@@ -72,6 +72,8 @@ public class SwapUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        chooseBtn.onClick.RemoveListener(OnChooseBtnClick);
+        microButton.onClick.RemoveListener(OnSpeakBtnClick);
         if (chooseEvent != null)
         {
             chooseEvent = null;
