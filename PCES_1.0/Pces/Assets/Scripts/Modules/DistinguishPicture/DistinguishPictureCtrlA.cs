@@ -180,11 +180,50 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(shou);
 
             //8. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
+            SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
+            swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+            swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
+            swapui.speakEvent = () =>
+            {
+                swapui.speakEvent = null;
+                swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+                TipUI tipui = UIManager.Instance.GetUI<TipUI>("TipUI");
+                string gift = "";
+                tipui.SetTipMessage("小华要吃" + gift);
+
+                //9. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
+                Invoke("ClickTeachersHandFinal", 2f);
+            };
 
 
-            //9. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
 
             //10. 播放结束，触发小华接过XXX。
+
+
+        }
+    }
+
+    private void ClickTeachersHandFinal()
+    {
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        HighLightCtrl.GetInstance().FlashOn(shou);
+
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFinal);
+        ClickDispatcher.Inst.EnableClick = true;
+
+    }
+
+    private void OnClickTeacherHandFinal(ClickedObj cobj)
+    {
+        if (cobj.objname == "shou")
+        {
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFinal);
+            ClickDispatcher.Inst.EnableClick = false;
+
+            GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+            HighLightCtrl.GetInstance().FlashOff(shou);
+
 
             //11. 播放结束，出现下一关和重做的按钮。
             Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFourth(): 11. 播放结束，出现下一关和重做的按钮。");

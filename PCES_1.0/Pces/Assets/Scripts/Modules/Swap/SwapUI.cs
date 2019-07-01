@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SwapUI : MonoBehaviour
 {
-    public event System.Action chooseEvent, speakEvent;
+    public System.Action chooseEvent, speakEvent;
     Button chooseBtn;
     Button microButton;
     public GameObject GetChooseBtn
@@ -68,5 +68,18 @@ public class SwapUI : MonoBehaviour
         /// 麦克风按钮
         /// </summary>
         microButton = 1
+    }
+
+    private void OnDestroy()
+    {
+        if (chooseEvent != null)
+        {
+            chooseEvent = null;
+        }
+
+        if (speakEvent != null)
+        {
+            speakEvent = null;
+        }
     }
 }
