@@ -1,0 +1,208 @@
+fileFormatVersion: 2
+guid: df76b6095e5db3a409233a220f7ca8d3
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Chest_M
+    100002: DeformationSystem
+    100004: Elbow_L
+    100006: Elbow_R
+    100008: goutongben
+    100010: goutongben_01
+    100012: goutongben_02
+    100014: goutongben_03
+    100016: goutongben_tiehuan
+    100018: judai
+    100020: judai1
+    100022: Main
+    100024: Root_M
+    100026: Scapula_L
+    100028: Scapula_R
+    100030: Shoulder_L
+    100032: Shoulder_R
+    100034: ShoulderPart1_L
+    100036: ShoulderPart1_R
+    100038: ShoulderPart2_L
+    100040: ShoulderPart2_R
+    100042: Spine1_M
+    100044: tuka10
+    100046: tuka2
+    100048: tuka4
+    100050: tuka5
+    100052: tuka6
+    100054: tuka7
+    100056: tuka8
+    100058: tuka9
+    100060: Wrist_L
+    100062: Wrist_R
+    100064: //RootNode
+    400000: Chest_M
+    400002: DeformationSystem
+    400004: Elbow_L
+    400006: Elbow_R
+    400008: goutongben
+    400010: goutongben_01
+    400012: goutongben_02
+    400014: goutongben_03
+    400016: goutongben_tiehuan
+    400018: judai
+    400020: judai1
+    400022: Main
+    400024: Root_M
+    400026: Scapula_L
+    400028: Scapula_R
+    400030: Shoulder_L
+    400032: Shoulder_R
+    400034: ShoulderPart1_L
+    400036: ShoulderPart1_R
+    400038: ShoulderPart2_L
+    400040: ShoulderPart2_R
+    400042: Spine1_M
+    400044: tuka10
+    400046: tuka2
+    400048: tuka4
+    400050: tuka5
+    400052: tuka6
+    400054: tuka7
+    400056: tuka8
+    400058: tuka9
+    400060: Wrist_L
+    400062: Wrist_R
+    400064: //RootNode
+    2100000: goutongben_RGB4
+    2100002: goutongben_RGB0
+    2100004: goutongben_RGB1
+    2100006: tuka_RGB
+    2100008: tuke_tex
+    2100010: judai_RGB1
+    2100012: judai_RGB2
+    2100014: goutongben_RGB3
+    2100016: goutongben_RGB5
+    2100018: goutongben_RGB2
+    2100020: tuka_RGB1
+    2100022: tuke_tex1
+    2300000: goutongben_01
+    2300002: goutongben_02
+    2300004: goutongben_03
+    2300006: goutongben_tiehuan
+    2300008: judai
+    2300010: judai1
+    2300012: tuka10
+    2300014: tuka2
+    2300016: tuka4
+    2300018: tuka5
+    2300020: tuka6
+    2300022: tuka7
+    2300024: tuka8
+    2300026: tuka9
+    3300000: goutongben_01
+    3300002: goutongben_02
+    3300004: goutongben_03
+    3300006: goutongben_tiehuan
+    3300008: judai
+    3300010: judai1
+    3300012: tuka10
+    3300014: tuka2
+    3300016: tuka4
+    3300018: tuka5
+    3300020: tuka6
+    3300022: tuka7
+    3300024: tuka8
+    3300026: tuka9
+    4300000: goutongben_tiehuan
+    4300002: goutongben_01
+    4300004: tuka2
+    4300006: tuka4
+    4300008: judai
+    4300010: goutongben_02
+    4300012: tuka5
+    4300014: goutongben_03
+    4300016: tuka7
+    4300018: tuka6
+    4300020: tuka8
+    4300022: judai1
+    4300024: tuka9
+    4300026: tuka10
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 1
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

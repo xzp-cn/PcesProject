@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.ComponentModel;
+using System.Reflection;
 public class ObjectsManager : MonoBehaviour
 {
     public static ObjectsManager instanse;
@@ -52,7 +53,7 @@ public class ObjectsManager : MonoBehaviour
             {
                 po = go.AddComponent<PropsObject>();
             }
-            po.pData = new PropsData(tag.ToString(), i, ptype);
+            po.pData = new PropsData(tag.ToString(), i, ptype, GetCnNameOfObject(tag.ToString()));
             propList.Add(po);
         }
 
@@ -96,7 +97,7 @@ public class ObjectsManager : MonoBehaviour
             if (tukObj == null)
             {
                 tukObj = tuka.AddComponent<PropsObject>();
-                tukObj.pData = new PropsData(tuka.name, j++, PropsType.Tuka);
+                tukObj.pData = new PropsData(tuka.name, j++, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
                 propList.Add(tukObj);
             }
         }
@@ -106,6 +107,30 @@ public class ObjectsManager : MonoBehaviour
     public PropsObject GetProps(int index)
     {
         return propList[index];
+    }
+    /// <summary>
+    /// 获得道具中文名字
+    /// </summary>
+    private Dictionary<string, string> objectCns = new Dictionary<string, string>();
+    private string GetCnNameOfObject(string enName)
+    {
+        if (objectCns.Count == 0)
+        {
+            FieldInfo[] fields = typeof(PropsTag).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            int i = 0;
+            foreach (FieldInfo fi in fields)
+            {
+                DescriptionAttribute descriptionAttribute = fi.GetCustomAttributes(typeof(DescriptionAttribute), true)[0] as DescriptionAttribute;
+                string cnName = descriptionAttribute.Description;
+                objectCns.Add(enName, cnName);
+                i++;
+            }
+        }
+        if (!objectCns.ContainsKey(enName))
+        {
+            return "";
+        }
+        return objectCns[enName];
     }
 
 }
@@ -131,18 +156,20 @@ public class PropsData
     public string name;
     public int id;
     public PropsType pType;
-    public PropsData(string _name, int _id, PropsType _pType)
+    public string name_cn;
+    public PropsData(string _name, int _id, PropsType _pType, string _name_cn)
     {
         name = _name;
         id = _id;
         pType = _pType;
+        name_cn = _name_cn;
     }
 }
 public enum PropsType
 {
     /// <summary>
     /// 强化物
-    /// </summary>
+    /// </summary>   
     reinforcement,
     /// <summary>
     /// 负强化物
@@ -163,98 +190,121 @@ public enum PropsTag
     /// <summary>
     /// 巧克力
     /// </summary>
+    [Description("巧克力")]
     chocolate = 0,
     /// <summary>
     /// 饼干
     /// </summary>
+    [Description("饼干")]
     biscuit = 1,
     /// <summary>
     /// 薯片
     /// </summary>
+    [Description("薯片")]
     chips = 2,
     /// <summary>
     /// 橙汁
     /// </summary>
+    [Description("橙汁")]
     orangeJuice = 3,
     /// <summary>
     /// 小汽车
     /// </summary>
+    [Description("小汽车")]
     car = 4,
     /// <summary>
     /// 香蕉
     /// </summary>
+    [Description("香蕉")]
     banana = 5,
     /// <summary>
     /// 苹果
     /// </summary>
+    [Description("苹果")]
     apple = 6,
     /// <summary>
     /// 雪饼
     /// </summary>
+    [Description("雪饼")]
     snowBiscuit = 7,
     /// <summary>
     /// 牛奶
     /// </summary>
+    [Description("牛奶")]
     milk = 8,
     /// <summary>
     /// 帽子
     /// </summary>
+    [Description("帽子")]
     hat = 9,
     /// <summary>
     /// 积木
     /// </summary>
+    [Description("积木")]
     juggle = 10,
     /// <summary>
     ///故事书
     /// </summary>
+    [Description("故事书")]
     storyBooks = 11,
-
     /// <summary>
     /// 图卡巧克力
     /// </summary>
+    [Description("图卡巧克力")]
     tuka_chocolate = 12,
     /// <summary>
     /// 图卡饼干
-    /// </summary>
+    /// </summary
+    [Description("图卡饼干")]
     tuka_biscuit = 13,
     /// <summary>
     /// 图卡薯片
     /// </summary>
+    [Description("图卡薯片")]
     tuka_chips = 14,
     /// <summary>
     /// 图卡橙汁
     /// </summary>
+    [Description("图卡橙汁")]
     tuka_orangeJuice = 15,
     /// <summary>
     /// 图卡小汽车
     /// </summary>
+    [Description("图卡橙汁")]
     tuka_car = 16,
     /// <summary>
     /// 图卡香蕉
     /// </summary>
+    [Description("图卡香蕉")]
     tuka_banana = 17,
     /// <summary>
     /// 图卡苹果
     /// </summary>
+    [Description("图卡苹果")]
     tuka_apple = 18,
     /// <summary>
     /// 图卡雪饼
     /// </summary>
+    [Description("图卡雪饼")]
     tuka_snowBiscuit = 19,
     /// <summary>
     /// 图卡牛奶
     /// </summary>
+    [Description("图卡牛奶")]
     tuka_milk = 20,
     /// <summary>
     /// 图卡帽子
     /// </summary>
+    [Description("图卡帽子")]
     tuka_hat = 21,
     /// <summary>
     /// 图卡积木
-    /// </summary>
+    /// </summary>    
+    [Description("图卡积木")]
     tuka_juggle = 22,
     /// <summary>
     /// 图卡故事书
     /// </summary>
+    [Description("图卡故事书")]
     tuka_storyBooks = 23
 }
