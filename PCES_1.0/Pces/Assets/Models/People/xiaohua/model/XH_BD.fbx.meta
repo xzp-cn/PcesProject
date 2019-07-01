@@ -1,0 +1,419 @@
+fileFormatVersion: 2
+guid: af9c594c84b4abf44a6f3373f4782c5f
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Ankle_L
+    100002: Ankle_R
+    100004: arms_GEO1
+    100006: arms_GEO2
+    100008: brow_GEO1
+    100010: Chest_M
+    100012: clothes
+    100014: DeformationSystem
+    100016: Elbow_L
+    100018: Elbow_R
+    100020: Eye_L
+    100022: Eye_R
+    100024: EyeEnd_L
+    100026: EyeEnd_R
+    100028: Geometry
+    100030: Group
+    100032: head_GEO5
+    100034: Head_M
+    100036: HeadEnd_M
+    100038: Hip_L
+    100040: Hip_R
+    100042: IndexFinger1_L
+    100044: IndexFinger1_R
+    100046: IndexFinger2_L
+    100048: IndexFinger2_R
+    100050: IndexFinger3_L
+    100052: IndexFinger3_R
+    100054: IndexFinger4_L
+    100056: IndexFinger4_R
+    100058: Jaw_M
+    100060: JawEnd_M
+    100062: jd_tuka_1
+    100064: jd_tuka_2
+    100066: jd_tuka_3
+    100068: Knee_L
+    100070: Knee_R
+    100072: kyle_hair_GEO1
+    100074: Main
+    100076: MiddleFinger1_L
+    100078: MiddleFinger1_R
+    100080: MiddleFinger2_L
+    100082: MiddleFinger2_R
+    100084: MiddleFinger3_L
+    100086: MiddleFinger3_R
+    100088: MiddleFinger4_L
+    100090: MiddleFinger4_R
+    100092: Neck_M
+    100094: PinkyFinger1_L
+    100096: PinkyFinger1_R
+    100098: PinkyFinger2_L
+    100100: PinkyFinger2_R
+    100102: PinkyFinger3_L
+    100104: PinkyFinger3_R
+    100106: PinkyFinger4_L
+    100108: PinkyFinger4_R
+    100110: R_eye_GEO2
+    100112: R_eye_GEO4
+    100114: RingFinger1_L
+    100116: RingFinger1_R
+    100118: RingFinger2_L
+    100120: RingFinger2_R
+    100122: RingFinger3_L
+    100124: RingFinger3_R
+    100126: RingFinger4_L
+    100128: RingFinger4_R
+    100130: Root_M
+    100132: Scapula_L
+    100134: Scapula_R
+    100136: shoe_GEO1
+    100138: shoe_GEO2
+    100140: Shoulder_L
+    100142: Shoulder_R
+    100144: ShoulderPart1_L
+    100146: ShoulderPart1_R
+    100148: ShoulderPart2_L
+    100150: ShoulderPart2_R
+    100152: Spine1_M
+    100154: ThumbFinger1_L
+    100156: ThumbFinger1_R
+    100158: ThumbFinger2_L
+    100160: ThumbFinger2_R
+    100162: ThumbFinger3_L
+    100164: ThumbFinger3_R
+    100166: ThumbFinger4_L
+    100168: ThumbFinger4_R
+    100170: Toes_L
+    100172: Toes_R
+    100174: ToesEnd_L
+    100176: ToesEnd_R
+    100178: tuka
+    100180: tuka 1
+    100182: tuka2
+    100184: tuka2 1
+    100186: tuka3
+    100188: tuka3 1
+    100190: Wrist_L
+    100192: Wrist_R
+    100194: //RootNode
+    100196: XH_BD1
+    100198: XH_judai
+    100200: XH_judai 1
+    100202: XH_judai_2
+    100204: XH_judai_2 1
+    100206: XH_L1
+    100208: XH_R1
+    100210: XH_R2
+    400000: Ankle_L
+    400002: Ankle_R
+    400004: arms_GEO1
+    400006: arms_GEO2
+    400008: brow_GEO1
+    400010: Chest_M
+    400012: clothes
+    400014: DeformationSystem
+    400016: Elbow_L
+    400018: Elbow_R
+    400020: Eye_L
+    400022: Eye_R
+    400024: EyeEnd_L
+    400026: EyeEnd_R
+    400028: Geometry
+    400030: Group
+    400032: head_GEO5
+    400034: Head_M
+    400036: HeadEnd_M
+    400038: Hip_L
+    400040: Hip_R
+    400042: IndexFinger1_L
+    400044: IndexFinger1_R
+    400046: IndexFinger2_L
+    400048: IndexFinger2_R
+    400050: IndexFinger3_L
+    400052: IndexFinger3_R
+    400054: IndexFinger4_L
+    400056: IndexFinger4_R
+    400058: Jaw_M
+    400060: JawEnd_M
+    400062: jd_tuka_1
+    400064: jd_tuka_2
+    400066: jd_tuka_3
+    400068: Knee_L
+    400070: Knee_R
+    400072: kyle_hair_GEO1
+    400074: Main
+    400076: MiddleFinger1_L
+    400078: MiddleFinger1_R
+    400080: MiddleFinger2_L
+    400082: MiddleFinger2_R
+    400084: MiddleFinger3_L
+    400086: MiddleFinger3_R
+    400088: MiddleFinger4_L
+    400090: MiddleFinger4_R
+    400092: Neck_M
+    400094: PinkyFinger1_L
+    400096: PinkyFinger1_R
+    400098: PinkyFinger2_L
+    400100: PinkyFinger2_R
+    400102: PinkyFinger3_L
+    400104: PinkyFinger3_R
+    400106: PinkyFinger4_L
+    400108: PinkyFinger4_R
+    400110: R_eye_GEO2
+    400112: R_eye_GEO4
+    400114: RingFinger1_L
+    400116: RingFinger1_R
+    400118: RingFinger2_L
+    400120: RingFinger2_R
+    400122: RingFinger3_L
+    400124: RingFinger3_R
+    400126: RingFinger4_L
+    400128: RingFinger4_R
+    400130: Root_M
+    400132: Scapula_L
+    400134: Scapula_R
+    400136: shoe_GEO1
+    400138: shoe_GEO2
+    400140: Shoulder_L
+    400142: Shoulder_R
+    400144: ShoulderPart1_L
+    400146: ShoulderPart1_R
+    400148: ShoulderPart2_L
+    400150: ShoulderPart2_R
+    400152: Spine1_M
+    400154: ThumbFinger1_L
+    400156: ThumbFinger1_R
+    400158: ThumbFinger2_L
+    400160: ThumbFinger2_R
+    400162: ThumbFinger3_L
+    400164: ThumbFinger3_R
+    400166: ThumbFinger4_L
+    400168: ThumbFinger4_R
+    400170: Toes_L
+    400172: Toes_R
+    400174: ToesEnd_L
+    400176: ToesEnd_R
+    400178: tuka
+    400180: tuka 1
+    400182: tuka2
+    400184: tuka2 1
+    400186: tuka3
+    400188: tuka3 1
+    400190: Wrist_L
+    400192: Wrist_R
+    400194: //RootNode
+    400196: XH_BD1
+    400198: XH_judai
+    400200: XH_judai 1
+    400202: XH_judai_2
+    400204: XH_judai_2 1
+    400206: XH_L1
+    400208: XH_R1
+    400210: XH_R2
+    2100000: M_xh
+    2100002: tuka_RGB1
+    2100004: tuke_tex1
+    2100006: judai_RGB1
+    2100008: judai_RGB2
+    2100010: tuka_RGB2
+    2100012: tuke_tex2
+    2100014: tuka_RGB
+    2100016: tuke_tex
+    2300000: jd_tuka_1
+    2300002: jd_tuka_2
+    2300004: jd_tuka_3
+    2300006: tuka 1
+    2300008: tuka2 1
+    2300010: tuka3 1
+    2300012: XH_judai 1
+    2300014: XH_judai_2 1
+    3300000: jd_tuka_1
+    3300002: jd_tuka_2
+    3300004: jd_tuka_3
+    3300006: tuka 1
+    3300008: tuka2 1
+    3300010: tuka3 1
+    3300012: XH_judai 1
+    3300014: XH_judai_2 1
+    4300000: R_eye_GEO4
+    4300002: shoe_GEO2
+    4300004: shoe_GEO1
+    4300006: arms_GEO2
+    4300008: arms_GEO1
+    4300010: R_eye_GEO2
+    4300012: head_GEO5
+    4300014: kyle_hair_GEO1
+    4300016: brow_GEO1
+    4300018: clothes
+    4300020: tuka
+    4300022: XH_judai
+    4300024: XH_judai_2
+    4300026: jd_tuka_1
+    4300028: jd_tuka_2
+    4300030: jd_tuka_3
+    4300032: tuka2
+    4300034: tuka3
+    7400000: idle
+    7400002: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: arms_GEO1
+    13700002: arms_GEO2
+    13700004: brow_GEO1
+    13700006: clothes
+    13700008: head_GEO5
+    13700010: kyle_hair_GEO1
+    13700012: R_eye_GEO2
+    13700014: R_eye_GEO4
+    13700016: shoe_GEO1
+    13700018: shoe_GEO2
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Scapula_R' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\t'ShoulderPart2_R' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'ThumbFinger1_R'
+      has translation animation that will be discarded.\n\t'Scapula_L' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'ShoulderPart2_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 1.5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 250
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 1
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
