@@ -164,6 +164,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     void OnXiaoHuaBringAToTeacher()
     {
         //7. 播放结束，提醒操作者点击教师的手，点击后触发教师接卡的动画。
+        Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBringAToTeacher(): 7. 播放结束，提醒操作者点击教师的手，点击后触发教师接卡的动画。");
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
         ClickDispatcher.Inst.EnableClick = true;
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
@@ -195,11 +196,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 Invoke("ClickTeachersHandFinal", 2f);
             };
 
-
-
-            //10. 播放结束，触发小华接过XXX。
-
-
         }
     }
 
@@ -212,6 +208,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFinal);
         ClickDispatcher.Inst.EnableClick = true;
 
+
     }
 
     private void OnClickTeacherHandFinal(ClickedObj cobj)
@@ -223,6 +220,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
             HighLightCtrl.GetInstance().FlashOff(shou);
+
+
+            //10. 播放结束，触发小华接过XXX。
 
 
             //11. 播放结束，出现下一关和重做的按钮。
