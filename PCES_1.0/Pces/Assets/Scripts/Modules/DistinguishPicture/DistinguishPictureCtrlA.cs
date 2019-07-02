@@ -57,19 +57,39 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+
 
         xiaohuaAnim.Complete += () =>
         {
+            GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
             Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
             HighLightCtrl.GetInstance().FlashOn(shou);
-            shou.GetBoxCollider();
-
-            //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。
-            GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
-            ClickDispatcher.Inst.EnableClick = true;
+            ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
         xiaohuaAnim.PlayForward("TY_XH_NKDK");
+    }
+
+    private void ClickTeachersPromptFirst()
+    {
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
+        HighLightCtrl.GetInstance().FlashOn(shou);
+        shou.GetBoxCollider();
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+    }
+
+    private void RedoClickTeachersHandFirst()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        HighLightCtrl.GetInstance().FlashOff(shou);
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        Invoke("ClickTeachersPromptFirst", 2);
     }
 
     /// <summary>
@@ -81,6 +101,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
         if (cobj.objname == "shou")
         {
+            ChooseDo.Instance.Clicked();
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);

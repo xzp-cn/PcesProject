@@ -16,6 +16,7 @@ public class TipUI : MonoBehaviour
     /// <param name="tip"></param>
     public void SetTipMessage(string tip)
     {
+        gameObject.SetActive(true);
         text.text = tip;
         Invoke("Hide", 2f);
     }
