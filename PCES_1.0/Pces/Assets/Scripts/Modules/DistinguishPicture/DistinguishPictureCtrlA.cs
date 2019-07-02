@@ -25,6 +25,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     void Start()
     {
         InitGoodsState();
+        AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+        teacherAnim.PlayForward("idle");
+
 
         //1. 进入界面后1秒，触发小华拿B卡递卡的动画。
         Invoke("OnXiaoHuaBring", 1f);
@@ -64,7 +67,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
             Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
             HighLightCtrl.GetInstance().FlashOn(shou);
-            shou.GetBoxCollider();
+            shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
@@ -77,7 +80,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
         Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
         HighLightCtrl.GetInstance().FlashOn(shou);
-        shou.GetBoxCollider();
+        
         ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
     }
