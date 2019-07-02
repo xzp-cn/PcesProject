@@ -6,7 +6,7 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
     List<HighlightableObject> hoList = new List<HighlightableObject>();
     Camera camera;
     Color32 c1 = new Color(190, 171, 71, 255), c2 = new Color32(210, 27, 255, 255);
-    float freq = 2f;
+    //float freq = 2f;
     /// <summary>
     /// 初始化
     /// </summary>
