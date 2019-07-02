@@ -20,8 +20,11 @@ namespace future3d.unityLibs
         /// </summary>
         public bool Enable
         {
-            get { return particls.enableEmission; }
-            set { particls.enableEmission = value; }
+            get { return particls.emission.enabled; }
+            set {
+                ParticleSystem.EmissionModule em = particls.emission;
+                em.enabled = value;
+            }
         }
 
         /// <summary>

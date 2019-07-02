@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 618 //取消过时警告
+#pragma warning disable 108
+using UnityEngine;
 using System.Collections.Generic;
 
 /*
@@ -13,7 +15,7 @@ using System.Collections.Generic;
 
 * @ 描述：调试信息输出显示工具
 
-* @ Copyright 2013-2016 深圳市国泰安信息技术有限公司版权所有
+*
 
 */
 public class DebugConsole : MonoBehaviour
@@ -30,8 +32,8 @@ public class DebugConsole : MonoBehaviour
     public List<string> messages = new List<string>();
     public List<GameObject> guis = new List<GameObject>();
     public List<string> colors = new List<string>();
-    public bool draggable = true;                  // Can the output be dragged around at runtime by default? 
-    public bool visible = true;                    // Does output show on screen by default or do we have to enable it with code? 
+    public bool draggable = true;                  // Can the output be dragged around at runtime by default?
+    public bool visible = true;                    // Does output show on screen by default or do we have to enable it with code?
     public bool pixelCorrect = false; // set to be pixel Correct linespacing
     public static bool isVisible
     {
@@ -96,7 +98,6 @@ public class DebugConsole : MonoBehaviour
     {
         s_Instance = this;
         InitGuis();
-
     }
 
     protected bool guisCreated = false;
@@ -114,9 +115,8 @@ public class DebugConsole : MonoBehaviour
             {
                 DebugGui = new GameObject();
                 guiText = DebugGui.AddComponent<GUIText>();
+                DebugGui.AddComponent<GUILayer>();  //添加GUILayer
                 DebugGui.name = "DebugGUI(0)";
-                DebugGui.transform.position = defaultGuiPosition;
-                DebugGui.transform.localScale = defaultGuiScale;
             }
 
             // Create our GUI objects to our maxMessages count

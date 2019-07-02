@@ -9,7 +9,7 @@ public class PeopleManager : SingleTon<PeopleManager>
     {
         if (!pDic.ContainsKey(name))
         {
-            Transform temp = transform.Find(name);
+            //Transform temp = transform.Find(name);
 
         }
         else

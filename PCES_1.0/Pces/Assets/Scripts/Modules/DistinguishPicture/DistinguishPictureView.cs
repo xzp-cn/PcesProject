@@ -19,7 +19,6 @@ public class DistinguishPictureView : MonoBehaviour {
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
         UnityEngine.Debug.Log("DistinguishPictureView::Awake(): 第三阶段 分辨图片");
 
-
     }
 
 
@@ -51,7 +50,6 @@ public class DistinguishPictureView : MonoBehaviour {
         fudaolsGo.SetActive(false);
 
         ///初始化老师状态
-        GameObject laoshiGo = PeopleManager.Instance.GetPeople("LS_BD");
     }
 
     void OnXiaoHua()

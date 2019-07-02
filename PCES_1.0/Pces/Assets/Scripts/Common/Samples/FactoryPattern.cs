@@ -70,19 +70,19 @@ public class DogFactory
 public class FactoryPattern : MonoBehaviour {
 
     DogFactory aFactory;
-    BirdFactory bFactory;
+    //BirdFactory bFactory;
 
-	void Start () {
+    void Start () {
         aFactory = new DogFactory();
         aFactory.CreateRun().Run();
 
         aFactory.CreatePet().Run();  //增加宠物狗不影响其他创建代码
 
-        bFactory = new BirdFactory();
-	}
-	
+        //bFactory = new BirdFactory();
+    }
 
-	void Update () {
-	
-	}
+
+    void Update () {
+
+    }
 }

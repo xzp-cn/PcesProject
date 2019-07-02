@@ -13,7 +13,7 @@ public class SelectionUI : MonoBehaviour
     private void Awake()
     {
         gameObject.SetActive(false);
-        RectTransform rt = GetComponent<RectTransform>();
+        //RectTransform rt = GetComponent<RectTransform>();
     }
     private void OnEnable()
     {
