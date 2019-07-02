@@ -36,6 +36,7 @@ ModelImporter:
     100060: Wrist_L
     100062: Wrist_R
     100064: //RootNode
+    100066: Group1
     400000: Chest_M
     400002: DeformationSystem
     400004: Elbow_L
@@ -69,6 +70,7 @@ ModelImporter:
     400060: Wrist_L
     400062: Wrist_R
     400064: //RootNode
+    400066: Group1
     2100000: goutongben_RGB4
     2100002: goutongben_RGB0
     2100004: goutongben_RGB1
@@ -197,7 +199,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2

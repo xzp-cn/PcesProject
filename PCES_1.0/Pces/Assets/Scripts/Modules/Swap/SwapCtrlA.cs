@@ -15,7 +15,6 @@ public class SwapCtrlA : MonoBehaviour
     AnimationOper LS;
     AnimationOper XH;
     AnimationOper FDLS;
-    Tick tick;
     private void Awake()
     {
         this.name = "SwapA";
@@ -41,11 +40,6 @@ public class SwapCtrlA : MonoBehaviour
             selectUI.okEvent += SelectUIOkBtnCallback;
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
-        if (tick == null)
-        {
-            tick = new GameObject("tick").AddComponent<Tick>();
-            tick.transform.SetParent(transform);
-        }
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
@@ -74,6 +68,7 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>  
     void SelectUIOkBtnCallback(int selectObj)
     {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         Transform objectsTr = new GameObject("objectsParent").transform;
         objectsTr.localPosition = Vector3.zero;
         objectsTr.localScale = Vector3.one;
@@ -95,7 +90,7 @@ public class SwapCtrlA : MonoBehaviour
         po = lsObject.GetComponent<PropsObject>();
         SwapModel.GetInstance().CurReinforcement = new Reinforcement(po.pData);
         //播放小华抢东西动画         
-        XH.Complete += SnatchXh;
+        XH.Complete += SnatchXhCallback;
         XH.PlayForward("TY_XH_QIANG");
     }
     /// <summary>
@@ -114,7 +109,7 @@ public class SwapCtrlA : MonoBehaviour
     /// <summary>
     /// 小华抢东西动画回调
     /// </summary>
-    void SnatchXh()
+    void SnatchXhCallback()
     {
         //计时开始     
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
@@ -148,6 +143,8 @@ public class SwapCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsDragHandTakeCardCallback;
         FDLS.PlayForward("FDLS_A_1ST_ZD");
+        XH.PlayForward("XH_A_1ST_BZDK");
+
     }
     /// <summary>
     /// 辅导老师抓手拿卡回调
@@ -264,20 +261,33 @@ public class SwapCtrlA : MonoBehaviour
     }
     void ClickLsGiveObjTip()
     {
-        jshand.GetUIFlash().StartFlash();
+        HighLightCtrl.GetInstance().FlashOn(jshand);
         ClickDispatcher.Inst.EnableClick = true;
     }
     void RedoLsGiveObj()
     {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师给相应物品");
+        ClickLsGiveObjTip();
 
     }
     void LsGiveObj()
     {
-
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+        LS.Complete += LsGiveObjCallback;
+        LS.PlayForward("TY_LS_JKDW");
     }
     void LsGiveObjCallback()
     {
-
+        XH.Complete += XHJiewuCallback;
+        XH.PlayForward("TY_XH_JG");
+    }
+    void XHJiewuCallback()
+    {
+        ShowFinalUI();
     }
     #endregion
     /// <summary>
@@ -285,32 +295,33 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void ShowFinalUI()
     {
-
+        CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        com.redoClickEvent += NextDo;
+        com.redoClickEvent += ReDo;
+        com.ShowFinalUI();
     }
-    void Finish()
+    void ReDo()
     {
         RemoveAllListeners();
-        Destroy(gameObject);
+    }
+    void NextDo()
+    {
+        RemoveAllListeners();
     }
     void RemoveAllListeners()
     {
-
-    }
-    private void OnDestroy()
-    {
-
-    }
-    public enum Stage//阶段枚举
-    {
-        getCard,//小华拿卡
-        handingCard,//辅导教师，小华递卡
-        pickUpCard,//教师接卡
-        talk,//教师说话
-        giveGoods//教师给物品
+        CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        com.redoClickEvent -= NextDo;
+        com.redoClickEvent -= ReDo;
+        swapUI.chooseEvent -= ChooseBtnClickCallback;
+        swapUI.speakEvent -= SpeakBtnClickCallback;
+        selectUI.okEvent -= SelectUIOkBtnCallback;
     }
     public void Dispose()
     {
-
+        CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        com.HideFinalUI();
+        Destroy(gameObject);
     }
 }
 
