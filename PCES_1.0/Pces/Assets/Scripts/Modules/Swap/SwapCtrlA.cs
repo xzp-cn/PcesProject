@@ -8,7 +8,6 @@ public class SwapCtrlA : MonoBehaviour
     public event System.Action evtRedo;
     SwapUI swapUI;
     SelectionUI selectUI;
-    GameObject choosebtn;
     GameObject fdlshand;
     GameObject jshand;
     GameObject lsObject;
@@ -17,8 +16,6 @@ public class SwapCtrlA : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     Tick tick;
-    Transform objectsTr;
-    Stage curStage;
     private void Awake()
     {
         this.name = "SwapA";
@@ -35,6 +32,8 @@ public class SwapCtrlA : MonoBehaviour
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
             swapUI.chooseEvent += ChooseBtnClickCallback;
             swapUI.speakEvent += SpeakBtnClickCallback;
+            swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+            swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, true);
         }
         if (selectUI == null)
         {
@@ -47,14 +46,9 @@ public class SwapCtrlA : MonoBehaviour
             tick = new GameObject("tick").AddComponent<Tick>();
             tick.transform.SetParent(transform);
         }
-        choosebtn = swapUI.GetChooseBtn;
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        objectsTr = new GameObject("objectsParent").transform;
-        objectsTr.localPosition = Vector3.zero;
-        objectsTr.localScale = Vector3.one;
-        objectsTr.rotation = Quaternion.identity;
         Tip();
     }
     /// <summary>
@@ -62,7 +56,7 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>    
     void Tip()
     {
-        UIFlah chooeFlash = choosebtn.gameObject.GetUIFlash();
+        UIFlah chooeFlash = swapUI.GetChooseBtn.gameObject.GetUIFlash();
         chooeFlash.StartFlash();
     }
     /// <summary>
@@ -70,24 +64,20 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void ChooseBtnClickCallback()
     {
-        UIFlah uf = choosebtn.gameObject.GetUIFlash();
+        UIFlah uf = swapUI.GetChooseBtn.gameObject.GetUIFlash();
         uf.StopFlash();
         selectUI.gameObject.SetActive(true);
         //对当前场景做一些处理
-    }
-    void SpeakBtnClickCallback()
-    {
-        //TODO：显示老师说话内容             
-    }
-    void SelectUICloseCallback()
-    {
-
     }
     /// <summary>
     /// 选择强化物界面ok按钮回调用
     /// </summary>  
     void SelectUIOkBtnCallback(int selectObj)
     {
+        Transform objectsTr = new GameObject("objectsParent").transform;
+        objectsTr.localPosition = Vector3.zero;
+        objectsTr.localScale = Vector3.one;
+        objectsTr.rotation = Quaternion.identity;
         //老师手上显示物品
         lsObject = Instantiate(SwapModel.GetInstance().GetObj(selectObj));
         lsObject.transform.SetParent(objectsTr);
@@ -101,7 +91,10 @@ public class SwapCtrlA : MonoBehaviour
         deskTuka.name = tuka;
         po = deskTuka.GetComponent<PropsObject>();
         po.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-        //播放小华抢东西动画 
+        //设置当前选择的强化物
+        po = lsObject.GetComponent<PropsObject>();
+        SwapModel.GetInstance().CurReinforcement = new Reinforcement(po.pData);
+        //播放小华抢东西动画         
         XH.Complete += SnatchXh;
         XH.PlayForward("TY_XH_QIANG");
     }
@@ -213,148 +206,80 @@ public class SwapCtrlA : MonoBehaviour
     void RedoLsJieka()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOff(jshand);
+        HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
         Invoke("ClickFdlsDikaHandTip", 2);
     }
     void LsJieka()
     {
-
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+        ClickDispatcher.Inst.EnableClick = false;
+        LS.Complete += LsJiekaCallback;
+        LS.PlayForward("TY_LS_JK");
     }
-    #endregion
-    #region  教师接收图卡
-
-    #endregion
-    //void RedoStageProcessing()
-    //{
-    //    ClickDispatcher.Inst.EnableClick = true;
-    //    switch (curStage)
-    //    {
-    //        case Stage.getCard:
-    //            //GetCardStage();
-    //            break;
-    //        case Stage.handingCard:
-    //            break;
-    //        case Stage.pickUpCard:
-    //            break;
-    //        case Stage.talk:
-    //            break;
-    //        case Stage.giveGoods:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-    //void FinishStageProcessing()
-    //{
-    //    ClickDispatcher.Inst.EnableClick = false;
-    //    switch (curStage)
-    //    {
-    //        case Stage.getCard:
-    //            GetCardAction();
-    //            break;
-    //        case Stage.handingCard:
-    //            HandingCardAction();
-    //            break;
-    //        case Stage.pickUpCard:
-    //            PickUpCardStage();
-    //            break;
-    //        case Stage.talk:
-    //            TalkAcion();
-    //            break;
-    //        case Stage.giveGoods:
-    //            GiveGoodsAcion();
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
     /// <summary>
-    /// 得到卡片
+    /// 教师接收图卡回调
     /// </summary>
-    //void GetCardStage()
-    //{
-    //    curStage = Stage.getCard;
-    //    HighLightCtrl.GetInstance().FlashOn(fdlshand);
-    //    ClickDispatcher.Inst.EnableClick = true;
-    //    //计时开始       
-    //    tick.TimingStart(5, TimeCallBack);
-    //}
-    //void HandingCardStage()
-    //{
-    //    curStage = Stage.handingCard;
-    //    HighLightCtrl.GetInstance().FlashOn(fdlshand);
-    //    ClickDispatcher.Inst.EnableClick = true;
-    //    //计时开始       
-    //    tick.TimingStart(5, TimeCallBack);
-    //}
-    //void PickUpCardStage()
-    //{
-    //    curStage = Stage.pickUpCard;
-    //}
-    //void TalkStage()
-    //{
-    //    curStage = Stage.talk;
-    //}
-    //void GivegoodsStage()
-    //{
-    //    curStage = Stage.giveGoods;
-    //}
-    #region 动画触发事件
-    void GetCardAction()
+    void LsJiekaCallback()
     {
-        //播放老师拿小华手拿卡动画
-    }
-    void GetCardActionCallBack()
-    {
-        //HandingCardStage();
-    }
-    void HandingCardAction()
-    {
-        //播放老师拿小华手拿卡动画
-    }
-    void HandingCardActionCallBack()
-    {
-        //PickUpCardStage();
-    }
-    void PickUpCardAction()
-    {
-
-    }
-    void PickUpCardCallBack()
-    {
-        //TalkStage();
-    }
-    void TalkAcion()
-    {
-
-    }
-    void TalkAcionCallBack()
-    {
-        //GivegoodsStage();
-    }
-    void GiveGoodsAcion()
-    {
-
-    }
-    void GiveGoodsActionCallBack()
-    {
-        XHReceive();
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+        ClickDispatcher.Inst.EnableClick = false;
+        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
+        ClickmicroPhoneTip();
     }
     #endregion
-    /// <summary>
-    /// 小华接受东西动画
-    /// </summary>
-    void XHReceive()
+    #region 点击话筒提示
+    void ClickmicroPhoneTip()
+    {
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+    }
+    void RedoLsSpeak()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickmicroPhoneTip", 2);
+    }
+    void SpeakBtnClickCallback()
+    {
+        UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
+        uf.StopFlash();
+        ChooseDo.Instance.Clicked();
+    }
+    void ShowSpeakContent()
+    {
+        Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
+        dlog.SetDialogMessage("小华要吃" + curObjName);
+        Invoke("LsGiveInit", 2);
+    }
+    #endregion
+    #region 老师给物品
+    void LsGiveInit()
+    {
+        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
+        ChooseDo.Instance.DoWhat(5, RedoLsGiveObj, LsGiveObj);
+    }
+    void ClickLsGiveObjTip()
+    {
+        jshand.GetUIFlash().StartFlash();
+        ClickDispatcher.Inst.EnableClick = true;
+    }
+    void RedoLsGiveObj()
     {
 
     }
-    void XHReceiveCallBack()
+    void LsGiveObj()
     {
-        //ui事件注册
-        ShowFinalUI();
+
     }
+    void LsGiveObjCallback()
+    {
+
+    }
+    #endregion
     /// <summary>
     /// 显示结算界面
     /// </summary>

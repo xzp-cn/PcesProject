@@ -38,9 +38,9 @@ public class SwapModel : SingleTemplate<SwapModel>
 /// </summary>
 public class Reinforcement
 {
-    public string name;
-    public Reinforcement(string _name)
+    public PropsData pData;
+    public Reinforcement(PropsData _pdata)
     {
-        name = _name;
+        pData = _pdata;
     }
 }

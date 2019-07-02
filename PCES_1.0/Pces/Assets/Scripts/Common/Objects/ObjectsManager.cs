@@ -47,14 +47,14 @@ public class ObjectsManager : MonoBehaviour
             GameObject go = ResManager.GetPrefab(path);
             go.name = tag.ToString();
             go.transform.SetParent(transform, false);
-            //go.SetActive(false);
+
             PropsObject po = go.GetComponent<PropsObject>();
             if (po == null)
             {
                 po = go.AddComponent<PropsObject>();
             }
-            po.pData = new PropsData(tag.ToString(), i, ptype, GetCnNameOfObject(tag.ToString()));
             propList.Add(po);
+            po.pData = new PropsData(tag.ToString(), i, ptype, GetCnNameOfObject(tag.ToString()));
         }
 
         InitTuka();
@@ -97,8 +97,8 @@ public class ObjectsManager : MonoBehaviour
             if (tukObj == null)
             {
                 tukObj = tuka.AddComponent<PropsObject>();
-                tukObj.pData = new PropsData(tuka.name, j++, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
                 propList.Add(tukObj);
+                tukObj.pData = new PropsData(tuka.name, j++, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
             }
         }
         Debug.Log("ObjectsManager.InitTuka(): propList {Nums} " + propList.Count);
@@ -122,7 +122,7 @@ public class ObjectsManager : MonoBehaviour
             {
                 DescriptionAttribute descriptionAttribute = fi.GetCustomAttributes(typeof(DescriptionAttribute), true)[0] as DescriptionAttribute;
                 string cnName = descriptionAttribute.Description;
-                objectCns.Add(enName, cnName);
+                objectCns.Add(ConvertToPropsTag(i).ToString(), cnName);
                 i++;
             }
         }
@@ -131,6 +131,12 @@ public class ObjectsManager : MonoBehaviour
             return "";
         }
         return objectCns[enName];
+    }
+
+    private PropsTag ConvertToPropsTag(int i)
+    {
+        PropsTag pt = (PropsTag)i;
+        return pt;
     }
 
 }
@@ -169,7 +175,7 @@ public enum PropsType
 {
     /// <summary>
     /// 强化物
-    /// </summary>   
+    /// </summary>
     reinforcement,
     /// <summary>
     /// 负强化物
@@ -185,7 +191,9 @@ public enum PropsType
     /// </summary>
     Tuka,
 }
-public enum PropsTag
+
+[System.Flags]
+public enum PropsTag : int
 {
     /// <summary>
     /// 巧克力
@@ -299,12 +307,12 @@ public enum PropsTag
     tuka_hat = 21,
     /// <summary>
     /// 图卡积木
-    /// </summary>    
+    /// </summary>
     [Description("图卡积木")]
     tuka_juggle = 22,
     /// <summary>
     /// 图卡故事书
     /// </summary>
     [Description("图卡故事书")]
-    tuka_storyBooks = 23
+    tuka_storyBooks = 23,
 }

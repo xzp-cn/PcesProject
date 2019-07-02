@@ -185,6 +185,8 @@ ModelImporter:
     3300000: LS_tuka2 1
     4300000: LS_tuka2
     7400000: TY_LS_JKDW
+    7400002: TY_LS_JK
+    7400004: TY_LS_DW
     9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
@@ -202,21 +204,12 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'TY_LS_JKDW' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Scapula_R' has translation animation that will
-      be discarded.\n\t'Scapula_R' is inbetween humanoid transforms and has rotation
-      animation that will be discarded.\n\t'ShoulderPart2_R' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Scapula_L'
-      has translation animation that will be discarded.\n\t'Scapula_L' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'Shoulder_L'
-      has translation animation that will be discarded.\n\t'ShoulderPart2_L' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -227,7 +220,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TY_LS_JKDW
       takeName: TY_LS_JKDW
-      firstFrame: 118
+      firstFrame: 1
       lastFrame: 296
       wrapMode: 0
       orientationOffsetY: 0
@@ -243,6 +236,62 @@ ModelImporter:
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TY_LS_JK
+      takeName: TY_LS_JKDW
+      firstFrame: 118
+      lastFrame: 190
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TY_LS_DW
+      takeName: TY_LS_JKDW
+      firstFrame: 190
+      lastFrame: 296
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
