@@ -21,6 +21,17 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!114 &114282167225452794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797e2b2bc137c624eacae3dff9ad6189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1102 &1102110431490066128
 AnimatorState:
   serializedVersion: 5
@@ -66,6 +77,31 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 93a5564797507da489c587799bbcaf81, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102261143526788374
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: XH_A_1ST_BZNK
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400002, guid: fe893f0a838a08a4b9c036f0d0df5383, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -146,7 +182,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102425500254213306
+--- !u!1102 &1102353616647389840
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -165,7 +201,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fe893f0a838a08a4b9c036f0d0df5383, type: 3}
+  m_Motion: {fileID: 7400004, guid: fe893f0a838a08a4b9c036f0d0df5383, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -381,7 +417,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102270040569584546}
-    m_Position: {x: -12, y: 132, z: 0}
+    m_Position: {x: -12, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102933249772492100}
     m_Position: {x: -252, y: 60, z: 0}
@@ -391,9 +427,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102110431490066128}
     m_Position: {x: -252, y: 204, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102425500254213306}
-    m_Position: {x: 0, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102941621839932902}
     m_Position: {x: 264, y: 72, z: 0}
@@ -421,6 +454,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102737812299097234}
     m_Position: {x: 828, y: 252, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102261143526788374}
+    m_Position: {x: -12, y: 120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102353616647389840}
+    m_Position: {x: -12, y: 180, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

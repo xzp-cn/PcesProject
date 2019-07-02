@@ -315,4 +315,9 @@ public enum PropsTag : int
     /// </summary>
     [Description("图卡故事书")]
     tuka_storyBooks = 23,
+    /// <summary>
+    /// 沟通本
+    /// </summary>
+    [Description("沟通本")]
+    goutongben = 24,
 }
