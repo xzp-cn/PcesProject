@@ -153,7 +153,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void ClickFdlsHandTip()
     {
-        ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsDragHandTakeCard);
+        ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsClickXhHand);
         ClickDispatcher.Inst.EnableClick = true;
         if (fdlshand == null)
         {
@@ -172,31 +172,36 @@ public class SwapCtrlB : MonoBehaviour
     }
     //点中辅导老师手后的回调
     /// <summary>
-    ///辅导老师抓手拿卡
+    ///辅导老师点击小华手
     /// </summary>
-    void FdlsDragHandTakeCard()
+    void FdlsClickXhHand()
     {
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
-        FDLS.PlayForward("FDLS_A_1ST_ZN");
-        XH.Complete += FdlsDragHandTakeCardCallback;
-        XH.PlayForward("XH_A_1ST_BZNK");
+        FDLS.Complete += FdlsClickXhHandCalllback;
+        FDLS.PlayForward("FDLS_A_2ND_D");
     }
     /// <summary>
-    /// 辅导老师抓手拿卡回调
+    /// 辅导老师点击小华手回调
     /// </summary>
-    void FdlsDragHandTakeCardCallback()
+    void FdlsClickXhHandCalllback()
     {
         //FDLS.PlayForward("idle");
-        ClickFdlsDikaHandTip();
+        XhTakeCard();
     }
     #endregion
-    #region 辅导老师抓手递卡
-    void ClickFdlsDikaHandTip()
+    #region 小华拿卡并给卡
+    void XhTakeCard()
     {
-        ChooseDo.Instance.DoWhat(5, RedoFdlsDika, FdlsDika);//
-        HighLightCtrl.GetInstance().FlashOn(fdlshand);
-        ClickDispatcher.Inst.EnableClick = true;
+        XH.Complete += XhTakeCardCallback;
+        XH.PlayForward("TY_XH_NKDK");
+    }
+    /// <summary>
+    /// 小华拿卡递卡回调
+    /// </summary>
+    void XhTakeCardCallback()
+    {
+
     }
     void RedoFdlsDika()
     {
