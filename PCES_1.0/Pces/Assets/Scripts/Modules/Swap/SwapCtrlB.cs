@@ -17,7 +17,7 @@ public class SwapCtrlB : MonoBehaviour
     AnimationOper FDLS;
     private void Awake()
     {
-        this.name = "SwapA";
+        this.name = "SwapB";
     }
     //public bool Finished;
     private void Start()
@@ -141,7 +141,7 @@ public class SwapCtrlB : MonoBehaviour
             ChooseDo.Instance.Clicked();
         }
     }
-    #region 小华抓手拿卡
+    #region 小华抢东西回调
     /// <summary>
     /// 小华抢东西动画回调
     /// </summary>
@@ -200,30 +200,6 @@ public class SwapCtrlB : MonoBehaviour
     /// 小华拿卡递卡回调
     /// </summary>
     void XhTakeCardCallback()
-    {
-
-    }
-    void RedoFdlsDika()
-    {
-        ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOff(fdlshand);
-        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要辅导老师协助");
-        Invoke("ClickFdlsDikaHandTip", 2);
-    }
-    /// <summary>
-    /// 辅导老师抓小华手递卡
-    /// </summary>
-    void FdlsDika()
-    {
-        HighLightCtrl.GetInstance().FlashOff(fdlshand);
-        ClickDispatcher.Inst.EnableClick = false;
-        FDLS.Complete += FdlsDikaCallBack;
-        FDLS.PlayForward("FDLS_A_1ST_ZD");
-        XH.PlayForward("XH_A_1ST_BZDK");
-    }
-    //辅导老师抓手递卡回调
-    void FdlsDikaCallBack()
     {
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);

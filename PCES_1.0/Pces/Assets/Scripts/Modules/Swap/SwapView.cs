@@ -25,14 +25,14 @@ public class SwapView : MonoBehaviour
         com.SetComUITitle("第一阶段 以物换物");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
-        spACtrl.transform.SetParent(transform);
-        spACtrl.evtFinished += OnSpACtrlFinished;
-        spACtrl.evtRedo += OnSpACtrlRedo;
-        //spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
-        //spBCtrl.transform.SetParent(transform);
-        //spBCtrl.evtFinished += OnSpBCtrlFinished;
-        //spBCtrl.evtRedo += OnSpBCtrlRedo;
+        //spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
+        //spACtrl.transform.SetParent(transform);
+        //spACtrl.evtFinished += OnSpACtrlFinished;
+        //spACtrl.evtRedo += OnSpACtrlRedo;
+        spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
+        spBCtrl.transform.SetParent(transform);
+        spBCtrl.evtFinished += OnSpBCtrlFinished;
+        spBCtrl.evtRedo += OnSpBCtrlRedo;
     }
 
     void OnSpACtrlFinished()
