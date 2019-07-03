@@ -55,6 +55,15 @@ public class ChooseDo : SingleTon<ChooseDo>
 
         }
     }
+    public void ResetAll()
+    {
+        StopCoroutine("LoopCalll");
+        time = 0;
+        bNextDo = false;
+        currTime = 0;
+        redo = null;
+        nextdo = null;
+    }
     /// <summary>
     /// 点击调用
     /// </summary>

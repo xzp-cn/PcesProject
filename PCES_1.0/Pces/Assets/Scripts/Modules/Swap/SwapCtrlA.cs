@@ -47,6 +47,7 @@ public class SwapCtrlA : MonoBehaviour
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         FDLS.PlayForward("idle");
+        HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
     /// <summary>
@@ -359,6 +360,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void Finish()
     {
+        ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
         RemoveAllListeners();
     }
@@ -384,6 +386,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     public void Dispose()
     {
+        RemoveAllListeners();
         Destroy(gameObject);
     }
     private void OnDestroy()
