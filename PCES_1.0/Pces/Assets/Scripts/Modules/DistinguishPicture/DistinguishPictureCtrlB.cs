@@ -10,6 +10,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
     public event System.Action evtFinished;
     public event System.Action evtRedo;
+    private CommonUI comUI;
+    PromptHelper prp;
 
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         teacherAnim.PlayForward("idle");
 
         //1. 进入界面后1秒，触发小华拿A卡递卡的动画。
+        prp = UIManager.Instance.GetUI<PromptHelper>("Prompt");
+        prp.SetText("1. 进入界面后1秒，触发小华拿A卡递卡的动画。");
         Invoke("OnXiaoHuaBringA", 1f);
     }
 
@@ -38,6 +42,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         {
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
             Debug.Log("DistinguishPictureCtrlB.OnXiaoHuaBringA(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
+            prp.SetText("2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
             HighLightCtrl.GetInstance().FlashOn(shou);
             shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。
@@ -87,12 +92,13 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             teacherAnim.Complete += () =>
             {
                 //3. 播放结束，提醒操作者点击话筒，显示“自己拿”。
+                prp.SetText("3. 播放结束，提醒操作者点击话筒，显示“自己拿”");
                 OnClickHuaTong();
             };
             teacherAnim.PlayForward("TY_LS_JK");
         }
 
-        
+
     }
 
     void OnClickHuaTong()
@@ -111,19 +117,24 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             dialog.SetDialogMessage(gift);
 
             //4. 播放结束，触发小华拿起B的动画。
-            OnXiaoHuaBringB();
+            prp.SetText("4. 播放结束，触发小华拿起B的动画。");
+            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+            AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+            xiaohuaAnim.Complete += () =>
+            {
+                OnXiaoHuaBringB();
+            };
+            xiaohuaAnim.PlayForward("TY_XH_NKDK");
         };
 
-        
+
     }
 
     void OnXiaoHuaBringB()
     {
-        
-
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
         HighLightCtrl.GetInstance().FlashOn(shou);
-
+        prp.SetText("5. 播放结束，提醒操作者点击教师的手，点击后触发教师拿走B动画。");
         //5. 播放结束，提醒操作者点击教师的手，点击后触发教师拿走B动画。
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
         ClickDispatcher.Inst.EnableClick = true;
@@ -142,7 +153,6 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void ClickTeachersPromptSecond()
     {
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-        Debug.Log("DistinguishPictureCtrlA.ClickTeachersPromptSecond(): 3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。");
         HighLightCtrl.GetInstance().FlashOn(shou);
 
         ClickDispatcher.Inst.EnableClick = true;
@@ -152,26 +162,86 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
     private void OnClickTeacherHandSecond(ClickedObj cobj)
     {
-        ChooseDo.Instance.Clicked();
-        CancelInvoke("ClickTeachersPromptSecond");
-        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
-        ClickDispatcher.Inst.EnableClick = false;
-        //6. 播放结束，提醒操作者点击教师的手，点击后触发教师指指B的动画。
+        if (cobj.objname == "shou")
+        {
+            ChooseDo.Instance.Clicked();
+            CancelInvoke("ClickTeachersPromptSecond");
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
+            ClickDispatcher.Inst.EnableClick = false;
 
-        //7. 播放结束，触发小华拿起B卡的动画。
-        OnXiaoHuaBringUpB();
+            GameObject teacherGo = PeopleManager.Instance.GetPeople("LS_BD");
+            AnimationOper teacherAnim = teacherGo.GetAnimatorOper();
+            teacherAnim.Complete += () => {
+                //6. 播放结束，提醒操作者点击教师的手，点击后触发教师指指B的动画。
+                OnClickTeacherShouThird();
+            };
+            teacherAnim.PlayForward("TY_LS_JK");
+
+
+        }
+    }
+
+    void OnClickTeacherShouThird()
+    {
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        HighLightCtrl.GetInstance().FlashOn(shou);
+        prp.SetText("6. 播放结束，提醒操作者点击教师的手，点击后触发教师指指B的动画。");
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandThird, null);
+    }
+
+    private void ClickTeachersPromptThird()
+    {
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        HighLightCtrl.GetInstance().FlashOn(shou);
+
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandThird, null);
+    }
+
+    private void RedoClickTeachersHandThird()
+    {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        CancelInvoke("ClickTeachersPromptThird");
+        Invoke("ClickTeachersPromptThird", 2);
+    }
+
+
+
+    void OnClickTeacherHandThird(ClickedObj cobj)
+    {
+        if (cobj.objname == "shou")
+        {
+            CancelInvoke("ClickTeachersPromptThird");
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
+            ClickDispatcher.Inst.EnableClick = false;
+
+            GameObject teacherGo = PeopleManager.Instance.GetPeople("LS_BD");
+            AnimationOper teacherAnim = teacherGo.GetAnimatorOper();
+            teacherAnim.Complete += () =>
+            {
+                prp.SetText("7. 播放结束，触发小华拿起B卡的动画。");
+                //7. 播放结束，触发小华拿起B卡的动画。
+                OnXiaoHuaBringUpB();
+            };
+            teacherAnim.PlayForward("LS_C_1ST_ZZ");
+
+
+        }
     }
 
     void OnXiaoHuaBringUpB()
     {
         //8. 播放结束，提醒操作者点击教师的手，点击后触发教师接卡的动画。
-        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
         ClickDispatcher.Inst.EnableClick = true;
     }
 
-    void OnClickTeacherHandThird(ClickedObj cobj)
+    void OnClickTeacherHandFourth(ClickedObj cobj)
     {
-        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
         ClickDispatcher.Inst.EnableClick = false;
 
         //9. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
@@ -181,6 +251,16 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         //11. 播放结束，触发小华接过XXX。
 
         //12. 播放结束，出现下一关和重做的按钮。
+        Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFinal(): 11. 播放结束，出现下一关和重做的按钮。");
+        comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        comUI.redoClickEvent += OnReDo;
+        comUI.nextClickEvent += OnNextDo;
+        comUI.ShowFinalUI();
+    }
+
+    private void OnNextDo()
+    {
+        Finished();
     }
 
     /// <summary>
@@ -192,6 +272,12 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         {
             evtFinished();
         }
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
+        comUI.redoClickEvent -= OnReDo;
+        comUI.nextClickEvent -= OnNextDo;
     }
 
     private void OnReDo()
