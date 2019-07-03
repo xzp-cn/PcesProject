@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SelectionUI : MonoBehaviour
 {
-    Button okBtn;
+    Button okBtn, closeBtn;
     Toggle[] toggles;
     Transform tip;
     int selectedObjIndex = -1;
     public event System.Action<int> okEvent;
+    public event System.Action closeEvent;
     Dictionary<string, Texture> spDic;
     private void Awake()
     {
@@ -24,11 +25,14 @@ public class SelectionUI : MonoBehaviour
         tip = transform.Find("panel/tip");
         tip.gameObject.SetActive(false);
         okBtn = transform.Find("panel/okBtn").GetComponent<Button>();
+        closeBtn = transform.Find("panel/closeBtn").GetComponent<Button>();
         toggles = transform.Find("panel/toggles").GetComponentsInChildren<Toggle>();
         if (spDic == null)
         {
             spDic = new Dictionary<string, Texture>();
-            RawImage[] rws = transform.GetComponentInChildren<ToggleGroup>().GetComponentsInChildren<RawImage>();
+            ToggleGroup tg = transform.GetComponentInChildren<ToggleGroup>();
+            tg.SetAllTogglesOff();
+            RawImage[] rws = tg.GetComponentsInChildren<RawImage>();
             for (int i = 0; i < 5; i++)
             {
                 //toggles[i].name = i.ToString();
@@ -47,6 +51,7 @@ public class SelectionUI : MonoBehaviour
             });
         }
         okBtn.onClick.AddListener(OnOkBtnClick);
+        closeBtn.onClick.AddListener(OnCloseBtnClick);
     }
     /// <summary>
     /// 3D物体显示
@@ -73,6 +78,14 @@ public class SelectionUI : MonoBehaviour
         {
             tip.gameObject.SetActive(true);
             Invoke("HideTipText", 0.5f);
+        }
+    }
+    void OnCloseBtnClick()
+    {
+        gameObject.SetActive(false);
+        if (closeEvent != null)
+        {
+            closeEvent();
         }
     }
     void OnValueChanged(bool isOn, int ObjIndex)

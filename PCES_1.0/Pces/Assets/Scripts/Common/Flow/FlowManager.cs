@@ -10,7 +10,6 @@ public class FlowManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
     private void Start()
     {
         GlobalEntity.GetInstance().AddListener<ModelTasks>(FlowModel.mEvent.FlowStepFinished, OnFlowStepFinished);
@@ -20,7 +19,6 @@ public class FlowManager : MonoBehaviour
         FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
         PreInitComm();
     }
-
     /// <summary>
     /// 预初始化
     /// </summary>

@@ -38,12 +38,50 @@ public class SwapCtrlA : MonoBehaviour
         {
             selectUI = UIManager.Instance.GetUI<SelectionUI>("selectionUI");
             selectUI.okEvent += SelectUIOkBtnCallback;
+            selectUI.closeEvent += CloseSelectUICallback;
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        Tip();
+        LS.PlayForward("idle");
+        XH.PlayForward("idle");
+        FDLS.PlayForward("idle");
+        GetTukaObject();
+    }
+    /// <summary>
+    /// 初始化桌子上的涂卡
+    /// </summary>
+    void GetTukaObject()
+    {
+        Reinforcement rfc = SwapModel.GetInstance().CurReinforcement;
+        //rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        if (rfc != null)
+        {
+            Debug.Log("GetTukaObject");
+            Transform objectsTr = new GameObject("objectsParent").transform;
+            objectsTr.localPosition = Vector3.zero;
+            objectsTr.localScale = Vector3.one;
+            objectsTr.rotation = Quaternion.identity;
+            objectsTr.SetParent(transform);
+            int objId = rfc.pData.id;
+            GameObject obj = Instantiate(SwapModel.GetInstance().GetObj(objId));
+            obj.name = ((PropsTag)objId).ToString();
+            obj.transform.SetParent(objectsTr);
+            PropsObject po = obj.GetComponent<PropsObject>();
+            po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
+            string _tuka = "tuka_" + ((PropsTag)objId).ToString();
+            GameObject deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(_tuka));
+            deskTuka.transform.SetParent(objectsTr);
+            deskTuka.name = _tuka;
+            PropsObject pot = deskTuka.GetComponent<PropsObject>();
+            pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
+            Invoke("SnatchXh", 1);
+        }
+        else
+        {
+            Tip();
+        }
     }
     /// <summary>
     /// 提示点击强化物按钮
@@ -68,30 +106,24 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>  
     void SelectUIOkBtnCallback(int selectObj)
     {
-        swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
-        Transform objectsTr = new GameObject("objectsParent").transform;
-        objectsTr.localPosition = Vector3.zero;
-        objectsTr.localScale = Vector3.one;
-        objectsTr.rotation = Quaternion.identity;
-        objectsTr.SetParent(transform);
-        //老师手上显示物品
-        lsObject = Instantiate(SwapModel.GetInstance().GetObj(selectObj));
-        lsObject.transform.SetParent(objectsTr);
-        PropsObject po = lsObject.GetComponent<PropsObject>();
-        po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整        
-        lsObject.name = ((PropsTag)selectObj).ToString();
-        //Debug.Log(SwapModel.GetInstance().GetObj(selectObj).GetComponent<PropsObject>().pData.name_cn);
-        //Debug.Log(po.pData.name_cn);
-        //小华桌子上面涂卡
-        string tuka = "tuka_" + ((PropsTag)selectObj).ToString();
-        GameObject deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(tuka));
-        deskTuka.transform.SetParent(objectsTr);
-        deskTuka.name = tuka;
-        po = deskTuka.GetComponent<PropsObject>();
-        po.setPos(new Vector3(2.18f, 0.57f, -0.001f));
         //设置当前选择的强化物     
         PropsData pData = SwapModel.GetInstance().GetObj(selectObj).GetComponent<PropsObject>().pData;
         SwapModel.GetInstance().CurReinforcement = new Reinforcement(pData);
+        ResetAll();
+    }
+    void ResetAll()
+    {
+        //CancelInvoke();
+        this.enabled = false;
+        ReDo();
+    }
+    void CloseSelectUICallback()
+    {
+        Debug.Log("close");
+        //ReDo();
+    }
+    void SnatchXh()
+    {
         //播放小华抢东西动画         
         XH.Complete += SnatchXhCallback;
         XH.PlayForward("TY_XH_QIANG");
@@ -116,11 +148,11 @@ public class SwapCtrlA : MonoBehaviour
     {
         //计时开始     
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
-        ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsDragHandTakeCard);
         ClickFdlsHandTip();
     }
     void ClickFdlsHandTip()
     {
+        ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsDragHandTakeCard);
         ClickDispatcher.Inst.EnableClick = true;
         if (fdlshand == null)
         {
@@ -143,7 +175,6 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void FdlsDragHandTakeCard()
     {
-        CancelInvoke("ClickFdlsHandTip");
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.PlayForward("FDLS_A_1ST_ZN");
@@ -155,7 +186,6 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void FdlsDragHandTakeCardCallback()
     {
-        ChooseDo.Instance.DoWhat(5, RedoFdlsDika, FdlsDika);//
         //FDLS.PlayForward("idle");
         ClickFdlsDikaHandTip();
     }
@@ -163,6 +193,7 @@ public class SwapCtrlA : MonoBehaviour
     #region 辅导老师抓手递卡
     void ClickFdlsDikaHandTip()
     {
+        ChooseDo.Instance.DoWhat(5, RedoFdlsDika, FdlsDika);//
         HighLightCtrl.GetInstance().FlashOn(fdlshand);
         ClickDispatcher.Inst.EnableClick = true;
     }
@@ -190,7 +221,6 @@ public class SwapCtrlA : MonoBehaviour
     {
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
-        ChooseDo.Instance.DoWhat(5, RedoLsJieka, LsJieka);
         ClickDispatcher.Inst.EnableClick = true;
         ClickLsHandTip();
     }
@@ -214,6 +244,7 @@ public class SwapCtrlA : MonoBehaviour
         }
         HighLightCtrl.GetInstance().FlashOn(jshand);
         ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoLsJieka, LsJieka);
     }
     void RedoLsJieka()
     {
@@ -221,6 +252,7 @@ public class SwapCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
+        CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }
     void LsJieka()
@@ -237,13 +269,13 @@ public class SwapCtrlA : MonoBehaviour
     {
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         ClickDispatcher.Inst.EnableClick = false;
-        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
         ClickmicroPhoneTip();
     }
     #endregion
     #region 点击话筒提示
     void ClickmicroPhoneTip()
     {
+        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
     void RedoLsSpeak()
@@ -252,6 +284,7 @@ public class SwapCtrlA : MonoBehaviour
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
+        CancelInvoke("ClickmicroPhoneTip");
         Invoke("ClickmicroPhoneTip", 2);
     }
     void SpeakBtnClickCallback()
@@ -268,6 +301,7 @@ public class SwapCtrlA : MonoBehaviour
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
         dlog.SetDialogMessage("小华要吃" + curObjName);
+        CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
     #endregion
@@ -276,11 +310,11 @@ public class SwapCtrlA : MonoBehaviour
     {
         Debug.Log("给物品");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
-        ChooseDo.Instance.DoWhat(5, RedoLsGiveObj, LsGiveObj);
         ClickLsGiveObjTip();
     }
     void ClickLsGiveObjTip()
     {
+        ChooseDo.Instance.DoWhat(5, RedoLsGiveObj, LsGiveObj);
         HighLightCtrl.GetInstance().FlashOn(jshand);
         ClickDispatcher.Inst.EnableClick = true;
     }
@@ -291,7 +325,6 @@ public class SwapCtrlA : MonoBehaviour
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
         ClickLsGiveObjTip();
-
     }
     void LsGiveObj()
     {
@@ -300,16 +333,18 @@ public class SwapCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
         LS.Complete += LsGiveObjCallback;
-        LS.PlayForward("TY_LS_JKDW");
-    }
-    void LsGiveObjCallback()
-    {
+        LS.PlayForward("TY_LS_DW");
         XH.Complete += XHJiewuCallback;
         XH.PlayForward("TY_XH_JG");
     }
-    void XHJiewuCallback()
+    void LsGiveObjCallback()
     {
         ShowFinalUI();
+
+    }
+    void XHJiewuCallback()
+    {
+        Debug.Log("xh给物品回调用");
     }
     #endregion
     /// <summary>
@@ -318,18 +353,24 @@ public class SwapCtrlA : MonoBehaviour
     void ShowFinalUI()
     {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        com.redoClickEvent += NextDo;
+        com.nextClickEvent += NextDo;
         com.redoClickEvent += ReDo;
         com.ShowFinalUI();
     }
+    void Finish()
+    {
+        UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        RemoveAllListeners();
+    }
     void ReDo()
     {
-        RemoveAllListeners();
+        Debug.Log("redo");
+        Finish();
         evtRedo();
     }
     void NextDo()
     {
-        RemoveAllListeners();
+        Finish();
         evtFinished();
     }
     void RemoveAllListeners()
@@ -343,9 +384,11 @@ public class SwapCtrlA : MonoBehaviour
     }
     public void Dispose()
     {
-        CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        com.HideFinalUI();
         Destroy(gameObject);
+    }
+    private void OnDestroy()
+    {
+
     }
 }
 

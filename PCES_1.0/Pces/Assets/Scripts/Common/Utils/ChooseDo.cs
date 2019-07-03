@@ -29,7 +29,6 @@ public class ChooseDo : SingleTon<ChooseDo>
     }
     IEnumerator LoopCall()
     {
-
         while (true)
         {
             yield return new WaitForEndOfFrame();
@@ -62,7 +61,6 @@ public class ChooseDo : SingleTon<ChooseDo>
     public void Clicked()
     {
         bNextDo = true;
-
     }
     void DelayCall()
     {
