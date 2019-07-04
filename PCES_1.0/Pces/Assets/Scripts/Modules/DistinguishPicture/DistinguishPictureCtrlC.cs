@@ -8,6 +8,8 @@ using UnityEngine;
 public class DistinguishPictureCtrlC : MonoBehaviour {
 
     public event System.Action evtFinished;
+    private PromptHelper prp;
+    private CommonUI comUI;
 
     private void Awake()
     {
@@ -16,7 +18,10 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
     void Start () {
         //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
-        OnXiaoHuaPassGouTongBenToTeacher();
+        prp = UIManager.Instance.GetUI<PromptHelper>("Prompt");
+        prp.SetText("1. 进入界面后1秒，触发小华拿A卡递卡的动画。");
+        Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
+
     }
 
     void OnXiaoHuaPassGouTongBenToTeacher()
@@ -32,6 +37,16 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
 
         //5. 播放结束，出现下一关和重做的按钮。
+        prp.SetText("5. 播放结束，出现下一关和重做的按钮。");
+        comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        comUI.redoClickEvent += OnReDo;
+        comUI.nextClickEvent += OnNextDo;
+        comUI.ShowFinalUI();
+    }
+
+    private void OnNextDo()
+    {
+        Finished();
     }
 
     /// <summary>
@@ -43,6 +58,26 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         {
             evtFinished();
         }
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
+        comUI.redoClickEvent -= OnReDo;
+        comUI.nextClickEvent -= OnNextDo;
+    }
+
+    private void OnReDo()
+    {
+        Redo();
+    }
+
+    void Redo()
+    {
+        if (evtRedo != null)
+        {
+            evtRedo();
+        }
+
     }
 
     public void Dispose()
