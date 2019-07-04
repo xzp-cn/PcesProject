@@ -26,12 +26,12 @@ public class TestPaperView : MonoBehaviour
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
         transform.Find("bg/title").GetComponent<Text>().text = paper.title;
         Transform subTr = transform.Find("subject");
-        for (int i = 0; i < subTr.childCount; i++)
+        for (int i = 0; i < paper.itemList.Count; i++)
         {
-            TestPaperItem tPaperItem = ResManager.GetPrefab("TestPaperItem").GetComponent<TestPaperItem>();
+            TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/TestPaper/TestPaperItem").GetComponent<TestPaperItem>();
             tPaperItem.name = i.ToString();
             tPaperItem.transform.SetParent(subTr);
-            tPaperItem.Init(paper.subList[i]);
+            tPaperItem.Init(paper.itemList[i]);
         }
     }
 

@@ -17,7 +17,7 @@ public class SwapCtrlC : MonoBehaviour
     AnimationOper FDLS;
     private void Awake()
     {
-        this.name = "SwapA";
+        this.name = "SwapC";
     }
     //public bool Finished;
     private void Start()

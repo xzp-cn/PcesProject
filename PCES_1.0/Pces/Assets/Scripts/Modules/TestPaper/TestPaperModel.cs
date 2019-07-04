@@ -24,8 +24,7 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
         TextAsset XMLFile = Resources.Load<TextAsset>(path);
         xmlDoc.LoadXml(XMLFile.text);
         XmlNodeList courseList = xmlDoc.SelectNodes(findstr);
-
-        //Debug.Log(title);
+        Debug.Log(courseList.Count);
         foreach (XmlNode course in courseList)
         {
             Paper paper = new Paper();
@@ -33,7 +32,7 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
             XmlElement bookElement = (XmlElement)itemRootNode;
             XmlAttribute attr = bookElement.GetAttributeNode("title");
             paper.title = attr.InnerText;//大标题
-            XmlNodeList itemList = course.SelectNodes("Item");
+            XmlNodeList itemList = course.SelectNodes("item");
             for (int i = 0; i < itemList.Count; i++)
             {
                 PaperItem sItem = new PaperItem();
@@ -41,7 +40,7 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
                 sItem.question = itemElement.GetAttributeNode("question").InnerXml;
                 sItem.options = itemElement.GetAttributeNode("options").InnerXml.Split('|');
                 sItem.answer = itemElement.GetAttributeNode("answer").InnerXml;
-                paper.subList.Add(sItem);
+                paper.itemList.Add(sItem);
             }
             paperList.Add(paper);
         }
@@ -60,7 +59,7 @@ public class PaperItem//单个题目
 public class Paper//阶段
 {
     public string title;
-    public List<PaperItem> subList = new List<PaperItem>();
+    public List<PaperItem> itemList = new List<PaperItem>();
     public Paper()
     {
 

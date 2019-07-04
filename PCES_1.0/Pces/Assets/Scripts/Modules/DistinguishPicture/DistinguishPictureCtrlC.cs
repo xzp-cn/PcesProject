@@ -5,9 +5,9 @@ using UnityEngine;
 /// <summary>
 /// 第三关 -- 区辨多张图片
 /// </summary>
-public class DistinguishPictureCtrlC : MonoBehaviour {
-
-    public event System.Action evtFinished;
+public class DistinguishPictureCtrlC : MonoBehaviour
+{
+    public event System.Action evtRedo, evtFinished;
     private PromptHelper prp;
     private CommonUI comUI;
 
@@ -16,7 +16,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
     }
 
-    void Start () {
+    void Start()
+    {
         //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
         prp = UIManager.Instance.GetUI<PromptHelper>("Prompt");
         prp.SetText("1. 进入界面后1秒，触发小华拿A卡递卡的动画。");
