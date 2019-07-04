@@ -7,14 +7,34 @@ public class TestPaperView : MonoBehaviour
     public event System.Action evtFinished, evtRedo;
     private CommonUI comUI;
     Button resetBtn, nextBtn;
+    private void Awake()
+    {
+        Init();
+    }
     private void Start()
     {
         comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        resetBtn = transform.Find("Final/reset").GetComponent<Button>();
+        resetBtn = transform.Find("final/reset").GetComponent<Button>();
         resetBtn.onClick.AddListener(OnReDo);
-        nextBtn = transform.Find("Final/next").GetComponent<Button>();
+        nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
     }
+    void Init()
+    {
+        int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        curIndex = 0;//测试
+        Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
+        transform.Find("bg/title").GetComponent<Text>().text = paper.title;
+        Transform subTr = transform.Find("subject");
+        for (int i = 0; i < subTr.childCount; i++)
+        {
+            TestPaperItem tPaperItem = ResManager.GetPrefab("TestPaperItem").GetComponent<TestPaperItem>();
+            tPaperItem.name = i.ToString();
+            tPaperItem.transform.SetParent(subTr);
+            tPaperItem.Init(paper.subList[i]);
+        }
+    }
+
     private void OnReDo()
     {
         Redo();
@@ -50,10 +70,6 @@ public class TestPaperView : MonoBehaviour
 
     public void Dispose()
     {
-        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
-        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
-        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
-        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         evtFinished = null;
