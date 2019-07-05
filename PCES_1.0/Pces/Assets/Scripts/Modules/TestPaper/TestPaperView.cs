@@ -34,7 +34,6 @@ public class TestPaperView : MonoBehaviour
             tPaperItem.Init(paper.itemList[i]);
         }
     }
-
     private void OnReDo()
     {
         Redo();

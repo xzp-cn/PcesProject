@@ -2,15 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnhanceCommunityModel : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class EnhanceCommunityModel : MonoBehaviour
+{
+    int idLevel = 1;
+    /// <summary>
+    ///通过名字得到道具/涂卡
+    /// </summary>
+    /// <param name="tukaName"></param>
+    /// <returns></returns>
+    public GameObject GetTuKa(string tukaName)
+    {
+        int index = (int)System.Enum.Parse(typeof(PropsTag), tukaName, true);
+        return ObjectsManager.instanse.propList[index].gameObject;
+    }
+    /// <summary>
+    /// 通过索引得到道具
+    /// </summary>
+    /// <param name="selectObj"></param>
+    /// <returns></returns>
+    public GameObject GetObj(int selectObj)
+    {
+        return ObjectsManager.instanse.GetProps(selectObj).gameObject;
+    }
+    /// <summary>
+    /// 当前选择的强化物
+    /// </summary>
+    Reinforcement rf;
+    public Reinforcement CurReinforcement
+    {
+        get
+        {
+            return rf;
+        }
+        set
+        {
+            rf = value;
+        }
+    }
 }

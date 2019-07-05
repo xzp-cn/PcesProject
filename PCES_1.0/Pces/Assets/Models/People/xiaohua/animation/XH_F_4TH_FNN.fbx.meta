@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2e0684bc86f4c1245bbea01c4cc50e01
+guid: b2fa0595e9ad961479dd4cb11ba1694e
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -163,7 +163,7 @@ ModelImporter:
     400154: Wrist_R
     400156: XH_BD1
     400158: //RootNode
-    7400000: XH_E_3RD_FNN
+    7400000: XH_F_4TH_FNN
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -192,35 +192,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: XH_E_3RD_FNN
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 595
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -265,7 +237,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2

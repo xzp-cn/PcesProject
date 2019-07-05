@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 114890055329056566}
   - component: {fileID: 114721682675254286}
   m_Layer: 5
-  m_Name: TestPaper
+  m_Name: TestPaperView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

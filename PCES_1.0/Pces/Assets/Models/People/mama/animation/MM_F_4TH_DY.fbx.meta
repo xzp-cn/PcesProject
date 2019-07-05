@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b62c5ed563dec8745bc73e81af05e862
+guid: 24fe6d68f40593f47905ba8b41dbda75
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -171,7 +171,7 @@ ModelImporter:
     400162: ToesEnd_R
     400164: Wrist_L
     400166: Wrist_R
-    7400000: MM_E_3RD_W
+    7400000: MM_F_4TH_DY
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -202,10 +202,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MM_E_3RD_W
+      name: MM_F_4TH_DY
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 60
+      firstFrame: 811
+      lastFrame: 890
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: df76b6095e5db3a409233a220f7ca8d3
+guid: a3f92b9c61f1c774cb5991c4bc3b4485
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -13,7 +13,7 @@ ModelImporter:
     100014: goutongben_03
     100016: goutongben_tiehuan
     100018: judai
-    100020: judai1
+    100020: judai4
     100022: Main
     100024: Root_M
     100026: Scapula_L
@@ -36,7 +36,6 @@ ModelImporter:
     100060: Wrist_L
     100062: Wrist_R
     100064: //RootNode
-    100066: Group1
     400000: Chest_M
     400002: DeformationSystem
     400004: Elbow_L
@@ -47,7 +46,7 @@ ModelImporter:
     400014: goutongben_03
     400016: goutongben_tiehuan
     400018: judai
-    400020: judai1
+    400020: judai4
     400022: Main
     400024: Root_M
     400026: Scapula_L
@@ -70,7 +69,6 @@ ModelImporter:
     400060: Wrist_L
     400062: Wrist_R
     400064: //RootNode
-    400066: Group1
     2100000: goutongben_RGB4
     2100002: goutongben_RGB0
     2100004: goutongben_RGB1
@@ -81,14 +79,12 @@ ModelImporter:
     2100014: goutongben_RGB3
     2100016: goutongben_RGB5
     2100018: goutongben_RGB2
-    2100020: tuka_RGB1
-    2100022: tuke_tex1
     2300000: goutongben_01
     2300002: goutongben_02
     2300004: goutongben_03
     2300006: goutongben_tiehuan
     2300008: judai
-    2300010: judai1
+    2300010: judai4
     2300012: tuka10
     2300014: tuka2
     2300016: tuka4
@@ -102,7 +98,7 @@ ModelImporter:
     3300004: goutongben_03
     3300006: goutongben_tiehuan
     3300008: judai
-    3300010: judai1
+    3300010: judai4
     3300012: tuka10
     3300014: tuka2
     3300016: tuka4
@@ -122,10 +118,10 @@ ModelImporter:
     4300016: tuka7
     4300018: tuka6
     4300020: tuka8
-    4300022: judai1
+    4300022: judai4
     4300024: tuka9
     4300026: tuka10
-    7400000: XH_E_3RD_FNN_KA
+    7400000: XH_F_4TH_FNN_KA
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -156,10 +152,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: XH_E_3RD_FNN_KA
-      takeName: Take 001
+      name: XH_F_4TH_FNN_KA
+      takeName: XH_F_4TH_FNN
       firstFrame: 1
-      lastFrame: 595
+      lastFrame: 650
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -227,7 +223,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2

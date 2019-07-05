@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b62c5ed563dec8745bc73e81af05e862
+guid: e214360c211b8b747ad4adc74ff21b08
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -29,64 +29,60 @@ ModelImporter:
     100046: IndexFinger4_R
     100048: Jaw_M
     100050: JawEnd_M
-    100052: joint1_L
-    100054: joint1_R
-    100056: joint2_L
-    100058: joint2_R
-    100060: Knee_L
-    100062: Knee_R
-    100064: Main
-    100066: mama
-    100068: MiddleFinger1_L
-    100070: MiddleFinger1_R
-    100072: MiddleFinger2_L
-    100074: MiddleFinger2_R
-    100076: MiddleFinger3_L
-    100078: MiddleFinger3_R
-    100080: MiddleFinger4_L
-    100082: MiddleFinger4_R
-    100084: //RootNode
-    100086: Neck_M
-    100088: PinkyFinger1_L
-    100090: PinkyFinger1_R
-    100092: PinkyFinger2_L
-    100094: PinkyFinger2_R
-    100096: PinkyFinger3_L
-    100098: PinkyFinger3_R
-    100100: PinkyFinger4_L
-    100102: PinkyFinger4_R
-    100104: RingFinger1_L
-    100106: RingFinger1_R
-    100108: RingFinger2_L
-    100110: RingFinger2_R
-    100112: RingFinger3_L
-    100114: RingFinger3_R
-    100116: RingFinger4_L
-    100118: RingFinger4_R
-    100120: Root_M
-    100122: Scapula_L
-    100124: Scapula_R
-    100126: Shoulder_L
-    100128: Shoulder_R
-    100130: ShoulderPart1_L
-    100132: ShoulderPart1_R
-    100134: ShoulderPart2_L
-    100136: ShoulderPart2_R
-    100138: Spine1_M
-    100140: ThumbFinger1_L
-    100142: ThumbFinger1_R
-    100144: ThumbFinger2_L
-    100146: ThumbFinger2_R
-    100148: ThumbFinger3_L
-    100150: ThumbFinger3_R
-    100152: ThumbFinger4_L
-    100154: ThumbFinger4_R
-    100156: Toes_L
-    100158: Toes_R
-    100160: ToesEnd_L
-    100162: ToesEnd_R
-    100164: Wrist_L
-    100166: Wrist_R
+    100052: Knee_L
+    100054: Knee_R
+    100056: Main
+    100058: MiddleFinger1_L
+    100060: MiddleFinger1_R
+    100062: MiddleFinger2_L
+    100064: MiddleFinger2_R
+    100066: MiddleFinger3_L
+    100068: MiddleFinger3_R
+    100070: MiddleFinger4_L
+    100072: MiddleFinger4_R
+    100074: Neck_M
+    100076: PinkyFinger1_L
+    100078: PinkyFinger1_R
+    100080: PinkyFinger2_L
+    100082: PinkyFinger2_R
+    100084: PinkyFinger3_L
+    100086: PinkyFinger3_R
+    100088: PinkyFinger4_L
+    100090: PinkyFinger4_R
+    100092: RingFinger1_L
+    100094: RingFinger1_R
+    100096: RingFinger2_L
+    100098: RingFinger2_R
+    100100: RingFinger3_L
+    100102: RingFinger3_R
+    100104: RingFinger4_L
+    100106: RingFinger4_R
+    100108: Root_M
+    100110: Scapula_L
+    100112: Scapula_R
+    100114: Shoulder_L
+    100116: Shoulder_R
+    100118: ShoulderPart1_L
+    100120: ShoulderPart1_R
+    100122: ShoulderPart2_L
+    100124: ShoulderPart2_R
+    100126: Spine1_M
+    100128: ThumbFinger1_L
+    100130: ThumbFinger1_R
+    100132: ThumbFinger2_L
+    100134: ThumbFinger2_R
+    100136: ThumbFinger3_L
+    100138: ThumbFinger3_R
+    100140: ThumbFinger4_L
+    100142: ThumbFinger4_R
+    100144: Toes_L
+    100146: Toes_R
+    100148: ToesEnd_L
+    100150: ToesEnd_R
+    100152: Wrist_L
+    100154: Wrist_R
+    100156: XH_BD1
+    100158: //RootNode
     400000: Ankle_L
     400002: Ankle_R
     400004: Chest_M
@@ -113,65 +109,61 @@ ModelImporter:
     400046: IndexFinger4_R
     400048: Jaw_M
     400050: JawEnd_M
-    400052: joint1_L
-    400054: joint1_R
-    400056: joint2_L
-    400058: joint2_R
-    400060: Knee_L
-    400062: Knee_R
-    400064: Main
-    400066: mama
-    400068: MiddleFinger1_L
-    400070: MiddleFinger1_R
-    400072: MiddleFinger2_L
-    400074: MiddleFinger2_R
-    400076: MiddleFinger3_L
-    400078: MiddleFinger3_R
-    400080: MiddleFinger4_L
-    400082: MiddleFinger4_R
-    400084: //RootNode
-    400086: Neck_M
-    400088: PinkyFinger1_L
-    400090: PinkyFinger1_R
-    400092: PinkyFinger2_L
-    400094: PinkyFinger2_R
-    400096: PinkyFinger3_L
-    400098: PinkyFinger3_R
-    400100: PinkyFinger4_L
-    400102: PinkyFinger4_R
-    400104: RingFinger1_L
-    400106: RingFinger1_R
-    400108: RingFinger2_L
-    400110: RingFinger2_R
-    400112: RingFinger3_L
-    400114: RingFinger3_R
-    400116: RingFinger4_L
-    400118: RingFinger4_R
-    400120: Root_M
-    400122: Scapula_L
-    400124: Scapula_R
-    400126: Shoulder_L
-    400128: Shoulder_R
-    400130: ShoulderPart1_L
-    400132: ShoulderPart1_R
-    400134: ShoulderPart2_L
-    400136: ShoulderPart2_R
-    400138: Spine1_M
-    400140: ThumbFinger1_L
-    400142: ThumbFinger1_R
-    400144: ThumbFinger2_L
-    400146: ThumbFinger2_R
-    400148: ThumbFinger3_L
-    400150: ThumbFinger3_R
-    400152: ThumbFinger4_L
-    400154: ThumbFinger4_R
-    400156: Toes_L
-    400158: Toes_R
-    400160: ToesEnd_L
-    400162: ToesEnd_R
-    400164: Wrist_L
-    400166: Wrist_R
-    7400000: MM_E_3RD_W
+    400052: Knee_L
+    400054: Knee_R
+    400056: Main
+    400058: MiddleFinger1_L
+    400060: MiddleFinger1_R
+    400062: MiddleFinger2_L
+    400064: MiddleFinger2_R
+    400066: MiddleFinger3_L
+    400068: MiddleFinger3_R
+    400070: MiddleFinger4_L
+    400072: MiddleFinger4_R
+    400074: Neck_M
+    400076: PinkyFinger1_L
+    400078: PinkyFinger1_R
+    400080: PinkyFinger2_L
+    400082: PinkyFinger2_R
+    400084: PinkyFinger3_L
+    400086: PinkyFinger3_R
+    400088: PinkyFinger4_L
+    400090: PinkyFinger4_R
+    400092: RingFinger1_L
+    400094: RingFinger1_R
+    400096: RingFinger2_L
+    400098: RingFinger2_R
+    400100: RingFinger3_L
+    400102: RingFinger3_R
+    400104: RingFinger4_L
+    400106: RingFinger4_R
+    400108: Root_M
+    400110: Scapula_L
+    400112: Scapula_R
+    400114: Shoulder_L
+    400116: Shoulder_R
+    400118: ShoulderPart1_L
+    400120: ShoulderPart1_R
+    400122: ShoulderPart2_L
+    400124: ShoulderPart2_R
+    400126: Spine1_M
+    400128: ThumbFinger1_L
+    400130: ThumbFinger1_R
+    400132: ThumbFinger2_L
+    400134: ThumbFinger2_R
+    400136: ThumbFinger3_L
+    400138: ThumbFinger3_R
+    400140: ThumbFinger4_L
+    400142: ThumbFinger4_R
+    400144: Toes_L
+    400146: Toes_R
+    400148: ToesEnd_L
+    400150: ToesEnd_R
+    400152: Wrist_L
+    400154: Wrist_R
+    400156: XH_BD1
+    400158: //RootNode
+    7400000: XH_F_4TH_JG
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -202,10 +194,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MM_E_3RD_W
+      name: XH_F_4TH_JG
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 60
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
