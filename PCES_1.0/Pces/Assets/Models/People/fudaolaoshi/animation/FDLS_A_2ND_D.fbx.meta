@@ -172,7 +172,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: Group3/Main
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -182,12 +182,11 @@ ModelImporter:
       be discarded.\n\t'Root_M' is inbetween humanoid transforms and has rotation
       animation that will be discarded.\n\t'Scapula_R' has translation animation that
       will be discarded.\n\t'Scapula_R' is inbetween humanoid transforms and has rotation
-      animation that will be discarded.\n\t'ShoulderPart2_R' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n"
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -199,7 +198,7 @@ ModelImporter:
     - serializedVersion: 16
       name: FDLS_A_2ND_D
       takeName: Take 001
-      firstFrame: 1
+      firstFrame: 0
       lastFrame: 69
       wrapMode: 0
       orientationOffsetY: 0
@@ -209,9 +208,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
@@ -224,7 +223,7 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

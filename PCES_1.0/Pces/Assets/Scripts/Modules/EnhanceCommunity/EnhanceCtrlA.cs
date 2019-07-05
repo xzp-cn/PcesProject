@@ -47,6 +47,7 @@ public class EnhanceCtrlA : MonoBehaviour
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         FDLS.PlayForward("idle");
+        //FDLS.PlayForward("FDLS_A_2ND_D");
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
@@ -55,7 +56,7 @@ public class EnhanceCtrlA : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        Reinforcement rfc = SwapModel.GetInstance().CurReinforcement;
+        Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
         rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
         if (rfc != null)
         {
@@ -66,17 +67,20 @@ public class EnhanceCtrlA : MonoBehaviour
             objectsTr.rotation = Quaternion.identity;
             objectsTr.SetParent(transform);
             int objId = rfc.pData.id;
-            GameObject obj = Instantiate(SwapModel.GetInstance().GetObj(objId));
+            GameObject obj = Instantiate(EnhanceCommunityModel.GetInstance().GetObj(objId));
             obj.name = ((PropsTag)objId).ToString();
             obj.transform.SetParent(objectsTr);
             PropsObject po = obj.GetComponent<PropsObject>();
             po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
-            GameObject deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(_tuka));
+            GameObject deskTuka = Instantiate(EnhanceCommunityModel.GetInstance().GetTuKa(_tuka));
             deskTuka.transform.SetParent(objectsTr);
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
             pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
+            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/goutongben");
+            gtb.name = "goutongben";
+            gtb.transform.SetParent(objectsTr);
             Invoke("SnatchXh", 1);
         }
         else
@@ -108,8 +112,8 @@ public class EnhanceCtrlA : MonoBehaviour
     void SelectUIOkBtnCallback(int selectObj)
     {
         //设置当前选择的强化物     
-        PropsData pData = SwapModel.GetInstance().GetObj(selectObj).GetComponent<PropsObject>().pData;
-        SwapModel.GetInstance().CurReinforcement = new Reinforcement(pData);
+        PropsData pData = EnhanceCommunityModel.GetInstance().GetObj(selectObj).GetComponent<PropsObject>().pData;
+        EnhanceCommunityModel.GetInstance().CurReinforcement = new Reinforcement(pData);
         ResetAll();
     }
     void ResetAll()
@@ -180,6 +184,8 @@ public class EnhanceCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsClickXhHandCalllback;
         FDLS.PlayForward("FDLS_A_2ND_D");
+        //FDLS.PlayForward("FDLS_B_1ST_FGTB");//TODO:教师动画播放时有位移
+        //XH.PlayForward("XH_B_1ST_FBNKDK");
     }
     /// <summary>
     /// 辅导老师点击小华手回调
@@ -281,7 +287,7 @@ public class EnhanceCtrlA : MonoBehaviour
     {
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
-        string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
+        string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
         dlog.SetDialogMessage("小华要吃" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);

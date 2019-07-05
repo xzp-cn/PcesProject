@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnhanceCommunityModel : MonoBehaviour
+public class EnhanceCommunityModel : SingleTemplate<EnhanceCommunityModel>
 {
     int idLevel = 1;
     /// <summary>

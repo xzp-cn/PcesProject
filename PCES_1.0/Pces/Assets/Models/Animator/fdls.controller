@@ -121,7 +121,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102775913515887962
+--- !u!1102 &1102687834919877192
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FDLS_B_1ST_FGTB
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 4b0be51c819e7fc47aa6be8cab679fcf, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102740747563981752
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -134,7 +159,7 @@ AnimatorState:
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
@@ -158,9 +183,6 @@ AnimatorStateMachine:
     m_State: {fileID: 1102377255781096642}
     m_Position: {x: 36, y: 180, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102775913515887962}
-    m_Position: {x: 300, y: 132, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1102401727078714008}
     m_Position: {x: -180, y: 180, z: 0}
   - serializedVersion: 1
@@ -169,6 +191,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102247425500708586}
     m_Position: {x: 36, y: 288, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102740747563981752}
+    m_Position: {x: 36, y: 348, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102687834919877192}
+    m_Position: {x: 264, y: 180, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

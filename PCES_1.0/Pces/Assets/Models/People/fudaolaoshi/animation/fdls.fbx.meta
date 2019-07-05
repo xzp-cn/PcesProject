@@ -177,18 +177,12 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'fdls' has import animation warnings that might
-      lower retargeting quality:\nNote: Activate translation DOF on avatar to improve
-      retargeting quality.\n\t'Root_M' has translation animation that will be discarded.\n\t'Root_M'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Scapula_R'
-      has translation animation that will be discarded.\n\t'Scapula_R' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'ShoulderPart2_R'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
