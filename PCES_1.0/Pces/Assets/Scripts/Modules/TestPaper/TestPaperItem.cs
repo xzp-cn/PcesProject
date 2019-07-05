@@ -10,6 +10,7 @@ public class TestPaperItem : MonoBehaviour
     private void Awake()
     {
         tg = GetComponent<ToggleGroup>();
+        tg.allowSwitchOff = true;
     }
     public void Init(PaperItem _pItem)
     {
@@ -30,13 +31,16 @@ public class TestPaperItem : MonoBehaviour
     {
         if (isOn)
         {
-            Text txt = transform.Find("question").GetComponent<Text>();
-            string str = txt.text + answer;
-            txt.text = str;
-            for (int i = 0; i < togs.Length; i++)
-            {
-                togs[i].interactable = false;
-            }
+            Text txt = transform.Find("answer").GetComponent<Text>();
+            txt.text = answer;
+        }
+    }
+    public void ResetAll()//重置数据
+    {
+        for (int i = 0; i < togs.Length; i++)
+        {
+            togs[i].transform.Find("answer").GetComponent<Text>().text = string.Empty;
+            togs[i].isOn = false;
         }
     }
 }

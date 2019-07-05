@@ -39,7 +39,6 @@ public class TestPaperView : MonoBehaviour
     {
         Redo();
     }
-
     private void OnNextDo()
     {
         Finished();

@@ -98,8 +98,6 @@ public class SwapView : MonoBehaviour
     }
     void Finish()
     {
-        //通知当前阶段完成
-        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.Swap);
     }
     void OnTestPaperRedo()
     {
@@ -110,6 +108,14 @@ public class SwapView : MonoBehaviour
         tpv.transform.SetParent(transform);
         tpv.evtFinished += Finish;
         tpv.evtRedo += OnTestPaperRedo;
+    }
+    void OnTestPaperFinished()
+    {
+        tpv.evtFinished -= Finish;
+        tpv.evtRedo -= OnTestPaperRedo;
+        tpv.Dispose();
+        //通知当前阶段完成
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.Swap);
     }
     void RemoveListens()
     {
