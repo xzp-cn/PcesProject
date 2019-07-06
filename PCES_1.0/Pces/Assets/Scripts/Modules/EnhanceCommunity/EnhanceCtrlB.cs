@@ -18,6 +18,7 @@ public class EnhanceCtrlB : MonoBehaviour
     private void Awake()
     {
         this.name = "SwapB";
+        Camera.main.transform.parent.localPosition = new Vector3(3.84f, 1.071f, 0.05f);
     }
     //public bool Finished;
     private void Start()
@@ -42,6 +43,7 @@ public class EnhanceCtrlB : MonoBehaviour
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
+        LS.transform.localPosition = new Vector3(1.3f, 0, 0);
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");

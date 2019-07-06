@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224318744632192102}
   - component: {fileID: 222844847666132120}
   - component: {fileID: 114364497675113382}
-  - component: {fileID: 65586280794550852}
   m_Layer: 5
   m_Name: Final
   m_TagString: Untagged
@@ -232,18 +231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &65586280794550852
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1098404994607500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1920, y: 1080, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114016547766883194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -442,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.59607846}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

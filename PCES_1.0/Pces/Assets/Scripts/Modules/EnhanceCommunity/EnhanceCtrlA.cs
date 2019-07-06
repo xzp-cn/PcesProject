@@ -15,6 +15,7 @@ public class EnhanceCtrlA : MonoBehaviour
     AnimationOper LS;
     AnimationOper XH;
     AnimationOper FDLS;
+    AnimationOper GTB;//沟通本
     private void Awake()
     {
         this.name = "EnhanceCtrlA";
@@ -58,6 +59,7 @@ public class EnhanceCtrlA : MonoBehaviour
     {
         Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
         rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
@@ -78,9 +80,14 @@ public class EnhanceCtrlA : MonoBehaviour
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
             pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/goutongben");
+            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/TY_GTB");
             gtb.name = "goutongben";
             gtb.transform.SetParent(objectsTr);
+            GTB = gtb.GetComponent<AnimationOper>();
+            if (GTB == null)
+            {
+                GTB = gtb.AddComponent<AnimationOper>();
+            }
             Invoke("SnatchXh", 1);
         }
         else
@@ -176,32 +183,22 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     //点中辅导老师手后的回调
     /// <summary>
-    ///辅导老师点击小华手
+    ///辅导教师抓住小华的手翻开沟通本
     /// </summary>
     void FdlsClickXhHand()
     {
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
-        FDLS.Complete += FdlsClickXhHandCalllback;
-        FDLS.PlayForward("FDLS_A_2ND_D");
-        //FDLS.PlayForward("FDLS_B_1ST_FGTB");//TODO:教师动画播放时有位移
-        //XH.PlayForward("XH_B_1ST_FBNKDK");
+        //FDLS.Complete += FdlsClickXhHandCalllback;
+        //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
+        FDLS.PlayForward("FDLS_B_1ST_FGTB");
+        XH.PlayForward("XH_B_1ST_FBNKDK");
+        GTB.PlayForward("onePaper");
+        XH.Complete += XhTakeCardCallback;
     }
     /// <summary>
     /// 辅导老师点击小华手回调
-    /// </summary>
-    void FdlsClickXhHandCalllback()
-    {
-        //FDLS.PlayForward("idle");
-        XhTakeCard();
-    }
-    #endregion
-    #region 小华拿卡并给卡
-    void XhTakeCard()
-    {
-        XH.Complete += XhTakeCardCallback;
-        XH.PlayForward("TY_XH_NKDK");
-    }
+    /// </summary>  
     /// <summary>
     /// 小华拿卡递卡回调
     /// </summary>
@@ -343,6 +340,7 @@ public class EnhanceCtrlA : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.nextClickEvent += NextDo;
         com.redoClickEvent += ReDo;
+        UIManager.Instance.SetUIDepthTop("CommonUI");
         com.ShowFinalUI();
     }
     void Finish()
