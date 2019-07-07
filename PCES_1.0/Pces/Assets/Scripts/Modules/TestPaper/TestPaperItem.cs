@@ -16,6 +16,7 @@ public class TestPaperItem : MonoBehaviour
     {
         pItem = _pItem;
         transform.Find("question").GetComponent<Text>().text = pItem.question;
+        transform.Find("question/answer").GetComponent<Text>().text = string.Empty;
         togs = transform.GetComponentsInChildren<Toggle>();
         for (int j = 0; j < togs.Length; j++)
         {
@@ -31,16 +32,21 @@ public class TestPaperItem : MonoBehaviour
     {
         if (isOn)
         {
-            Text txt = transform.Find("answer").GetComponent<Text>();
+            Text txt = transform.Find("question/answer").GetComponent<Text>();
             txt.text = answer;
+            for (int i = 0; i < togs.Length; i++)
+            {
+                togs[i].interactable = false;
+            }
         }
     }
     public void ResetAll()//重置数据
     {
         for (int i = 0; i < togs.Length; i++)
         {
-            togs[i].transform.Find("answer").GetComponent<Text>().text = string.Empty;
+            transform.Find("question/answer").GetComponent<Text>().text = string.Empty;
             togs[i].isOn = false;
+            togs[i].interactable = true;
         }
     }
 }

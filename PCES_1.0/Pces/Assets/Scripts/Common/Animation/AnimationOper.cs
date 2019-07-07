@@ -36,7 +36,7 @@ public class AnimationOper : MonoBehaviour
     public event System.Action Complete;
     float timeLength;
     float currLength;
-
+    public float transitionTime = 0.2f;//过渡时间
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
@@ -46,7 +46,7 @@ public class AnimationOper : MonoBehaviour
         if (anim)
         {
             animName = clipName;
-            anim.CrossFade(clipName, 0.2f, 0, 0);
+            anim.CrossFade(clipName, transitionTime, 0, 0);
             //anim.Play(clipName, 0, 0);
             timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
             IsStart = true;

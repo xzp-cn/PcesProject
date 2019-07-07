@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnhanceCtrlC : MonoBehaviour
 {
+
     public event System.Action evtFinished;
     public event System.Action evtRedo;
     SwapUI swapUI;
@@ -17,7 +18,8 @@ public class EnhanceCtrlC : MonoBehaviour
     AnimationOper FDLS;
     private void Awake()
     {
-        this.name = "SwapB";
+        this.name = "EnhanceCtrlC";
+        //Camera.main.transform.parent.localPosition = new Vector3(3.84f, 1.071f, 0.05f);
     }
     //public bool Finished;
     private void Start()
@@ -42,11 +44,14 @@ public class EnhanceCtrlC : MonoBehaviour
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
+        //LS.transform.localPosition = new Vector3(1.3f, 0, 0);
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
+        FDLS.gameObject.SetActive(false);
         LS.PlayForward("idle");
         XH.PlayForward("idle");
-        FDLS.PlayForward("idle");
+        //XH.gameObject.SetActive(false);
+        //FDLS.PlayForward("idle");
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
@@ -55,8 +60,9 @@ public class EnhanceCtrlC : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        Reinforcement rfc = SwapModel.GetInstance().CurReinforcement;
-        //rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
+        rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
@@ -77,7 +83,7 @@ public class EnhanceCtrlC : MonoBehaviour
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
             pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-            Invoke("SnatchXh", 1);
+            Invoke("XhTakeCard", 1);
         }
         else
         {
@@ -123,85 +129,20 @@ public class EnhanceCtrlC : MonoBehaviour
         Debug.Log("close");
         //ReDo();
     }
-    void SnatchXh()
-    {
-        //播放小华抢东西动画         
-        XH.Complete += SnatchXhCallback;
-        XH.PlayForward("TY_XH_QIANG");
-    }
-    /// <summary>
-    /// 辅导老师手被点击
-    /// </summary>
-    /// <param name="cobj"></param>
-    void ClickFdlsCallBack(ClickedObj cobj)
-    {
-        Debug.Log("点中 " + cobj.objname);
-        if (cobj.objname == "fdls_shou")
-        {
-            ChooseDo.Instance.Clicked();
-        }
-    }
-    #region 小华抢东西回调
-    /// <summary>
-    /// 小华抢东西动画回调
-    /// </summary>
-    void SnatchXhCallback()
-    {
-        //计时开始     
-        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
-        ClickFdlsHandTip();
-    }
-    void ClickFdlsHandTip()
-    {
-        ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsClickXhHand);
-        ClickDispatcher.Inst.EnableClick = true;
-        if (fdlshand == null)
-        {
-            fdlshand = FDLS.transform.Find("FDLS/fdls_shou").gameObject;
-        }
-        HighLightCtrl.GetInstance().FlashOn(fdlshand);
-    }
-    void RedoClickFdlsHand()
-    {
-        ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOff(fdlshand);
-        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要辅导老师协助");
-        CancelInvoke("ClickFdlsHandTip");
-        Invoke("ClickFdlsHandTip", 2);
-    }
-    //点中辅导老师手后的回调
-    /// <summary>
-    ///辅导老师点击小华手
-    /// </summary>
-    void FdlsClickXhHand()
-    {
-        HighLightCtrl.GetInstance().FlashOff(fdlshand);
-        ClickDispatcher.Inst.EnableClick = false;
-        FDLS.Complete += FdlsClickXhHandCalllback;
-        FDLS.PlayForward("FDLS_A_2ND_D");
-    }
-    /// <summary>
-    /// 辅导老师点击小华手回调
-    /// </summary>
-    void FdlsClickXhHandCalllback()
-    {
-        //FDLS.PlayForward("idle");
-        XhTakeCard();
-    }
-    #endregion
-    #region 小华拿卡并给卡
+    #region 小华走动拿卡并给卡
     void XhTakeCard()
     {
+        XH.gameObject.SetActive(true);
         XH.Complete += XhTakeCardCallback;
-        XH.PlayForward("TY_XH_NKDK");
+        XH.PlayForward("XH_B_3RD_ZFNZD");
+        XH.gameObject.SetActive(true);
     }
     /// <summary>
     /// 小华拿卡递卡回调
     /// </summary>
     void XhTakeCardCallback()
     {
-        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
+        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         ClickDispatcher.Inst.EnableClick = true;
         ClickLsHandTip();
@@ -281,7 +222,7 @@ public class EnhanceCtrlC : MonoBehaviour
     {
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
-        string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
+        string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
         dlog.SetDialogMessage("小华要吃" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
@@ -310,6 +251,9 @@ public class EnhanceCtrlC : MonoBehaviour
     }
     void LsGiveObj()
     {
+        //XH.PlayForward("empty");    
+        //XH.transitionTime = 0f;
+        //XH.transform.localPosition = new Vector3(1.4f, 0, 0);
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -318,6 +262,8 @@ public class EnhanceCtrlC : MonoBehaviour
         LS.PlayForward("TY_LS_DW");
         XH.Complete += XHJiewuCallback;
         XH.PlayForward("TY_XH_JG");
+
+
     }
     void LsGiveObjCallback()
     {
@@ -337,6 +283,7 @@ public class EnhanceCtrlC : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.nextClickEvent += NextDo;
         com.redoClickEvent += ReDo;
+        UIManager.Instance.SetUIDepthTop("CommonUI");
         com.ShowFinalUI();
     }
     void Finish()

@@ -26,10 +26,18 @@ public class EnhanceCommunityView : MonoBehaviour
         //ecACtrl.transform.SetParent(transform);
         //ecACtrl.evtFinished += OnecACtrlFinished;
         //ecACtrl.evtRedo += OnecACtrlRedo;
-        ecBCtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceB").GetComponent<EnhanceCtrlB>();
-        ecBCtrl.transform.SetParent(transform);
-        ecBCtrl.evtFinished += OnecBCtrlFinished;
-        ecBCtrl.evtRedo += OnecBCtrlRedo;
+        //ecBCtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceB").GetComponent<EnhanceCtrlB>();
+        //ecBCtrl.transform.SetParent(transform);
+        //ecBCtrl.evtFinished += OnecBCtrlFinished;
+        //ecBCtrl.evtRedo += OnecBCtrlRedo;
+        //ecCCtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceC").GetComponent<EnhanceCtrlC>();
+        //ecCCtrl.transform.SetParent(transform);
+        //ecCCtrl.evtFinished += OnecCCtrlFinished;
+        //ecCCtrl.evtRedo += OnecCCtrlRedo;
+        tpv = ResManager.GetPrefab("Prefabs/TestPaper/TestPaperView").GetComponent<TestPaperView>();
+        tpv.transform.SetParent(transform);
+        tpv.evtFinished += OnTestPaperFinished;
+        tpv.evtRedo += OnTestPaperRedo;
     }
     void OnecACtrlFinished()
     {
@@ -78,7 +86,7 @@ public class EnhanceCommunityView : MonoBehaviour
         ecCCtrl.Dispose();
         tpv = ResManager.GetPrefab("Prefabs/TestPaperView/TestPaperView").GetComponent<TestPaperView>();
         tpv.transform.SetParent(transform);
-        tpv.evtFinished += Finish;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
     private void OnecCCtrlRedo()
@@ -91,26 +99,23 @@ public class EnhanceCommunityView : MonoBehaviour
         ecCCtrl.evtFinished += OnecCCtrlFinished;
         ecCCtrl.evtRedo += OnecCCtrlRedo;
     }
-    void Finish()
-    {
-    }
     void OnTestPaperRedo()
     {
-        tpv.evtFinished -= Finish;
+        tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        tpv = ResManager.GetPrefab("Prefabs/TestPaperView/TestPaperView").GetComponent<TestPaperView>();
+        tpv = ResManager.GetPrefab("Prefabs/TestPaper/TestPaperView").GetComponent<TestPaperView>();
         tpv.transform.SetParent(transform);
-        tpv.evtFinished += Finish;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
     void OnTestPaperFinished()
     {
-        tpv.evtFinished -= Finish;
+        tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
         //通知当前阶段完成
-        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.Swap);
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.EnhanceCommunity);
     }
     void RemoveListens()
     {

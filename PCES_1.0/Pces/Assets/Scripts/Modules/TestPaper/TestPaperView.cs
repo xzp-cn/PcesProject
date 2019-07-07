@@ -18,11 +18,12 @@ public class TestPaperView : MonoBehaviour
         resetBtn.onClick.AddListener(OnReDo);
         nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
+        transform.SetParent(UIManager.Instance.transform, false);
     }
     void Init()
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
-        curIndex = 0;//测试
+        curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
         transform.Find("bg/title").GetComponent<Text>().text = paper.title;
         Transform subTr = transform.Find("subject");
@@ -36,11 +37,21 @@ public class TestPaperView : MonoBehaviour
     }
     private void OnReDo()
     {
+        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].ResetAll();
+        }
         Redo();
     }
     private void OnNextDo()
     {
         Finished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
+
     }
 
     /// <summary>
@@ -48,10 +59,6 @@ public class TestPaperView : MonoBehaviour
     /// </summary>
     void Finished()
     {
-        if (evtFinished != null)
-        {
-            evtFinished();
-        }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
     }
@@ -62,8 +69,6 @@ public class TestPaperView : MonoBehaviour
         {
             evtRedo();
         }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
     }
 
     public void Dispose()
