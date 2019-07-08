@@ -294,7 +294,6 @@ GameObject:
   - component: {fileID: 114992954401462242}
   - component: {fileID: 114304525260943152}
   - component: {fileID: 114502098155099154}
-  - component: {fileID: 114529407254402046}
   m_Layer: 5
   m_Name: TestPaperItem
   m_TagString: Untagged
@@ -650,29 +649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb69265455bd0a4faef52be8698f7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114529407254402046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1938619807829290}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 30
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 100, y: 50}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 1
-  m_ConstraintCount: 1
 --- !u!114 &114564115296840604
 MonoBehaviour:
   m_ObjectHideFlags: 1

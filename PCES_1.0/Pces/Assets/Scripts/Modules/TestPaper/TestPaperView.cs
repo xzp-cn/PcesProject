@@ -26,7 +26,7 @@ public class TestPaperView : MonoBehaviour
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
-        transform.Find("bg/title").GetComponent<Text>().text = paper.title;
+        transform.Find("bg/Image/title").GetComponent<Text>().text = paper.title;
         Transform content = transform.Find("subject/Viewport/Content");
         for (int i = 0; i < paper.itemList.Count; i++)
         {
