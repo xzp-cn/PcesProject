@@ -13,8 +13,8 @@ public class SentenceExpressionView : MonoBehaviour
     //private void Awake()
     //{
     //    ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
-    //    UnityEngine.Debug.Log("EnhanceCommunityView::Awake(): 第二阶段 增强自发性沟通");
-    //    this.name = "EnhanceCommunityView";
+    //    UnityEngine.Debug.Log("SentenceExpressionView::Awake(): 第六阶段 增强自发性沟通");
+    //    this.name = "SentenceExpressionView";
 
     //}
     //private void Start()
