@@ -18,7 +18,8 @@ public class TestPaperView : MonoBehaviour
         resetBtn.onClick.AddListener(OnReDo);
         nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
-        UIManager.Instance.SetUIDepthTop("TestPaperView");
+        Canvas canvas = FindObjectOfType<Canvas>();
+        transform.SetParent(canvas.transform, false);
     }
     public void Init()
     {
@@ -26,12 +27,12 @@ public class TestPaperView : MonoBehaviour
         curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
         transform.Find("bg/title").GetComponent<Text>().text = paper.title;
-        Transform subTr = transform.Find("subject");
+        Transform content = transform.Find("subject/Viewport/Content");
         for (int i = 0; i < paper.itemList.Count; i++)
         {
             TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/UI/TestPaperItem").GetComponent<TestPaperItem>();
             tPaperItem.name = i.ToString();
-            tPaperItem.transform.SetParent(subTr);
+            tPaperItem.transform.SetParent(content);
             tPaperItem.Init(paper.itemList[i]);
         }
     }

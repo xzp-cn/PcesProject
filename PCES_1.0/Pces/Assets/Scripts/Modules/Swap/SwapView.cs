@@ -79,7 +79,7 @@ public class SwapView : MonoBehaviour
         spCCtrl.evtFinished -= OnSpCCtrlFinished;
         spCCtrl.evtRedo -= OnSpCCtrlRedo;
         spCCtrl.Dispose();
-        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperRedo;
         tpv.evtRedo += OnTestPaperRedo;
     }
@@ -97,7 +97,8 @@ public class SwapView : MonoBehaviour
     {
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
-        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.Dispose();
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>(); ;
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
