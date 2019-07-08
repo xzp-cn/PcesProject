@@ -67,7 +67,7 @@ public class ObjectsManager : MonoBehaviour
     /// </summary>
     public void InitTuka()
     {
-        string[] ignores = { "tuka_hua", "tuka_shumu", "tuka_xiaogou" };    //忽略
+        string[] ignores = { "tuka_hua", "tuka_shumu", "tuka_xiaogou", "tuka_orangeJuice" };    //忽略
         Texture[] tukaTexs = Resources.LoadAll<Texture>("Images/tuka");
 
         for (int i = 0, j = propList.Count; i < tukaTexs.Length; i++)

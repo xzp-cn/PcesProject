@@ -16,6 +16,12 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private GameObject RndNegReinforcementB;
     private GameObject tukaA;
     private GameObject tukaB;
+    //小华身上的图卡
+    private GameObject XH_tkA;
+    private GameObject XH_tkB;
+    private GameObject XH_tkC;
+    private GameObject XH_judaiA;
+    private GameObject XH_judaiB;
 
     private void Awake()
     {
@@ -38,19 +44,58 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     /// </summary>
     void InitGoodsState()
     {
+        //随机一个强化物A
         GameObject goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
         RndReinforcementA = GameObject.Instantiate(goodA);
-        RndReinforcementA.transform.SetParent(emptyRoot.transform, false);
+        GameObject qhwA = new GameObject("ReinforcementA");
+        qhwA.transform.SetParent(emptyRoot.transform, false);
+        RndReinforcementA.transform.SetParent(qhwA.transform, false);
+        RndReinforcementA.transform.localPosition = Vector3.zero;
+        qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
+        //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
         tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
-        tukaA.transform.SetParent(emptyRoot.transform, false);
+        GameObject _tukaA = new GameObject("tukaA");
+        _tukaA.transform.SetParent(emptyRoot.transform, false);
+        _tukaA.transform.localPosition = new Vector3(2.297f, 0.5466f, -0.231f);
+        tukaA.transform.SetParent(_tukaA.transform, false);
+        tukaA.transform.localPosition = Vector3.zero;
 
+
+        //随机一个负强化物B
         GameObject goodB = DistinguishPictureModel.GetInstance().GetRndNegReinforcement();
         RndNegReinforcementB = GameObject.Instantiate(goodB);
-        RndNegReinforcementB.transform.SetParent(emptyRoot.transform, false);
+        GameObject qhwB = new GameObject("NegReinforcementB");
+        qhwB.transform.SetParent(emptyRoot.transform, false);
+        float offY = 0;
+        if (goodB.name == "apple")
+        {
+            offY = 0.04f;
+        }
+        qhwB.transform.localPosition = new Vector3(2.5328f,0.5698f + offY, 0.0913f);
+        RndNegReinforcementB.transform.SetParent(qhwB.transform, false);
+        RndNegReinforcementB.transform.localPosition = Vector3.zero;
+
+        //负强化物图卡B
         string tukaNameB = "tuka_" + goodB.name;
         tukaB = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB);
-        tukaB.transform.SetParent(emptyRoot.transform, false);
+        GameObject _tukaB = new GameObject("tukaB");
+        _tukaB.transform.SetParent(emptyRoot.transform, false);
+
+        _tukaB.transform.localPosition = new Vector3(2.297f, 0.5466f, 0f);
+        tukaB.transform.SetParent(_tukaB.transform, false);
+        tukaB.transform.localPosition = Vector3.zero;
+
+        XH_tkA = GameObject.Find("tuka");
+        XH_tkA.SetActive(false);
+        XH_tkB = GameObject.Find("tuka2");
+        XH_tkB.SetActive(false);
+        XH_tkC = GameObject.Find("tuka3");
+        XH_tkC.SetActive(false);
+        XH_judaiA = GameObject.Find("XH_judai");
+        XH_judaiA.SetActive(false);
+        XH_judaiB = GameObject.Find("XH_judai_2");
+        XH_judaiB.SetActive(false);
     }
 
     /// <summary>
@@ -72,7 +117,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("TY_XH_NKDK");
+        xiaohuaAnim.PlayForward("XH_C_2ND_NA");
     }
 
     private void ClickTeachersPromptFirst()
@@ -80,7 +125,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
         Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
         HighLightCtrl.GetInstance().FlashOn(shou);
-        
+
         ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
     }
