@@ -20,7 +20,7 @@ public class TestPaperView : MonoBehaviour
         nextBtn.onClick.AddListener(OnNextDo);
         UIManager.Instance.SetUIDepthTop("TestPaperView");
     }
-    private void Init()
+    public void Init()
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         curIndex = 1;//测试

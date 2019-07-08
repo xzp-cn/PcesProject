@@ -98,7 +98,7 @@ public class SwapView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
-        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
     void OnTestPaperFinished()
