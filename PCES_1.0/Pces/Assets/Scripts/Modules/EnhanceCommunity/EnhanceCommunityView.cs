@@ -34,10 +34,10 @@ public class EnhanceCommunityView : MonoBehaviour
         //ecCCtrl.transform.SetParent(transform);
         //ecCCtrl.evtFinished += OnecCCtrlFinished;
         //ecCCtrl.evtRedo += OnecCCtrlRedo;
-        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
-        tpv.transform.SetParent(transform);
-        tpv.evtFinished += OnTestPaperFinished;
-        tpv.evtRedo += OnTestPaperRedo;
+        //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
+        //tpv.transform.SetParent(transform);
+        //tpv.evtFinished += OnTestPaperFinished;
+        //tpv.evtRedo += OnTestPaperRedo;
     }
     void OnecACtrlFinished()
     {
