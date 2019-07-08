@@ -91,8 +91,15 @@ public class DistinguishPictureView : MonoBehaviour {
     {
         dpcCtrl.evtFinished -= OnDpcCtrlFinished;
         dpcCtrl.Dispose();
+
+        OnDistinguishPictureFinished();
     }
 
+    void OnDistinguishPictureFinished()
+    {
+        //第三阶段完成
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.DistinguishPicture);
+    }
 
 
     public void Dispose()
