@@ -29,7 +29,7 @@ public class TestPaperView : MonoBehaviour
         Transform subTr = transform.Find("subject");
         for (int i = 0; i < paper.itemList.Count; i++)
         {
-            TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/TestPaper/TestPaperItem").GetComponent<TestPaperItem>();
+            TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/UI/TestPaperItem").GetComponent<TestPaperItem>();
             tPaperItem.name = i.ToString();
             tPaperItem.transform.SetParent(subTr);
             tPaperItem.Init(paper.itemList[i]);
@@ -37,7 +37,7 @@ public class TestPaperView : MonoBehaviour
     }
     private void OnReDo()
     {
-        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();
+        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();//数据清除
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].ResetAll();
