@@ -79,9 +79,8 @@ public class SwapView : MonoBehaviour
         spCCtrl.evtFinished -= OnSpCCtrlFinished;
         spCCtrl.evtRedo -= OnSpCCtrlRedo;
         spCCtrl.Dispose();
-        tpv = ResManager.GetPrefab("Prefabs/TestPaperView/TestPaperView").GetComponent<TestPaperView>();
-        tpv.transform.SetParent(transform);
-        tpv.evtFinished += Finish;
+        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.evtFinished += OnTestPaperRedo;
         tpv.evtRedo += OnTestPaperRedo;
     }
     private void OnSpCCtrlRedo()
@@ -94,22 +93,17 @@ public class SwapView : MonoBehaviour
         spCCtrl.evtFinished += OnSpCCtrlFinished;
         spCCtrl.evtRedo += OnSpCCtrlRedo;
     }
-    void Finish()
-    {
-    }
     void OnTestPaperRedo()
     {
-        tpv.evtFinished -= Finish;
+        tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
-        tpv.Dispose();
-        tpv = ResManager.GetPrefab("Prefabs/TestPaperView/TestPaperView").GetComponent<TestPaperView>();
-        tpv.transform.SetParent(transform);
-        tpv.evtFinished += Finish;
+        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.evtFinished += OnTestPaperRedo;
         tpv.evtRedo += OnTestPaperRedo;
     }
     void OnTestPaperFinished()
     {
-        tpv.evtFinished -= Finish;
+        tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
         //通知当前阶段完成
