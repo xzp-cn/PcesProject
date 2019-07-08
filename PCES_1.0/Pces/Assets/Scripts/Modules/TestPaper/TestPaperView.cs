@@ -18,8 +18,9 @@ public class TestPaperView : MonoBehaviour
         resetBtn.onClick.AddListener(OnReDo);
         nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
+        UIManager.Instance.SetUIDepthTop("TestPaperView");
     }
-    public void Init()
+    private void Init()
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         curIndex = 1;//测试
