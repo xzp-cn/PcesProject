@@ -82,7 +82,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         GameObject _tukaB = new GameObject("tukaB");
         _tukaB.transform.SetParent(emptyRoot.transform, false);
 
-        _tukaB.transform.localPosition = new Vector3(2.297f, 0.5466f, 0f);
+        _tukaB.transform.localPosition = new Vector3(2.2656f, 0.5466f, 0.0018f);
         tukaB.transform.SetParent(_tukaB.transform, false);
         tukaB.transform.localPosition = Vector3.zero;
 
@@ -117,7 +117,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("XH_C_2ND_NA");
+        xiaohuaAnim.PlayForward("TY_XH_NK");
     }
 
     private void ClickTeachersPromptFirst()
