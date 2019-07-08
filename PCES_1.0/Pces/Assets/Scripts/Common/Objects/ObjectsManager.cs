@@ -7,6 +7,8 @@ public class ObjectsManager : MonoBehaviour
 {
     public static ObjectsManager instanse;
     public List<PropsObject> propList = new List<PropsObject>();
+    const int TotalNum = 11;    //道具总数
+
     private void Awake()
     {
         instanse = this;
@@ -27,14 +29,14 @@ public class ObjectsManager : MonoBehaviour
     }
     public void Init()
     {
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < TotalNum; i++)
         {
             PropsType ptype;
-            if (i < 6)
+            if (i < 5)
             {
                 ptype = PropsType.reinforcement;
             }
-            else if (i >= 6 && i < 9)
+            else if (i >= 5 && i < 8)
             {
                 ptype = PropsType.neutralStimulator;
             }
@@ -213,108 +215,108 @@ public enum PropsTag : int
     /// <summary>
     /// 橙汁
     /// </summary>
-    [Description("橙汁")]
-    orangeJuice = 3,
+    //[Description("橙汁")]
+    //orangeJuice = 3,
     /// <summary>
     /// 小汽车
     /// </summary>
     [Description("小汽车")]
-    car = 4,
+    car = 3,
     /// <summary>
     /// 香蕉
     /// </summary>
     [Description("香蕉")]
-    banana = 5,
+    banana = 4,
     /// <summary>
     /// 苹果
     /// </summary>
     [Description("苹果")]
-    apple = 6,
+    apple = 5,
     /// <summary>
     /// 雪饼
     /// </summary>
     [Description("雪饼")]
-    snowBiscuit = 7,
+    snowBiscuit = 6,
     /// <summary>
     /// 牛奶
     /// </summary>
     [Description("牛奶")]
-    milk = 8,
+    milk = 7,
     /// <summary>
     /// 帽子
     /// </summary>
     [Description("帽子")]
-    hat = 9,
+    hat = 8,
     /// <summary>
     /// 积木
     /// </summary>
     [Description("积木")]
-    juggle = 10,
+    juggle = 9,
     /// <summary>
     ///故事书
     /// </summary>
     [Description("故事书")]
-    storyBooks = 11,
+    storyBooks = 10,
     /// <summary>
     /// 图卡巧克力
     /// </summary>
     [Description("图卡巧克力")]
-    tuka_chocolate = 12,
+    tuka_chocolate = 11,
     /// <summary>
     /// 图卡饼干
     /// </summary
     [Description("图卡饼干")]
-    tuka_biscuit = 13,
+    tuka_biscuit = 12,
     /// <summary>
     /// 图卡薯片
     /// </summary>
     [Description("图卡薯片")]
-    tuka_chips = 14,
-    /// <summary>
-    /// 图卡橙汁
-    /// </summary>
-    [Description("图卡橙汁")]
-    tuka_orangeJuice = 15,
+    tuka_chips = 13,
+    ///// <summary>
+    ///// 图卡橙汁
+    ///// </summary>
+    //[Description("图卡橙汁")]
+    //tuka_orangeJuice = 15,
     /// <summary>
     /// 图卡小汽车
     /// </summary>
-    [Description("图卡橙汁")]
-    tuka_car = 16,
+    [Description("图卡小汽车")]
+    tuka_car = 14,
     /// <summary>
     /// 图卡香蕉
     /// </summary>
     [Description("图卡香蕉")]
-    tuka_banana = 17,
+    tuka_banana = 15,
     /// <summary>
     /// 图卡苹果
     /// </summary>
     [Description("图卡苹果")]
-    tuka_apple = 18,
+    tuka_apple = 16,
     /// <summary>
     /// 图卡雪饼
     /// </summary>
     [Description("图卡雪饼")]
-    tuka_snowBiscuit = 19,
+    tuka_snowBiscuit = 17,
     /// <summary>
     /// 图卡牛奶
     /// </summary>
     [Description("图卡牛奶")]
-    tuka_milk = 20,
+    tuka_milk = 18,
     /// <summary>
     /// 图卡帽子
     /// </summary>
     [Description("图卡帽子")]
-    tuka_hat = 21,
+    tuka_hat = 19,
     /// <summary>
     /// 图卡积木
     /// </summary>
     [Description("图卡积木")]
-    tuka_juggle = 22,
+    tuka_juggle = 20,
     /// <summary>
     /// 图卡故事书
     /// </summary>
     [Description("图卡故事书")]
-    tuka_storyBooks = 23,
+    tuka_storyBooks = 21,
     ///// <summary>
     ///// 沟通本
     ///// </summary>

@@ -11,6 +11,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     public event System.Action evtRedo;
     private PromptHelper prp;
     private CommonUI comUI;
+    private TestPaperView tpv;
 
     private void Awake()
     {
@@ -130,7 +131,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             //5. 播放结束，出现下一关和重做的按钮。
-            prp.SetText("5. 播放结束，出现测试题界面。");
+            prp.SetText("5. 播放结束，出现下一关和重做的按钮。");
+
+
             comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
             comUI.redoClickEvent += OnReDo;
             comUI.nextClickEvent += OnNextDo;
