@@ -116,6 +116,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+            tukaB.SetActive(false); //隐藏桌面上图卡
+            XH_tkB.SetActive(true); //显示小华手上图卡
         };
         xiaohuaAnim.PlayForward("TY_XH_NK");
     }
@@ -126,7 +128,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
         HighLightCtrl.GetInstance().FlashOn(shou);
 
-        ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
     }
 
@@ -147,13 +148,19 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
         if (cobj.objname == "shou")
         {
+            
             ChooseDo.Instance.Clicked();
             CancelInvoke("ClickTeachersPromptFirst");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
-            //播放接图卡动画
+            //播放小华递卡动画
+            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+            AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+            xiaohuaAnim.PlayForward("TY_XH_DK");
+
+            //播放老师接图卡动画
             AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             teacherAnim.Complete += () =>
             {

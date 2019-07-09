@@ -271,7 +271,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TY_XH_DK
       takeName: Take 001
-      firstFrame: 333
+      firstFrame: 341
       lastFrame: 390
       wrapMode: 0
       orientationOffsetY: 0
