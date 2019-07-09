@@ -15,6 +15,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private GameObject RndReinforcementA;
     private GameObject RndNegReinforcementB;
     private GameObject tukaA;
+    private GameObject _tukaA;
     private GameObject tukaB;
     //小华身上的图卡
     private GameObject XH_tkA;
@@ -57,7 +58,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
         tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
-        GameObject _tukaA = new GameObject("tukaA");
+        _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
         _tukaA.transform.localPosition = new Vector3(2.297f, 0.5466f, -0.231f);
         tukaA.transform.SetParent(_tukaA.transform, false);
@@ -271,6 +272,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
                 xiaohuaAnim.Complete += () =>
                 {
+                    _tukaA.transform.localPosition = new Vector3(2.2656f, 0.5466f, 0.0018f);
                     OnXiaoHuaPushB();
                 };
                 xiaohuaAnim.PlayForward("XH_C_1ST_JJ");
@@ -302,10 +304,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private void ClickTeachersPromptThird()
     {
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-        Debug.Log("DistinguishPictureCtrlA.ClickTeachersPromptThird(): 5. 播放结束，提醒操作者点击教师的手，点击后触发教师指A卡的动画。");
         HighLightCtrl.GetInstance().FlashOn(shou);
 
-        ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandThird, null);
     }
 
@@ -396,8 +396,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     swapui.speakEvent = null;
                     swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
                     Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-                    string gift = "";
-                    dialog.SetDialogMessage("小华要吃" + gift);
+                    string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
+                    dialog.SetDialogMessage("小华要吃" + gift + "呀。");
 
                     //9. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                     Invoke("ClickTeachersHandFinal", 2f);
