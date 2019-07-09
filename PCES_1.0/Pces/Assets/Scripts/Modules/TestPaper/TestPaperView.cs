@@ -18,26 +18,27 @@ public class TestPaperView : MonoBehaviour
         resetBtn.onClick.AddListener(OnReDo);
         nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
-        transform.SetParent(UIManager.Instance.transform, false);
+        Canvas canvas = FindObjectOfType<Canvas>();
+        transform.SetParent(canvas.transform, false);
     }
-    void Init()
+    public void Init()
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
-        transform.Find("bg/title").GetComponent<Text>().text = paper.title;
-        Transform subTr = transform.Find("subject");
+        transform.Find("bg/Image/title").GetComponent<Text>().text = paper.title;
+        Transform content = transform.Find("subject/Viewport/Content");
         for (int i = 0; i < paper.itemList.Count; i++)
         {
-            TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/TestPaper/TestPaperItem").GetComponent<TestPaperItem>();
+            TestPaperItem tPaperItem = ResManager.GetPrefab("Prefabs/UI/TestPaperItem").GetComponent<TestPaperItem>();
             tPaperItem.name = i.ToString();
-            tPaperItem.transform.SetParent(subTr);
+            tPaperItem.transform.SetParent(content);
             tPaperItem.Init(paper.itemList[i]);
         }
     }
     private void OnReDo()
     {
-        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();
+        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();//数据清除
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].ResetAll();

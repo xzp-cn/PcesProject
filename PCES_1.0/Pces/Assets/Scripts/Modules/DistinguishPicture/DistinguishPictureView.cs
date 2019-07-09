@@ -14,6 +14,8 @@ public class DistinguishPictureView : MonoBehaviour {
     Animation xiaohuaAnim;
     Animation laoshiAnim;
 
+    TestPaperView tpv;
+
     private void Awake()
     {
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
@@ -91,8 +93,35 @@ public class DistinguishPictureView : MonoBehaviour {
     {
         dpcCtrl.evtFinished -= OnDpcCtrlFinished;
         dpcCtrl.Dispose();
+
+        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtRedo += OnTestPaperRedo;
     }
 
+
+    void OnTestPaperRedo()
+    {
+        tpv.evtFinished -= OnTestPaperFinished;
+        tpv.evtRedo -= OnTestPaperRedo;
+        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.evtFinished += OnTestPaperFinished;
+        tpv.evtRedo += OnTestPaperRedo;
+    }
+    void OnTestPaperFinished()
+    {
+        tpv.evtFinished -= OnTestPaperFinished;
+        tpv.evtRedo -= OnTestPaperRedo;
+        tpv.Dispose();
+        //通知当前阶段完成
+        OnDistinguishPictureFinished();
+    }
+
+    void OnDistinguishPictureFinished()
+    {
+        //第三阶段完成
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.DistinguishPicture);
+    }
 
 
     public void Dispose()

@@ -9,16 +9,14 @@ public class SceneManager : SingleTon<SceneManager>
     /// 每个场景是单独的预制体
     /// </summary>
     public static Dictionary<string, GameObject> sceneDic;
-    public void ChangeScene(string curScene, string nextScene)
+    public GameObject ChangeScene(string scene)
     {
-        if (sceneDic.ContainsKey(curScene))
+        if (!sceneDic.ContainsKey(scene))
         {
-            //ToDo:0.切换方式，1.每个场景处理切换的处理
+            GameObject go = Instantiate(ResManager.GetPrefab("Scenes/" + scene));
+            sceneDic.Add(scene, go);
         }
-        else
-        {
-            //ResManager.GetPrefab();
-        }
+        return sceneDic[scene];
     }
 
 }

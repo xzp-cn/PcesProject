@@ -19,7 +19,7 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndReinforcement()
     {
-        int rnd = Random.Range(0,6);
+        int rnd = Random.Range(0,4);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
 
@@ -29,7 +29,7 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndNeutralStimulator()
     {
-        int rnd = Random.Range(6, 9);
+        int rnd = Random.Range(7, 11);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
 
@@ -39,7 +39,7 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndNegReinforcement()
     {
-        int rnd = Random.Range(9, 12);
+        int rnd = Random.Range(4, 7);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
 
@@ -50,7 +50,6 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetTuKa(string tukaName)
     {
-        int index = (int)System.Enum.Parse(typeof(PropsTag), tukaName, true);
-        return ObjectsManager.instanse.propList[index].gameObject;
+        return ObjectsManager.instanse.propList.Find(tuka => { return tuka.name == tukaName; }).gameObject;
     }
 }
