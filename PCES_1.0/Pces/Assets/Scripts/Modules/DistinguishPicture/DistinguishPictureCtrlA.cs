@@ -48,6 +48,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //随机一个强化物A
         GameObject goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
         RndReinforcementA = GameObject.Instantiate(goodA);
+        RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
         GameObject qhwA = new GameObject("ReinforcementA");
         qhwA.transform.SetParent(emptyRoot.transform, false);
         RndReinforcementA.transform.SetParent(qhwA.transform, false);
@@ -66,6 +67,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //随机一个负强化物B
         GameObject goodB = DistinguishPictureModel.GetInstance().GetRndNegReinforcement();
         RndNegReinforcementB = GameObject.Instantiate(goodB);
+        RndNegReinforcementB.GetComponent<PropsObject>().pData = goodB.GetComponent<PropsObject>().pData;
         GameObject qhwB = new GameObject("NegReinforcementB");
         qhwB.transform.SetParent(emptyRoot.transform, false);
         float offY = 0;
@@ -195,7 +197,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptSecond");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手,递给小华");
+        PropsObject pb = RndNegReinforcementB.GetComponentInChildren<PropsObject>();
+        string cn_name = pb.pData.name_cn;
+        tip.SetTipMessage("请点击老师的手,递给小华"+cn_name);
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
