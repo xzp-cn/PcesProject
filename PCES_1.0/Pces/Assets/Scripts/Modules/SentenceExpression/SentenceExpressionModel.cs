@@ -21,6 +21,7 @@ public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
     /// <returns></returns>
     public GameObject GetObj(int selectObj)
     {
+        Debug.Log(selectObj);
         return ObjectsManager.instanse.GetProps(selectObj).gameObject;
     }
     /// <summary>

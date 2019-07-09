@@ -72,9 +72,6 @@ public class PeopleManager : SingleTon<PeopleManager>
         }
         return go;
     }
-
-
-
     private void OnDestroy()
     {
 

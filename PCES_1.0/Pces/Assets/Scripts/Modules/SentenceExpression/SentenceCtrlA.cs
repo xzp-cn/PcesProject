@@ -30,18 +30,11 @@ public class SentenceCtrlA : MonoBehaviour
         if (swapUI == null)
         {
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
-            swapUI.chooseEvent += ChooseBtnClickCallback;
+            //swapUI.chooseEvent += ChooseBtnClickCallback;
             swapUI.speakEvent += SpeakBtnClickCallback;
-            swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-            swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, true);
+            swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+            swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
-        if (selectUI == null)
-        {
-            selectUI = UIManager.Instance.GetUI<SelectionUI>("selectionUI");
-            selectUI.okEvent += SelectUIOkBtnCallback;
-            selectUI.closeEvent += CloseSelectUICallback;
-        }
-        UIManager.Instance.SetUIDepthTop("selectionUI");
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
@@ -57,88 +50,48 @@ public class SentenceCtrlA : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);
+        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.neutralStimulator);//中性刺激物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
-        EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
-        if (rfc != null)
+        SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
+        Debug.Log("GetTukaObject");
+        Transform objectsTr = new GameObject("objectsParent").transform;
+        objectsTr.localPosition = Vector3.zero;
+        objectsTr.localScale = Vector3.one;
+        objectsTr.rotation = Quaternion.identity;
+        objectsTr.SetParent(transform);
+        int objId = rfc.pData.id;
+        GameObject obj = Instantiate(pObj.gameObject);
+        obj.name = ((PropsTag)objId).ToString();
+        obj.transform.SetParent(objectsTr);
+        PropsObject curObj = obj.GetComponent<PropsObject>();
+        curObj.pData = pObj.pData;
+        curObj.setPos(new Vector3(2.55f, 0.57f, -0.27f));//TODO:每个物体的位置缩放,角度,有待调整  
+        curObj.transform.localScale = Vector3.one * 0.5f;
+        Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
+        GameObject gtb = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.TY_GTB.ToString()));
+        gtb.name = PropsTag.TY_GTB.ToString();
+        gtb.transform.SetParent(objectsTr);
+        gtb.name = "goutongben";
+        gtb.transform.SetParent(objectsTr);
+        GTB = gtb.GetComponent<AnimationOper>();
+        if (GTB == null)
         {
-            Debug.Log("GetTukaObject");
-            Transform objectsTr = new GameObject("objectsParent").transform;
-            objectsTr.localPosition = Vector3.zero;
-            objectsTr.localScale = Vector3.one;
-            objectsTr.rotation = Quaternion.identity;
-            objectsTr.SetParent(transform);
-            int objId = rfc.pData.id;
-            GameObject obj = Instantiate(EnhanceCommunityModel.GetInstance().GetObj(objId));
-            obj.name = ((PropsTag)objId).ToString();
-            obj.transform.SetParent(objectsTr);
-            PropsObject po = obj.GetComponent<PropsObject>();
-            po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
-            string _tuka = "tuka_" + ((PropsTag)objId).ToString();
-            GameObject deskTuka = Instantiate(EnhanceCommunityModel.GetInstance().GetTuKa(_tuka));
-            deskTuka.transform.SetParent(objectsTr);
-            deskTuka.name = _tuka;
-            PropsObject pot = deskTuka.GetComponent<PropsObject>();
-            pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/TY_GTB");
-            gtb.name = "goutongben";
-            gtb.transform.SetParent(objectsTr);
-            GTB = gtb.GetComponent<AnimationOper>();
-            if (GTB == null)
-            {
-                GTB = gtb.AddComponent<AnimationOper>();
-            }
-            Invoke("SnatchXh", 1);
+            GTB = gtb.AddComponent<AnimationOper>();
         }
-        else
-        {
-            Tip();
-        }
-    }
-    /// <summary>
-    /// 提示点击强化物按钮
-    /// </summary>    
-    void Tip()
-    {
-        UIFlah chooeFlash = swapUI.GetChooseBtn.gameObject.GetUIFlash();
-        chooeFlash.StartFlash();
-    }
-    /// <summary>
-    /// 选择强化物按钮点击回调
-    /// </summary>
-    void ChooseBtnClickCallback()
-    {
-        UIFlah uf = swapUI.GetChooseBtn.gameObject.GetUIFlash();
-        uf.StopFlash();
-        selectUI.gameObject.SetActive(true);
-        //对当前场景做一些处理
-    }
-    /// <summary>
-    /// 选择强化物界面ok按钮回调用
-    /// </summary>  
-    void SelectUIOkBtnCallback(int selectObj)
-    {
-        //设置当前选择的强化物     
-        PropsData pData = EnhanceCommunityModel.GetInstance().GetObj(selectObj).GetComponent<PropsObject>().pData;
-        EnhanceCommunityModel.GetInstance().CurReinforcement = new Reinforcement(pData);
-        ResetAll();
-    }
-    void ResetAll()
-    {
-        //CancelInvoke();
-        this.enabled = false;
-        ReDo();
-    }
-    void CloseSelectUICallback()
-    {
-        Debug.Log("close");
-        //ReDo();
-    }
-    void SnatchXh()
-    {
-        //播放小华抢东西动画         
-        XH.Complete += SnatchXhCallback;
-        XH.PlayForward("TY_XH_QIANG");
+        string _tuka = "tuka_" + ((PropsTag)objId).ToString();
+        GameObject deskTuka = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(_tuka));
+        deskTuka.transform.SetParent(objectsTr);
+        deskTuka.name = _tuka;
+        PropsObject pot = deskTuka.GetComponent<PropsObject>();
+        pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
+        GameObject judai = Instantiate(SentenceExpressionModel.GetInstance().GetObj((int)PropsTag.judai));
+        judai.transform.SetParent(objectsTr);
+        judai.name = PropsTag.judai.ToString();
+        pot = judai.GetComponent<PropsObject>();
+        pot.setPos(new Vector3(2.4f, 0.6f, -0.234f));
+        LS.Complete += ClickmicroPhoneTip;
+        LS.PlayForward("LS_E_1ST_ZB");
+        //Debug.Log("ls");
     }
     /// <summary>
     /// 辅导老师手被点击
@@ -154,14 +107,86 @@ public class SentenceCtrlA : MonoBehaviour
     }
     #region 小华抢东西回调
     /// <summary>
-    /// 小华抢东西动画回调
+    /// 点击话筒
     /// </summary>
-    void SnatchXhCallback()
+    /// <param name="cobj"></param>
+    /// 
+    void ClickmicroPhoneTip()
     {
-        //计时开始     
+        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+    }
+    void RedoLsSpeak()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        CancelInvoke("ClickmicroPhoneTip");
+        Invoke("ClickmicroPhoneTip", 2);
+    }
+    void SpeakBtnClickCallback()
+    {
+        Debug.Log("按钮点击");
+        UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
+        uf.StopFlash();
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+        ChooseDo.Instance.Clicked();
+    }
+    void ShowSpeakContent()
+    {
+        Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        UIManager.Instance.SetUIDepthTop("Dialog");
+        dlog.SetDialogMessage("小华看见什么");
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        ClickDispatcher.Inst.EnableClick = true;
+        ClickLsHandTip();
+    }
+    void ClickLsCallBack(ClickedObj cobj)
+    {
+        Debug.Log("点中 " + cobj.objname);
+        if (cobj.objname == "shou")
+        {
+            ChooseDo.Instance.Clicked();
+        }
+    }
+    void ClickLsHandTip()
+    {
+        if (jshand == null)
+        {
+            jshand = LS.transform.Find("LSB_BD/shou").gameObject;
+        }
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoLsPointJudai, LsPointJudai);
+    }
+    void RedoLsPointJudai()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师指句带");
+        CancelInvoke("ClickLsHandTip");
+        Invoke("ClickLsHandTip", 2);
+    }
+    void LsPointJudai()
+    {
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+        ClickDispatcher.Inst.EnableClick = false;
+        LS.Complete += LsPointJudaiCallback;
+        LS.PlayForward("LS_E_1ST_ZBZK");
+    }
+    /// <summary>
+    /// 教师接收图卡回调
+    /// </summary>
+    void LsPointJudaiCallback()
+    {
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
+        ClickDispatcher.Inst.EnableClick = true;
         ClickFdlsHandTip();
     }
+    #endregion
     void ClickFdlsHandTip()
     {
         ChooseDo.Instance.DoWhat(5, RedoClickFdlsHand, FdlsClickXhHand);
@@ -192,13 +217,11 @@ public class SentenceCtrlA : MonoBehaviour
         //FDLS.Complete += FdlsClickXhHandCalllback;
         //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
         FDLS.PlayForward("FDLS_B_1ST_FGTB");
-        XH.PlayForward("XH_B_1ST_FBNKDK");
+        XH.PlayForward("XH_D_1ST_FBNKT");
+        XH.PlayForward("XH_D_1ST_FBNKTK_KA");
         GTB.PlayForward("onePaper");
         XH.Complete += XhTakeCardCallback;
     }
-    /// <summary>
-    /// 辅导老师点击小华手回调
-    /// </summary>  
     /// <summary>
     /// 小华拿卡递卡回调
     /// </summary>
@@ -207,21 +230,9 @@ public class SentenceCtrlA : MonoBehaviour
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         ClickDispatcher.Inst.EnableClick = true;
-        ClickLsHandTip();
+        ClickLsHandJiekaTip();
     }
-    /// <summary>
-    /// 教师点中
-    /// </summary>
-    /// <param name="cobj"></param>
-    void ClickLsCallBack(ClickedObj cobj)
-    {
-        Debug.Log("点中 " + cobj.objname);
-        if (cobj.objname == "shou")
-        {
-            ChooseDo.Instance.Clicked();
-        }
-    }
-    void ClickLsHandTip()
+    void ClickLsHandJiekaTip()
     {
         if (jshand == null)
         {
@@ -254,16 +265,15 @@ public class SentenceCtrlA : MonoBehaviour
     {
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         ClickDispatcher.Inst.EnableClick = false;
-        ClickmicroPhoneTip();
+        ClickmicroPhoneJiekaTip();
     }
-    #endregion
-    #region 点击话筒提示
-    void ClickmicroPhoneTip()
+    void ClickmicroPhoneJiekaTip()
     {
-        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
+        ChooseDo.Instance.DoWhat(5, RedoLsJiekaSpeak, ShowSpeakJiekaContent);
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
-    void RedoLsSpeak()
+    void RedoLsJiekaSpeak()
     {
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
@@ -272,29 +282,19 @@ public class SentenceCtrlA : MonoBehaviour
         CancelInvoke("ClickmicroPhoneTip");
         Invoke("ClickmicroPhoneTip", 2);
     }
-    void SpeakBtnClickCallback()
-    {
-        Debug.Log("按钮点击");
-        UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
-        uf.StopFlash();
-        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-        ChooseDo.Instance.Clicked();
-    }
-    void ShowSpeakContent()
+    void ShowSpeakJiekaContent()
     {
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("小华要吃" + curObjName);
+        dlog.SetDialogMessage("是的，你看见了" + curObjName + "，你表现得很好!");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
-    #endregion
     #region 老师给物品
     void LsGiveInit()
     {
         Debug.Log("给物品");
-        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         ClickLsGiveObjTip();
     }
     void ClickLsGiveObjTip()
@@ -325,7 +325,6 @@ public class SentenceCtrlA : MonoBehaviour
     void LsGiveObjCallback()
     {
         ShowFinalUI();
-
     }
     void XHJiewuCallback()
     {
@@ -349,12 +348,6 @@ public class SentenceCtrlA : MonoBehaviour
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
         RemoveAllListeners();
     }
-    void ReDo()
-    {
-        Debug.Log("redo");
-        Finish();
-        evtRedo();
-    }
     void NextDo()
     {
         Finish();
@@ -365,9 +358,13 @@ public class SentenceCtrlA : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-        swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
-        selectUI.okEvent -= SelectUIOkBtnCallback;
+    }
+    void ReDo()
+    {
+        Debug.Log("redo");
+        Finish();
+        evtRedo();
     }
     public void Dispose()
     {

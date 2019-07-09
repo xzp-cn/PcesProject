@@ -111,7 +111,7 @@ public class ObjectsManager : MonoBehaviour
     void InitOthers()
     {
         int startIndex = 22, endIndex = 23;
-        for (int i = startIndex; i < endIndex; i++)
+        for (int i = startIndex; i <= endIndex; i++)
         {
             PropsTag tag = (PropsTag)i;
             string path = "Prefabs/Objects/" + tag.ToString();
