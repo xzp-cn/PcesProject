@@ -22,6 +22,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private GameObject XH_tkC;
     private GameObject XH_judaiA;
     private GameObject XH_judaiB;
+    public Material tukaMat;    //手上图卡材质
 
     private void Awake()
     {
@@ -105,7 +106,13 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-
+        if (tukaMat != null)
+        {
+            //替换手上图卡材质
+            Material[] tukaBs = tukaB.GetComponentInChildren<MeshRenderer>().materials;
+            tukaMat.CopyPropertiesFromMaterial(tukaBs[1]);
+            XH_tkB.GetComponentInChildren<MeshRenderer>().materials[1] = tukaMat;
+        }
 
         xiaohuaAnim.Complete += () =>
         {
@@ -116,8 +123,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
-            tukaB.SetActive(false); //隐藏桌面上图卡
+            tukaB.SetActive(false);
             XH_tkB.SetActive(true); //显示小华手上图卡
+           
         };
         xiaohuaAnim.PlayForward("TY_XH_NK");
     }
