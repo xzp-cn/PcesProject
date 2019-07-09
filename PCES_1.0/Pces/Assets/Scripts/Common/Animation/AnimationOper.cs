@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Legacy 动画播放控制
+/// Animator 动画播放控制
 /// </summary>
 public class AnimationOper : MonoBehaviour
 {
@@ -34,8 +34,10 @@ public class AnimationOper : MonoBehaviour
     }
 
     public event System.Action Complete;
+    public System.Action<float> timePointEvent; //时间点事件,参数为当前时间
     float timeLength;
     float currLength;
+
     public float transitionTime = 0.2f;//过渡时间
     /// <summary>
     /// 从头开始播放动画剪辑
@@ -66,8 +68,13 @@ public class AnimationOper : MonoBehaviour
             if (asif.IsName("Base." + animName))
             {
                 timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
+
                 if (currLength <= timeLength)
                 {
+                    if(timePointEvent != null)
+                    {
+                        timePointEvent(currLength);
+                    }
                     currLength += Time.deltaTime;
 
                 }
@@ -80,6 +87,7 @@ public class AnimationOper : MonoBehaviour
                     {
                         Complete();
                         Complete = null;
+                        timePointEvent = null;
                     }
                 }
             }
@@ -91,6 +99,7 @@ public class AnimationOper : MonoBehaviour
         IsStart = false;
         IsComplete = false;
         Complete = null;
+        timePointEvent = null;
     }
 }
 

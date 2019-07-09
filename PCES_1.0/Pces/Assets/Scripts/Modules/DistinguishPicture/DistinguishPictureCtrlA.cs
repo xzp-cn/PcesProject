@@ -75,7 +75,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         {
             offY = 0.04f;
         }
-        qhwB.transform.localPosition = new Vector3(2.5328f,0.5698f + offY, 0.0913f);
+        qhwB.transform.localPosition = new Vector3(2.5328f, 0.5698f + offY, 0.0913f);
         RndNegReinforcementB.transform.SetParent(qhwB.transform, false);
         RndNegReinforcementB.transform.localPosition = Vector3.zero;
 
@@ -90,15 +90,34 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         tukaB.transform.localPosition = Vector3.zero;
 
         XH_tkA = GameObject.Find("tuka");
-        XH_tkA.SetActive(false);
+        if (XH_tkA != null)
+        {
+            XH_tkA.SetActive(false);
+        }
+
         XH_tkB = GameObject.Find("tuka2");
-        XH_tkB.SetActive(false);
+        if (XH_tkB != null)
+        {
+            XH_tkB.SetActive(false);
+        }
+
         XH_tkC = GameObject.Find("tuka3");
-        XH_tkC.SetActive(false);
+        if (XH_tkC != null)
+        {
+            XH_tkC.SetActive(false);
+        }
         XH_judaiA = GameObject.Find("XH_judai");
-        XH_judaiA.SetActive(false);
+        if (XH_judaiA != null)
+        {
+            XH_judaiA.SetActive(false);
+        }
+
+
         XH_judaiB = GameObject.Find("XH_judai_2");
-        XH_judaiB.SetActive(false);
+        if (XH_judaiB != null)
+        {
+            XH_judaiB.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -127,7 +146,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
             tukaB.SetActive(false);
             XH_tkB.SetActive(true); //显示小华手上图卡
-           
+
         };
         xiaohuaAnim.PlayForward("TY_XH_NK");
     }
@@ -158,7 +177,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
         if (cobj.objname == "shou")
         {
-            
+
             ChooseDo.Instance.Clicked();
             CancelInvoke("ClickTeachersPromptFirst");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
@@ -199,7 +218,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         PropsObject pb = RndNegReinforcementB.GetComponentInChildren<PropsObject>();
         string cn_name = pb.pData.name_cn;
-        tip.SetTipMessage("请点击老师的手,递给小华"+cn_name);
+        tip.SetTipMessage("请点击老师的手,递给小华" + cn_name);
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
@@ -216,12 +235,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         if (cobj.objname == "shou")
         {
-            LSCtrl lsCtrl = PeopleManager.Instance.GetPeople("LS_BD").GetComponent<LSCtrl>();
-            if(lsCtrl != null)
-            {
-                lsCtrl.SetJoint(RndNegReinforcementB);
-            }
-            
+
             ChooseDo.Instance.Clicked();
             CancelInvoke("ClickTeachersPromptSecond");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
@@ -231,6 +245,24 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
             //播放教师给小华B的动画--(做在接图卡里)
             AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+            
+            //指定一个时间段，和时间点做近似比较
+            float st = 1.0f;
+            float et = 1.03f;
+            teacherAnim.timePointEvent = (t) =>
+            {
+                if(t>=st && t <= et)
+                {
+                    teacherAnim.timePointEvent = null;
+                    LSCtrl lsCtrl = PeopleManager.Instance.GetPeople("LS_BD").GetComponent<LSCtrl>();
+                    if (lsCtrl != null)
+                    {
+                        lsCtrl.SetJoint(RndNegReinforcementB);
+                    }
+                    RndNegReinforcementB.SetActive(false);
+                }
+            };
+
             teacherAnim.Complete += () =>
             {
                 Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandSecond(): 4. 播放结束，触发小华用手推开B的动画。");
@@ -351,7 +383,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
             GameObject teacherGo = PeopleManager.Instance.GetPeople("LS_BD");
             AnimationOper teacherAnim = teacherGo.GetAnimatorOper();
-            teacherAnim.Complete += () => {
+            teacherAnim.Complete += () =>
+            {
                 //8. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                 SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
                 swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
