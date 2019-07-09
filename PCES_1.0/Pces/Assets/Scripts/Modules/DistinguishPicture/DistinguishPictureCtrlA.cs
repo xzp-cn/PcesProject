@@ -209,7 +209,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         Debug.Log("DistinguishPictureCtrlA.ClickTeachersPromptSecond(): 3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。");
         HighLightCtrl.GetInstance().FlashOn(shou);
 
-        ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSecond, null);
     }
 
@@ -217,6 +216,12 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         if (cobj.objname == "shou")
         {
+            LSCtrl lsCtrl = PeopleManager.Instance.GetPeople("LS_BD").GetComponent<LSCtrl>();
+            if(lsCtrl != null)
+            {
+                lsCtrl.SetJoint(RndNegReinforcementB);
+            }
+            
             ChooseDo.Instance.Clicked();
             CancelInvoke("ClickTeachersPromptSecond");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
