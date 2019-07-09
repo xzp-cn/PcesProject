@@ -18,7 +18,7 @@ public class SentenceCtrlA : MonoBehaviour
     AnimationOper GTB;//沟通本
     private void Awake()
     {
-        this.name = "EnhanceCtrlA";
+        this.name = "SentenceCtrlA";
     }
     //public bool Finished;
     private void Start()
@@ -57,8 +57,8 @@ public class SentenceCtrlA : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
-        rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);
+        Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
         if (rfc != null)
         {

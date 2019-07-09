@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using UnityEngine;
 public class ObjectsManager : MonoBehaviour
 {
     public static ObjectsManager instanse;
@@ -28,6 +27,13 @@ public class ObjectsManager : MonoBehaviour
         }
     }
     public void Init()
+    {
+
+        InitReinforcement();
+        InitTuka();
+        InitOthers();
+    }
+    void InitReinforcement()
     {
         for (int i = 0; i < TotalNum; i++)
         {
@@ -58,10 +64,7 @@ public class ObjectsManager : MonoBehaviour
             propList.Add(po);
             po.pData = new PropsData(tag.ToString(), i, ptype, GetCnNameOfObject(tag.ToString()));
         }
-
-        InitTuka();
     }
-
     /// <summary>
     /// 初始化图卡
     /// </summary>
@@ -105,7 +108,25 @@ public class ObjectsManager : MonoBehaviour
         }
         Debug.Log("ObjectsManager.InitTuka(): propList {Nums} " + propList.Count);
     }
-
+    void InitOthers()
+    {
+        int startIndex = 22, endIndex = 23;
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            PropsTag tag = (PropsTag)i;
+            string path = "Prefabs/Objects/" + tag.ToString();
+            GameObject go = ResManager.GetPrefab(path);
+            go.name = tag.ToString();
+            go.transform.SetParent(transform, false);
+            PropsObject po = go.GetComponent<PropsObject>();
+            if (po == null)
+            {
+                po = go.AddComponent<PropsObject>();
+            }
+            propList.Add(po);
+            po.pData = new PropsData(tag.ToString(), i, PropsType.others, GetCnNameOfObject(tag.ToString()));
+        }
+    }
     public PropsObject GetProps(int index)
     {
         return propList[index];
@@ -192,9 +213,13 @@ public enum PropsType
     /// 图卡
     /// </summary>
     Tuka,
+    /// <summary>
+    /// 其他类型物品
+    /// </summary>
+    others,
 }
 
-[System.Flags]
+[System.Flags]//
 public enum PropsTag : int
 {
     /// <summary>
@@ -317,9 +342,14 @@ public enum PropsTag : int
     /// </summary>
     [Description("图卡故事书")]
     tuka_storyBooks = 21,
-    ///// <summary>
-    ///// 沟通本
-    ///// </summary>
-    //[Description("沟通本")]
-    //goutongben = 24,
+    /// <summary>
+    /// 沟通本
+    /// </summary>
+    [Description("沟通本")]
+    TY_GTB = 22,
+    /// <summary>
+    /// 句带
+    /// </summary>
+    [Description("judai")]
+    judai = 23,
 }
