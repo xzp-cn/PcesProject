@@ -30,7 +30,6 @@ public class FlowManager : MonoBehaviour
         ResManager.GetPrefab("Prefabs/Objects/Objects");
         GlobalDataManager.GetInstance().InitUI();
     }
-
     private void OnFlowStepFinished(ModelTasks mt)
     {
         //Debug.LogError(mt.ToString());s
@@ -41,5 +40,4 @@ public class FlowManager : MonoBehaviour
         GameObject module = ResManager.GetPrefab(sb.ToString());
         FlowModel.GetInstance().PushPrefabToMem(mt.ToString(), module);
     }
-
 }
