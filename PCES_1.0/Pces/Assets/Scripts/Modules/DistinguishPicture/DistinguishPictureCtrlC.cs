@@ -9,21 +9,38 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
     public event System.Action evtFinished;
     public event System.Action evtRedo;
-    private PromptHelper prp;
     private CommonUI comUI;
-    private TestPaperView tpv;
+    private GameObject emptyRoot;
+    private Vector3[] qhwPos;
 
     private void Awake()
     {
-
+        qhwPos = new Vector3[3] { new Vector3(2.5328F, 0.5698F, -0.118F), new Vector3(2.5328F, 0.5698F, -0.118F), new Vector3(2.5328F, 0.5698F, -0.118F) };
+        emptyRoot = new GameObject("Root");
     }
 
     void Start () {
         //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
-        prp = UIManager.Instance.GetUI<PromptHelper>("Prompt");
-        prp.SetText("1. 进入界面后1秒，触发小华拿A卡递卡的动画。");
-        Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
+        List<PropsObject> rndReinforcements = new List<PropsObject>();
+        DistinguishPictureModel.GetInstance().GetRndReinforcements(3, rndReinforcements);
 
+
+
+        List<PropsObject> rndNegReinforcements = new List<PropsObject>();
+        DistinguishPictureModel.GetInstance().GetRndNegReinforcements(2, rndNegReinforcements);
+
+        Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
+    }
+
+    private GameObject CreateObj(PropsObject source,int index)
+    {
+        GameObject scopy = GameObject.Instantiate(source.gameObject);
+        scopy.GetComponent<PropsObject>().pData = source.pData;
+        GameObject qhw = new GameObject("qhw"+index);
+        qhw.transform.SetParent(emptyRoot.transform, false);
+        scopy.transform.SetParent(qhw.transform, false);
+        scopy.transform.localPosition = Vector3.zero;
+        return qhw;
     }
 
     void OnXiaoHuaPassGouTongBenToTeacher()
@@ -35,7 +52,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-            prp.SetText("2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
+
             HighLightCtrl.GetInstance().FlashOn(shou);
             shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
@@ -75,7 +92,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             teacherAnim.Complete += () =>
             {
-                prp.SetText("3. 播放结束，提醒操作者点击话筒，显示“你要XXX呀”");
                 OnClickHuaTong();
             };
             teacherAnim.PlayForward("TY_LS_JK");
@@ -98,7 +114,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             dialog.SetDialogMessage("你要"+gift);
 
             //4. 播放结束，触发小华拿起B的动画。
-            prp.SetText("4. 播放结束，触发小华拿起B的动画。");
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
             xiaohuaAnim.Complete += () =>
@@ -118,7 +133,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         teacherAnim.Complete += () =>
         {
             //4. 播放结束，触发小华接过XXX。
-            prp.SetText("4. 播放结束，触发小华接过XXX。");
             OnXiaoHuaAccept();
         };
         teacherAnim.PlayForward("TY_LS_JK");
@@ -131,7 +145,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             //5. 播放结束，出现下一关和重做的按钮。
-            prp.SetText("5. 播放结束，出现下一关和重做的按钮。");
 
 
             comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
@@ -180,7 +193,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
     public void Dispose()
     {
-        prp = null;
         comUI = null;
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
         Destroy(gameObject);

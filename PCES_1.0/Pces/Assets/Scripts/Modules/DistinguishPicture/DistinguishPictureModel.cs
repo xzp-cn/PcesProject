@@ -24,6 +24,66 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     }
 
     /// <summary>
+    /// 随机一批不重复的强化物
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public void GetRndReinforcements(int n,List<PropsObject> results)
+    {
+        List<int> tmps = new List<int>();
+        for(int i = 0; i < 4; i++)
+        {
+            tmps.Add(i);
+        }
+
+        List<int> rets = new List<int>();
+        for(int j = 0; j < n; j++)
+        {
+            int rnd = Random.Range(0, tmps.Count);
+            rets.Add(tmps[rnd]);
+            tmps.RemoveAt(rnd);
+        }
+
+
+        rets.ForEach((index) =>
+        {
+            Debug.Log("强化物索引:" + index);
+            results.Add(ObjectsManager.instanse.propList[index]);
+        });
+        Debug.Log("====================================================");
+    }
+
+    /// <summary>
+    /// 随机一批不重复的负强化物
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="results"></param>
+    public void GetRndNegReinforcements(int n, List<PropsObject> results)
+    {
+        List<int> tmps = new List<int>();
+        for (int i = 4; i < 7; i++)
+        {
+            tmps.Add(i);
+        }
+
+        List<int> rets = new List<int>();
+        for (int j = 0; j < n; j++)
+        {
+            int rnd = Random.Range(0, tmps.Count);
+            rets.Add(tmps[rnd]);
+            tmps.RemoveAt(rnd);
+        }
+
+
+        rets.ForEach((index) =>
+        {
+            Debug.Log("负强化物索引:" + index);
+            results.Add(ObjectsManager.instanse.propList[index]);
+        });
+        Debug.Log("====================================================");
+    }
+
+    /// <summary>
     /// 随机一个中性刺激物
     /// </summary>
     /// <returns></returns>
