@@ -59,7 +59,6 @@ public class AnimationOper : MonoBehaviour
         }
 
     }
-
     public void Update()
     {
         if (IsStart)
@@ -68,15 +67,13 @@ public class AnimationOper : MonoBehaviour
             if (asif.IsName("Base." + animName))
             {
                 timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
-
                 if (currLength <= timeLength)
                 {
-                    if(timePointEvent != null)
+                    if (timePointEvent != null)
                     {
                         timePointEvent(currLength);
                     }
                     currLength += Time.deltaTime;
-
                 }
                 else
                 {
@@ -93,7 +90,6 @@ public class AnimationOper : MonoBehaviour
             }
         }
     }
-
     void OnDestroy()
     {
         IsStart = false;

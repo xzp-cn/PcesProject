@@ -110,25 +110,49 @@ public class ObjectsManager : MonoBehaviour
     }
     void InitOthers()
     {
-        int startIndex = 22, endIndex = 23;
-        for (int i = startIndex; i <= endIndex; i++)
+        int startIndex = 22;//通用沟通本
+        PropsTag tag = (PropsTag)startIndex;
+        string path = "Prefabs/Objects/" + tag.ToString();
+        GameObject go = ResManager.GetPrefab(path);
+        go.name = tag.ToString();
+        go.transform.SetParent(transform, false);
+        PropsObject po = go.GetComponent<PropsObject>();
+        if (po == null)
         {
-            PropsTag tag = (PropsTag)i;
-            string path = "Prefabs/Objects/" + tag.ToString();
-            GameObject go = ResManager.GetPrefab(path);
-            go.name = tag.ToString();
-            go.transform.SetParent(transform, false);
-            PropsObject po = go.GetComponent<PropsObject>();
-            if (po == null)
+            po = go.AddComponent<PropsObject>();
+        }
+        propList.Add(po);
+        po.pData = new PropsData(tag.ToString(), startIndex, PropsType.others, GetCnNameOfObject(tag.ToString()));
+
+        startIndex++;
+        string[] judais = new string[] { "judai_wokanjian", "judai_woyao" };
+        for (int i = 0; i < judais.Length; i++)
+        {
+            Texture texture = ResManager.GetTexture("Images/tuka/" + judais[i]);
+            GameObject tuka = ResManager.GetPrefab("Prefabs/Objects/tuka");
+            tuka.name = texture.name;
+            tuka.transform.SetParent(transform, false);
+            tuka.transform.localScale = Vector3.one;
+            Renderer render = tuka.GetComponent<Renderer>();
+            render.materials[1] = new Material(Shader.Find("Standard"));
+            render.materials[1].name = "mat_" + tuka.name;
+            render.materials[1].mainTexture = texture;
+
+            PropsObject tukObj = tuka.GetComponent<PropsObject>();
+            if (tukObj == null)
             {
-                po = go.AddComponent<PropsObject>();
+                tukObj = tuka.AddComponent<PropsObject>();
+                propList.Add(tukObj);
+                startIndex += i;
+                tukObj.pData = new PropsData(tuka.name, startIndex, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
+                Debug.Log(startIndex);
             }
-            propList.Add(po);
-            po.pData = new PropsData(tag.ToString(), i, PropsType.others, GetCnNameOfObject(tag.ToString()));
         }
     }
+
     public PropsObject GetProps(int index)
     {
+        //Debug.LogAssertion(propList.Count);
         return propList[index];
     }
     /// <summary>
@@ -350,6 +374,8 @@ public enum PropsTag : int
     /// <summary>
     /// 句带
     /// </summary>
-    [Description("judai")]
-    judai = 23,
+    [Description("judai_woyao")]
+    judai_woyao = 23,
+    [Description("judai_wokanjian")]
+    judai_wokanjian = 24,
 }
