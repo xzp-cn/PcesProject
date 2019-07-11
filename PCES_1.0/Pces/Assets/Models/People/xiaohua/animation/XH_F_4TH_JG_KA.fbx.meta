@@ -25,6 +25,7 @@ ModelImporter:
     100038: tuka7
     100040: Wrist_R
     100042: //RootNode
+    100044: Group1
     400000: Chest_M
     400002: DeformationSystem
     400004: Elbow_R
@@ -47,6 +48,7 @@ ModelImporter:
     400038: tuka7
     400040: Wrist_R
     400042: //RootNode
+    400044: Group1
     2100000: goutongben_RGB4
     2100002: goutongben_RGB0
     2100004: goutongben_RGB1
@@ -86,6 +88,7 @@ ModelImporter:
     4300016: tuka7
     7400000: XH_F_4TH_JG_KA
     9500000: //RootNode
+    11100000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -186,10 +189,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

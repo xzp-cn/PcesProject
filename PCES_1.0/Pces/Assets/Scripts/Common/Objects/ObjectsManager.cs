@@ -222,6 +222,9 @@ public class PropsData
         pType = _pType;
         name_cn = _name_cn;
     }
+    ~PropsData()
+    {
+    }
 }
 public enum PropsType
 {

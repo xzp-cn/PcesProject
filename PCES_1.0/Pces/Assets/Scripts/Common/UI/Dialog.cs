@@ -23,4 +23,5 @@ public class Dialog : MonoBehaviour
         upText.text = msg;
         contentText.text = msg;
     }
+
 }
