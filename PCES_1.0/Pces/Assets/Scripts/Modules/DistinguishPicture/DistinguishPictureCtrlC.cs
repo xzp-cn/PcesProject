@@ -14,6 +14,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     private Vector3[] qhwPos;   //强化物初始位置
     private Vector3[] nqhwPos; //负强化物初始位置
     private GameObject gtNotebook; //沟通本
+    public float delay;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
         gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
         gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.29f, 0.56572f, 0.379f);
+        gtNotebook.transform.localPosition = new Vector3(2.276f, 0.56572f, 0.1f);
 
         //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
         Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
@@ -77,14 +78,26 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         return nqhw;
     }
 
+    void OnGUI()
+    {
+        if (GUILayout.Button("Repeat"))
+        {
+            OnXiaoHuaPassGouTongBenToTeacher();
+        }
+    }
+
     void OnXiaoHuaPassGouTongBenToTeacher()
     {
         //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要XXX呀”
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
+        Invoke("DelayPlayGTB", delay);
+
+
         xiaohuaAnim.Complete += () =>
         {
+            return;
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
 
             HighLightCtrl.GetInstance().FlashOn(shou);
@@ -94,7 +107,12 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("TY_XH_NKDK");
+        xiaohuaAnim.PlayForward("XH_C_3RD_FBFY");
+    }
+
+    private void DelayPlayGTB()
+    {
+        gtNotebook.GetAnimatorOper().PlayForward("allPaper");
     }
 
     private void ClickTeachersPromptFirst()
