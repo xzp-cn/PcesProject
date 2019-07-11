@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 618
+using UnityEngine;
 
 // Delegate for the highlighting event
 public delegate void HighlightingEventHandler(bool state, bool zWrite);
@@ -230,12 +231,12 @@ public class HighlightingEffect : MonoBehaviour
         }
 
         // Disable if Render Textures is not supported
-        if (!SystemInfo.supportsRenderTextures)
-        {
-            Debug.LogWarning("HighlightingSystem : RenderTextures is not supported on this platform! Disabling.");
-            this.enabled = false;
-            return;
-        }
+        //if (!SystemInfo.supportsRenderTextures)
+        //{
+        //    Debug.LogWarning("HighlightingSystem : RenderTextures is not supported on this platform! Disabling.");
+        //    this.enabled = false;
+        //    return;
+        //}
 
         // Disable if required Render Texture Format is not supported
         if (!SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.ARGB32))

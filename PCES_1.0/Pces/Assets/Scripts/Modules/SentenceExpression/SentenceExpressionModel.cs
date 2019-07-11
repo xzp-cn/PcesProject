@@ -30,7 +30,7 @@ public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
     /// <returns></returns>
     public PropsObject GetObj(PropsType type)
     {
-        PropsObject pObj = null;
+        //PropsObject pObj = null;
         int index = 0;
         switch (type)
         {

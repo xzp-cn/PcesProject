@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class SwapModel : SingleTemplate<SwapModel>
 {
-    int idLevel = 1;
+    //int idLevel = 1;
     /// <summary>
     ///通过名字得到道具/涂卡
     /// </summary>

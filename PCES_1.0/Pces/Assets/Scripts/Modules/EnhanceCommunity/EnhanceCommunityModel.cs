@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnhanceCommunityModel : SingleTemplate<EnhanceCommunityModel>
 {
-    int idLevel = 1;
+    //int idLevel = 1;
     /// <summary>
     ///通过名字得到道具/涂卡
     /// </summary>
