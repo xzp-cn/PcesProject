@@ -36,6 +36,10 @@ public class DistinguishPictureView : MonoBehaviour {
         dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
         dpcCtrl.evtFinished += OnDpcCtrlFinished;
 
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
+        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtRedo += OnTestPaperRedo;
+
         InitPersonsState();
 
     }
