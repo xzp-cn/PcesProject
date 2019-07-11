@@ -11,24 +11,47 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     public event System.Action evtRedo;
     private CommonUI comUI;
     private GameObject emptyRoot;
-    private Vector3[] qhwPos;
+    private Vector3[] qhwPos;   //强化物初始位置
+    private Vector3[] nqhwPos; //负强化物初始位置
+    private GameObject gtNotebook; //沟通本
 
     private void Awake()
     {
-        qhwPos = new Vector3[3] { new Vector3(2.5328F, 0.5698F, -0.118F), new Vector3(2.5328F, 0.5698F, -0.118F), new Vector3(2.5328F, 0.5698F, -0.118F) };
+        qhwPos = new Vector3[3] { new Vector3(2.5328F, 0.5698F, -0.436F), new Vector3(2.5328F, 0.5698F, -0.229F), new Vector3(2.5328F, 0.5698F, -0.023F) };
+        nqhwPos = new Vector3[2] { new Vector3(2.5328f, 0.5698f, 0.166f), new Vector3(2.5328f, 0.5698f, 0.356f) };
         emptyRoot = new GameObject("Root");
     }
 
     void Start () {
-        //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
+        
         List<PropsObject> rndReinforcements = new List<PropsObject>();
         DistinguishPictureModel.GetInstance().GetRndReinforcements(3, rndReinforcements);
-
+        int i = 0;
+        //初始化摆放强化物
+        rndReinforcements.ForEach((ob) => {
+            GameObject qhw = CreateObj(ob, i);
+            qhw.transform.localPosition = qhwPos[i++];
+        });
 
 
         List<PropsObject> rndNegReinforcements = new List<PropsObject>();
         DistinguishPictureModel.GetInstance().GetRndNegReinforcements(2, rndNegReinforcements);
+        i = 0;
+        //初始化摆放负强化物
+        rndNegReinforcements.ForEach((ob) =>
+        {
+            GameObject nqhw = CreateNegObj(ob, i);
+            nqhw.transform.localPosition = nqhwPos[i++];
+        });
 
+        //初始化沟通本
+        PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
+        gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
+        gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
+        gtNotebook.transform.SetParent(emptyRoot.transform, false);
+        gtNotebook.transform.localPosition = new Vector3(2.29f, 0.56572f, 0.379f);
+
+        //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
         Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
     }
 
@@ -41,6 +64,17 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         scopy.transform.SetParent(qhw.transform, false);
         scopy.transform.localPosition = Vector3.zero;
         return qhw;
+    }
+
+    private GameObject CreateNegObj(PropsObject source, int index)
+    {
+        GameObject scopy = GameObject.Instantiate(source.gameObject);
+        scopy.GetComponent<PropsObject>().pData = source.pData;
+        GameObject nqhw = new GameObject("nqhw" + index);
+        nqhw.transform.SetParent(emptyRoot.transform, false);
+        scopy.transform.SetParent(nqhw.transform, false);
+        scopy.transform.localPosition = Vector3.zero;
+        return nqhw;
     }
 
     void OnXiaoHuaPassGouTongBenToTeacher()
@@ -65,13 +99,11 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
     private void ClickTeachersPromptFirst()
     {
-        ClickDispatcher.Inst.EnableClick = true;
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
     }
 
     private void RedoClickTeachersHandFirst()
     {
-        ClickDispatcher.Inst.EnableClick = false;
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("请点击老师的手");
         CancelInvoke("ClickTeachersPromptFirst");
@@ -110,14 +142,15 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             swapui.speakEvent = null;
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-            string gift = "XXX";
-            dialog.SetDialogMessage("你要"+gift);
+            string gift = emptyRoot.transform.Find("qhw2").GetComponentInChildren<PropsObject>().pData.name_cn;
+            dialog.SetDialogMessage("你要"+gift + "呀。");
 
             //4. 播放结束，触发小华拿起B的动画。
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
             xiaohuaAnim.Complete += () =>
             {
+                dialog.Show(false);
                 //3. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                 OnTeacherTakeXiaoHuaB();
             };
@@ -145,8 +178,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             //5. 播放结束，出现下一关和重做的按钮。
-
-
             comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
             comUI.redoClickEvent += OnReDo;
             comUI.nextClickEvent += OnNextDo;
@@ -195,6 +226,11 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     {
         comUI = null;
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        if (emptyRoot != null)
+        {
+            Destroy(emptyRoot);
+            emptyRoot = null;
+        }
         Destroy(gameObject);
     }
 
