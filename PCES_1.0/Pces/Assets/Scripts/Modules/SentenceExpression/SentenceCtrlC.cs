@@ -146,8 +146,8 @@ public class SentenceCtrlC : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
-        CancelInvoke("ClickLsHandTip");
-        Invoke("ClickLsHandTip", 2);
+        CancelInvoke("ClickLsHandJiekaTip");
+        Invoke("ClickLsHandJiekaTip", 2);
     }
     void LsJieka()
     {
@@ -239,8 +239,6 @@ public class SentenceCtrlC : MonoBehaviour
     {
         Debug.Log("xh给物品回调用");
     }
-
-
     /// <summary>
     /// 看见模块初始化
     /// </summary>
@@ -249,6 +247,7 @@ public class SentenceCtrlC : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
         swapUI.speakEvent += KJSpeakBtnClickCallback;
 
+        gtb.gameObject.SetActive(false);
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_3RD_FBNKTK_KA").GetLegacyAnimationOper();//沟通本
         gtb.name = PropsTag.TY_GTB.ToString();
         gtb.transform.SetParent(objectsTr);
