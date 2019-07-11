@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SentenceCtrlD : MonoBehaviour
 {
-
     public event System.Action evtFinished;
     public event System.Action evtRedo;
     SwapUI swapUI;
@@ -19,11 +18,15 @@ public class SentenceCtrlD : MonoBehaviour
     AnimationOper GTB;//沟通本
     private void Awake()
     {
-        this.name = "EnhanceCtrlA";
+        this.name = "SentenceCtrlD";
     }
     //public bool Finished;
     private void Start()
     {
+        foreach (GameObject rootobj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            Debug.Log(rootobj.name);
+        }
         Init();
     }
     public void Init()

@@ -30,10 +30,14 @@ public class SentenceExpressionView : MonoBehaviour
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;
         //stBCtrl.evtRedo += OnstBCtrlRedo;
-        stCCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlC").GetComponent<SentenceCtrlC>();
-        stCCtrl.transform.SetParent(transform);
-        stCCtrl.evtFinished += OnstCCtrlFinished;
-        stCCtrl.evtRedo += OnstCCtrlRedo;
+        //stCCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlC").GetComponent<SentenceCtrlC>();
+        //stCCtrl.transform.SetParent(transform);
+        //stCCtrl.evtFinished += OnstCCtrlFinished;
+        //stCCtrl.evtRedo += OnstCCtrlRedo;
+        stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
+        stDCtrl.transform.SetParent(transform);
+        stDCtrl.evtFinished += OnstDCtrlFinished;
+        stDCtrl.evtRedo += OnstCCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -86,8 +90,8 @@ public class SentenceExpressionView : MonoBehaviour
         stCCtrl.Dispose();
         stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
         stDCtrl.transform.SetParent(transform);
-        stDCtrl.evtFinished += OnecDCtrlFinished;
-        stDCtrl.evtRedo += OnecDCtrlRedo;
+        stDCtrl.evtFinished += OnstDCtrlFinished;
+        stDCtrl.evtRedo += OnstDCtrlRedo;
     }
     private void OnstCCtrlRedo()
     {
@@ -99,24 +103,24 @@ public class SentenceExpressionView : MonoBehaviour
         stCCtrl.evtFinished += OnstCCtrlFinished;
         stCCtrl.evtRedo += OnstCCtrlRedo;
     }
-    private void OnecDCtrlFinished()
+    private void OnstDCtrlFinished()
     {
-        stDCtrl.evtFinished -= OnecDCtrlFinished;
-        stDCtrl.evtRedo -= OnecDCtrlRedo;
+        stDCtrl.evtFinished -= OnstDCtrlFinished;
+        stDCtrl.evtRedo -= OnstDCtrlRedo;
         stDCtrl.Dispose();
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
-    private void OnecDCtrlRedo()
+    private void OnstDCtrlRedo()
     {
-        stDCtrl.evtFinished -= OnecDCtrlFinished;
-        stDCtrl.evtRedo -= OnecDCtrlRedo;
+        stDCtrl.evtFinished -= OnstDCtrlFinished;
+        stDCtrl.evtRedo -= OnstDCtrlRedo;
         stDCtrl.Dispose();
         stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
         stDCtrl.transform.SetParent(transform);
-        stDCtrl.evtFinished += OnstCCtrlFinished;
-        stDCtrl.evtRedo += OnstCCtrlRedo;
+        stDCtrl.evtFinished += OnstDCtrlFinished;
+        stDCtrl.evtRedo += OnstDCtrlRedo;
     }
     void OnTestPaperRedo()
     {

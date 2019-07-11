@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4309540190669824}
   - component: {fileID: 111830923617453634}
   m_Layer: 0
-  m_Name: XH_D_1ST_FBNKT_KA
+  m_Name: XH_D_1ST_FBNKT_ka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
