@@ -58,7 +58,7 @@ ModelImporter:
     4300008: XH_judaiA
     4300010: tukaB
     4300012: tukaA
-    7400000: XH_D_2ND_FYFT_ka
+    7400000: XH_D_2ND_FYFT_KA
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -89,7 +89,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: XH_D_2ND_FYFT_ka
+      name: XH_D_2ND_FYFT_KA
       takeName: Take 001
       firstFrame: -3
       lastFrame: 360

@@ -48,6 +48,7 @@ public class AnimationOper : MonoBehaviour
         if (anim)
         {
             animName = clipName;
+            //Debug.Log(animName);
             anim.CrossFade(clipName, transitionTime, 0, 0);
             //anim.Play(clipName, 0, 0);
             timeLength = anim.GetCurrentAnimatorStateInfo(0).length;

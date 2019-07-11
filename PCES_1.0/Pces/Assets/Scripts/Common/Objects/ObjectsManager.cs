@@ -125,7 +125,7 @@ public class ObjectsManager : MonoBehaviour
         po.pData = new PropsData(tag.ToString(), startIndex, PropsType.others, GetCnNameOfObject(tag.ToString()));
 
         startIndex++;
-        string[] judais = new string[] { "judai_wokanjian", "judai_woyao" };
+        string[] judais = new string[] { "judai_woyao", "judai_wokanjian" };
         for (int i = 0; i < judais.Length; i++)
         {
             Texture texture = ResManager.GetTexture("Images/tuka/" + judais[i]);

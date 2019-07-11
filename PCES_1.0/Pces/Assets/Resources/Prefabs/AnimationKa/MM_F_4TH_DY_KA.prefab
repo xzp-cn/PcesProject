@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4777981390685372}
-  - component: {fileID: 95019294395062004}
+  - component: {fileID: 111751247545361400}
   m_Layer: 0
   m_Name: MM_F_4TH_DY_KA
   m_TagString: Untagged
@@ -900,21 +900,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1654516909502692}
   m_Mesh: {fileID: 4300004, guid: e178277f240d5d647a90de9a47201f4d, type: 3}
---- !u!95 &95019294395062004
-Animator:
-  serializedVersion: 3
+--- !u!111 &111751247545361400
+Animation:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1913823201769248}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e178277f240d5d647a90de9a47201f4d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3d9a41ba7532b824cae099a6036c2005, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e178277f240d5d647a90de9a47201f4d, type: 3}
+  m_Animations:
+  - {fileID: 7400000, guid: e178277f240d5d647a90de9a47201f4d, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 1
