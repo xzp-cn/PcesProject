@@ -199,6 +199,11 @@ public class PropsObject : MonoBehaviour
     {
         transform.localPosition = pos;
     }
+
+    private void OnDestroy()
+    {
+        pData = null;
+    }
 }
 
 /// <summary>

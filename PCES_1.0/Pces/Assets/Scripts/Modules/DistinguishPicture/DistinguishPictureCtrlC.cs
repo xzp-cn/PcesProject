@@ -23,7 +23,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     }
 
     void Start () {
-        
+
         List<PropsObject> rndReinforcements = new List<PropsObject>();
         DistinguishPictureModel.GetInstance().GetRndReinforcements(3, rndReinforcements);
         int i = 0;
@@ -231,6 +231,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             Destroy(emptyRoot);
             emptyRoot = null;
         }
+        evtFinished = null;
+        evtRedo = null;
         Destroy(gameObject);
     }
 
