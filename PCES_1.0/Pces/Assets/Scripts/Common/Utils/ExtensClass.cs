@@ -42,12 +42,12 @@ public static class ExtensClass
         }
         return oper;
     }
-    public static AnimationKA GetAnimationKa(this GameObject go)
+    public static LegacyAnimationOper GetLegacyAnimationOper(this GameObject go)
     {
-        AnimationKA ak = go.GetComponent<AnimationKA>();
+        LegacyAnimationOper ak = go.GetComponent<LegacyAnimationOper>();
         if (ak == null)
         {
-            ak = go.AddComponent<AnimationKA>();
+            ak = go.AddComponent<LegacyAnimationOper>();
         }
         return ak;
     }

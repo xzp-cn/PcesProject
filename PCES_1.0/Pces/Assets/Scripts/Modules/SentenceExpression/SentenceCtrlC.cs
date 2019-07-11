@@ -16,7 +16,7 @@ public class SentenceCtrlC : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
-    AnimationKA gtb;
+    LegacyAnimationOper gtb;
     Transform objectsTr;
     private void Awake()
     {
@@ -33,16 +33,17 @@ public class SentenceCtrlC : MonoBehaviour
         {
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
             //swapUI.chooseEvent += ChooseBtnClickCallback;
-            //swapUI.speakEvent += SpeakBtnClickCallback;
+            swapUI.speakEvent += SpeakBtnClickCallback;
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
+        FDLS.gameObject.SetActive(false);
         LS.PlayForward("idle");
         XH.PlayForward("idle");
-        FDLS.gameObject.SetActive(false);
+
         //FDLS.PlayForward("idle");
         //FDLS.gameObject.SetActive(false);
         //FDLS.PlayForward("FDLS_A_2ND_D");
@@ -75,7 +76,7 @@ public class SentenceCtrlC : MonoBehaviour
         curObj.transform.localEulerAngles = new Vector3(0, -90, 0);
         Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetAnimationKa();//沟通本
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();//沟通本
         gtb.name = PropsTag.TY_GTB.ToString();
         gtb.transform.SetParent(objectsTr);
         gtb.name = "goutongben";//沟通本更新在日志
@@ -100,7 +101,7 @@ public class SentenceCtrlC : MonoBehaviour
         judai_wokanjian.transform.localEulerAngles = new Vector3(0, -90, 0);
         judai_wokanjian.transform.localPosition = new Vector3(2.214f, 0.546f, -0.177f);
         judai_wokanjian.name = PropsTag.judai_wokanjian.ToString();
-        XhTJudai();
+        // XhTJudai();
     }
     void XhTJudai()
     {
@@ -170,6 +171,13 @@ public class SentenceCtrlC : MonoBehaviour
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
+    void SpeakBtnClickCallback()
+    {
+        UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
+        uf.StopFlash();
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+        ChooseDo.Instance.Clicked();
+    }
     void RedoLsJiekaSpeak()
     {
         ClickDispatcher.Inst.EnableClick = false;
@@ -184,7 +192,204 @@ public class SentenceCtrlC : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("你要" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName);
+        CancelInvoke("LsGiveInit");
+        Invoke("LsGiveInit", 2);
+    }
+    /// <summary>
+    ///  老师给物品
+    /// </summary>
+    void LsGiveInit()
+    {
+        Debug.Log("给物品");
+        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
+        ClickLsGiveObjTip();
+    }
+    void ClickLsGiveObjTip()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoLsGiveObj, LsGiveObj);
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        ClickDispatcher.Inst.EnableClick = true;
+    }
+    void RedoLsGiveObj()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师给相应物品");
+        ClickLsGiveObjTip();
+    }
+    void LsGiveObj()
+    {
+        Debug.Log("教师给物品");
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+        LS.Complete += LsGiveObjCallback;
+        LS.PlayForward("TY_LS_DW");
+        XH.Complete += XHJiewuCallback;
+        XH.PlayForward("TY_XH_JG");
+    }
+    void LsGiveObjCallback()
+    {
+        //ShowFinalUI();
+    }
+    void XHJiewuCallback()
+    {
+        Debug.Log("xh给物品回调用");
+    }
+
+    /*
+    /// <summary>
+    /// 看见模块初始化
+    /// </summary>
+    void InitKanjian()
+    {
+        swapUI.speakEvent -= SpeakBtnClickCallback;
+        swapUI.speakEvent += KJSpeakBtnClickCallback;
+    }
+    void ClickmicroPhoneTip()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+    }
+    void RedoLsSpeak()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        CancelInvoke("ClickmicroPhoneTip");
+        Invoke("ClickmicroPhoneTip", 2);
+    }
+    void KJSpeakBtnClickCallback()
+    {
+        UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
+        uf.StopFlash();
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+        ChooseDo.Instance.Clicked();
+    }
+    void ShowSpeakContent()
+    {
+        Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        UIManager.Instance.SetUIDepthTop("Dialog");
+        dlog.SetDialogMessage("小华看见什么");
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        ClickDispatcher.Inst.EnableClick = true;
+        ClickLsHandTip();
+    }
+    void ClickLsHandTip()
+    {
+        if (jshand == null)
+        {
+            jshand = LS.transform.Find("LSB_BD/shou").gameObject;
+        }
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoLsPointJudai, LsPointJudai);
+    }
+    void RedoLsPointJudai()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师指句带");
+        CancelInvoke("ClickLsHandTip");
+        Invoke("ClickLsHandTip", 2);
+    }
+    void LsPointJudai()
+    {
+        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+        ClickDispatcher.Inst.EnableClick = false;
+        LS.Complete += LsPointJudaiCallback;
+        LS.PlayForward("LS_E_1ST_ZK");
+    }
+    /// <summary>
+    /// 教师接收图卡回调
+    /// </summary>
+    void LsPointJudaiCallback()
+    {
+        XhTJudai();
+    }
+    //点中辅导老师手后的回调
+    /// <summary>
+    ///辅导教师抓住小华的手翻开沟通本
+    /// </summary>
+    void XhTJudai()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        XH.PlayForward("XH_D_1ST_FBNKT");
+        gtb.PlayForward("XH_D_1ST_FBNKT_ka");
+        //GTB.PlayForward("onePaper");
+        XH.Complete += XhTakeCardCallback;
+    }
+    /// <summary>
+    /// 小华拿卡递卡回调
+    /// </summary>
+    void XhTakeCardCallback()
+    {
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        ClickDispatcher.Inst.EnableClick = true;
+        ClickLsHandJiekaTip();
+    }
+    void ClickLsHandJiekaTip()
+    {
+        if (jshand == null)
+        {
+            jshand = LS.transform.Find("LSB_BD/shou").gameObject;
+        }
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoLsJieka, LsJieka);
+    }
+    void RedoLsJieka()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        HighLightCtrl.GetInstance().FlashOn(jshand);
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师接卡");
+        CancelInvoke("ClickLsHandTip");
+        Invoke("ClickLsHandTip", 2);
+    }
+    void LsJieka()
+    {
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+        ClickDispatcher.Inst.EnableClick = false;
+        LS.Complete += LsJiekaCallback;
+        LS.PlayForward("TY_LS_JK");
+    }
+    /// <summary>
+    /// 教师接收图卡回调
+    /// </summary>
+    void LsJiekaCallback()
+    {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+        ClickDispatcher.Inst.EnableClick = false;
+        ClickmicroPhoneJiekaTip();
+    }
+    void ClickmicroPhoneJiekaTip()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoLsJiekaSpeak, ShowSpeakJiekaContent);
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+    }
+    void RedoLsJiekaSpeak()
+    {
+        ClickDispatcher.Inst.EnableClick = false;
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        CancelInvoke("ClickmicroPhoneTip");
+        Invoke("ClickmicroPhoneTip", 2);
+    }
+    void ShowSpeakJiekaContent()
+    {
+        Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        UIManager.Instance.SetUIDepthTop("Dialog");
+        string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
+        dlog.SetDialogMessage("是的，你看见了" + curObjName + "，你表现得很好!");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -241,12 +446,14 @@ public class SentenceCtrlC : MonoBehaviour
         UIManager.Instance.SetUIDepthTop("CommonUI");
         com.ShowFinalUI();
     }
+    */
     void Finish()
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
         RemoveAllListeners();
     }
+
     void NextDo()
     {
         Finish();
@@ -274,4 +481,5 @@ public class SentenceCtrlC : MonoBehaviour
     {
 
     }
+
 }
