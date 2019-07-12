@@ -18,5 +18,27 @@ public class SceneManager : SingleTon<SceneManager>
         }
         return sceneDic[scene];
     }
-
+    public void ChangeScene(SceneEnum scene)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync((int)scene);
+    }
+    public enum SceneEnum
+    {
+        /// <summary>
+        /// 首页
+        /// </summary>
+        Preload = 0,
+        /// <summary>
+        /// 教室
+        /// </summary>
+        ClassRoom = 1,
+        /// <summary>
+        /// 超市
+        /// </summary>
+        Supermarket = 2,
+        /// <summary>
+        /// 公园
+        /// </summary>
+        Park = 3,
+    }
 }

@@ -18,15 +18,12 @@ public class SentenceCtrlD : MonoBehaviour
     AnimationOper GTB;//沟通本
     private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         this.name = "SentenceCtrlD";
     }
     //public bool Finished;
     private void Start()
     {
-        foreach (GameObject rootobj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
-        {
-            Debug.Log(rootobj.name);
-        }
         Init();
     }
     public void Init()

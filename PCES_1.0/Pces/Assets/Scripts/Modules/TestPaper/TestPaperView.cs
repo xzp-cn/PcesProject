@@ -74,8 +74,8 @@ public class TestPaperView : MonoBehaviour
 
     public void Dispose()
     {
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
+        //comUI.redoClickEvent -= OnReDo;
+        //comUI.nextClickEvent -= OnNextDo;
         evtFinished = null;
         evtRedo = null;
         Destroy(gameObject);
