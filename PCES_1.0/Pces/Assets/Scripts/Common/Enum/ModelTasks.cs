@@ -30,6 +30,12 @@ public enum ModelTasks
     DistinguishPicture,
 
     /// <summary>
+    /// 句型表达
+    /// </summary>
+    [Description("句型表达")]
+    SpeakUp,
+
+    /// <summary>
     /// 接受性问句
     /// </summary>
     [Description("接受性问句")]

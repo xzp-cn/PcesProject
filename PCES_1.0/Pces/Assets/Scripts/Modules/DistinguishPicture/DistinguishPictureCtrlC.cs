@@ -97,7 +97,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
         xiaohuaAnim.Complete += () =>
         {
-            return;
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
 
             HighLightCtrl.GetInstance().FlashOn(shou);
