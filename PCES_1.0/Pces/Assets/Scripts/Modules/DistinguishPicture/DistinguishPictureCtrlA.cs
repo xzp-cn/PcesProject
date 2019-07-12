@@ -246,7 +246,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
             //播放教师给小华B的动画--(做在接图卡里)
             AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
-            
+
             //指定一个时间段，和时间点做近似比较
             float st = 1.0f;
             float et = 1.03f;
