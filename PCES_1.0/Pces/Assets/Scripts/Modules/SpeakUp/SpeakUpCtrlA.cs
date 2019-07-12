@@ -77,7 +77,6 @@ public class SpeakUpCtrlA : MonoBehaviour {
             AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             teacherAnim.Complete += () =>
             {
-                /*OnReceiveTuKa*/();
             };
             teacherAnim.PlayForward("TY_LS_JK");
         }
