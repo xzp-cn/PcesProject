@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LegacyAnimationOper : MonoBehaviour
 {
-
     public Animation anim;
     public string animName;
     void Awake()
@@ -14,7 +13,17 @@ public class LegacyAnimationOper : MonoBehaviour
         IsComplete = false;
         anim.playAutomatically = false;
     }
-
+    public WrapMode SetWrapMode
+    {
+        get
+        {
+            return anim.wrapMode;
+        }
+        set
+        {
+            anim.wrapMode = value;
+        }
+    }
     /// <summary>
     /// 当画是否开始
     /// </summary>

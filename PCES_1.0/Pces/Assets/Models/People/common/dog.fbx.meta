@@ -127,8 +127,9 @@ ModelImporter:
     400120: Tail6_M
     2100000: sw_br_gyj_da_map
     4300000: sw_dw_brl_xhq
-    7400000: dog_idle
+    7400000: idle
     9500000: //RootNode
+    11100000: //RootNode
     13700000: sw_dw_brl_xhq
   externalObjects: {}
   materials:
@@ -159,7 +160,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: dog_idle
+      name: idle
       takeName: Take 001
       firstFrame: 1
       lastFrame: 49
@@ -230,10 +231,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
