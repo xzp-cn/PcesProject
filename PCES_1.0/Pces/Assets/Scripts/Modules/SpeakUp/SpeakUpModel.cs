@@ -8,5 +8,13 @@ using UnityEngine;
 public class SpeakUpModel : SingleTemplate<SpeakUpModel>
 {
 
-
+    /// <summary>
+    /// 随机一个强化物
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetRndReinforcement()
+    {
+        int rnd = Random.Range(0, 4);
+        return ObjectsManager.instanse.propList[rnd].gameObject;
+    }
 }
