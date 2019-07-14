@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 4778264383159260}
   - component: {fileID: 111088449394501994}
   m_Layer: 0
-  m_Name: XH_D_2ND_FYFT_KA
+  m_Name: XH_D_2ND_FYFT_ka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

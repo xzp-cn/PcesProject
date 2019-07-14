@@ -47,18 +47,17 @@ public class LegacyAnimationOper : MonoBehaviour
     float timeLength;
     float currLength;
 
-    public float transitionTime = 0.1f;//过渡时间
+    public float transitionTime = 0f;//过渡时间
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
     /// <param name="clipName"></param>
     public void PlayForward(string clipName)
     {
-        if (anim)
+        if (anim && !anim.IsPlaying(clipName))
         {
             animName = clipName;
-            //Debug.Log(animName);
-            anim.CrossFade(clipName, transitionTime, PlayMode.StopSameLayer);
+            anim.Play(clipName);
             //anim.Play(clipName, 0, 0);
             timeLength = anim[clipName].length;
             IsStart = true;

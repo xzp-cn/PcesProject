@@ -15,10 +15,18 @@ public class SentenceCtrlD : MonoBehaviour
     private void Awake()
     {
         this.name = "SentenceCtrlD";
+        PeopleManager.Instance.gameObject.SetActive(false);
+        foreach (GameObject item in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            if (item.name == "model_root")
+            {
+                item.SetActive(false);
+            }
+        }            
     }
     //public bool Finished;
     private void Start()
-    {
+    {       
         Transform park = ResManager.GetPrefab("Scenes/park/park").transform;
         park.SetParent(transform);
         if (swapUI == null)
@@ -35,10 +43,17 @@ public class SentenceCtrlD : MonoBehaviour
         XH.transform.SetParent(park);
         LegacyAnimationOper dog = ResManager.GetPrefab("Scenes/park/dog").GetLegacyAnimationOper();
         dog.transform.SetParent(park);
+        dog.transform.localScale = Vector3.one * 2;
         dog.PlayForward("idle");
+        dog.SetWrapMode = WrapMode.Loop;
         MM.PlayForward("idle");
         //XH.PlayForward("idle");
         //XH.PlayForward("XH_F_4TH_FNN");
+        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.neutralStimulator);//中性刺激物
+        Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
+        SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
+        Debug.Log("GetTukaObject");
+
         XHTZka();
         //Invoke("XHTZka", 1);
     }
@@ -50,38 +65,40 @@ public class SentenceCtrlD : MonoBehaviour
         XH.transitionTime = 0;
         XH.Complete += XHTZkaCallback;
         XH.PlayForward("XH_F_4TH_FNN");
-        ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_FNN_KA").GetLegacyAnimationOper().PlayForward("XH_F_4TH_FNN_KA");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_FNN_KA");
+        ka.transform.SetParent(transform);
+        ka.GetLegacyAnimationOper().PlayForward("XH_F_4TH_FNN_KA");
     }
     void ClickMMhandCallback(ClickedObj cobj)
     {
         Debug.Log("点中 " + cobj.objname);
-        if (cobj.objname == "fdls_shou")
+        if (cobj.objname == "click")
         {
             ChooseDo.Instance.Clicked();
         }
     }
     void XHTZkaCallback()
     {
-        XH.PlayForward("XH_F_4TH_JG");
+        ClickDispatcher.Inst.cam = transform.Find("park(Clone)/Camera").GetComponent<Camera>();
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickMMhandCallback);
-        ClickDispatcher.Inst.EnableClick = true;
         ClickMMhandTip();
     }
     void ClickMMhandTip()
     {
         if (mmHand == null)
         {
-            mmHand = MM.transform.Find("click").gameObject;
+            mmHand = MM.transform.Find("mama/mama_shenti").gameObject;
         }
+        ClickDispatcher.Inst.EnableClick = true;
         HighLightCtrl.GetInstance().FlashOn(mmHand);
         ChooseDo.Instance.DoWhat(5, RedoClickMMHand, MMJieObj);
     }
     void RedoClickMMHand()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        //swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接卡");
+        tip.SetTipMessage("需要妈妈接卡");
         CancelInvoke("ClickMMhandTip");
         Invoke("ClickMMhandTip", 2);
     }
@@ -90,8 +107,11 @@ public class SentenceCtrlD : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         ClickDispatcher.Inst.EnableClick = false;
         MM.Complete += DBYCallback;
-        MM.PlayForward("MM_F_4TH_DBY ");
-        ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA").GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        MM.PlayForward("MM_F_4TH_DBY");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
+        ka.transform.SetParent(transform);
+        ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        Invoke("ClickmicroPhoneTip", 1);
     }
 
     /// <summary>
@@ -99,11 +119,12 @@ public class SentenceCtrlD : MonoBehaviour
     /// </summary>
     void DBYCallback()
     {
-        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
-        ClickmicroPhoneTip();
+        Debug.Log("话筒提示");
+
     }
     void ClickmicroPhoneTip()
     {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
