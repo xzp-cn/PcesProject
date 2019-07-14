@@ -11,8 +11,57 @@ public class SpeakUpCtrlC : MonoBehaviour {
     public System.Action evtRedo;
     private CommonUI comUI;
     private GameObject emptyRoot;
+    private GameObject gtNotebook; //沟通本
+    private GameObject judaiGobj; //句带
+    private GameObject RndReinforcementA; //强化物
+    private GameObject tukaA;  //图卡
 
     void Start () {
+        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+        if (xiaohuaGo.GetComponent<XHCtrl>() == null)
+        {
+            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () => {
+                xiaohuaGo.GetComponent<XHCtrl>().r_tuka.SetActive(false);
+                xiaohuaGo.GetComponent<XHCtrl>().r_tuka2.SetActive(false);
+                xiaohuaGo.GetComponent<XHCtrl>().r_judai.SetActive(false);
+                xiaohuaGo.GetComponent<XHCtrl>().r_judai2.SetActive(false);
+            };
+        }
+        emptyRoot = new GameObject("Root");
+
+        //生成沟通本
+        PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
+        gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
+        gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
+        gtNotebook.transform.SetParent(emptyRoot.transform, false);
+        gtNotebook.transform.localPosition = new Vector3(2.276f, 0.56572f, 0.1f);
+
+        //生成我要句带
+        GameObject judaiParent = new GameObject("judaiParent");
+        judaiParent.transform.SetParent(emptyRoot.transform, false);
+        judaiParent.transform.localPosition = new Vector3(2.281f, 0.549f, -0.334f);
+        judaiGobj = GameObject.Instantiate(ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].gameObject);
+        judaiGobj.GetComponent<PropsObject>().pData = ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].pData;
+        judaiGobj.transform.SetParent(judaiParent.transform, false);
+
+        //随机一个强化物A
+        GameObject goodA = SpeakUpModel.GetInstance().GetRndReinforcement();
+        RndReinforcementA = GameObject.Instantiate(goodA);
+        RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
+        GameObject qhwA = new GameObject("ReinforcementA");
+        qhwA.transform.SetParent(emptyRoot.transform, false);
+        RndReinforcementA.transform.SetParent(qhwA.transform, false);
+        RndReinforcementA.transform.localPosition = Vector3.zero;
+        qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
+        //强化物图卡A
+        string tukaNameA = "tuka_" + goodA.name;
+        tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
+        GameObject _tukaA = new GameObject("tukaA");
+        _tukaA.transform.SetParent(emptyRoot.transform, false);
+        _tukaA.transform.localPosition = new Vector3(2.297f, 0.565f, 0.093f);
+        tukaA.transform.SetParent(_tukaA.transform, false);
+        tukaA.transform.localPosition = Vector3.zero;
+
         //进入界面1秒后，触动小华翻开沟通本，并把字卡和图卡都粘在句带，并走到老师的面前的动画。
         Invoke("OnXiaoHuaBring", 1f);
     }
@@ -77,9 +126,9 @@ public class SpeakUpCtrlC : MonoBehaviour {
                     swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
                     swapui.speakEvent = null;
                     swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-                    //Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-                    //string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
-                    //dialog.SetDialogMessage("小华要吃" + gift + "呀。");
+                    Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+                    string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
+                    dialog.SetDialogMessage("小华要" + gift + "呀。");
 
                     //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                     Invoke("ClickTeachersHandFinal", 2f);
@@ -92,6 +141,9 @@ public class SpeakUpCtrlC : MonoBehaviour {
 
     private void ClickTeachersHandFinal()
     {
+        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        dialog.Show(false);
+
         //播放结束，触发小华接过XXX。
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();

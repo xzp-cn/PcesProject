@@ -95,9 +95,17 @@ public class SpeakUpCtrlA : MonoBehaviour
         xiaohuaAnim.PlayForward("TY_XH_NK");
     }
 
+    private void ClickFDTeachersPromptFirst()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
+    }
+
     private void RedoClickFDTeachersHandFirst()
     {
-
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击辅导老师的手");
+        CancelInvoke("ClickFDTeachersPromptFirst");
+        Invoke("ClickFDTeachersPromptFirst", 2);
     }
 
     private void OnClickFDTeacherHandFirst(ClickedObj cobj)
@@ -130,9 +138,9 @@ public class SpeakUpCtrlA : MonoBehaviour
                     swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
                     swapui.speakEvent = null;
                     swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-                    //Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-                    //string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
-                    //dialog.SetDialogMessage("小华要吃" + gift + "呀。");
+                    Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+                    string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
+                    dialog.SetDialogMessage("小华要吃" + gift + "呀。");
 
                     //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                     Invoke("ClickTeachersHandFinal", 2f);
@@ -141,13 +149,13 @@ public class SpeakUpCtrlA : MonoBehaviour
             };
             teacherAnim.PlayForward("TY_LS_JK");
 
-            
-
         }
     }
 
     private void ClickTeachersHandFinal()
     {
+        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        dialog.Show(false);
         //7. 播放结束，触发小华接过XXX。
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
