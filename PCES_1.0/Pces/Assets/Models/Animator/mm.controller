@@ -10,7 +10,7 @@ AnimatorController:
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Base Layer
+    m_Name: Base
     m_StateMachine: {fileID: 1107169817395919604}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -202,7 +202,7 @@ AnimatorStateMachine:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Base Layer
+  m_Name: Base
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102910728458293172}

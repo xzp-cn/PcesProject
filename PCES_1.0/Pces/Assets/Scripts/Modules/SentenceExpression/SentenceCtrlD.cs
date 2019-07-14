@@ -22,11 +22,11 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 item.SetActive(false);
             }
-        }            
+        }
     }
     //public bool Finished;
     private void Start()
-    {       
+    {
         Transform park = ResManager.GetPrefab("Scenes/park/park").transform;
         park.SetParent(transform);
         if (swapUI == null)
@@ -111,7 +111,7 @@ public class SentenceCtrlD : MonoBehaviour
         GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
         ka.transform.SetParent(transform);
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
-        Invoke("ClickmicroPhoneTip", 1);
+        //Invoke("ClickmicroPhoneTip", 1);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class SentenceCtrlD : MonoBehaviour
     void DBYCallback()
     {
         Debug.Log("话筒提示");
-
+        ClickmicroPhoneTip();
     }
     void ClickmicroPhoneTip()
     {
@@ -159,17 +159,20 @@ public class SentenceCtrlD : MonoBehaviour
     /// </summary>
     void WyXhZka()
     {
+        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         XH.Complete += WyXhZkaCallback;
         XH.PlayForward("XH_F_4TH_FNN");
-        ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_FNN_KA").GetLegacyAnimationOper().PlayForward("XH_F_4TH_FNN_KA");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_FNN_KA");
+        ka.transform.SetParent(transform);
+        ka.GetLegacyAnimationOper().PlayForward("XH_F_4TH_FNN_KA");
     }
     void WyXhZkaCallback()
     {
-        ClickDispatcher.Inst.EnableClick = true;
         WyClickMMHandTip();
     }
     void WyClickMMHandTip()
     {
+        ClickDispatcher.Inst.EnableClick = true;
         HighLightCtrl.GetInstance().FlashOn(mmHand);
         ChooseDo.Instance.DoWhat(5, RedoWyClickMMhand, ClickMMhandCallback);
     }
@@ -178,7 +181,7 @@ public class SentenceCtrlD : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接过物品");
+        tip.SetTipMessage("需要妈妈接过物品");
         CancelInvoke("ClickmicroPhoneTip");
         Invoke("ClickmicroPhoneTip", 2);
     }
@@ -191,7 +194,9 @@ public class SentenceCtrlD : MonoBehaviour
     {
         MM.Complete += MMGiveObjCallback;
         MM.PlayForward("MM_F_4TH_DY");
-        ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA").GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
+        ka.transform.SetParent(transform);
+        ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
     }
     void WYXhBY()
     {
@@ -202,9 +207,12 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMGiveObjCallback()
     {
+        UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         XH.Complete += WYXHJiewuCallback;
         XH.PlayForward("XH_F_4TH_JG");
-        ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA").GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
+        ka.transform.SetParent(transform);
+        ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
     }
     void WYXHJiewuCallback()
     {
@@ -249,7 +257,7 @@ public class SentenceCtrlD : MonoBehaviour
     public void Dispose()
     {
         RemoveAllListeners();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
     private void OnDestroy()
     {

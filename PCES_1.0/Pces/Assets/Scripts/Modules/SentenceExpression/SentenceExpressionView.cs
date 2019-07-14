@@ -107,7 +107,7 @@ public class SentenceExpressionView : MonoBehaviour
     {
         stDCtrl.evtFinished -= OnstDCtrlFinished;
         stDCtrl.evtRedo -= OnstDCtrlRedo;
-        stDCtrl.Dispose();
+        //stDCtrl.Dispose();
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
@@ -136,8 +136,9 @@ public class SentenceExpressionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
+        stDCtrl.Dispose();
         //通知当前阶段完成
-        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.EnhanceCommunity);
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SentenceExpression);
     }
     void RemoveListens()
     {

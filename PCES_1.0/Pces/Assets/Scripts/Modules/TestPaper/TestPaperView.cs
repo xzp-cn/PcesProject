@@ -18,13 +18,13 @@ public class TestPaperView : MonoBehaviour
         resetBtn.onClick.AddListener(OnReDo);
         nextBtn = transform.Find("final/next").GetComponent<Button>();
         nextBtn.onClick.AddListener(OnNextDo);
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Transform canvas = comUI.transform.parent;
         transform.SetParent(canvas.transform, false);
     }
     public void Init()
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
-        curIndex = 1;//测试
+        //curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
         transform.Find("bg/Image/title").GetComponent<Text>().text = paper.title;
         Transform content = transform.Find("subject/Viewport/Content");
