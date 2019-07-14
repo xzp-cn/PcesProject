@@ -12,6 +12,8 @@ public class SpeakUpView : MonoBehaviour {
     SpeakUpCtrlB spbCtrl;
     SpeakUpCtrlC spcCtrl;
 
+    TestPaperView tpv; //测试题
+
     void Start () {
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
         UnityEngine.Debug.Log("SpeakUpView::Awake(): 第四阶段 句型表达");
@@ -24,9 +26,6 @@ public class SpeakUpView : MonoBehaviour {
         spaCtrl.evtFinished += OnSpaCtrlFinished;
         spaCtrl.evtRedo += OnSpaCtrlRedo;
 
-        //dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
-        //dpcCtrl.evtFinished += OnDpcCtrlFinished;
-
         InitPersonsState();
     }
 
@@ -36,6 +35,51 @@ public class SpeakUpView : MonoBehaviour {
 
     private void OnSpaCtrlFinished()
     {
+        Debug.Log("SpeakUpView.OnSpaCtrlFinished(): 第四阶段 第一关 句型表达 下一关!!!");
+        spaCtrl.evtFinished -= OnSpaCtrlFinished;
+        spaCtrl.Dispose();
+
+        spbCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpB").GetComponent<SpeakUpCtrlB>();
+        spbCtrl.evtFinished += OnSpbCtrlFinished;
+    }
+
+    private void OnSpbCtrlFinished()
+    {
+        spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
+        spcCtrl.evtFinished += OnSpcCtrlFinished;
+    }
+
+    private void OnSpcCtrlFinished()
+    {
+        spcCtrl.evtFinished -= OnSpcCtrlFinished;
+        spcCtrl.Dispose();
+
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
+        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtRedo += OnTestPaperRedo;
+    }
+
+    void OnTestPaperRedo()
+    {
+        tpv.evtFinished -= OnTestPaperFinished;
+        tpv.evtRedo -= OnTestPaperRedo;
+        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.evtFinished += OnTestPaperFinished;
+        tpv.evtRedo += OnTestPaperRedo;
+    }
+    void OnTestPaperFinished()
+    {
+        tpv.evtFinished -= OnTestPaperFinished;
+        tpv.evtRedo -= OnTestPaperRedo;
+        tpv.Dispose();
+        //通知当前阶段完成
+        OnSpeakUpFinished();
+    }
+
+    void OnSpeakUpFinished()
+    {
+        //第四阶段完成
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SpeakUp);
     }
 
     /// <summary>

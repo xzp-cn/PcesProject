@@ -114,7 +114,7 @@ public class SpeakUpCtrlA : MonoBehaviour
         if (cobj.objname == "fdls_shou")
         {
             ChooseDo.Instance.Clicked();
-            CancelInvoke("ClickTeachersPromptFirst");
+            CancelInvoke("ClickFDTeachersPromptFirst");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickFDTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
