@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Preload.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/ClassRoom.unity
     guid: 552a19661e8dde94385391e3e29ee73a
+  - enabled: 1
+    path: Assets/Scenes/Supermarket.unity
+    guid: 1b4e4c22e0f84f145b36387b8578d53f
+  - enabled: 1
+    path: Assets/Scenes/Park.unity
+    guid: 75afbc83945853545b837a07b212224d
   m_configObjects: {}
