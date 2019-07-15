@@ -252,7 +252,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             float et = 1.03f;
             teacherAnim.timePointEvent = (t) =>
             {
-                if(t>=st && t <= et)
+                if (t >= st && t <= et)
                 {
                     teacherAnim.timePointEvent = null;
                     LSCtrl lsCtrl = PeopleManager.Instance.GetPeople("LS_BD").GetComponent<LSCtrl>();

@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 小华手上道具控制
 /// </summary>
-public class XHCtrl : MonoBehaviour {
+public class XHCtrl : MonoBehaviour
+{
     /// <summary>
     /// 小华右手图卡
     /// </summary>
@@ -28,7 +29,8 @@ public class XHCtrl : MonoBehaviour {
 
     public System.Action InitComplete;
 
-    void Start() {
+    void Start()
+    {
         r_tuka = GameObject.Find("tuka");
         r_tuka2 = GameObject.Find("tuka2");
         r_judai = GameObject.Find("XH_judai");
@@ -39,5 +41,5 @@ public class XHCtrl : MonoBehaviour {
             InitComplete();
             InitComplete = null;
         }
-	}
+    }
 }
