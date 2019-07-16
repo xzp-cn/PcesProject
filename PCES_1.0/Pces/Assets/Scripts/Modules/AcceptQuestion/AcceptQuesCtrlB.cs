@@ -19,7 +19,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     LegacyAnimationOper gtb;
     private void Awake()
     {
-        this.name = "AcceptQuesCtrlA";
+        this.name = "AcceptQuesCtrlB";
     }
     //public bool Finished;
     private void Start()

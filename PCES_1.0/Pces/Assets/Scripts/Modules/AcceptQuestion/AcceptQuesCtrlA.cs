@@ -322,13 +322,14 @@ public class AcceptQuesCtrlA : MonoBehaviour
     }
     void NextDo()
     {
+        Debug.Log("nextdo");
         Finish();
         evtFinished();
     }
     void RemoveAllListeners()
     {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        com.redoClickEvent -= NextDo;
+        com.nextClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
     }
