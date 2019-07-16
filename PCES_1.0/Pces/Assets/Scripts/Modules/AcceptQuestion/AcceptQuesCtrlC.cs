@@ -276,11 +276,15 @@ public class AcceptQuesCtrlC : MonoBehaviour
         MM.PlayForward("MM_E_3RE_DY");
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();
         ka.PlayForward("MM_E_3RE_DY_KA");
+
         XH.Complete += XHJiewuCallback;
         XH.PlayForward("XH_E_3RD_JG");
+        ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
+        ka.PlayForward("XH_E_3RD_JG_KA");
     }
     void LsGiveObjCallback()
     {
+        Debug.Log("fs");
     }
     void XHJiewuCallback()
     {
