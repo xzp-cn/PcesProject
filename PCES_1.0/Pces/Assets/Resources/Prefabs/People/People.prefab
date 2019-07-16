@@ -1492,6 +1492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4702014769645750}
   - component: {fileID: 95263868354474618}
+  - component: {fileID: 114901508663499162}
   m_Layer: 0
   m_Name: XH_BD
   m_TagString: Untagged
@@ -4973,7 +4974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1783744895151980
 GameObject:
   m_ObjectHideFlags: 1
@@ -5242,6 +5243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265931799892628}
   - component: {fileID: 95430656740071208}
+  - component: {fileID: 114731435777050410}
   m_Layer: 0
   m_Name: LS_BD
   m_TagString: Untagged
@@ -12559,6 +12561,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4c467cdd4e11b4fa0c0aba5b7b8e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114731435777050410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1844473017761538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b49cd821ad9574f840a0c3513ed93a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ls_Lf: {fileID: 1494177694199700}
+  l_guadian: {fileID: 0}
+  ls_judai: {fileID: 1019427242713650}
+  ls_judai2: {fileID: 1707355943781090}
+  ls_tuka1: {fileID: 1561550601542296}
+  ls_tuka2: {fileID: 1241411854494918}
+--- !u!114 &114901508663499162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1266861189157456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95ce7067436088429b674f0842ae0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  r_tuka: {fileID: 1923842977196760}
+  r_tuka2: {fileID: 1652711014950458}
+  r_judai: {fileID: 1141833550939426}
+  r_judai2: {fileID: 1457969859135232}
+  XH_R2: {fileID: 1053043783428148}
 --- !u!137 &137008366748331504
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

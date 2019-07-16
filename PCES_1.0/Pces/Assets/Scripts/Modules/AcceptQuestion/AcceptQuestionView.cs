@@ -111,7 +111,12 @@ public class AcceptQuestionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
+        if (aqCCtrl.gameObject != null)
+        {
+            Destroy(aqCCtrl.gameObject);
+        }
         //通知当前阶段完成
+        GameObject.Find("model_root").transform.GetChild(0).gameObject.SetActive(true);
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.AcceptQuestion);
     }
     void RemoveListens()

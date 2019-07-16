@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224492034188902852}
   - component: {fileID: 114741911387503246}
   m_Layer: 5
-  m_Name: d
+  m_Name: D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 224534343102902380}
   - component: {fileID: 114753150916398098}
   m_Layer: 5
-  m_Name: c
+  m_Name: C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 224952287148318894}
   - component: {fileID: 114688628666834956}
   m_Layer: 5
-  m_Name: b
+  m_Name: B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 224045694771170972}
   - component: {fileID: 114012109583999074}
   m_Layer: 5
-  m_Name: a
+  m_Name: A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -649,6 +649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb69265455bd0a4faef52be8698f7cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  right: {fileID: 21300000, guid: dcd36f38dc801514284343d08b16dc9f, type: 3}
+  wrong: {fileID: 21300000, guid: e8cd867e2db31a54798b53cfe72c5122, type: 3}
 --- !u!114 &114564115296840604
 MonoBehaviour:
   m_ObjectHideFlags: 1

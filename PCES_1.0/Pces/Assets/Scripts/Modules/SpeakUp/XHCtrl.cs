@@ -26,15 +26,36 @@ public class XHCtrl : MonoBehaviour
     /// 小华右手句带2
     /// </summary>
     public GameObject r_judai2;
+    /// <summary>
+    /// 小华右手接过老师递过来的物体空节点
+    /// </summary>
+    public GameObject XH_R2;
 
     public System.Action InitComplete;
 
     void Start()
     {
-        r_tuka = GameObject.Find("tuka");
-        r_tuka2 = GameObject.Find("tuka2");
-        r_judai = GameObject.Find("XH_judai");
-        r_judai2 = GameObject.Find("XH_judai_2");
+        if (r_tuka == null)
+        {
+            r_tuka = GameObject.Find("tuka");
+        }
+        if (r_tuka2 == null)
+        {
+            r_tuka2 = GameObject.Find("tuka2");
+        }
+        if (r_judai == null)
+        {
+            r_judai = GameObject.Find("XH_judai");
+        }
+        if (r_judai2 == null)
+        {
+            r_judai2 = GameObject.Find("XH_judai_2");
+        }
+
+        r_tuka.SetActive(false);
+        r_tuka2.SetActive(false);
+        r_judai.SetActive(false);
+        r_judai2.SetActive(false);
 
         if (InitComplete != null)
         {

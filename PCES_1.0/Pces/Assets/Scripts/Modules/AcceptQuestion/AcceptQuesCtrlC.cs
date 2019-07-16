@@ -21,6 +21,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GameObject.Find("model_root").transform.GetChild(0).gameObject.SetActive(false);
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");
         market.transform.SetParent(transform);
         Camera cam = transform.GetComponentInChildren<Camera>();
@@ -275,16 +276,16 @@ public class AcceptQuesCtrlC : MonoBehaviour
         MM.Complete += LsGiveObjCallback;
         MM.PlayForward("MM_E_3RE_DY");
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();
+        ka.transform.SetParent(transform);
         ka.PlayForward("MM_E_3RE_DY_KA");
-
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("XH_E_3RD_JG");
-        ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
-        ka.PlayForward("XH_E_3RD_JG_KA");
     }
     void LsGiveObjCallback()
     {
-        Debug.Log("fs");
+        XH.Complete += XHJiewuCallback;
+        XH.PlayForward("XH_E_3RD_JG");
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
+        ka.transform.SetParent(transform);
+        ka.PlayForward("XH_E_3RD_JG_KA");
     }
     void XHJiewuCallback()
     {
@@ -329,7 +330,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     public void Dispose()
     {
         RemoveAllListeners();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
     private void OnDestroy()
     {

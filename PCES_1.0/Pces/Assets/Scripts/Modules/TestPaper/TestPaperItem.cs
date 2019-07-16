@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class TestPaperItem : MonoBehaviour
 {
     public PaperItem pItem;
+    public Sprite right;
+    public Sprite wrong;
     ToggleGroup tg;
     Toggle[] togs;
     private void Awake()
@@ -21,19 +23,23 @@ public class TestPaperItem : MonoBehaviour
         for (int j = 0; j < togs.Length; j++)
         {
             togs[j].transform.Find("Label").GetComponent<Text>().text = pItem.options[j];
-            string answer = pItem.answer;
+            string answer = pItem.answer;//正确答案
+            string tName = togs[j].name;
             togs[j].onValueChanged.AddListener(delegate (bool isOn)
             {
-                OnValueChanged(isOn, answer);
+                OnValueChanged(isOn, answer, tName);
             });
         }
     }
-    void OnValueChanged(bool isOn, string answer)
+    void OnValueChanged(bool isOn, string answer, string togName)
     {
         if (isOn)
         {
             Text txt = transform.Find("question/answer").GetComponent<Text>();
             txt.text = answer;
+            Image img = transform.Find(togName + "/Background/Checkmark").GetComponent<Image>();
+            img.sprite = answer == togName ? right : wrong;
+            img.SetNativeSize();
             for (int i = 0; i < togs.Length; i++)
             {
                 togs[i].interactable = false;

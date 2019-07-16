@@ -8,21 +8,23 @@ using UnityEngine;
 public class LSCtrl : MonoBehaviour
 {
     public GameObject ls_Lf; //老师左手指
-    public GameObject l_guadian; //老师左手指挂点
+    public GameObject l_guadian; //老师左手指挂点->拿物体点
     public GameObject ls_judai; //句带
+    public GameObject ls_judai2;//句带2
     public GameObject ls_tuka1; //老师图卡1
     public GameObject ls_tuka2; //老师图卡2
 
     private void Awake()
     {
         ShowGroup(true);
-
     }
     void Start()
     {
         if (ls_judai != null)
         {
             ls_judai.SetActive(false);
+
+            ls_judai2.SetActive(false);
 
             ls_tuka1.SetActive(false);
 

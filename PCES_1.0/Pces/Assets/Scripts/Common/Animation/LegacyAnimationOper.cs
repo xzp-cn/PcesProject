@@ -47,24 +47,27 @@ public class LegacyAnimationOper : MonoBehaviour
     float timeLength;
     float currLength;
 
-    public float transitionTime = 0f;//过渡时间
+    public float transitionTime = 0f;//过渡时间-
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
-    /// <param name="clipName"></param>
+    /// <param name="clipName"></param> 
     public void PlayForward(string clipName)
     {
-        if (anim && !anim.IsPlaying(clipName))
+        if (anim)
         {
             animName = clipName;
-            anim.Play(clipName);
+            if (!anim.IsPlaying(clipName))
+            {
+                anim.Play(clipName);
+            }
             //anim.Play(clipName, 0, 0);
             timeLength = anim[clipName].length;
             IsStart = true;
         }
         else
         {
-            Debug.Log("没有找到动画");
+            Debug.Log("没有找到动画  " + clipName);
         }
 
     }

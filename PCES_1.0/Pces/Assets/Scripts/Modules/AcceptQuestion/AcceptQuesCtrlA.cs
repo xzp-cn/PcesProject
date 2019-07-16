@@ -43,6 +43,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         //FDLS.PlayForward("idle");
         FDLS.gameObject.SetActive(false);
         HighLightCtrl.GetInstance().OffAllObjs();
+        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
         GetTukaObject();
     }
     /// <summary>
@@ -50,6 +51,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
+        //随机得到一个强化物
         PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
@@ -61,29 +63,31 @@ public class AcceptQuesCtrlA : MonoBehaviour
         objectsTr.rotation = Quaternion.identity;
         objectsTr.SetParent(transform);
 
+        //设置老师旁边的强化物模型
         int objId = rfc.pData.id;//强化物
         GameObject obj = Instantiate(pObj.gameObject);
         obj.name = ((PropsTag)objId).ToString();
         obj.transform.SetParent(objectsTr);
         PropsObject curObj = obj.GetComponent<PropsObject>();
         curObj.pData = pObj.pData;
-        curObj.setPos(new Vector3(2.55f, 0.57f, -0.27f));//TODO:每个物体的位置缩放,角度,有待调整  
-        curObj.transform.localScale = Vector3.one * 0.5f;
+        curObj.setPos(new Vector3(2.5328F, 0.5698F, -0.118F));//TODO:每个物体的位置缩放,角度,有待调整  
+        curObj.transform.localScale = Vector3.one;
         Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper(); //通用沟通本
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper(); //沟通本
         gtb.name = PropsTag.TY_GTB.ToString();
         gtb.transform.SetParent(objectsTr);
         gtb.name = "goutongben";
         gtb.transform.SetParent(objectsTr);
         gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
 
-        string _tuka = "tuka_" + ((PropsTag)objId).ToString();//图卡
+        string _tuka = "tuka_" + ((PropsTag)objId).ToString();//沟通本里面图卡
         GameObject deskTuka = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(_tuka));
         deskTuka.transform.SetParent(objectsTr);
         deskTuka.name = _tuka;
         PropsObject pot = deskTuka.GetComponent<PropsObject>();
         pot.setPos(new Vector3(2.2878f, 0.57f, 0.0113f));
+        deskTuka.SetActive(false);
 
         GameObject judai = Instantiate(AcceptQuestionModel.GetInstance().GetObj((int)PropsTag.judai_woyao));
         judai.transform.SetParent(objectsTr);
@@ -91,6 +95,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         judai.transform.localPosition = new Vector3(2.27f, 0.546f, -0.177f);
         judai.name = PropsTag.judai_woyao.ToString();
         ClickmicroPhoneTip();
+
     }
     /// <summary>
     /// 辅导老师手被点击
