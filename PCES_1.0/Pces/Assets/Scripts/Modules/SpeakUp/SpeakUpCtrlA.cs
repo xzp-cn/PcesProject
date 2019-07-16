@@ -92,7 +92,7 @@ public class SpeakUpCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+        xiaohuaAnim.PlayForward("XH_D_1ST_FB");
     }
 
     private void ClickFDTeachersPromptFirst()
