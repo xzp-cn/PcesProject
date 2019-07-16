@@ -89,14 +89,14 @@ public class SpeakUpCtrlB : MonoBehaviour
             shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandFirst);
             ClickDispatcher.Inst.EnableClick = true;
-            ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
+            ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("TY_XH_NK");
+        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
     }
 
     private void OnClickteacherHandFirst(ClickedObj cobj)
     {
-        Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
+        Debug.Log("SpeakUpCtrlB.OnClickTeacherHandFirst(): " + cobj.objname);
         if (cobj.objname == "fdls_shou")
         {
             ChooseDo.Instance.Clicked();
@@ -126,10 +126,10 @@ public class SpeakUpCtrlB : MonoBehaviour
                     swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
                     Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
                     string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
-                    dialog.SetDialogMessage("小华要吃" + gift + "呀。");
+                    dialog.SetDialogMessage("小华要" + gift + "呀。");
 
                     //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
-                    Invoke("ClickTeachersHandFinal", 2f);
+                    Invoke("ClickTeachersHandSecond", 2f);
                 };
 
             };
@@ -137,28 +137,72 @@ public class SpeakUpCtrlB : MonoBehaviour
         }
     }
 
-    private void RedoClickFDTeachersHandFirst()
+    private void RedoClickTeachersHandFirst()
     {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        CancelInvoke("ClickTeachersPromptFirst");
+        Invoke("ClickTeachersPromptFirst", 2);
     }
 
-    private void ClickTeachersHandFinal()
+    private void ClickTeachersPromptFirst()
     {
-        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-        dialog.Show(false);
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+    }
 
-        //播放结束，触发小华接过XXX。
-        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        xiaohuaAnim.Complete += () =>
+    private void ClickTeachersHandSecond()
+    {
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandSecond);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSecond, null);
+    }
+
+    private void RedoClickTeachersHandSecond()
+    {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        CancelInvoke("ClickTeachersPromptSecond");
+        Invoke("ClickTeachersPromptSecond", 2);
+    }
+
+    private void ClickTeachersPromptSecond()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSecond, null);
+    }
+
+    private void OnClickteacherHandSecond(ClickedObj cobj)
+    {
+        if (cobj.objname == "shou")
         {
-            //播放结束，出现下一关和重做的按钮。
-            Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-            comUI.redoClickEvent += OnReDo;
-            comUI.nextClickEvent += OnNextDo;
-            comUI.ShowFinalUI();
-        };
-        xiaohuaAnim.PlayForward("TY_XH_JG");
+            ChooseDo.Instance.Clicked();
+            CancelInvoke("ClickTeachersPromptSecond");
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandSecond);
+            ClickDispatcher.Inst.EnableClick = false;
+            HighLightCtrl.GetInstance().FlashOff(cobj.go);
+
+            AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+            teacherAnim.Complete += () => {
+
+            };
+            teacherAnim.PlayForward("TY_LS_JK");
+
+            Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+            dialog.Show(false);
+
+            //播放结束，触发小华接过XXX。
+            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+            AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+            xiaohuaAnim.Complete += () =>
+            {
+                //播放结束，出现下一关和重做的按钮。
+                Debug.Log("SpeakUpCtrlB.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
+                comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+                comUI.redoClickEvent += OnReDo;
+                comUI.nextClickEvent += OnNextDo;
+                comUI.ShowFinalUI();
+            };
+            xiaohuaAnim.PlayForward("TY_XH_JG");
+        }
     }
 
     private void OnReDo()
