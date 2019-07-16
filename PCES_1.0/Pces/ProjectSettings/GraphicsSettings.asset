@@ -37,6 +37,25 @@ GraphicsSettings:
   - {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 17000, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 16000, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 4800000, guid: 89f2dd5e0a3a25648a5760bb724d8d69, type: 3}
+  - {fileID: 4800000, guid: d067bb2eb0dc23a438ac9ee2a80a44c4, type: 3}
+  - {fileID: 4800000, guid: 674464799b3325b47b7dd0cc097c900a, type: 3}
+  - {fileID: 4800000, guid: 8ac5056144ce05f42a8673898539c60b, type: 3}
+  - {fileID: 4800000, guid: 7163f52fe50c1b347ac41c3659a585b6, type: 3}
+  - {fileID: 4800000, guid: 3070218404d1de94c9d081d248597046, type: 3}
+  - {fileID: 4800000, guid: b0bd9de6a4f20954f9704e56568224a6, type: 3}
+  - {fileID: 4800000, guid: ce3b12ca636563c48afb814d9aeb5b90, type: 3}
+  - {fileID: 4800000, guid: 2f134f18e4841ed4dbbda16cc9e2d4c5, type: 3}
+  - {fileID: 4800000, guid: 9fc04a058c8768648a6532aa07540ca5, type: 3}
+  - {fileID: 4800000, guid: e653787ecbeea534c8c5676e7885bf0c, type: 3}
+  - {fileID: 4800000, guid: ebb25e93a38d52d42a2d9bcc83775098, type: 3}
+  - {fileID: 4800000, guid: 028326845b1c1aa4494758c320161d27, type: 3}
+  - {fileID: 4800000, guid: 29be9870b71170c42b8cbe4e9c4f3dad, type: 3}
+  - {fileID: 4800000, guid: 644c9e2f395b59f44bc4a09d3452e53d, type: 3}
+  - {fileID: 4800000, guid: 003dd0b2a764e57419ca2ad50130ba53, type: 3}
+  - {fileID: 4800000, guid: 174c46edef67ef946b59477f58a3581c, type: 3}
+  - {fileID: 4800000, guid: 003dd0b2a764e57419ca2ad50130ba53, type: 3}
+  - {fileID: 4800000, guid: ca2880183f504a5488f4c55e16c50364, type: 3}
   m_PreloadedShaders: []
   m_SpritesDefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000,
     type: 0}
