@@ -81,25 +81,36 @@ public class SpeakUpCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             //2. //播放结束，提示操作者点击教师的手，播放教师接卡的动画。
-            GameObject shou = PeopleManager.Instance.GetPeople("FDLS_BD").transform.Find("FDLS/fdls_shou").gameObject;
-            Debug.Log("SpeakUpCtrlB.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
+            GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+            Debug.Log("SpeakUpCtrlC.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
             HighLightCtrl.GetInstance().FlashOn(shou);
             shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("TY_XH_NK");
+        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
     }
 
     private void RedoClickTeachersHandFirst()
     {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        CancelInvoke("ClickTeachersPromptFirst");
+        Invoke("ClickTeachersPromptFirst", 2);
     }
+
+    private void ClickTeachersPromptFirst()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+    }
+
+
 
     private void OnClickTeacherHandFirst(ClickedObj cobj)
     {
-        Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
-        if (cobj.objname == "fdls_shou")
+        Debug.Log("SpeakUpCtrlC.OnClickTeacherHandFirst(): " + cobj.objname);
+        if (cobj.objname == "shou")
         {
             ChooseDo.Instance.Clicked();
             CancelInvoke("ClickTeachersPromptFirst");
@@ -150,7 +161,7 @@ public class SpeakUpCtrlC : MonoBehaviour {
         xiaohuaAnim.Complete += () =>
         {
             //播放结束，出现下一关和重做的按钮。
-            Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
+            Debug.Log("SpeakUpCtrlC.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
             comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
             comUI.redoClickEvent += OnReDo;
             comUI.nextClickEvent += OnNextDo;
