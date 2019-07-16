@@ -31,27 +31,64 @@ public class SpeakUpView : MonoBehaviour {
 
     private void OnSpaCtrlRedo()
     {
+        spaCtrl.evtFinished -= OnSpaCtrlFinished;
+        spaCtrl.evtRedo -= OnSpaCtrlRedo;
+        spaCtrl.Dispose();
+
+        spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
+        spaCtrl.evtFinished += OnSpaCtrlFinished;
+        spaCtrl.evtRedo += OnSpaCtrlRedo;
     }
 
     private void OnSpaCtrlFinished()
     {
         Debug.Log("SpeakUpView.OnSpaCtrlFinished(): 第四阶段 第一关 句型表达 下一关!!!");
         spaCtrl.evtFinished -= OnSpaCtrlFinished;
+        spaCtrl.evtRedo -= OnSpaCtrlRedo;
         spaCtrl.Dispose();
 
         spbCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpB").GetComponent<SpeakUpCtrlB>();
         spbCtrl.evtFinished += OnSpbCtrlFinished;
+        spbCtrl.evtRedo += OnSpbCtrlRedo;
+    }
+
+    private void OnSpbCtrlRedo()
+    {
+        spbCtrl.evtFinished -= OnSpbCtrlFinished;
+        spbCtrl.evtRedo -= OnSpbCtrlRedo;
+        spbCtrl.Dispose();
+
+        spbCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpB").GetComponent<SpeakUpCtrlB>();
+        spbCtrl.evtFinished += OnSpbCtrlFinished;
+        spbCtrl.evtRedo += OnSpbCtrlRedo;
     }
 
     private void OnSpbCtrlFinished()
     {
+        spbCtrl.evtFinished -= OnSpbCtrlFinished;
+        spbCtrl.evtRedo -= OnSpbCtrlRedo;
+        spbCtrl.Dispose();
+
         spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
         spcCtrl.evtFinished += OnSpcCtrlFinished;
+        spcCtrl.evtRedo += OnSpcCtrlFinished;
+    }
+
+    private void OnSpcCtrlRedo()
+    {
+        spcCtrl.evtFinished -= OnSpcCtrlFinished;
+        spcCtrl.evtRedo -= OnSpcCtrlRedo;
+        spcCtrl.Dispose();
+
+        spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
+        spcCtrl.evtFinished += OnSpcCtrlFinished;
+        spcCtrl.evtRedo += OnSpcCtrlRedo;
     }
 
     private void OnSpcCtrlFinished()
     {
         spcCtrl.evtFinished -= OnSpcCtrlFinished;
+        spcCtrl.evtRedo -= OnSpcCtrlFinished;
         spcCtrl.Dispose();
 
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();

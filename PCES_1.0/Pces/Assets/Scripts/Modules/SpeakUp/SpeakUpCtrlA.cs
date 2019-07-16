@@ -92,7 +92,7 @@ public class SpeakUpCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
-        xiaohuaAnim.PlayForward("TY_XH_NK");
+        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
     }
 
     private void ClickFDTeachersPromptFirst()
@@ -119,35 +119,41 @@ public class SpeakUpCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
-            //3. 播放结束，触发小华把句带递给教师的动画。
-            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-            AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-            xiaohuaAnim.PlayForward("TY_XH_DK");
-
-            //4. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
-            AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
-            teacherAnim.Complete += () =>
+            GameObject fdls = PeopleManager.Instance.GetPeople("FDLS_BD");
+            AnimationOper fdlsAnimOp = fdls.GetAnimatorOper();
+            fdlsAnimOp.Complete += () =>
             {
-                //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
-                SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
-                swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
-                swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
-                swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
-                swapui.speakEvent = () =>
+                //3. 播放结束，触发小华把句带递给教师的动画。
+                GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+                AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+                xiaohuaAnim.PlayForward("TY_XH_DK");
+
+                //4. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+                AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+                teacherAnim.Complete += () =>
                 {
-                    swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
-                    swapui.speakEvent = null;
-                    swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-                    Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-                    string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
-                    dialog.SetDialogMessage("小华要吃" + gift + "呀。");
+                    //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
+                    SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
+                    swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+                    swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
+                    swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+                    swapui.speakEvent = () =>
+                    {
+                        swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+                        swapui.speakEvent = null;
+                        swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+                        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+                        string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
+                        dialog.SetDialogMessage("小华要吃" + gift + "呀。");
 
-                    //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
-                    Invoke("ClickTeachersHandFinal", 2f);
+                        //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
+                        Invoke("ClickTeachersHandFinal", 2f);
+                    };
+
                 };
-
+                teacherAnim.PlayForward("TY_LS_JK");
             };
-            teacherAnim.PlayForward("TY_LS_JK");
+            fdlsAnimOp.PlayForward("FDLS_D_1ST_TJD");
 
         }
     }
