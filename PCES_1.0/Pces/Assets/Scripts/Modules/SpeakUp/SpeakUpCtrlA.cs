@@ -13,12 +13,17 @@ public class SpeakUpCtrlA : MonoBehaviour
     private CommonUI comUI;
     private GameObject gtNotebook; //沟通本
     private GameObject emptyRoot;
-    private GameObject judaiGobj; //句带
+    private GameObject judaiGobj; //我要句带
     private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
+    private GameObject judaiParent;  //句带
+    private GameObject _tukaA;
+    public Material tukaAMat;
 
     void Start()
     {
+        tukaAMat = new Material(Shader.Find("Standard"));
+        tukaAMat.name = "tukaA";
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if(xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
@@ -38,15 +43,19 @@ public class SpeakUpCtrlA : MonoBehaviour
         gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
         gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
         gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.276f, 0.56572f, 0.1f);
+        gtNotebook.transform.localPosition = new Vector3(2.274f, 0.56572f, 0.059f);
 
-        //生成我要句带
-        GameObject judaiParent = new GameObject("judaiParent");
+        //生成句带
+        judaiParent = ResManager.GetPrefab("Prefabs/Objects/judai");
         judaiParent.transform.SetParent(emptyRoot.transform, false);
         judaiParent.transform.localPosition = new Vector3(2.281f, 0.549f, -0.334f);
+        judaiParent.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+        //生成我要句带
         judaiGobj = GameObject.Instantiate(ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].gameObject);
         judaiGobj.GetComponent<PropsObject>().pData = ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].pData;
         judaiGobj.transform.SetParent(judaiParent.transform, false);
+        judaiGobj.transform.localPosition = new Vector3(0.083f, 0.0019f, 0);
 
         //随机一个强化物A
         GameObject goodA = SpeakUpModel.GetInstance().GetRndReinforcement();
@@ -60,11 +69,11 @@ public class SpeakUpCtrlA : MonoBehaviour
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
         tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
-        GameObject _tukaA = new GameObject("tukaA");
+        _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.297f, 0.5587f, 0.0932f);
-        tukaA.transform.localRotation = Quaternion.Euler(-4, 0, 0);
+        _tukaA.transform.localPosition = new Vector3(2.297f, 0.5535f, -0.013f);
         tukaA.transform.SetParent(_tukaA.transform, false);
+        _tukaA.transform.localRotation = Quaternion.Euler(-4, 0, 0);
 
         //1. 进入界面1秒后，触动小华翻开沟通本的动画。
         Invoke("OnXiaoHuaBring", 1f);
@@ -136,10 +145,19 @@ public class SpeakUpCtrlA : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
             GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-            fdlsObj2.GetAnimatorOper().PlayForward("FDLS_D_1ST_TJD_ZHUA");
+            AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
+            fdlsAnim.Complete += () => {
+                _tukaA.transform.localPosition = new Vector3(2.2565f, 0.5515f, -0.333f);
+            };
+            fdlsAnim.PlayForward("FDLS_D_1ST_TJD_ZHUA");
 
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+            XHCtrl xhCtrl = xiaohuaGo.GetComponent<XHCtrl>();
+            xhCtrl.r_tuka.SetActive(true);
+            tukaAMat.CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<Renderer>().materials[1]);
+            xhCtrl.r_tuka.GetComponentInChildren<Renderer>().materials[1] = tukaAMat;
+
             xiaohuaAnim.Complete += () => {
                 //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                 SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
