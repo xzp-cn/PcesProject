@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3089554f4d4575144a6810bba6e4396b
+guid: 9c6cdb574a5132644ad8a7303a17ca12
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -177,7 +177,6 @@ ModelImporter:
     400170: Wrist_R
     7400000: TY_LS_JTKJD
     9500000: //RootNode
-    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -193,55 +192,19 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'TY_LS_JTKJD' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Scapula_R' has translation animation that will
-      be discarded.\n\t'ShoulderPart2_R' is inbetween humanoid transforms and has
-      rotation animation that will be discarded.\n\t'Scapula_L' has translation animation
-      that will be discarded.\n\t'Scapula_L' is inbetween humanoid transforms and
-      has rotation animation that will be discarded.\n\t'Shoulder_L' has translation
-      animation that will be discarded.\n\t'ShoulderPart2_L' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: TY_LS_JTKJD
-      takeName: TY_LS_JTKJD
-      firstFrame: 1
-      lastFrame: 157
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -286,7 +249,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2

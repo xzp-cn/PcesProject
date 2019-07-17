@@ -97,8 +97,7 @@ public class SpeakUpCtrlA : MonoBehaviour
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
         xiaohuaAnim.PlayForward("XH_D_1ST_FB");
-        //xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
-        
+
     }
 
     private void OnGUI()
@@ -150,26 +149,26 @@ public class SpeakUpCtrlA : MonoBehaviour
             //替换小华手上图卡材质贴图
             XHCtrl xhCtrl = xiaohuaGo.GetComponent<XHCtrl>();
             xhCtrl.r_tuka.SetActive(true);
-            xhCtrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture = tukaA.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture;
-            xhCtrl.r_judai2.SetActive(true);
-            if (xhCtrl.jd_tk1 != null)
-            {
-                xhCtrl.jd_tk1.SetActive(false);
-            }
+            xhCtrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
+            //xhCtrl.r_judai2.SetActive(true);
+            //if (xhCtrl.jd_tk1 != null)
+            //{
+            //    xhCtrl.jd_tk1.SetActive(false);
+            //}
 
-            if (xhCtrl.jd_tk2 != null)
-            {
-                //图卡A
-                xhCtrl.jd_tk2.SetActive(true);
-                xhCtrl.jd_tk2.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture = tukaA.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture;
-            }
+            //if (xhCtrl.jd_tk2 != null)
+            //{
+            //    //图卡A
+            //    xhCtrl.jd_tk2.SetActive(true);
+            //    xhCtrl.jd_tk2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
+            //}
 
-            if (xhCtrl.jd_tk2 != null)
-            {
-                //我要图卡
-                xhCtrl.jd_tk3.SetActive(true);
-                xhCtrl.jd_tk3.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture = judaiGobj.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture;
-            }
+            //if (xhCtrl.jd_tk2 != null)
+            //{
+            //    //我要图卡
+            //    xhCtrl.jd_tk3.SetActive(true);
+            //    xhCtrl.jd_tk3.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponentInChildren<MeshRenderer>().materials[1]);
+            //}
 
             xiaohuaAnim.Complete += () => {
                 //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
