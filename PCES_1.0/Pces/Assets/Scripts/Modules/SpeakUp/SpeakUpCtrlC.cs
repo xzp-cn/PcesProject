@@ -27,6 +27,10 @@ public class SpeakUpCtrlC : MonoBehaviour {
                 xiaohuaGo.GetComponent<XHCtrl>().r_judai2.SetActive(false);
             };
         }
+
+        //初始化老师位置和相机位置
+        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = new Vector3(1.2f,0,0);
+        Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
         emptyRoot = new GameObject("Root");
 
         //生成沟通本
@@ -216,6 +220,10 @@ public class SpeakUpCtrlC : MonoBehaviour {
             Destroy(emptyRoot);
             emptyRoot = null;
         }
+        //恢复老师位置和相机位置
+        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = Vector3.zero;
+        Camera.main.transform.parent.localPosition = new Vector3(2.65f, 1.071f, 0.05f);
+
         Destroy(gameObject);
     }
 
