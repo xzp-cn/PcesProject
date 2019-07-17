@@ -244,6 +244,17 @@ public class AcceptQuesCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD");
+        float st = 0.3f;
+        float et = 0.31f;
+        LS.timePointEvent = (a) =>
+        {
+            if (a > st && a < et)
+            {
+                Debug.Log("接卡");
+                gtb.PlayForward("XH_D_1ST_FBNKT_HideKA");//沟通本图卡隐藏
+                XH.PlayForward("XH_D_1ST_BACK");//小华收手
+            }
+        };
 
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
         ka.name = "TY_LS_JTKJD_KA";
@@ -257,8 +268,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
         ka.PlayForward("TY_LS_JTKJD_KA");
 
-        gtb.PlayForward("XH_D_1ST_FBNKT_HideKA");//沟通本图卡隐藏
-        //XH.PlayForward("gtb");//小华回收图卡
+
     }
     /// <summary>
     /// 教师接收图卡回调
