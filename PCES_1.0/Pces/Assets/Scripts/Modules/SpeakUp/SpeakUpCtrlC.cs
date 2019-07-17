@@ -70,13 +70,6 @@ public class SpeakUpCtrlC : MonoBehaviour {
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        //if (tukaMat != null)
-        //{
-        //    //替换手上图卡材质
-        //    Material[] tukaBs = tukaB.GetComponentInChildren<MeshRenderer>().materials;
-        //    tukaMat.CopyPropertiesFromMaterial(tukaBs[1]);
-        //    XH_tkB.GetComponentInChildren<MeshRenderer>().materials[1] = tukaMat;
-        //}
 
         xiaohuaAnim.Complete += () =>
         {
