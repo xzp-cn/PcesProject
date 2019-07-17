@@ -18,12 +18,9 @@ public class SpeakUpCtrlA : MonoBehaviour
     private GameObject tukaA;  //图卡
     private GameObject judaiParent;  //句带
     private GameObject _tukaA;
-    public Material tukaAMat;
 
     void Start()
     {
-        tukaAMat = new Material(Shader.Find("Standard"));
-        tukaAMat.name = "tukaA";
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if(xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
@@ -83,13 +80,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        //if (tukaMat != null)
-        //{
-        //    //替换手上图卡材质
-        //    Material[] tukaBs = tukaB.GetComponentInChildren<MeshRenderer>().materials;
-        //    tukaMat.CopyPropertiesFromMaterial(tukaBs[1]);
-        //    XH_tkB.GetComponentInChildren<MeshRenderer>().materials[1] = tukaMat;
-        //}
+
         gtNotebook.GetAnimatorOper().PlayForward("onePaper");
 
 
@@ -106,6 +97,8 @@ public class SpeakUpCtrlA : MonoBehaviour
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
         xiaohuaAnim.PlayForward("XH_D_1ST_FB");
+        //xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+        
     }
 
     private void OnGUI()
@@ -153,10 +146,12 @@ public class SpeakUpCtrlA : MonoBehaviour
 
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+
+            //替换小华手上图卡材质贴图
             XHCtrl xhCtrl = xiaohuaGo.GetComponent<XHCtrl>();
             xhCtrl.r_tuka.SetActive(true);
-            tukaAMat.CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<Renderer>().materials[1]);
-            xhCtrl.r_tuka.GetComponentInChildren<Renderer>().materials[1] = tukaAMat;
+            xhCtrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture = tukaA.GetComponentInChildren<MeshRenderer>().materials[1].mainTexture;
+            xhCtrl.r_judai2.SetActive(true);
 
             xiaohuaAnim.Complete += () => {
                 //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”

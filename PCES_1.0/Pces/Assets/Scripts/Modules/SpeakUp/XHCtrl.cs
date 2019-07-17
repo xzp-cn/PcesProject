@@ -31,6 +31,10 @@ public class XHCtrl : MonoBehaviour
     /// </summary>
     public GameObject XH_R2;
 
+    public GameObject jd_tk1;  //句带下图卡1
+    public GameObject jd_tk2;  //句带下图卡2
+    public GameObject jd_tk3;  //句带下图卡3
+
     public System.Action InitComplete;
 
     void Start()
