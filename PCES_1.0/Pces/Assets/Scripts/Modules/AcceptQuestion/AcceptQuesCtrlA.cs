@@ -326,31 +326,48 @@ public class AcceptQuesCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-        float st = 0.21f;
-        float et = 0.23f; ;
-        LS.timePointEvent = (a) =>
+        float st = 1.02f;
+        float et = 1.05f;
+        LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a > st && a < et)
+            if (a > st && a < et)//挂载到老师手上强化物时间点
             {
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhwCtrl.gameObject);
                 qhwCtrl.SetPos();
+                //Debug.LogError("ls");
+            }
+
+            if (a > 0.8f && a < 0.83f)//小华接卡动画播放延迟一边挂载强化物
+            {
+                XH.Complete += XHJiewuCallback;
+                XH.PlayForward("TY_XH_JG");
             }
         };
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
+        st = 1.16f;
+        et = 1.19f;
+        XH.timePointEvent = (a) =>//小华接过物品
+        {
+            if (a > st && a < et)
+            {
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhwCtrl.gameObject);
+                qhwCtrl.SetPos();
+                //Debug.LogError("xh");
+            }
+        };
+
     }
     void LsGiveObjCallback()
     {
-        return;
         ShowFinalUI();
     }
     void XHJiewuCallback()
     {
-        Debug.Log("xh给物品回调用");
+        Debug.Log("xh给物品回调");
     }
     /// <summary>
     /// 显示结算界面
