@@ -179,13 +179,23 @@ public class ObjectsManager : MonoBehaviour
         }
         return objectCns[enName];
     }
+    /// <summary>
+    /// 获取老师手旁边的TY强化物
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetQHW()
+    {
+        GameObject qhw = ResManager.GetPrefab("Prefabs/QHW/TY_QHW");
+        qhw.transform.SetParent(transform, false);
+        qhw.name = "QHW";
+        return qhw;
+    }
 
     private PropsTag ConvertToPropsTag(int i)
     {
         PropsTag pt = (PropsTag)i;
         return pt;
     }
-
 }
 
 public class PropsObject : MonoBehaviour
@@ -315,60 +325,60 @@ public enum PropsTag : int
     [Description("故事书")]
     storyBooks = 10,
     /// <summary>
-    /// 图卡巧克力
+    /// 图卡苹果
     /// </summary>
-    [Description("图卡巧克力")]
-    tuka_chocolate = 11,
+    [Description("图卡苹果")]
+    tuka_apple = 11,
+    /// <summary>
+    /// 图卡香蕉
+    /// </summary>
+    [Description("图卡香蕉")]
+    tuka_banana = 12,
     /// <summary>
     /// 图卡饼干
     /// </summary
     [Description("图卡饼干")]
-    tuka_biscuit = 12,
-    /// <summary>
-    /// 图卡薯片
-    /// </summary>
-    [Description("图卡薯片")]
-    tuka_chips = 13,
-    ///// <summary>
-    ///// 图卡橙汁
-    ///// </summary>
-    //[Description("图卡橙汁")]
-    //tuka_orangeJuice = 15,
+    tuka_biscuit = 13,
     /// <summary>
     /// 图卡小汽车
     /// </summary>
     [Description("图卡小汽车")]
     tuka_car = 14,
     /// <summary>
-    /// 图卡香蕉
+    /// 图卡薯片
     /// </summary>
-    [Description("图卡香蕉")]
-    tuka_banana = 15,
+    [Description("图卡薯片")]
+    tuka_chips = 15,
     /// <summary>
-    /// 图卡苹果
+    /// 图卡巧克力
     /// </summary>
-    [Description("图卡苹果")]
-    tuka_apple = 16,
-    /// <summary>
-    /// 图卡雪饼
-    /// </summary>
-    [Description("图卡雪饼")]
-    tuka_snowBiscuit = 17,
-    /// <summary>
-    /// 图卡牛奶
-    /// </summary>
-    [Description("图卡牛奶")]
-    tuka_milk = 18,
+    [Description("图卡巧克力")]
+    tuka_chocolate = 16,
     /// <summary>
     /// 图卡帽子
     /// </summary>
     [Description("图卡帽子")]
-    tuka_hat = 19,
+    tuka_hat = 17,
     /// <summary>
     /// 图卡积木
     /// </summary>
     [Description("图卡积木")]
-    tuka_juggle = 20,
+    tuka_juggle = 18,
+    /// <summary>
+    /// 图卡牛奶
+    /// </summary>
+    [Description("图卡牛奶")]
+    tuka_milk = 19,
+    ///// <summary>
+    ///// 图卡橙汁
+    ///// </summary>
+    //[Description("图卡橙汁")]
+    //tuka_orangeJuice = 15,
+    /// <summary>
+    /// 图卡雪饼
+    /// </summary>
+    [Description("图卡雪饼")]
+    tuka_snowBiscuit = 20,
     /// <summary>
     /// 图卡故事书
     /// </summary>

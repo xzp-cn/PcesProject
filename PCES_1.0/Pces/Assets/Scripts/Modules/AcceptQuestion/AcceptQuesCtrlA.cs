@@ -17,6 +17,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
     LegacyAnimationOper gtb;
+    QHWCtrl qhwCtrl;
     private void Awake()
     {
         this.name = "AcceptQuesCtrlA";
@@ -54,7 +55,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-        Debug.Log("GetTukaObject");
+        Debug.Log("GetTukaObject  " + rfc.pData.name);
 
         Transform objectsTr = new GameObject("objectsParent").transform;
         objectsTr.localPosition = Vector3.zero;
@@ -63,48 +64,40 @@ public class AcceptQuesCtrlA : MonoBehaviour
         objectsTr.SetParent(transform);
 
         //设置老师旁边的强化物模型
-        int objId = rfc.pData.id;//强化物
-        GameObject obj = Instantiate(pObj.gameObject);
-        obj.name = ((PropsTag)objId).ToString();
-        obj.transform.SetParent(objectsTr);
-        PropsObject curObj = obj.GetComponent<PropsObject>();
-        curObj.pData = pObj.pData;
-        curObj.setPos(new Vector3(2.5328F, 0.5698F, -0.118F));//TODO:每个物体的位置缩放,角度,有待调整  
-        curObj.transform.localScale = Vector3.one;
-        Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
+        string objName = rfc.pData.name;//强化物
+        GameObject obj = Instantiate(ObjectsManager.instanse.GetQHW());
+        obj.name = "QHW";
+        obj.transform.SetParent(objectsTr, false);
+        qhwCtrl = obj.GetComponent<QHWCtrl>();
+        qhwCtrl.ShowObj(objName);
+
+        //PropsObject curObj = obj.GetComponent<PropsObject>();
+        //curObj.pData = pObj.pData;
+        //curObj.setPos(new Vector3(2.5328F, 0.5698F, -0.118F));//TODO:每个物体的位置缩放,角度,有待调整  
+        //curObj.transform.localScale = Vector3.one;
+        //Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper(); //沟通本   
         gtb.name = "XH_D_1ST_FBNKT_KA";
         gtb.transform.SetParent(transform);
-        gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
+        //gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
 
         Transform tkPar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB");
 
-        string _tuka = "tuka_" + ((PropsTag)objId).ToString();//沟通本里面图卡        
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡        
         GameObject tkSource = AcceptQuestionModel.GetInstance().GetTuKa(_tuka);
+        //Debug.Log(tkSource);
         Material[] matsSour = tkSource.GetComponent<MeshRenderer>().materials;
         Transform tkGtb = tkPar.Find("tukaB 1");
         Material[] matsTar = tkGtb.GetComponent<MeshRenderer>().materials;
         matsTar[1].CopyPropertiesFromMaterial(matsSour[1]);
+        //Debug.Log(_tuka);
 
         tkGtb = tkPar.Find("tukaB1");
         matsTar = tkGtb.GetComponent<MeshRenderer>().materials;
         matsSour = AcceptQuestionModel.GetInstance().GetObj((int)PropsTag.judai_woyao).GetComponent<MeshRenderer>().materials;
         matsTar[1].CopyPropertiesFromMaterial(matsSour[1]);
 
-
-        //GameObject deskTuka = Instantiate(tkSource);
-        //deskTuka.transform.SetParent(objectsTr);
-        //deskTuka.name = _tuka;
-        //PropsObject pot = deskTuka.GetComponent<PropsObject>();
-        //pot.setPos(new Vector3(2.2878f, 0.57f, 0.0113f));
-        //deskTuka.SetActive(false);
-
-        //GameObject judai = Instantiate(AcceptQuestionModel.GetInstance().GetObj((int)PropsTag.judai_woyao));//句带上的字卡
-        //judai.transform.SetParent(objectsTr);
-        //judai.transform.localEulerAngles = new Vector3(0, -90, 0);
-        //judai.transform.localPosition = new Vector3(2.27f, 0.546f, -0.177f);
-        //judai.name = PropsTag.judai_woyao.ToString();
         ClickmicroPhoneTip();
 
     }
@@ -244,15 +237,15 @@ public class AcceptQuesCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD");
-        float st = 0.3f;
-        float et = 0.31f;
-        LS.timePointEvent = (a) =>
+        float st = 0.02f;
+        float et = 0.05f;
+        LS.timePointEvent = (a) =>//老师借卡时间点
         {
             if (a > st && a < et)
             {
-                Debug.Log("接卡");
-                gtb.PlayForward("XH_D_1ST_FBNKT_HideKA");//沟通本图卡隐藏
-                XH.PlayForward("XH_D_1ST_BACK");//小华收手
+                //Debug.LogError("event");
+                transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+                XH.PlayForward("XH_D_1ST_BACK");//小华手收回
             }
         };
 
@@ -266,9 +259,9 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
         matWy.CopyPropertiesFromMaterial(matSourceWy);
         matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
-        ka.PlayForward("TY_LS_JTKJD_KA");
 
-
+        ka.transform.Find("tuka4").gameObject.SetActive(false);//
+        ka.PlayForward("TY_LS_JTKJD_KA");//播放老师图卡动画        图卡等待一帧隐藏
     }
     /// <summary>
     /// 教师接收图卡回调
@@ -332,13 +325,27 @@ public class AcceptQuesCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        float st = 0.21f;
+        float et = 0.23f; ;
+        LS.timePointEvent = (a) =>
+        {
+            if (a > st && a < et)
+            {
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhwCtrl.gameObject);
+                qhwCtrl.SetPos();
+            }
+        };
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
+
         XH.Complete += XHJiewuCallback;
         XH.PlayForward("TY_XH_JG");
     }
     void LsGiveObjCallback()
     {
+        return;
         ShowFinalUI();
     }
     void XHJiewuCallback()
