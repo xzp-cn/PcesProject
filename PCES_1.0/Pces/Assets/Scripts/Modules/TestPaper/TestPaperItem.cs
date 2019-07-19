@@ -9,6 +9,8 @@ public class TestPaperItem : MonoBehaviour
     public Sprite wrong;
     ToggleGroup tg;
     Toggle[] togs;
+    public int item_right = 0;//统计正确
+    public int item_wrong = 0;//统计错误
     private void Awake()
     {
         tg = GetComponent<ToggleGroup>();
@@ -39,6 +41,14 @@ public class TestPaperItem : MonoBehaviour
             txt.text = answer;
             Image img = transform.Find(togName + "/Background/Checkmark").GetComponent<Image>();
             img.sprite = answer == togName ? right : wrong;
+            if (answer == togName)
+            {
+                item_right = 1;
+            }
+            else
+            {
+                item_wrong = 1;
+            }
             img.SetNativeSize();
             for (int i = 0; i < togs.Length; i++)
             {
@@ -54,5 +64,7 @@ public class TestPaperItem : MonoBehaviour
             togs[i].isOn = false;
             togs[i].interactable = true;
         }
+        item_right = 0;
+        item_wrong = 0;
     }
 }

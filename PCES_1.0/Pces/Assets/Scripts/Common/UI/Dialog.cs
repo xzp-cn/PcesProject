@@ -22,6 +22,7 @@ public class Dialog : MonoBehaviour
         Show(true);
         upText.text = msg;
         contentText.text = msg;
+        HideCtrl(2);
     }
     /// <summary>
     /// 对话框等待一定时间消失。

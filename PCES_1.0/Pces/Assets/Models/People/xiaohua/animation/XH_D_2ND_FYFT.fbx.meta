@@ -172,6 +172,8 @@ ModelImporter:
     400164: XH_R1
     400166: XH_R2
     7400000: XH_D_2ND_FYFT
+    7400002: XH_D_2ND_FYFT_DW
+    7400004: XH_D_2ND_FYFT_JW
     9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
@@ -206,6 +208,62 @@ ModelImporter:
       name: XH_D_2ND_FYFT
       takeName: Take 001
       firstFrame: -3
+      lastFrame: 360
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: XH_D_2ND_FYFT_DW
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 330
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: XH_D_2ND_FYFT_JW
+      takeName: Take 001
+      firstFrame: 330
       lastFrame: 360
       wrapMode: 0
       orientationOffsetY: 0
