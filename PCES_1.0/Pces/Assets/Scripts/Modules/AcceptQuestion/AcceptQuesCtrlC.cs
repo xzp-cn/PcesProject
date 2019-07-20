@@ -21,7 +21,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
-        GameObject.Find("model_root").transform.GetChild(0).gameObject.SetActive(false);
+        GameObject.Find("jiaoshi").gameObject.SetActive(false);
+        PeopleManager.Instance.gameObject.SetActive(false);
+
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");
         market.transform.SetParent(transform);
         Camera cam = transform.GetComponentInChildren<Camera>();
@@ -42,6 +44,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         XH.transform.localPosition = new Vector3(2.224f, 0, 0);
         XH.transform.localEulerAngles = new Vector3(0, -154.7f, 0);
         XH.PlayForward("idle");
+        //XH.transform.localPosition = Vector3.zero;
+        //XH.transform.localScale = Vector3.zero;
 
         MM = ResManager.GetPrefab("Scenes/supermarket/MM").GetAnimatorOper();
         MM.name = "MM";
@@ -61,41 +65,13 @@ public class AcceptQuesCtrlC : MonoBehaviour
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
         Debug.Log("GetTukaObject");
 
-        Transform objectsTr = new GameObject("objectsParent").transform;
-        objectsTr.localPosition = Vector3.zero;
-        objectsTr.localScale = Vector3.one;
-        objectsTr.rotation = Quaternion.identity;
-        objectsTr.SetParent(transform);
-
-        int objId = rfc.pData.id;//强化物
-        GameObject obj = Instantiate(pObj.gameObject);
-        obj.name = ((PropsTag)objId).ToString();
-        obj.transform.SetParent(objectsTr);
-        PropsObject curObj = obj.GetComponent<PropsObject>();
-        curObj.pData = pObj.pData;
-        curObj.setPos(new Vector3(2.55f, 0.57f, -0.27f));//TODO:每个物体的位置缩放,角度,有待调整  
-        curObj.transform.localScale = Vector3.one * 0.5f;
-        Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
-
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_2ND_FYFT_KA").GetLegacyAnimationOper(); //通用沟通本
         gtb.name = PropsTag.TY_GTB.ToString();
-        gtb.transform.SetParent(objectsTr);
+        gtb.transform.SetParent(transform);
         gtb.name = "goutongben";
-        gtb.transform.SetParent(objectsTr);
+        gtb.transform.SetParent(transform);
         gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
 
-        string _tuka = "tuka_" + ((PropsTag)objId).ToString();//图卡
-        GameObject deskTuka = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(_tuka));
-        deskTuka.transform.SetParent(objectsTr);
-        deskTuka.name = _tuka;
-        PropsObject pot = deskTuka.GetComponent<PropsObject>();
-        pot.setPos(new Vector3(2.2878f, 0.57f, 0.0113f));
-
-        //GameObject judai = Instantiate(AcceptQuestionModel.GetInstance().GetObj((int)PropsTag.judai_woyao));
-        //judai.transform.SetParent(objectsTr);
-        //judai.transform.localEulerAngles = new Vector3(0, -90, 0);
-        //judai.transform.localPosition = new Vector3(2.27f, 0.546f, -0.177f);
-        //judai.name = PropsTag.judai_woyao.ToString();
         ClickmicroPhoneTip();
     }
     /// <summary>
@@ -330,7 +306,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
     public void Dispose()
     {
         RemoveAllListeners();
-        //Destroy(gameObject);
+        Destroy(gameObject);
+        GameObject.Find("jiaoshi").gameObject.SetActive(false);
+        PeopleManager.Instance.gameObject.SetActive(false);
     }
     private void OnDestroy()
     {
