@@ -43,4 +43,8 @@ public class UIFlah : MonoBehaviour
         outline.enabled = false;
         StopAllCoroutines();
     }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 }

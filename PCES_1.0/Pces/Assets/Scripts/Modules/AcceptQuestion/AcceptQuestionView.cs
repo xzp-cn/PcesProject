@@ -21,18 +21,18 @@ public class AcceptQuestionView : MonoBehaviour
         com.SetComUITitle("第五阶段 接受性问句");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
-        aqACtrl.transform.SetParent(transform);
-        aqACtrl.evtFinished += OnaqACtrlFinished;
-        aqACtrl.evtRedo += OnaqACtrlRedo;
+        //aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
+        //aqACtrl.transform.SetParent(transform);
+        //aqACtrl.evtFinished += OnaqACtrlFinished;
+        //aqACtrl.evtRedo += OnaqACtrlRedo;
         //aqBCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlB").GetComponent<AcceptQuesCtrlB>();
         //aqBCtrl.transform.SetParent(transform);
         //aqBCtrl.evtFinished += OnaqBCtrlFinished;
         //aqBCtrl.evtRedo += OnaqBCtrlRedo;
-        //aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
-        //aqCCtrl.transform.SetParent(transform);
-        //aqCCtrl.evtFinished += OnstCCtrlFinished;
-        //aqCCtrl.evtRedo += OnstCCtrlRedo;
+        aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
+        aqCCtrl.transform.SetParent(transform);
+        aqCCtrl.evtFinished += OnstCCtrlFinished;
+        aqCCtrl.evtRedo += OnstCCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -116,7 +116,8 @@ public class AcceptQuestionView : MonoBehaviour
             Destroy(aqCCtrl.gameObject);
         }
         //通知当前阶段完成
-        GameObject.Find("model_root").transform.GetChild(0).gameObject.SetActive(true);
+        GameObject.Find("jiaoshi").gameObject.SetActive(true);
+        PeopleManager.Instance.gameObject.SetActive(false);
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.AcceptQuestion);
     }
     void RemoveListens()

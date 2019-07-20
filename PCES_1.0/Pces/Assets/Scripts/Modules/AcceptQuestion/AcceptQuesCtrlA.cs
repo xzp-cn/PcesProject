@@ -235,6 +235,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD");
         float st = 0.02f;
@@ -292,7 +293,12 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("你要吃" + curObjName);
+        string playMode = "吃";
+        if (curObjName == "小汽车")
+        {
+            playMode = "玩";
+        }
+        dlog.SetDialogMessage("你要" + playMode + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -344,6 +350,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 XH.PlayForward("TY_XH_JG");
             }
         };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 

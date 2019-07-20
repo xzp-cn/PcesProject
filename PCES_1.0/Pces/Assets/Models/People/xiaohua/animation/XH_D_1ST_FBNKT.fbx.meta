@@ -235,8 +235,8 @@ ModelImporter:
     - serializedVersion: 16
       name: XH_D_1ST_FB
       takeName: Take 001
-      firstFrame: 24
-      lastFrame: 66
+      firstFrame: 1
+      lastFrame: 67
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -263,8 +263,8 @@ ModelImporter:
     - serializedVersion: 16
       name: XH_D_1ST_FBNK
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 180
+      firstFrame: 68
+      lastFrame: 187
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -291,7 +291,7 @@ ModelImporter:
     - serializedVersion: 16
       name: XH_D_1ST_BACK
       takeName: Take 001
-      firstFrame: 190
+      firstFrame: 188
       lastFrame: 221
       wrapMode: 0
       orientationOffsetY: 0

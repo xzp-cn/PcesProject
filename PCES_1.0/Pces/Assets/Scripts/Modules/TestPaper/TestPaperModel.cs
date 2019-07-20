@@ -45,23 +45,53 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
             paperList.Add(paper);
         }
     }
+
+    /// <summary>
+    /// 正确和错误计数
+    /// </summary>
+    /// <returns></returns>
+    public int TotalCount(bool right)
+    {
+        int num = 0;
+        if (right)
+        {
+            for (int i = 0; i < paperList.Count; i++)
+            {
+                num += paperList[i].rightNum;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < paperList.Count; i++)
+            {
+                num += paperList[i].wrongNum;
+            }
+        }
+        return num;
+    }
 }
 public class PaperItem//单个题目
 {
     public string question;//问题
     public string[] options = new string[4];//选项
-    public string answer;//答案
+    public string answer;//答案   
     public PaperItem()
     {
-
     }
 }
 public class Paper//阶段
 {
     public string title;
     public List<PaperItem> itemList = new List<PaperItem>();
+    public int rightNum;
+    public int wrongNum;
     public Paper()
     {
 
+    }
+    public void ResetData()
+    {
+        rightNum = 0;
+        wrongNum = 0;
     }
 }

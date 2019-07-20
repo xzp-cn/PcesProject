@@ -26,6 +26,7 @@ public class TestPaperView : MonoBehaviour
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         //curIndex = 1;//测试
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
+        paper.ResetData();
         transform.Find("bg/Image/title").GetComponent<Text>().text = paper.title;
         Transform content = transform.Find("subject/Viewport/Content");
         for (int i = 0; i < paper.itemList.Count; i++)
@@ -43,10 +44,25 @@ public class TestPaperView : MonoBehaviour
         {
             Items[i].ResetAll();
         }
+        int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        TestPaperModel.GetInstance().paperList[curIndex].ResetData();
         Redo();
     }
     private void OnNextDo()
     {
+        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();//数据清除
+        int right = 0, wrong = 0;
+        for (int i = 0; i < Items.Length; i++)
+        {
+            right += Items[i].item_right;
+            wrong += Items[i].item_wrong;
+        }
+
+        int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
+        paper.rightNum = right;
+        paper.wrongNum = wrong;
+
         Finished();
         if (evtFinished != null)
         {
