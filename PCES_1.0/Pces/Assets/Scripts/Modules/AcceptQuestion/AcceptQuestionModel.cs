@@ -13,6 +13,7 @@ public class AcceptQuestionModel : SingleTemplate<AcceptQuestionModel>
     public GameObject GetTuKa(string tukaName)
     {
         int index = (int)System.Enum.Parse(typeof(PropsTag), tukaName, true);
+        //Debug.Log(tukaName + " /  " + index);
         return ObjectsManager.instanse.propList[index].gameObject;
     }
     /// <summary>

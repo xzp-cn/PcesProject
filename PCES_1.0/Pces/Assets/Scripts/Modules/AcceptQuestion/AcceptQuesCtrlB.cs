@@ -17,6 +17,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
     LegacyAnimationOper gtb;
+    QHWCtrl qhwCtrl;//强化物控制
     private void Awake()
     {
         this.name = "AcceptQuesCtrlB";
@@ -50,46 +51,40 @@ public class AcceptQuesCtrlB : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
+        PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//随机强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-        Debug.Log("GetTukaObject");
+        Debug.Log("GetTukaObject  " + rfc.pData.name);
 
-        Transform objectsTr = new GameObject("objectsParent").transform;
-        objectsTr.localPosition = Vector3.zero;
-        objectsTr.localScale = Vector3.one;
-        objectsTr.rotation = Quaternion.identity;
-        objectsTr.SetParent(transform);
-
-        int objId = rfc.pData.id;//强化物
-        GameObject obj = Instantiate(pObj.gameObject);
-        obj.name = ((PropsTag)objId).ToString();
-        obj.transform.SetParent(objectsTr);
-        PropsObject curObj = obj.GetComponent<PropsObject>();
-        curObj.pData = pObj.pData;
-        curObj.setPos(new Vector3(2.55f, 0.57f, -0.27f));//TODO:每个物体的位置缩放,角度,有待调整  
-        curObj.transform.localScale = Vector3.one * 0.5f;
-        Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
+        //Transform objectsTr = new GameObject("objectsParent").transform;
+        //objectsTr.localPosition = Vector3.zero;
+        //objectsTr.localScale = Vector3.one;
+        //objectsTr.rotation = Quaternion.identity;
+        //objectsTr.SetParent(transform);
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_2ND_FYFT_KA").GetLegacyAnimationOper(); //通用沟通本
         gtb.name = PropsTag.TY_GTB.ToString();
-        gtb.transform.SetParent(objectsTr);
-        gtb.name = "goutongben";
-        gtb.transform.SetParent(objectsTr);
-        gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
+        gtb.transform.SetParent(transform);
+        gtb.name = "XH_D_2ND_FYFT_KA";
 
-        string _tuka = "tuka_" + ((PropsTag)objId).ToString();//图卡
-        GameObject deskTuka = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(_tuka));
-        deskTuka.transform.SetParent(objectsTr);
-        deskTuka.name = _tuka;
-        PropsObject pot = deskTuka.GetComponent<PropsObject>();
-        pot.setPos(new Vector3(2.2878f, 0.57f, 0.0113f));
+        //沟通本我要图卡
+        Material matSource = AcceptQuestionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
+        Material matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaA/tukaA 1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
 
-        //GameObject judai = Instantiate(AcceptQuestionModel.GetInstance().GetObj((int)PropsTag.judai_woyao));
-        //judai.transform.SetParent(objectsTr);
-        //judai.transform.localEulerAngles = new Vector3(0, -90, 0);
-        //judai.transform.localPosition = new Vector3(2.27f, 0.546f, -0.177f);
-        //judai.name = PropsTag.judai_woyao.ToString();
+        //沟通本强化物图卡
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        matSource = AcceptQuestionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
+        matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+
+        //设置老师旁边的强化物模型
+        string objName = rfc.pData.name;//强化物
+        GameObject obj = Instantiate(ObjectsManager.instanse.GetQHW());
+        obj.name = "QHW";
+        obj.transform.SetParent(transform, false);
+        qhwCtrl = obj.GetComponent<QHWCtrl>();
+        qhwCtrl.ShowObj(objName);
 
         ClickmicroPhoneTip();
     }
@@ -188,8 +183,8 @@ public class AcceptQuesCtrlB : MonoBehaviour
     void XhTJudai()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        XH.PlayForward("XH_D_2ND_FYFT");
-        gtb.PlayForward("XH_D_2ND_FYFT_KA");
+        XH.PlayForward("XH_D_2ND_FYFT_DW");
+        gtb.PlayForward("XH_D_2ND_FYFT_KA_DK");
         //GTB.PlayForward("onePaper");
         XH.Complete += XhTakeCardCallback;
     }
@@ -226,8 +221,34 @@ public class AcceptQuesCtrlB : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
-        LS.PlayForward("TY_LS_JK");
+        LS.PlayForward("TY_LS_JTKJD_JG");
+        float st = 0.48f;
+        float et = 0.51f;
+        LS.timePointEvent = (a) =>//老师借卡时间点
+        {
+            if (a > st && a < et)
+            {
+                //Debug.LogError("event");
+                XH.PlayForward("XH_D_2ND_FYFT_JW");//小华手收回
+                transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+            }
+        };
+
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        ka.name = "TY_LS_JTKJD_KA";
+        ka.transform.SetParent(transform);
+        ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
+        Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
+        Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
+        Material matSourceWy = transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA/XH_judaiA 1/tukaA/tukaA 1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+        Material matSourceObj = transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+        matWy.CopyPropertiesFromMaterial(matSourceWy);
+        matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
+
+        ka.transform.Find("tuka4").gameObject.SetActive(false);//
+        ka.PlayForward("TY_LS_JTKJD_KA");//播放老师图卡动画        图卡等待一帧隐藏
     }
     /// <summary>
     /// 教师接收图卡回调
@@ -296,10 +317,41 @@ public class AcceptQuesCtrlB : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        float st = 1.0f;
+        float et = 1.03f;
+        LS.timePointEvent = (a) =>//老师递给物品
+        {
+            if (a > st && a < et)//挂载到老师手上强化物时间点
+            {
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhwCtrl.gameObject);
+                qhwCtrl.SetPos();
+                //Debug.LogError("ls");
+            }
+
+            if (a > 0.8f && a < 0.83f)//小华接卡动画播放延迟一边挂载强化物
+            {
+                XH.Complete += XHJiewuCallback;
+                XH.PlayForward("TY_XH_JG");
+            }
+        };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
+
+        st = 1.16f;
+        et = 1.19f;
+        XH.timePointEvent = (a) =>//小华接过物品
+        {
+            if (a > st && a < et)
+            {
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhwCtrl.gameObject);
+                qhwCtrl.SetPos();
+                //Debug.LogError("xh");
+            }
+        };
     }
     void LsGiveObjCallback()
     {
@@ -354,3 +406,13 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
     }
 }
+
+
+
+
+
+
+
+
+
+

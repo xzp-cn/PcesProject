@@ -115,7 +115,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3089554f4d4575144a6810bba6e4396b, type: 3}
+  m_Motion: {fileID: 7400000, guid: 9c6cdb574a5132644ad8a7303a17ca12, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -146,6 +146,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1102534602860079284
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TY_LS_JTKJD_GW
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400004, guid: 3089554f4d4575144a6810bba6e4396b, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1102626804557778818
 AnimatorState:
   serializedVersion: 5
@@ -166,6 +191,56 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400002, guid: a9380d7e606207944899e1ce60437f40, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102657954634820090
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TY_LS_JTKJD 0
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102660670567077130
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TY_LS_JTKJD_JG
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 9c6cdb574a5132644ad8a7303a17ca12, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -346,10 +421,10 @@ AnimatorStateMachine:
     m_Position: {x: -228, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102401540581985826}
-    m_Position: {x: -228, y: 336, z: 0}
+    m_Position: {x: -228, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102784461860610930}
-    m_Position: {x: -228, y: 396, z: 0}
+    m_Position: {x: -228, y: 432, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102793854528675098}
     m_Position: {x: 12, y: 360, z: 0}
@@ -358,13 +433,22 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 192, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102963292375011372}
-    m_Position: {x: 240, y: 264, z: 0}
+    m_Position: {x: 240, y: 252, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102626804557778818}
     m_Position: {x: 240, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102820042822071390}
     m_Position: {x: 240, y: 312, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102660670567077130}
+    m_Position: {x: -228, y: 252, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102534602860079284}
+    m_Position: {x: -228, y: 312, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102657954634820090}
+    m_Position: {x: 924.9518, y: 271.83063, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -11,19 +11,15 @@ public class SpeakUpCtrlA : MonoBehaviour
     public System.Action evtFinished;
     public System.Action evtRedo;
     private CommonUI comUI;
-    private GameObject gtNotebook; //沟通本
     private GameObject emptyRoot;
     private GameObject judaiGobj; //我要句带
     private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
-    private GameObject judaiParent;  //句带
     private GameObject _tukaA;
-    public Material tukaAMat;
+    private GameObject FBNKT_KA_Anim;
 
     void Start()
     {
-        tukaAMat = new Material(Shader.Find("Standard"));
-        tukaAMat.name = "tukaA";
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if(xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
@@ -38,23 +34,10 @@ public class SpeakUpCtrlA : MonoBehaviour
         GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
         fdlsObj.transform.localPosition = Vector3.zero;
 
-        //生成沟通本
-        PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
-        gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
-        gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
-        gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.274f, 0.56572f, 0.059f);
-
-        //生成句带
-        judaiParent = ResManager.GetPrefab("Prefabs/Objects/judai");
-        judaiParent.transform.SetParent(emptyRoot.transform, false);
-        judaiParent.transform.localPosition = new Vector3(2.281f, 0.549f, -0.334f);
-        judaiParent.transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-        //生成我要句带
+        //生成我要句带源
         judaiGobj = GameObject.Instantiate(ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].gameObject);
         judaiGobj.GetComponent<PropsObject>().pData = ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].pData;
-        judaiGobj.transform.SetParent(judaiParent.transform, false);
+        judaiGobj.transform.SetParent(emptyRoot.transform, false);
         judaiGobj.transform.localPosition = new Vector3(0.083f, 0.0019f, 0);
 
         //随机一个强化物A
@@ -66,14 +49,21 @@ public class SpeakUpCtrlA : MonoBehaviour
         RndReinforcementA.transform.SetParent(qhwA.transform, false);
         RndReinforcementA.transform.localPosition = Vector3.zero;
         qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
-        //强化物图卡A
+        //强化物图卡A源
         string tukaNameA = "tuka_" + goodA.name;
         tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.297f, 0.5535f, -0.013f);
+        _tukaA.transform.localPosition = new Vector3(999f, 999f, 999f);
         tukaA.transform.SetParent(_tukaA.transform, false);
         _tukaA.transform.localRotation = Quaternion.Euler(-4, 0, 0);
+
+        FBNKT_KA_Anim = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA");
+        FBNKT_KA_Anim.transform.SetParent(emptyRoot.transform, false);
+        //我要图卡
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+        //强化物图卡
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
 
         //1. 进入界面1秒后，触动小华翻开沟通本的动画。
         Invoke("OnXiaoHuaBring", 1f);
@@ -83,19 +73,10 @@ public class SpeakUpCtrlA : MonoBehaviour
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        //if (tukaMat != null)
-        //{
-        //    //替换手上图卡材质
-        //    Material[] tukaBs = tukaB.GetComponentInChildren<MeshRenderer>().materials;
-        //    tukaMat.CopyPropertiesFromMaterial(tukaBs[1]);
-        //    XH_tkB.GetComponentInChildren<MeshRenderer>().materials[1] = tukaMat;
-        //}
-        gtNotebook.GetAnimatorOper().PlayForward("onePaper");
-
 
         xiaohuaAnim.Complete += () =>
         {
-            //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。
+            //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。*
             GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
             GameObject shou = fdlsObj.transform.Find("FDLS/fdls_shou").gameObject;
             //Debug.Log("SpeakUpCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。");
@@ -106,19 +87,20 @@ public class SpeakUpCtrlA : MonoBehaviour
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
         xiaohuaAnim.PlayForward("XH_D_1ST_FB");
+        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_GKA");
     }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Again"))
-        {
-            GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-            fdlsObj2.GetAnimatorOper().PlayForward("FDLS_D_1ST_TJD");
+    //private void OnGUI()
+    //{
+    //    if (GUILayout.Button("Again"))
+    //    {
+    //        GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
+    //        fdlsObj2.GetAnimatorOper().PlayForward("FDLS_D_1ST_TJD");
 
-            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-            xiaohuaGo.GetAnimatorOper().PlayForward("XH_D_1ST_FBNKT");
-        }
-    }
+    //        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+    //        xiaohuaGo.GetAnimatorOper().PlayForward("XH_D_1ST_FBNKT");
+    //    }
+    //}
 
     private void ClickFDTeachersPromptFirst()
     {
@@ -146,17 +128,10 @@ public class SpeakUpCtrlA : MonoBehaviour
 
             GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
             AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
-            fdlsAnim.Complete += () => {
-                _tukaA.transform.localPosition = new Vector3(2.2565f, 0.5515f, -0.333f);
-            };
             fdlsAnim.PlayForward("FDLS_D_1ST_TJD_ZHUA");
 
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-            XHCtrl xhCtrl = xiaohuaGo.GetComponent<XHCtrl>();
-            xhCtrl.r_tuka.SetActive(true);
-            tukaAMat.CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<Renderer>().materials[1]);
-            xhCtrl.r_tuka.GetComponentInChildren<Renderer>().materials[1] = tukaAMat;
 
             xiaohuaAnim.Complete += () => {
                 //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
@@ -178,7 +153,7 @@ public class SpeakUpCtrlA : MonoBehaviour
                 };
             };
 
-            xiaohuaAnim.PlayForward("XH_D_1ST_FB_NK");
+            xiaohuaAnim.PlayForward("XH_D_1ST_FBNK");
         }
     }
 

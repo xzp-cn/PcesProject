@@ -30,6 +30,11 @@ public class XHCtrl : MonoBehaviour
     /// 小华右手接过老师递过来的物体空节点
     /// </summary>
     public GameObject XH_R2;
+    public GameObject r_guadian;
+
+    public GameObject jd_tk1;  //句带下图卡1
+    public GameObject jd_tk2;  //句带下图卡2
+    public GameObject jd_tk3;  //句带下图卡3
 
     public System.Action InitComplete;
 
@@ -57,10 +62,23 @@ public class XHCtrl : MonoBehaviour
         r_judai.SetActive(false);
         r_judai2.SetActive(false);
 
+        if (XH_R2 != null)
+        {
+            r_guadian = new GameObject("r_guadian");
+            r_guadian.transform.SetParent(XH_R2.transform, false);
+        }
+
         if (InitComplete != null)
         {
             InitComplete();
             InitComplete = null;
+        }
+    }
+    public void SetJoint(GameObject go)
+    {
+        if (XH_R2 != null)
+        {
+            go.transform.SetParent(r_guadian.transform, false);
         }
     }
 }
