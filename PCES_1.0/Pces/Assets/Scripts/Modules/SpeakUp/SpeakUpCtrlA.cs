@@ -79,7 +79,6 @@ public class SpeakUpCtrlA : MonoBehaviour
             //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。*
             GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
             GameObject shou = fdlsObj.transform.Find("FDLS/fdls_shou").gameObject;
-            //Debug.Log("SpeakUpCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。");
             HighLightCtrl.GetInstance().FlashOn(shou);
             shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
             GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickFDTeacherHandFirst);
@@ -87,20 +86,9 @@ public class SpeakUpCtrlA : MonoBehaviour
             ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
         };
         xiaohuaAnim.PlayForward("XH_D_1ST_FB");
-        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_GKA");
+        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_OPEN");
     }
 
-    //private void OnGUI()
-    //{
-    //    if (GUILayout.Button("Again"))
-    //    {
-    //        GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-    //        fdlsObj2.GetAnimatorOper().PlayForward("FDLS_D_1ST_TJD");
-
-    //        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-    //        xiaohuaGo.GetAnimatorOper().PlayForward("XH_D_1ST_FBNKT");
-    //    }
-    //}
 
     private void ClickFDTeachersPromptFirst()
     {

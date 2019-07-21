@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 4341463057449884}
   - component: {fileID: 111869344157522404}
   m_Layer: 0
-  m_Name: XH_D_1ST_FBNKT_KA
+  m_Name: XH_D_1ST_FBNKT_ka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -687,7 +687,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: df8e44caeaebe374cae17ce6c3980bc6, type: 3}
   - {fileID: 7400002, guid: df8e44caeaebe374cae17ce6c3980bc6, type: 3}
-  - {fileID: 7400006, guid: df8e44caeaebe374cae17ce6c3980bc6, type: 3}
+  - {fileID: 7400008, guid: df8e44caeaebe374cae17ce6c3980bc6, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
