@@ -72,6 +72,13 @@ public class AnimationOper : MonoBehaviour
                 {
                     if (timePointEvent != null)
                     {
+                        float ntm = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                        float framte = anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
+                        float f = ntm - (int)ntm;
+                        int cur = Mathf.RoundToInt(framte * f * timeLength);
+                        //int total = (int)(framte * timeLength);
+                        //cur = cur % total;
+                        Debug.Log(cur);
                         timePointEvent(currLength);
                     }
                     currLength += Time.deltaTime;
@@ -98,7 +105,7 @@ public class AnimationOper : MonoBehaviour
     public void OnPause()
     {
         IsStart = false;
-        if(anim != null)
+        if (anim != null)
         {
             anim.speed = 0;
         }

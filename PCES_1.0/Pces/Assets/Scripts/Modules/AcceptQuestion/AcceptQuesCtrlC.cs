@@ -185,8 +185,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
-        float st = 1.7f;
-        float et = 1.73f;
+        float st = 1.16f;
+        float et = 1.19f;
         MM.timePointEvent = (a) =>//mama借卡时间点
         {
             Debug.Log(a);
@@ -273,6 +273,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     void LsGiveObj()
     {
         Debug.Log("妈妈给物品");
+        transform.Find("MM_E_3RD_JG_KA").gameObject.SetActive(false);
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
