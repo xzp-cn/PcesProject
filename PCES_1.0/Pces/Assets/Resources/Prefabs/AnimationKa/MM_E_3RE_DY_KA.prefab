@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 33955357667012728}
   - component: {fileID: 23028654937222740}
   m_Layer: 0
-  m_Name: qiaokeli6
+  m_Name: chocolate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 33987796080862598}
   - component: {fileID: 23113825609318978}
   m_Layer: 0
-  m_Name: shupian40
+  m_Name: chips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 33729447155280122}
   - component: {fileID: 23239874290259584}
   m_Layer: 0
-  m_Name: haitaibinggan31
+  m_Name: biscuit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 33883949991632516}
   - component: {fileID: 23317393368980140}
   m_Layer: 0
-  m_Name: xiaoche
+  m_Name: car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

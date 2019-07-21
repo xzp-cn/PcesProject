@@ -26,7 +26,11 @@ public class UIFlah : MonoBehaviour
         isFlash = true;
         outline.enabled = true;
         InitOutline(new Vector2(4, -4));
-        StartCoroutine(Flash());
+        StopAllCoroutines();
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(Flash());
+        }
     }
     IEnumerator Flash()
     {

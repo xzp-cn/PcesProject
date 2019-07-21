@@ -26,6 +26,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");
         market.transform.SetParent(transform);
+        market.name = "chaoshi";
+
         Camera cam = transform.GetComponentInChildren<Camera>();
         ClickDispatcher.Inst.cam = cam;
         Init();
@@ -60,17 +62,17 @@ public class AcceptQuesCtrlC : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
+        PropsObject pObj = ObjectsManager.instanse.GetProps(Random.Range(101, 1001) % 3);//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-        Debug.Log("GetTukaObject");
+        Debug.Log("GetTukaObject  " + rfc.pData.name);
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_2ND_FYFT_KA").GetLegacyAnimationOper(); //通用沟通本
-        gtb.name = PropsTag.TY_GTB.ToString();
-        gtb.transform.SetParent(transform);
-        gtb.name = "goutongben";
-        gtb.transform.SetParent(transform);
-        gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
+        Transform panzi = transform.Find("chaoshi/chaoshi_sw/panzi");
+        for (int i = 0; i < panzi.childCount; i++)
+        {
+            panzi.GetChild(i).gameObject.SetActive(false);
+        }
+        panzi.Find(rfc.pData.name).gameObject.SetActive(true);
 
         ClickmicroPhoneTip();
     }
@@ -136,9 +138,16 @@ public class AcceptQuesCtrlC : MonoBehaviour
         XH.transform.localEulerAngles = Vector3.zero;
         XH.Complete += XhTzkCallback;
         XH.PlayForward("XH_E_3RD_FNN");
+
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
+        ka.name = "XH_E_3RD_FNN_KA";
         ka.PlayForward("XH_E_3RD_FNN_KA");
+
+        Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//物品图卡
+        Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
+        Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
+        matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
     }
     void XhTzkCallback()
     {
@@ -176,10 +185,28 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
+        float st = 1.7f;
+        float et = 1.73f;
+        MM.timePointEvent = (a) =>//mama借卡时间点
+        {
+            Debug.Log(a);
+            if (a >= st && a < et)
+            {
+                Debug.LogError("event");
+                transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
+                                                                              //XH.PlayForward("XH_D_1ST_BACK");//小华手收回
+            }
+        };
         MM.Complete += LsJiekaCallback;
         MM.PlayForward("MM_E_3RD_JG");
+
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RD_JG_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
+        ka.name = "MM_E_3RD_JG_KA";
+        Material matSource = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
+        Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
+        matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
         ka.PlayForward("MM_E_3RD_JG_KA");
     }
     /// <summary>
@@ -203,8 +230,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈说话");
-        CancelInvoke("ClickmicroPhoneTip");
-        Invoke("ClickmicroPhoneTip", 2);
+        CancelInvoke("ClickmicroPhoneJiekaTip");
+        Invoke("ClickmicroPhoneJiekaTip", 2);
     }
     void ShowSpeakJiekaContent()
     {
@@ -249,10 +276,19 @@ public class AcceptQuesCtrlC : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
         MM.Complete += LsGiveObjCallback;
         MM.PlayForward("MM_E_3RE_DY");
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();
+
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();//mm手中卡显示
         ka.transform.SetParent(transform);
+        ka.name = "MM_E_3RE_DY_KA";
+        Transform par = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R");
+        for (int i = 0; i < par.childCount; i++)
+        {
+            par.GetChild(i).gameObject.SetActive(false);
+        }
+        par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
         ka.PlayForward("MM_E_3RE_DY_KA");
     }
     void LsGiveObjCallback()
