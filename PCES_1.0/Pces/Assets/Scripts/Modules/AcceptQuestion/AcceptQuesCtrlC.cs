@@ -41,7 +41,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
-        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+        XH = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.XH_BD)).GetAnimatorOper();
         XH.transform.SetParent(transform);
         XH.transform.localPosition = new Vector3(2.224f, 0, 0);
         XH.transform.localEulerAngles = new Vector3(0, -154.7f, 0);
@@ -185,14 +185,13 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
-        float st = 1.16f;
-        float et = 1.19f;
+        bool pass = true;
         MM.timePointEvent = (a) =>//mama借卡时间点
         {
-            Debug.Log(a);
-            if (a >= st && a < et)
+            if (a > 39 && a < 43 && pass)//给定一个帧区间范围
             {
-                Debug.LogError("event");
+                pass = false;
+                //Debug.LogError("event");
                 transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
                                                                               //XH.PlayForward("XH_D_1ST_BACK");//小华手收回
             }
@@ -278,8 +277,17 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
+        bool pass = true;
+        MM.timePointEvent = (a) =>
+        {
+            if (pass)
+            {
+
+            }
+        };
         MM.Complete += LsGiveObjCallback;
         MM.PlayForward("MM_E_3RE_DY");
+
 
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();//mm手中卡显示
         ka.transform.SetParent(transform);
@@ -289,6 +297,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         {
             par.GetChild(i).gameObject.SetActive(false);
         }
+        par.Find("judai2").gameObject.SetActive(true);
         par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
         ka.PlayForward("MM_E_3RE_DY_KA");
     }
@@ -296,9 +305,19 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         XH.Complete += XHJiewuCallback;
         XH.PlayForward("XH_E_3RD_JG");
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
-        ka.transform.SetParent(transform);
-        ka.PlayForward("XH_E_3RD_JG_KA");
+
+        string name = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name;
+        Transform par = transform.Find("MM_E_3RE_DY_KA/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R");
+        par.Find(name).gameObject.SetActive(false);
+
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        GameObject obj = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(name));
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.rotation = Quaternion.identity;
+        xhctrl.SetJointL(obj);
+        //LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
+        //ka.transform.SetParent(transform);
+        //ka.PlayForward("XH_E_3RD_JG_KA");
     }
     void XHJiewuCallback()
     {
