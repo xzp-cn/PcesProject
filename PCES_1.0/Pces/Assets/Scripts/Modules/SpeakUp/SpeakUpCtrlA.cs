@@ -74,19 +74,36 @@ public class SpeakUpCtrlA : MonoBehaviour
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
-        xiaohuaAnim.Complete += () =>
+       
+        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+        GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
+        AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
+
+        fdlsAnim.PlayForward("FDLS_D_1ST_TJD");
+        //xiaohuaAnim.PlayForward("XH_D_1ST_FB");
+        //FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_OPEN");
+        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_GKA");
+
+        float start = 2.83f;
+        float end = 2.84f;
+        xiaohuaAnim.timePointEvent = (t) =>
         {
-            //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。*
-            GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
-            GameObject shou = fdlsObj.transform.Find("FDLS/fdls_shou").gameObject;
-            HighLightCtrl.GetInstance().FlashOn(shou);
-            shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
-            GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickFDTeacherHandFirst);
-            ClickDispatcher.Inst.EnableClick = true;
-            ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
+            if (t >= start && t <= end)
+            {
+                xiaohuaAnim.OnPause();
+                fdlsAnim.OnPause();
+                FBNKT_KA_Anim.GetLegacyAnimationOper().OnPause();
+
+                //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。*
+                GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
+                GameObject shou = fdlsObj.transform.Find("FDLS/fdls_shou").gameObject;
+                HighLightCtrl.GetInstance().FlashOn(shou);
+                shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
+                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickFDTeacherHandFirst);
+                ClickDispatcher.Inst.EnableClick = true;
+                ChooseDo.Instance.DoWhat(5, RedoClickFDTeachersHandFirst, null);
+            }
         };
-        xiaohuaAnim.PlayForward("XH_D_1ST_FB");
-        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_OPEN");
     }
 
 
@@ -114,12 +131,29 @@ public class SpeakUpCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
-            GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-            AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
-            fdlsAnim.PlayForward("FDLS_D_1ST_TJD_ZHUA");
-
             GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
             AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+            GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
+            AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
+            float start = 7.7f;
+            float end = 7.8f;
+            xiaohuaAnim.timePointEvent = (t) =>
+            {
+                if (t >= start && t <= end)
+                {
+                    xiaohuaAnim.OnPause();
+                    fdlsAnim.OnPause();
+                    FBNKT_KA_Anim.GetLegacyAnimationOper().OnPause();
+                }
+            };
+
+
+            xiaohuaAnim.OnContinue();
+            fdlsAnim.OnContinue();
+            FBNKT_KA_Anim.GetLegacyAnimationOper().OnContinue();
+
+            
+
 
             xiaohuaAnim.Complete += () => {
                 //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
@@ -140,9 +174,16 @@ public class SpeakUpCtrlA : MonoBehaviour
                     Invoke("ClickTeachersHandFinal", 2f);
                 };
             };
-
-            xiaohuaAnim.PlayForward("XH_D_1ST_FBNK");
+           
         }
+    }
+
+    private void DelayFDLSZhuaAnim()
+    {
+        GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
+        AnimationOper fdlsAnim = fdlsObj2.GetAnimatorOper();
+        fdlsAnim.PlayForward("FDLS_D_1ST_TJD_ZHUA");
+        FBNKT_KA_Anim.GetLegacyAnimationOper().PlayForward("XH_D_1ST_FBNKT_DK");
     }
 
     private void ClickTeachersHandFinal()

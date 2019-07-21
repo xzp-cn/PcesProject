@@ -91,6 +91,31 @@ public class AnimationOper : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 暂停
+    /// </summary>
+    public void OnPause()
+    {
+        IsStart = false;
+        if(anim != null)
+        {
+            anim.speed = 0;
+        }
+    }
+
+    /// <summary>
+    /// 继续
+    /// </summary>
+    public void OnContinue()
+    {
+        IsStart = true;
+        if (anim != null)
+        {
+            anim.speed = 1;
+        }
+    }
+
     void OnDestroy()
     {
         IsStart = false;
