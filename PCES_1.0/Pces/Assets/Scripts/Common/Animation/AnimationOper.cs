@@ -34,10 +34,9 @@ public class AnimationOper : MonoBehaviour
     }
 
     public event System.Action Complete;
-    public System.Action<float> timePointEvent; //时间点事件,参数为当前时间
+    public System.Action<int> timePointEvent; //时间点事件,参数为当前时间
     float timeLength;
     float currLength;
-
     public float transitionTime = 0.2f;//过渡时间
     /// <summary>
     /// 从头开始播放动画剪辑
@@ -51,7 +50,16 @@ public class AnimationOper : MonoBehaviour
             //Debug.Log(animName);
             anim.CrossFade(clipName, transitionTime, 0, 0);
             //anim.Play(clipName, 0, 0);
-            timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
+            System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
+            {
+                if(ac.name == animName)
+                {
+                    timeLength = ac.length;
+                    return true;
+                }
+                return false;
+            });
+            //timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
             IsStart = true;
         }
         else
@@ -67,26 +75,37 @@ public class AnimationOper : MonoBehaviour
             var asif = anim.GetCurrentAnimatorStateInfo(0);
             if (asif.IsName("Base." + animName))
             {
-                timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
+                //timeLength = anim.GetCurrentAnimatorStateInfo(0).length;
                 if (currLength <= timeLength)
                 {
                     if (timePointEvent != null)
                     {
-                        timePointEvent(currLength);
+                        float currentFrame = asif.length * asif.normalizedTime * anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
+                        Debug.Log("---" + Mathf.RoundToInt(currentFrame));
+                        //timePointEvent(currLength);
+                        timePointEvent(Mathf.RoundToInt(currentFrame));
                     }
-                    currLength += Time.deltaTime;
+                    if (IsStart)
+                    {
+                        currLength += Time.deltaTime;
+                    }
                 }
                 else
                 {
-                    IsStart = false;
-                    IsComplete = true;
-                    currLength = 0;
-                    if (Complete != null)
+                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
                     {
-                        Complete();
-                        Complete = null;
-                        timePointEvent = null;
+                        //播放完成
+                        IsStart = false;
+                        IsComplete = true;
+                        currLength = 0;
+                        if (Complete != null)
+                        {
+                            Complete();
+                            Complete = null;
+                            timePointEvent = null;
+                        }
                     }
+
                 }
             }
         }
