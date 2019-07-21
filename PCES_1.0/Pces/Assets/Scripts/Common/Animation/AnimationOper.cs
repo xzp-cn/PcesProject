@@ -8,11 +8,13 @@ public class AnimationOper : MonoBehaviour
 {
     public Animator anim;
     public string animName;
+    public float frameRate;
     void Awake()
     {
         anim = GetComponent<Animator>();
         IsStart = false;
         IsComplete = false;
+        frameRate = 24;
     }
 
     /// <summary>
@@ -80,9 +82,8 @@ public class AnimationOper : MonoBehaviour
                 {
                     if (timePointEvent != null)
                     {
-                        float currentFrame = asif.length * asif.normalizedTime * anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
-                        Debug.Log("---" + Mathf.RoundToInt(currentFrame));
-                        //timePointEvent(currLength);
+                        float currentFrame = asif.length * asif.normalizedTime * frameRate;
+                        //Debug.Log("---" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate);
                         timePointEvent(Mathf.RoundToInt(currentFrame));
                     }
                     if (IsStart)
