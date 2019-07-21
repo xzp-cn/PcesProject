@@ -224,11 +224,11 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD_JG");
-        float st = 0.48f;
-        float et = 0.51f;
+
+        bool passJG = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > st && a < et)
+            if (a > 21 && a < 25)
             {
                 //Debug.LogError("event");
                 XH.PlayForward("XH_D_2ND_FYFT_JW");//小华手收回
@@ -318,20 +318,23 @@ public class AcceptQuesCtrlB : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-        float st = 1.0f;
-        float et = 1.03f;
+
+        bool pass = true;
+        bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a > st && a < et)//挂载到老师手上强化物时间点
+            if (a > 25 && a < 30 && pass)//挂载到老师手上强化物时间点
             {
+                pass = false;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhwCtrl.gameObject);
                 qhwCtrl.SetPos();
                 //Debug.LogError("ls");
             }
 
-            if (a > 0.8f && a < 0.83f)//小华接卡动画播放延迟一边挂载强化物
+            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟一边挂载强化物
             {
+                passXh = false;
                 XH.Complete += XHJiewuCallback;
                 XH.PlayForward("TY_XH_JG");
             }
@@ -340,12 +343,12 @@ public class AcceptQuesCtrlB : MonoBehaviour
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 
-        st = 1.16f;
-        et = 1.19f;
+        bool passJG = true;
         XH.timePointEvent = (a) =>//小华接过物品
         {
-            if (a > st && a < et)
+            if (a > 40 && a < 45 && passJG)
             {
+                passJG = false;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                 xhCtrl.SetJoint(qhwCtrl.gameObject);
                 qhwCtrl.SetPos();
