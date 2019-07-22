@@ -146,10 +146,10 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = true;
             ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
             tukaB.SetActive(false);
-            XH_tkB.SetActive(true); //显示小华手上图卡
+            //XH_tkB.SetActive(true); //显示小华手上图卡
 
         };
-        xiaohuaAnim.PlayForward("TY_XH_NK");
+        xiaohuaAnim.PlayForward("TY_XH_NKDK");
     }
 
     private void ClickTeachersPromptFirst()
