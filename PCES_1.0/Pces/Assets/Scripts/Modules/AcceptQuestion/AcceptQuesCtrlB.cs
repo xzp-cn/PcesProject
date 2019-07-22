@@ -52,7 +52,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     void GetTukaObject()
     {
         PropsObject pObj = AcceptQuestionModel.GetInstance().GetObj(PropsType.reinforcement);//随机强化物
-        Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
+        Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
         Debug.Log("GetTukaObject  " + rfc.pData.name);
 
@@ -73,7 +73,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
 
         //沟通本强化物图卡
-        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡
         matSource = AcceptQuestionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
         matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
@@ -104,7 +104,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     /// 点击话筒
     /// </summary>
     /// <param name="cobj"></param>
-    /// 
+    ///
     void ClickmicroPhoneTip()
     {
         ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
@@ -225,7 +225,6 @@ public class AcceptQuesCtrlB : MonoBehaviour
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD_JG");
 
-        bool passJG = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
             if (a > 21 && a < 25)
@@ -325,7 +324,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
             if (a > 25 && a < 30 && pass)//挂载到老师手上强化物时间点
             {
                 pass = false;
-                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
                 lsctrl.SetJoint(qhwCtrl.gameObject);
                 qhwCtrl.SetPos();
                 //Debug.LogError("ls");
