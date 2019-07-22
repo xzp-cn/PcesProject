@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Animator 动画播放控制
@@ -35,7 +36,35 @@ public class AnimationOper : MonoBehaviour
         set;
     }
 
-    public event System.Action Complete;
+    /// <summary>
+    /// 释放完成绑定事件
+    /// </summary>
+    private List<System.Action> _BindList = new List<System.Action>();
+    private event System.Action _complete;
+    public event System.Action Complete
+    {
+        add
+        {
+            ClearCompleteEvent();
+            _complete += value;
+            _BindList.Add(value);
+        }
+
+        remove
+        {
+            _complete -= value;
+        }
+    }
+
+    private void ClearCompleteEvent()
+    {
+        for(int i = 0; i < _BindList.Count; i++)
+        {
+            _complete -= _BindList[i];
+        }
+        _BindList.Clear();
+    }
+
     public System.Action<int> timePointEvent; //时间点事件,参数为当前时间
     float timeLength;
     float currLength;
@@ -102,10 +131,10 @@ public class AnimationOper : MonoBehaviour
                         IsStart = false;
                         IsComplete = true;
                         currLength = 0;
-                        if (Complete != null)
+                        if (_complete != null)
                         {
-                            Complete();
-                            Complete = null;
+                            _complete();
+                            _complete = null;
                             timePointEvent = null;
                         }
                     }
@@ -143,7 +172,7 @@ public class AnimationOper : MonoBehaviour
     {
         IsStart = false;
         IsComplete = false;
-        Complete = null;
+        _complete = null;
         timePointEvent = null;
     }
 }
