@@ -16,10 +16,10 @@ public class SentenceCtrlB : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
-    AnimationOper gtb;
+    LegacyAnimationOper gtb;
     private void Awake()
     {
-        this.name = "SentenceCtrlA";
+        this.name = "SentenceCtrB";
     }
     //public bool Finished;
     private void Start()
@@ -55,57 +55,38 @@ public class SentenceCtrlB : MonoBehaviour
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.neutralStimulator);//中性刺激物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-        Debug.Log("GetTukaObject");
-        Transform objectsTr = new GameObject("objectsParent").transform;
-        objectsTr.localPosition = Vector3.zero;
-        objectsTr.localScale = Vector3.one;
-        objectsTr.rotation = Quaternion.identity;
-        objectsTr.SetParent(transform);
+        Debug.Log("GetTukaObject  " + rfc.pData.name);
 
-        int objId = rfc.pData.id;
-        GameObject obj = Instantiate(pObj.gameObject);
-        obj.name = ((PropsTag)objId).ToString();
-        obj.transform.SetParent(objectsTr);
-        PropsObject curObj = obj.GetComponent<PropsObject>();
-        curObj.pData = pObj.pData;
-        curObj.setPos(new Vector3(2.55f, 0.57f, -0.27f));//TODO:每个物体的位置缩放,角度,有待调整  
-        curObj.transform.localScale = Vector3.one * 0.5f;
-        Debug.Log(curObj.pData.name_cn + "    " + curObj.pData.name);
-
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetAnimatorOper();
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();
         gtb.name = PropsTag.TY_GTB.ToString();
-        gtb.transform.SetParent(objectsTr);
-        gtb.name = "goutongben";
-        gtb.transform.SetParent(objectsTr);
-        gtb.transform.localPosition = new Vector3(-0.048f, 0, -0.373f);
+        gtb.transform.SetParent(transform);
+        gtb.name = "XH_D_1ST_FBNKT_ka";
+        gtb.transform.SetParent(transform);
 
-        string _tuka = "tuka_" + ((PropsTag)objId).ToString();
-        GameObject deskTuka = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(_tuka));
-        deskTuka.transform.SetParent(objectsTr);
-        deskTuka.name = _tuka;
-        PropsObject pot = deskTuka.GetComponent<PropsObject>();
-        pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-        GameObject judai = Instantiate(SentenceExpressionModel.GetInstance().GetObj((int)PropsTag.judai_wokanjian));
-        judai.transform.SetParent(objectsTr);
-        judai.transform.localEulerAngles = new Vector3(0, -90, 0);
-        judai.transform.localPosition = new Vector3(2.27f, 0.546f, -0.177f);
-        judai.name = PropsTag.judai_wokanjian.ToString();
+        //沟通本我看见图卡
+        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
+        Material matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+
+        //沟通本之中性刺激物图卡
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
+        matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+
+        //设置老师旁边的中性刺激物模型
+        string objName = rfc.pData.name;//
+        GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
+        obj.name = "QHW";
+        obj.transform.SetParent(transform, false);
+        obj.transform.localPosition = new Vector3(2.572f, 0.578f, 0.299f);
+        obj.transform.localScale = Vector3.one * 0.3f;
+        //qhwCtrl = obj.GetComponent<QHWCtrl>();
+        //qhwCtrl.ShowObj(objName);
 
         LS.Complete += ClickmicroPhoneTip;
         LS.PlayForward("LS_E_1ST_ZB");
         //Debug.Log("ls");
-    }
-    /// <summary>
-    /// 辅导老师手被点击
-    /// </summary>
-    /// <param name="cobj"></param>
-    void ClickFdlsCallBack(ClickedObj cobj)
-    {
-        Debug.Log("点中 " + cobj.objname);
-        if (cobj.objname == "fdls_shou")
-        {
-            ChooseDo.Instance.Clicked();
-        }
     }
     /// <summary>
     /// 点击话筒
@@ -191,17 +172,37 @@ public class SentenceCtrlB : MonoBehaviour
     void XhTJudai()
     {
         ClickDispatcher.Inst.EnableClick = false;
+
+        bool passxh = true;
+        XH.timePointEvent = (b) =>
+        {
+            if (b > 184 && b < 189 && passxh)
+            {
+                passxh = false;
+                XH.OnPause();
+                XhTakeCardCallback();
+            }
+        };
+        //XH.Complete += XhTakeCardCallback;
         XH.PlayForward("XH_D_1ST_FBNKT");
-        gtb.PlayForward("XH_D_1ST_FBNKT_ka");
-        //GTB.PlayForward("onePaper");
-        XH.Complete += XhTakeCardCallback;
+        //
+        bool passgtb = true;
+        gtb.framePointEvent = (b) =>
+        {
+            if (b > 175 && b < 180 && passgtb)
+            {
+                passgtb = false;
+                gtb.OnPause();
+            }
+        };
+        gtb.PlayForward("XH_D_1ST_FBNKT_KA");
     }
     /// <summary>
     /// 小华拿卡递卡回调
     /// </summary>
     void XhTakeCardCallback()
     {
-        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
+        //GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         ClickDispatcher.Inst.EnableClick = true;
         ClickLsHandJiekaTip();
