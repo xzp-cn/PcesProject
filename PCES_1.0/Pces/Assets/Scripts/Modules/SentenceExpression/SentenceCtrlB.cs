@@ -33,7 +33,7 @@ public class SentenceCtrlB : MonoBehaviour
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
             //swapUI.chooseEvent += ChooseBtnClickCallback;
             swapUI.speakEvent += SpeakBtnClickCallback;
-            swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+            swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
@@ -79,7 +79,7 @@ public class SentenceCtrlB : MonoBehaviour
         GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
         obj.name = "QHW";
         obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.572f, 0.578f, 0.299f);
+        obj.transform.localPosition = new Vector3(2.587f, 0.578f, 0.249f);
         obj.transform.localScale = Vector3.one * 0.3f;
         //qhwCtrl = obj.GetComponent<QHWCtrl>();
         //qhwCtrl.ShowObj(objName);
@@ -96,6 +96,7 @@ public class SentenceCtrlB : MonoBehaviour
     void ClickmicroPhoneTip()
     {
         ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
     void RedoLsSpeak()
@@ -230,8 +231,35 @@ public class SentenceCtrlB : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
-        LS.PlayForward("TY_LS_JK");
+        LS.PlayForward("TY_LS_JTKJD_JG");
+
+        bool passJG = true;
+        LS.timePointEvent = (a) =>//老师借卡时间点
+        {
+            if (a > 19 && a < 23 && passJG)
+            {
+                //Debug.LogError("event");
+                passJG = false;
+                XH.OnContinue();//小华手收回
+                transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+            }
+        };
+
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        ka.name = "TY_LS_JTKJD_KA";
+        ka.transform.SetParent(transform);
+        ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
+        Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
+        Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
+        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+        matWy.CopyPropertiesFromMaterial(matSourceWy);
+        matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
+
+        ka.transform.Find("tuka4").gameObject.SetActive(false);//
+        ka.PlayForward("TY_LS_JTKJD_KA");//播放老师图卡动画        图卡等待一帧隐藏
     }
     /// <summary>
     /// 教师接收图卡回调
@@ -295,10 +323,42 @@ public class SentenceCtrlB : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        bool pass = true;
+        bool passXh = true;
+        Transform qhw = transform.Find("QHW");
+        LS.timePointEvent = (a) =>//老师递给物品
+        {
+            if (a > 25 && a < 30 && pass)//挂载到老师手上强化物时间点
+            {
+                pass = false;
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("ls");
+            }
+
+            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟
+            {
+                passXh = false;
+                XH.Complete += XHJiewuCallback;
+                XH.PlayForward("TY_XH_JG");
+            }
+        };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
+
+        bool passJG = true;
+        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
+        {
+            if (a > 40 && a < 45 && passJG)
+            {
+                passJG = false;
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("xh");
+            }
+        };
     }
     void LsGiveObjCallback()
     {
