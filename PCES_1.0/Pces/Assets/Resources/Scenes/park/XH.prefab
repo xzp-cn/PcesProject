@@ -410,7 +410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1269662466533762
 GameObject:
   m_ObjectHideFlags: 1
@@ -1621,6 +1621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4452812260855514}
   - component: {fileID: 95770319905771556}
+  - component: {fileID: 114853282733944918}
   m_Layer: 0
   m_Name: XH
   m_TagString: Untagged
@@ -3473,6 +3474,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114853282733944918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1999086586964472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95ce7067436088429b674f0842ae0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  r_tuka: {fileID: 1379966137947940}
+  r_tuka2: {fileID: 1977115243320856}
+  r_judai: {fileID: 1828262259469832}
+  r_judai2: {fileID: 1318594539223326}
+  XH_R2: {fileID: 1618441528673066}
+  XH_L1: {fileID: 1498878582631220}
+  r_guadian: {fileID: 0}
+  l_guadian: {fileID: 0}
+  jd_tk1: {fileID: 1559963919524874}
+  jd_tk2: {fileID: 1920834477215618}
+  jd_tk3: {fileID: 1133193998904518}
 --- !u!137 &137006008283367652
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

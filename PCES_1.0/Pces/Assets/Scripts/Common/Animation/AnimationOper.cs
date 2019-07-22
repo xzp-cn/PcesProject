@@ -51,7 +51,9 @@ public class AnimationOper : MonoBehaviour
             animName = clipName;
             //Debug.Log(animName);  
             currLength = 0;
-            anim.CrossFade(clipName, transitionTime, 0, 0);
+            IsStart = false;
+            //anim.CrossFade(clipName, transitionTime, 0, 0);
+            anim.Play(clipName, 0, 0);
             System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
             {
                 if (ac.name == animName)
@@ -82,6 +84,7 @@ public class AnimationOper : MonoBehaviour
                 {
                     if (timePointEvent != null)
                     {
+                        //Debug.LogError(asif.normalizedTime);
                         float currentFrame = asif.length * asif.normalizedTime * frameRate;
                         //Debug.Log("---" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate);
                         timePointEvent(Mathf.RoundToInt(currentFrame));
@@ -93,7 +96,7 @@ public class AnimationOper : MonoBehaviour
                 }
                 else
                 {
-                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
+                    //if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
                     {
                         //播放完成
                         IsStart = false;

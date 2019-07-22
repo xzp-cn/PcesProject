@@ -360,7 +360,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         evtRedo();
     }
     public void Dispose()
-    {
+    { 
         RemoveAllListeners();
         Destroy(gameObject);
 

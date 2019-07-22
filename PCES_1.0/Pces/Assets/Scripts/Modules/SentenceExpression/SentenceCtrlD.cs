@@ -18,7 +18,7 @@ public class SentenceCtrlD : MonoBehaviour
         PeopleManager.Instance.gameObject.SetActive(false);
         foreach (GameObject item in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
         {
-            if (item.name == "model_root")
+            if (item.name == "jiaoshi")
             {
                 item.SetActive(false);
             }
@@ -39,13 +39,16 @@ public class SentenceCtrlD : MonoBehaviour
         }
         MM = ResManager.GetPrefab("Scenes/park/MM").GetAnimatorOper();
         MM.transform.SetParent(park);
+
         XH = ResManager.GetPrefab("Scenes/park/XH").GetAnimatorOper();
         XH.transform.SetParent(park);
+
         LegacyAnimationOper dog = ResManager.GetPrefab("Scenes/park/dog").GetLegacyAnimationOper();
         dog.transform.SetParent(park);
         dog.transform.localScale = Vector3.one * 2;
         dog.PlayForward("idle");
         dog.SetWrapMode = WrapMode.Loop;
+
         MM.PlayForward("idle");
         //XH.PlayForward("idle");
         //XH.PlayForward("XH_F_4TH_FNN");

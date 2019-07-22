@@ -166,7 +166,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > 19 && a < 23)
+            if (a > 19 && a < 21)
             {
                 //Debug.LogError("event");
                 LS.timePointEvent = null;
@@ -263,7 +263,7 @@ public class SentenceCtrlC : MonoBehaviour
         bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a > 25 && a < 30)//挂载到老师手上强化物时间点
+            if (a > 25 && a < 27)//挂载到老师手上强化物时间点
             {
                 LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
@@ -271,7 +271,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟
+            if (a > 18 && a < 20 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.Complete += XHJiewuCallback;
@@ -284,7 +284,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
         {
-            if (a > 40 && a < 45)
+            if (a > 40 && a < 42)
             {
                 XH.timePointEvent = null;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
@@ -556,7 +556,7 @@ public class SentenceCtrlC : MonoBehaviour
         bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a > 25 && a < 30)//挂载到老师手上强化物时间点
+            if (a > 25 && a < 27)//挂载到老师手上强化物时间点
             {
                 LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
@@ -564,12 +564,14 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟
+            if (a > 18&& a < 20 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
+                XH.timePointEvent = null;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b > 40 && b < 45)
+                    Debug.Log(b);
+                    if (b > 40 && b < 42)//卡在一帧，多帧updae -多次进入该方法-多次执行覆盖，B参数用的上一次
                     {
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();

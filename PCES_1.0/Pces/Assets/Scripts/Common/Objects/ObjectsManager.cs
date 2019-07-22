@@ -125,7 +125,7 @@ public class ObjectsManager : MonoBehaviour
         po.pData = new PropsData(tag.ToString(), startIndex, PropsType.others, GetCnNameOfObject(tag.ToString()));
 
         startIndex++;
-        string[] judais = new string[] { "judai_woyao", "judai_wokanjian" };
+        string[] judais = new string[] { "judai_woyao", "judai_wokanjian", "tuka_shumu", "tuka_hua", "tuka_xiaogou" };
         for (int i = 0; i < judais.Length; i++)
         {
             Texture texture = ResManager.GetTexture("Images/tuka/" + judais[i]);
@@ -396,4 +396,10 @@ public enum PropsTag : int
     judai_woyao = 23,
     [Description("judai_wokanjian")]
     judai_wokanjian = 24,
+    [Description("图卡树木")]
+    tuka_shumu = 25,
+    [Description("图卡花")]
+    tuka_hua=26,
+    [Description("图卡小狗")]
+    tuka_xiaogou=27,
 }
