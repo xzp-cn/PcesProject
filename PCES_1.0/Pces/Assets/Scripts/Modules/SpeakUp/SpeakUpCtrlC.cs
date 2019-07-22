@@ -11,13 +11,17 @@ public class SpeakUpCtrlC : MonoBehaviour {
     public System.Action evtRedo;
     private CommonUI comUI;
     private GameObject emptyRoot;
-    private GameObject gtNotebook; //沟通本
     private GameObject judaiGobj; //句带
     private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
+    private GameObject FBNKT_KA_Anim;
+    private AnimationOper xiaohuaAnim;
+    private LegacyAnimationOper FBNKT_KA_AnimOper;
+    private AnimationOper LS;
 
     void Start () {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
+        
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
             xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () => {
@@ -32,13 +36,6 @@ public class SpeakUpCtrlC : MonoBehaviour {
         PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = new Vector3(1.2f,0,0);
         Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
         emptyRoot = new GameObject("Root");
-
-        //生成沟通本
-        PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
-        gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
-        gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
-        gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.276f, 0.56572f, 0.1f);
 
         //生成我要句带
         GameObject judaiParent = new GameObject("judaiParent");
@@ -62,9 +59,21 @@ public class SpeakUpCtrlC : MonoBehaviour {
         tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
         GameObject _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.297f, 0.565f, 0.093f);
+        _tukaA.transform.localPosition = new Vector3(999f, 999f, 999f);
         tukaA.transform.SetParent(_tukaA.transform, false);
         tukaA.transform.localPosition = Vector3.zero;
+
+        FBNKT_KA_Anim = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA");
+        FBNKT_KA_Anim.transform.SetParent(emptyRoot.transform, false);
+        //我要图卡
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+        //强化物图卡
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
+
+        PeopleManager.Instance.GetPeople("FDLS_BD").SetActive(false);
+
+        //xiaohuaGo.transform.localScale = Vector3.zero;
+        xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
         //进入界面1秒后，触动小华翻开沟通本，并把字卡和图卡都粘在句带，并走到老师的面前的动画。
         Invoke("OnXiaoHuaBring", 1f);
@@ -72,21 +81,57 @@ public class SpeakUpCtrlC : MonoBehaviour {
 
     void OnXiaoHuaBring()
     {
-        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+        int start0 = 160;
+        int end0 = 161;
+        xiaohuaAnim.timePointEvent = (t) => {
+            if (t >= start0 && t <= end0)
+            {
+                xiaohuaAnim.timePointEvent = null;
 
-        xiaohuaAnim.Complete += () =>
-        {
-            //2. //播放结束，提示操作者点击教师的手，播放教师接卡的动画。
-            GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-            Debug.Log("SpeakUpCtrlC.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
-            HighLightCtrl.GetInstance().FlashOn(shou);
-            shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
-            GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
-            ClickDispatcher.Inst.EnableClick = true;
-            ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+                FBNKT_KA_AnimOper = FBNKT_KA_Anim.GetLegacyAnimationOper();
+                FBNKT_KA_AnimOper.PlayForward("XH_D_1ST_FBNKT_GKA");
+
+                int start = 287;
+                int end = 288;
+                xiaohuaAnim.timePointEvent = (tt) =>
+                {
+                    if (tt >= start && tt <= end)
+                    {
+                        xiaohuaAnim.timePointEvent = null;
+                        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                        xhctrl.r_judai2.SetActive(true);
+                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_1").GetComponent<MeshRenderer>().enabled = false;
+                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_2").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_3").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
+
+
+                        int start1 = 449;
+                        int end1 = 450;
+                        xiaohuaAnim.timePointEvent = (ts) =>
+                        {
+                            if(ts >= start1 && ts <= end1)
+                            {
+                                xiaohuaAnim.timePointEvent = null;
+                                xiaohuaAnim.OnPause();
+
+                                //2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+                                GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+                                Debug.Log("SpeakUpCtrlC.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
+                                HighLightCtrl.GetInstance().FlashOn(shou);
+                                shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
+                                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+                                ClickDispatcher.Inst.EnableClick = true;
+                                ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
+                            }
+                           
+                        };
+                    }
+                };
+            }
         };
-        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+
+  
+        xiaohuaAnim.PlayForward("XH_D_3RD_ZGJD");
     }
 
     private void RedoClickTeachersHandFirst()
@@ -115,56 +160,120 @@ public class SpeakUpCtrlC : MonoBehaviour {
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
+            LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
+
             //3. 播放结束，触发小华把句带递给教师的动画。
-            GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-            AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-            xiaohuaAnim.PlayForward("TY_XH_DK");
-
-            //4. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
-            AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
-            teacherAnim.Complete += () =>
+            int st = 22;
+            int et = 24;
+            LS.timePointEvent = (a) =>//老师接卡时间点
             {
-                //3. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
-                SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
-                swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
-                swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
-                swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
-                swapui.speakEvent = () =>
+                if (a > st && a < et)
                 {
-                    swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
-                    swapui.speakEvent = null;
-                    swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-                    Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-                    string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
-                    dialog.SetDialogMessage("小华要" + gift + "呀。");
+                    LS.timePointEvent = null;
+                    XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                    xhctrl.r_judai2.SetActive(false);
+                    xiaohuaAnim.OnContinue();
 
-                    //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
-                    Invoke("ClickTeachersHandFinal", 2f);
-                };
+                    //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
+                    SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
+                    swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+                    swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
+                    swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+                    swapui.speakEvent = () =>
+                    {
+                        swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+                        swapui.speakEvent = null;
+                        swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+                        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+                        string gift = RndReinforcementA.GetComponent<PropsObject>().pData.name_cn;
+                        dialog.SetDialogMessage("小华要" + gift + "呀。");
 
+                        //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
+                        Invoke("ClickTeachersHandSecond", 2f);
+                    };
+                }
             };
-            teacherAnim.PlayForward("TY_LS_JK");
+
+            LS.PlayForward("TY_LS_JTKJD_JG");
         }
     }
 
-    private void ClickTeachersHandFinal()
+    private void ClickTeachersHandSecond()
     {
-        Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-        dialog.Show(false);
+        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+        HighLightCtrl.GetInstance().FlashOn(shou);
+        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandSecond);
+        ClickDispatcher.Inst.EnableClick = true;
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSecond, null);
+    }
 
-        //播放结束，触发小华接过XXX。
-        GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
-        xiaohuaAnim.Complete += () =>
+    private void RedoClickTeachersHandSecond()
+    {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("请点击老师的手");
+        CancelInvoke("ClickTeachersPromptSecond");
+        Invoke("ClickTeachersPromptSecond", 2);
+    }
+
+    private void ClickTeachersPromptSecond()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSecond, null);
+    }
+
+    private void OnClickteacherHandSecond(ClickedObj cobj)
+    {
+        if (cobj.objname == "shou")
         {
-            //播放结束，出现下一关和重做的按钮。
-            Debug.Log("SpeakUpCtrlC.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-            comUI.redoClickEvent += OnReDo;
-            comUI.nextClickEvent += OnNextDo;
-            comUI.ShowFinalUI();
-        };
-        xiaohuaAnim.PlayForward("TY_XH_JG");
+            Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+            dialog.Show(false);
+
+            ChooseDo.Instance.Clicked();
+            CancelInvoke("ClickTeachersPromptSecond");
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandSecond);
+            ClickDispatcher.Inst.EnableClick = false;
+            HighLightCtrl.GetInstance().FlashOff(cobj.go);
+
+            int st = 37;
+            int et = 39;
+            LS.timePointEvent = (a) =>//老师递给物品
+            {
+                if (a > st && a < et)//挂载到老师手上强化物时间点
+                {
+                    LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                    lsctrl.SetJoint(RndReinforcementA);
+                    //Debug.LogError("ls");
+                }
+
+                if (a > 45 && a < 47)//小华接卡动画播放延迟一边挂载强化物
+                {
+                    LS.Complete += () =>
+                    {
+                        //播放结束，出现下一关和重做的按钮。
+                        Debug.Log("SpeakUpCtrlB.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
+                        comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+                        comUI.redoClickEvent += OnReDo;
+                        comUI.nextClickEvent += OnNextDo;
+                        comUI.ShowFinalUI();
+                    };
+
+                    ////播放结束，触发小华接过XXX。
+                    //int xhst = 24;
+                    //int xhet = 26;
+                    //xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
+                    //{
+                    //    if (aa > xhst && aa < xhet)
+                    //    {
+                    //        xiaohuaAnim.timePointEvent = null;
+                    //        XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                    //        xhCtrl.SetJoint(RndReinforcementA);
+                    //    }
+                    //};
+                    //xiaohuaAnim.PlayForward("TY_XH_JG");
+                }
+            };
+
+            LS.PlayForward("TY_LS_DW");
+        }
     }
 
     private void OnReDo()

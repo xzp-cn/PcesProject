@@ -44,6 +44,7 @@ public class LegacyAnimationOper : MonoBehaviour
 
     public event System.Action Complete;
     public System.Action<float> timePointEvent; //时间点事件,参数为当前时间
+    public System.Action<int> framePointEvent; //帧事件,参数为当前帧数
     float timeLength;
     float currLength;
 
@@ -78,7 +79,7 @@ public class LegacyAnimationOper : MonoBehaviour
     public void OnPause()
     {
         IsStart = false;
-        if(anim != null)
+        if (anim != null)
         {
             anim[animName].speed = 0;
         }
@@ -90,7 +91,7 @@ public class LegacyAnimationOper : MonoBehaviour
     public void OnContinue()
     {
         IsStart = true;
-        if(anim != null)
+        if (anim != null)
         {
             anim[animName].speed = 1;
         }
@@ -108,6 +109,13 @@ public class LegacyAnimationOper : MonoBehaviour
                     if (timePointEvent != null)
                     {
                         timePointEvent(currLength);
+                    }
+
+                    if (framePointEvent != null)
+                    {
+                        float curFrame = anim[animName].clip.frameRate * anim[animName].length * anim[animName].normalizedTime;
+                        //Debug.Log(Mathf.RoundToInt(curFrame));
+                        framePointEvent(Mathf.RoundToInt(curFrame));
                     }
                     currLength += Time.deltaTime;
                 }
@@ -132,5 +140,6 @@ public class LegacyAnimationOper : MonoBehaviour
         IsComplete = false;
         Complete = null;
         timePointEvent = null;
+        framePointEvent = null;
     }
 }

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class UIManager : SingleTon<UIManager>
 {
-    Dictionary<string, GameObject> uiDic;
+    Dictionary<string, GameObject> uiDic = new Dictionary<string, GameObject>();
     Canvas canvas;
     public override void Awake()
     {
         base.Awake();
-        uiDic = new Dictionary<string, GameObject>();
+        //uiDic = new Dictionary<string, GameObject>();
         Debug.Log("调用全局初始化方法 GlobalDataManager");
     }
     public void InitUI(string name, Transform cur)

@@ -117,7 +117,7 @@ public class AcceptQuestionView : MonoBehaviour
         }
         //通知当前阶段完成
         GameObject.Find("jiaoshi").gameObject.SetActive(true);
-        PeopleManager.Instance.gameObject.SetActive(false);
+        PeopleManager.Instance.gameObject.SetActive(true);
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.AcceptQuestion);
     }
     void RemoveListens()
