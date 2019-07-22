@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,8 @@ public class SpeakUpCtrlB : MonoBehaviour
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
-            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () => {
+            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () =>
+            {
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka2.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_judai.SetActive(false);
@@ -130,7 +132,7 @@ public class SpeakUpCtrlB : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-            
+
             //3. 播放结束，触发小华把句带递给教师的动画。
             int st = 22;
             int et = 24;

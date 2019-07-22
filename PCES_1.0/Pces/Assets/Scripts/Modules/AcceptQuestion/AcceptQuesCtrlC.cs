@@ -312,7 +312,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
         GameObject obj = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(name));
-        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localPosition = new Vector3(0.026f, -0.04f, 0.007f);
         obj.transform.rotation = Quaternion.identity;
         xhctrl.SetJointL(obj);
         //LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
@@ -363,8 +363,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         RemoveAllListeners();
         Destroy(gameObject);
-        GameObject.Find("jiaoshi").gameObject.SetActive(false);
-        PeopleManager.Instance.gameObject.SetActive(false);
+
     }
     private void OnDestroy()
     {

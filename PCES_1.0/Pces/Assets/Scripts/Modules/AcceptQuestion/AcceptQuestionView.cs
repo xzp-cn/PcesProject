@@ -21,14 +21,14 @@ public class AcceptQuestionView : MonoBehaviour
         com.SetComUITitle("第五阶段 接受性问句");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        //aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
-        //aqACtrl.transform.SetParent(transform);
-        //aqACtrl.evtFinished += OnaqACtrlFinished;
-        //aqACtrl.evtRedo += OnaqACtrlRedo;
-        aqBCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlB").GetComponent<AcceptQuesCtrlB>();
-        aqBCtrl.transform.SetParent(transform);
-        aqBCtrl.evtFinished += OnaqBCtrlFinished;
-        aqBCtrl.evtRedo += OnaqBCtrlRedo;
+        aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
+        aqACtrl.transform.SetParent(transform);
+        aqACtrl.evtFinished += OnaqACtrlFinished;
+        aqACtrl.evtRedo += OnaqACtrlRedo;
+        //aqBCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlB").GetComponent<AcceptQuesCtrlB>();
+        //aqBCtrl.transform.SetParent(transform);
+        //aqBCtrl.evtFinished += OnaqBCtrlFinished;
+        //aqBCtrl.evtRedo += OnaqBCtrlRedo;
         //aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
         //aqCCtrl.transform.SetParent(transform);
         //aqCCtrl.evtFinished += OnstCCtrlFinished;
@@ -117,7 +117,7 @@ public class AcceptQuestionView : MonoBehaviour
         }
         //通知当前阶段完成
         GameObject.Find("jiaoshi").gameObject.SetActive(true);
-        PeopleManager.Instance.gameObject.SetActive(false);
+        PeopleManager.Instance.gameObject.SetActive(true);
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.AcceptQuestion);
     }
     void RemoveListens()

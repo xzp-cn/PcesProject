@@ -318,7 +318,6 @@ public class AcceptQuesCtrlB : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-
         bool pass = true;
         bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
