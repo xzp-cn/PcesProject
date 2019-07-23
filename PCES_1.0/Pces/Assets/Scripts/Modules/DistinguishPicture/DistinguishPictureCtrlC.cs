@@ -14,7 +14,25 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     private Vector3[] qhwPos;   //强化物初始位置
     private Vector3[] nqhwPos; //负强化物初始位置
     private GameObject gtNotebook; //沟通本
-    public float delay;
+    private AnimationOper xiaohuaAnim;
+    private AnimationOper gtbAnim;
+    private AnimationOper teacherAnim;
+
+    /*
+     小华坐在桌子的一边，老师坐在对面。桌上沟通本里有3张强化物和2张负强化物的图卡，桌子上有5个实物。
+  小华翻开沟通本，第一页（橙色）有4张图卡（有2负强化物和2强化物），第二页（红色）只有一张图卡（是强化物）。
+  小华拿到第二页的图卡后，递给老师。 老师接过图卡后，老师说:"哦，你要A“
+  然后将物品递给小华。
+     */
+
+    /*
+
+播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要XXX呀”
+显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
+播放结束，触发小华接过XXX。
+播放结束，出现下一关和重做的按钮。
+
+     */
 
     private void Awake()
     {
@@ -50,7 +68,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
         gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
         gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.276f, 0.56572f, 0.1f);
+        gtNotebook.transform.localPosition = new Vector3(2.251f, 0.56572f, 0.56f);
 
         //1. 进入界面后1秒，触发小华翻开沟通本并拿出图卡，递给老师的动画。
         Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
@@ -82,10 +100,19 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
     {
         //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要XXX呀”
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        AnimationOper xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
+        xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
-        Invoke("DelayPlayGTB", delay);
+        gtbAnim = gtNotebook.GetAnimatorOper();
 
+        int start = 31;
+        int end = 32;
+        xiaohuaAnim.timePointEvent = (t) => {
+            if(t >= start && t <= end)
+            {
+                xiaohuaAnim.timePointEvent = null;
+                FanGTB();
+            }
+        };
 
         xiaohuaAnim.Complete += () =>
         {
@@ -101,9 +128,24 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         xiaohuaAnim.PlayForward("XH_C_3RD_FBFY");
     }
 
-    private void DelayPlayGTB()
+    private bool passed;
+    private void FanGTB()
     {
-        gtNotebook.GetAnimatorOper().PlayForward("allPaper");
+        if (passed)
+        {
+            return;
+        }
+        passed = true;
+        int start0 = 52;
+        int end0 = 54;
+        gtbAnim.timePointEvent = (t) => {
+            if (t >= start0 && t <= end0)
+            {
+                gtbAnim.timePointEvent = null;
+                gtbAnim.OnPause();
+            }
+        };
+        gtbAnim.PlayForward("twoPaper");
     }
 
     private void ClickTeachersPromptFirst()
@@ -130,7 +172,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
             //播放接图卡动画
-            AnimationOper teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+            teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             teacherAnim.Complete += () =>
             {
                 OnClickHuaTong();
