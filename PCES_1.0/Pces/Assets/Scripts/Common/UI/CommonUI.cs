@@ -54,6 +54,7 @@ public class CommonUI : MonoBehaviour
     /// </summary>
     public void ShowFinalUI()
     {
+        UIManager.Instance.SetUIDepthTop("CommonUI");
         final.gameObject.SetActive(true);
     }
 

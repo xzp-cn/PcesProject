@@ -37,6 +37,7 @@ public class EnhanceCommunityModel : SingleTemplate<EnhanceCommunityModel>
         set
         {
             rf = value;
+            GlobalDataManager.GetInstance().CurReinforcement = rf;
         }
     }
 }

@@ -6,9 +6,6 @@ using UnityEngine;
 /// </summary>
 public class SwapModel : SingleTemplate<SwapModel>
 {
-    public bool selectedA = false;
-    public bool selectedB = false;
-    public bool selectedC = false;
     /// <summary>
     ///通过名字得到道具/涂卡
     /// </summary>
@@ -41,6 +38,7 @@ public class SwapModel : SingleTemplate<SwapModel>
         set
         {
             rf = value;
+            GlobalDataManager.GetInstance().CurReinforcement = rf;
         }
     }
 }

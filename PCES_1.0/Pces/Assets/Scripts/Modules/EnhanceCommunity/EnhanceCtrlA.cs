@@ -16,6 +16,8 @@ public class EnhanceCtrlA : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     AnimationOper GTB;//沟通本
+    GameObject deskTuka;
+    GameObject qhw;
     private void Awake()
     {
         this.name = "EnhanceCtrlA";
@@ -57,37 +59,38 @@ public class EnhanceCtrlA : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
-        rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        if (GTB == null)
+        {
+            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/TY_GTB");
+            gtb.name = "TY_GTB";
+            gtb.transform.SetParent(transform);
+            gtb.transform.localPosition = new Vector3(2.27f, 0.5672f, 0.376f);
+            GTB = gtb.GetComponent<AnimationOper>();
+        }
+        //Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
+        //rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        Reinforcement rfc = GlobalDataManager.GetInstance().CurReinforcement;
         EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
-            Transform objectsTr = new GameObject("objectsParent").transform;
-            objectsTr.localPosition = Vector3.zero;
-            objectsTr.localScale = Vector3.one;
-            objectsTr.rotation = Quaternion.identity;
-            objectsTr.SetParent(transform);
+
             int objId = rfc.pData.id;
-            GameObject obj = Instantiate(EnhanceCommunityModel.GetInstance().GetObj(objId));
-            obj.name = ((PropsTag)objId).ToString();
-            obj.transform.SetParent(objectsTr);
-            PropsObject po = obj.GetComponent<PropsObject>();
-            po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
+            qhw = Instantiate(EnhanceCommunityModel.GetInstance().GetObj(objId));
+            qhw.name = ((PropsTag)objId).ToString();
+            qhw.transform.SetParent(transform);
+            PropsObject po = qhw.GetComponent<PropsObject>();
+            po.setPos(new Vector3(2.55f, 0.57f, .189f));//TODO:每个物体的位置有待调整     
+
+
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
-            GameObject deskTuka = Instantiate(EnhanceCommunityModel.GetInstance().GetTuKa(_tuka));
-            deskTuka.transform.SetParent(objectsTr);
+            deskTuka = Instantiate(EnhanceCommunityModel.GetInstance().GetTuKa(_tuka));
+            deskTuka.transform.SetParent(transform);
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
-            pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
-            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/TY_GTB");
-            gtb.name = "goutongben";
-            gtb.transform.SetParent(objectsTr);
-            GTB = gtb.GetComponent<AnimationOper>();
-            if (GTB == null)
-            {
-                GTB = gtb.AddComponent<AnimationOper>();
-            }
+            pot.setPos(new Vector3(2.2974f, 0.57f, 0.376f));
+            deskTuka.gameObject.SetActive(false);
+
             Invoke("SnatchXh", 1);
         }
         else
@@ -192,9 +195,42 @@ public class EnhanceCtrlA : MonoBehaviour
         //FDLS.Complete += FdlsClickXhHandCalllback;
         //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
         FDLS.PlayForward("FDLS_B_1ST_FGTB");
+
+        XH.timePointEvent = (a) =>
+        {
+            if (a == 43)
+            {
+                GTB.timePointEvent = (b) =>
+                {
+                    if (b == 28)
+                    {
+                        GTB.timePointEvent = null;
+                        deskTuka.gameObject.SetActive(true);
+                    }
+                };
+                GTB.PlayForward("onePaper");
+            }
+
+            if (a == 125)//
+            {
+                //XH.timePointEvent = null;
+                XHCtrl ctrl = XH.GetComponent<XHCtrl>();
+                string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                transform.Find("tuka_" + name).gameObject.SetActive(false);
+                ctrl.r_tuka2.gameObject.SetActive(true);
+            }
+
+            if (a == 166)
+            {
+                XH.timePointEvent = null;
+                XH.OnPause();
+                XhTakeCardCallback();
+            }
+        };
         XH.PlayForward("XH_B_1ST_FBNKDK");
-        GTB.PlayForward("onePaper");
-        XH.Complete += XhTakeCardCallback;
     }
     /// <summary>
     /// 辅导老师点击小华手回调
@@ -244,8 +280,27 @@ public class EnhanceCtrlA : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
-        LS.PlayForward("TY_LS_JK");
+        LS.timePointEvent = (a) =>
+        {
+            if (a == 55)
+            {
+                LS.timePointEvent = null;
+                LSCtrl ctrl = LS.GetComponent<LSCtrl>();
+                string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.ls_tuka2.transform.Find("LS_tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                ctrl.ls_tuka2.gameObject.SetActive(true);
+
+                XHCtrl xctrl = XH.GetComponent<XHCtrl>();
+                xctrl.r_tuka2.gameObject.SetActive(false);
+                XH.OnContinue();
+                //FDLS.PlayForward("idle");
+            }
+        };
+        LS.PlayForward("TY_LS_JK");//LS_tuka/LS_tuka 1  //tuka2        
     }
     /// <summary>
     /// 教师接收图卡回调
@@ -317,15 +372,42 @@ public class EnhanceCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        Transform qhw = transform.Find(EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name);
+        LS.timePointEvent = (a) =>//老师递给物品
+        {
+            if (a == 32)//挂载到老师手上强化物时间点
+            {
+                LS.timePointEvent = null;
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("ls");
+            }
+
+            if (a == 20)//小华接卡动画播放延迟
+            {
+                XH.Complete += XHJiewuCallback;
+                XH.PlayForward("TY_XH_JG");
+            }
+        };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
+
+        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
+        {
+            if (a == 42)
+            {
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("xh");
+            }
+        };
     }
     void LsGiveObjCallback()
     {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         ShowFinalUI();
-
     }
     void XHJiewuCallback()
     {
@@ -340,7 +422,7 @@ public class EnhanceCtrlA : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.nextClickEvent += NextDo;
         com.redoClickEvent += ReDo;
-        UIManager.Instance.SetUIDepthTop("CommonUI");
+        //UIManager.Instance.SetUIDepthTop("CommonUI");
         com.ShowFinalUI();
     }
     void Finish()

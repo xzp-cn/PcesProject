@@ -15,10 +15,14 @@ public class EnhanceCtrlB : MonoBehaviour
     AnimationOper LS;
     AnimationOper XH;
     AnimationOper FDLS;
+    AnimationOper GTB;//沟通本
+    Vector3 camPos;
+    GameObject deskTuka;
     private void Awake()
     {
-        this.name = "SwapB";
-        Camera.main.transform.parent.localPosition = new Vector3(3.84f, 1.071f, 0.05f);
+        this.name = "EnhanceCtrlB";
+        camPos = Camera.main.transform.parent.localPosition;
+        Camera.main.transform.parent.localPosition = new Vector3(3.895f, 1.071f, 0.43f);
     }
     //public bool Finished;
     private void Start()
@@ -42,14 +46,24 @@ public class EnhanceCtrlB : MonoBehaviour
             selectUI.closeEvent += CloseSelectUICallback;
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
-        LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-        LS.transform.localPosition = new Vector3(1.3f, 0, 0);
-        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
-        FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        FDLS.gameObject.SetActive(false);
-        LS.PlayForward("idle");
-        XH.gameObject.SetActive(false);
-        //FDLS.PlayForward("idle");
+
+        if (LS == null)
+        {
+            LS = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.LS_BD)).GetAnimatorOper();
+            LS.name = "LS";
+            LS.transform.SetParent(transform);
+            LS.transform.localPosition = new Vector3(1.261f, 0, 0.022f);
+
+            XH = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.XH_BD)).GetAnimatorOper();
+            XH.name = "XH";
+            XH.transform.SetParent(transform);
+
+            PeopleManager.Instance.gameObject.SetActive(false);
+
+            LS.PlayForward("idle");
+            XH.gameObject.SetActive(false);
+        }
+
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
@@ -58,29 +72,37 @@ public class EnhanceCtrlB : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
-        rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        if (GTB == null)
+        {
+            GameObject gtb = ResManager.GetPrefab("Prefabs/Objects/TY_GTB");
+            gtb.name = "TY_GTB";
+            gtb.transform.SetParent(transform);
+            gtb.transform.localPosition = new Vector3(2.27f, 0.5672f, 0.376f);
+            GTB = gtb.AddComponent<AnimationOper>();
+        }
+        //Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
+        //rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
+        Reinforcement rfc = GlobalDataManager.GetInstance().CurReinforcement;
         EnhanceCommunityModel.GetInstance().CurReinforcement = rfc;
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
-            Transform objectsTr = new GameObject("objectsParent").transform;
-            objectsTr.localPosition = Vector3.zero;
-            objectsTr.localScale = Vector3.one;
-            objectsTr.rotation = Quaternion.identity;
-            objectsTr.SetParent(transform);
+
             int objId = rfc.pData.id;
             GameObject obj = Instantiate(SwapModel.GetInstance().GetObj(objId));
             obj.name = ((PropsTag)objId).ToString();
-            obj.transform.SetParent(objectsTr);
+            obj.transform.SetParent(transform);
             PropsObject po = obj.GetComponent<PropsObject>();
-            po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
+            po.setPos(new Vector3(3.88f, 0.57f, 0.17f));//TODO:每个物体的位置有待调整     
+
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
-            GameObject deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(_tuka));
-            deskTuka.transform.SetParent(objectsTr);
+            deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(_tuka));
+            deskTuka.transform.SetParent(transform);
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
-            pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
+            pot.setPos(new Vector3(2.2974f, 0.57f, 0.376f));
+            deskTuka.gameObject.SetActive(false);
+
             Invoke("XhTakeCard", 1);
         }
         else
@@ -132,8 +154,24 @@ public class EnhanceCtrlB : MonoBehaviour
     {
         XH.gameObject.SetActive(true);
         XH.Complete += XhTakeCardCallback;
+        XH.timePointEvent = (a) =>
+        {
+            if (a == 110)
+            {
+                GTB.timePointEvent = (b) =>
+                {
+                    if (b == 28)
+                    {
+                        GTB.timePointEvent = null;
+                        deskTuka.gameObject.SetActive(true);
+                    }
+                };
+                GTB.PlayForward("onePaper");
+            }
+        };
+
         XH.PlayForward("XH_B_2ND_ZFNZD");
-        XH.gameObject.SetActive(true);
+
     }
     /// <summary>
     /// 小华拿卡递卡回调
@@ -266,7 +304,6 @@ public class EnhanceCtrlB : MonoBehaviour
     void LsGiveObjCallback()
     {
         ShowFinalUI();
-
     }
     void XHJiewuCallback()
     {
@@ -312,7 +349,9 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     public void Dispose()
     {
+        PeopleManager.Instance.gameObject.SetActive(true);
         RemoveAllListeners();
+        Camera.main.transform.parent.localPosition = camPos;
         Destroy(gameObject);
     }
     private void OnDestroy()

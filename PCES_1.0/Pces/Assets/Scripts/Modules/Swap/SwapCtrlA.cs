@@ -191,7 +191,7 @@ public class SwapCtrlA : MonoBehaviour
         //FDLS.PlayForward("idle");
         XHCtrl ctrl = XH.GetComponent<XHCtrl>();
         string name = SwapModel.GetInstance().CurReinforcement.pData.name;
-        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+        Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
         Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         transform.Find("tuka_" + name).gameObject.SetActive(false);
@@ -285,7 +285,7 @@ public class SwapCtrlA : MonoBehaviour
                 LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
-                Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 Material matTar = ctrl.ls_tuka2.transform.Find("LS_tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 ctrl.ls_tuka2.gameObject.SetActive(true);
@@ -368,7 +368,6 @@ public class SwapCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
-
 
         Transform qhw = transform.Find(SwapModel.GetInstance().CurReinforcement.pData.name);
         LS.timePointEvent = (a) =>//老师递给物品

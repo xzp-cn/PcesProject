@@ -131,7 +131,7 @@ public class SwapCtrlC : MonoBehaviour
             {
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
-                Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 transform.Find("tuka_" + name).gameObject.SetActive(false);
@@ -199,7 +199,7 @@ public class SwapCtrlC : MonoBehaviour
                 LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
-                Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 Material matTar = ctrl.ls_tuka2.transform.Find("LS_tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 ctrl.ls_tuka2.gameObject.SetActive(true);

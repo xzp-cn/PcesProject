@@ -18,4 +18,19 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         }
         return main;
     }
+    /// <summary>
+    /// 当前选择的强化物
+    /// </summary>
+    Reinforcement rf;
+    public Reinforcement CurReinforcement
+    {
+        get
+        {
+            return rf;
+        }
+        set
+        {
+            rf = value;
+        }
+    }
 }
