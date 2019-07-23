@@ -334,7 +334,7 @@ public class SentenceCtrlD : MonoBehaviour
         ka.name = "MM_F_4TH_DBY_KA";
         ka.transform.SetParent(transform);
 
-        string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+        //string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
 
         Material matTar = ka.transform.Find("judai/tuka1").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];

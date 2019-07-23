@@ -34,10 +34,10 @@ public class SentenceExpressionView : MonoBehaviour
         //stCCtrl.transform.SetParent(transform);
         //stCCtrl.evtFinished += OnstCCtrlFinished;
         //stCCtrl.evtRedo += OnstCCtrlRedo;
-        stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
-        stDCtrl.transform.SetParent(transform);
-        stDCtrl.evtFinished += OnstDCtrlFinished;
-        stDCtrl.evtRedo += OnstCCtrlRedo;
+        //stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
+        //stDCtrl.transform.SetParent(transform);
+        //stDCtrl.evtFinished += OnstDCtrlFinished;
+        //stDCtrl.evtRedo += OnstCCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -136,7 +136,10 @@ public class SentenceExpressionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        stDCtrl.Dispose();
+        if (stDCtrl != null)
+        {
+            stDCtrl.Dispose();
+        }
         //通知当前阶段完成
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SentenceExpression);
     }
