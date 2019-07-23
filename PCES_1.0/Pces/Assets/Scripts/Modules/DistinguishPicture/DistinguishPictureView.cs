@@ -29,9 +29,13 @@ public class DistinguishPictureView : MonoBehaviour {
         com.SetComUITitle("第三阶段 分辨图片");
 
         //UnityEngine.Debug.Log("DistinguishPictureView::Start(): 第三阶段 第一关 区辨喜欢和不喜欢物品的图卡");
-        dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
-        dpaCtrl.evtFinished += OnDpaCtrlFinished;
-        dpaCtrl.evtRedo += OnDpaCtrlRedo;
+        //dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
+        //dpaCtrl.evtFinished += OnDpaCtrlFinished;
+        //dpaCtrl.evtRedo += OnDpaCtrlRedo;
+
+        dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
+        dpbCtrl.evtFinished += OnDpbCtrlFinished;
+        dpbCtrl.evtRedo += OnDpbCtrlRedo;
 
         InitPersonsState();
 
@@ -66,6 +70,7 @@ public class DistinguishPictureView : MonoBehaviour {
 
         dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
         dpbCtrl.evtFinished += OnDpbCtrlFinished;
+        dpbCtrl.evtRedo += OnDpbCtrlRedo;
     }
 
     void OnDpaCtrlRedo()
@@ -77,6 +82,17 @@ public class DistinguishPictureView : MonoBehaviour {
         dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
         dpaCtrl.evtFinished += OnDpaCtrlFinished;
         dpaCtrl.evtRedo += OnDpaCtrlRedo;
+    }
+
+    void OnDpbCtrlRedo()
+    {
+        Debug.Log("DistinguishPictureView.OnDpbCtrlRedo(): 第三阶段 第二关 区辨喜欢和不喜欢物品的图卡 重做!!!");
+        dpbCtrl.evtFinished -= OnDpaCtrlFinished;
+        dpbCtrl.evtRedo -= OnDpaCtrlRedo;
+        dpbCtrl.Dispose();
+        dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
+        dpbCtrl.evtFinished += OnDpbCtrlFinished;
+        dpbCtrl.evtRedo += OnDpbCtrlRedo;
     }
 
     private void OnDpbCtrlFinished()
