@@ -78,14 +78,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         return nqhw;
     }
 
-    void OnGUI()
-    {
-        if (GUILayout.Button("Repeat"))
-        {
-            OnXiaoHuaPassGouTongBenToTeacher();
-        }
-    }
-
     void OnXiaoHuaPassGouTongBenToTeacher()
     {
         //2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作。播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要XXX呀”
