@@ -111,7 +111,7 @@ public class ObjectsManager : MonoBehaviour
     void InitOthers()
     {
         int startIndex = 22;//通用沟通本
-        PropsTag tag = (PropsTag)startIndex;
+        PropsTag tag = (PropsTag)System.Enum.ToObject(typeof(PropsTag), startIndex);
         string path = "Prefabs/Objects/" + tag.ToString();
         GameObject go = ResManager.GetPrefab(path);
         go.name = tag.ToString();
@@ -143,9 +143,10 @@ public class ObjectsManager : MonoBehaviour
             {
                 tukObj = tuka.AddComponent<PropsObject>();
                 propList.Add(tukObj);
-                startIndex += i;
-                tukObj.pData = new PropsData(tuka.name, startIndex, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
-                //Debug.Log(startIndex);
+                //startIndex += i;
+                tag = (PropsTag)System.Enum.ToObject(typeof(PropsTag), startIndex);
+                tukObj.pData = new PropsData(tuka.name, startIndex++, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
+                //Debug.Log(startIndex + "   " + tag.ToString());
             }
         }
     }
@@ -392,14 +393,14 @@ public enum PropsTag : int
     /// <summary>
     /// 句带
     /// </summary>
-    [Description("judai_woyao")]
+    [Description("我要句带")]
     judai_woyao = 23,
-    [Description("judai_wokanjian")]
+    [Description("我看见句带")]
     judai_wokanjian = 24,
-    [Description("图卡树木")]
+    [Description("树木")]
     tuka_shumu = 25,
-    [Description("图卡花")]
-    tuka_hua=26,
-    [Description("图卡小狗")]
-    tuka_xiaogou=27,
+    [Description("花")]
+    tuka_hua = 26,
+    [Description("小狗")]
+    tuka_xiaogou = 27,
 }

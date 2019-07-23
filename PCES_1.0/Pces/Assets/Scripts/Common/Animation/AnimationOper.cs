@@ -58,7 +58,7 @@ public class AnimationOper : MonoBehaviour
 
     private void ClearCompleteEvent()
     {
-        for(int i = 0; i < _BindList.Count; i++)
+        for (int i = 0; i < _BindList.Count; i++)
         {
             _complete -= _BindList[i];
         }
@@ -81,8 +81,8 @@ public class AnimationOper : MonoBehaviour
             //Debug.Log(animName);  
             currLength = 0;
             IsStart = false;
-            //anim.CrossFade(clipName, transitionTime, 0, 0);
-            anim.Play(clipName, 0, 0);
+            anim.CrossFade(clipName, transitionTime, 0, 0);
+            //anim.Play(clipName, 0, 0);
             System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
             {
                 if (ac.name == animName)

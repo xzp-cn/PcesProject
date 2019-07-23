@@ -277,14 +277,14 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-        bool pass = true;
-        MM.timePointEvent = (a) =>
-        {
-            if (pass)
-            {
+        //bool pass = true;
+        //MM.timePointEvent = (a) =>
+        //{
+        //    if (pass)
+        //    {
 
-            }
-        };
+        //    }
+        //};
         MM.Complete += LsGiveObjCallback;
         MM.PlayForward("MM_E_3RE_DY");
 
@@ -360,7 +360,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         evtRedo();
     }
     public void Dispose()
-    { 
+    {
         RemoveAllListeners();
         Destroy(gameObject);
 

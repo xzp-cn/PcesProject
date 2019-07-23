@@ -60,6 +60,8 @@ public class ResManager
         else
         {
             GameObject go = GameObject.Instantiate(obj);
+            //string name = go.name.Split('(')[0];
+            //go.name = name;
             return go;
         }
     }
