@@ -52,7 +52,7 @@ public class EnhanceCtrlB : MonoBehaviour
             LS = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.LS_BD)).GetAnimatorOper();
             LS.name = "LS";
             LS.transform.SetParent(transform);
-            LS.transform.localPosition = new Vector3(1.261f, 0, 0.022f);
+            LS.transform.localPosition = new Vector3(1.4f, 0, 0.022f);
 
             XH = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.XH_BD)).GetAnimatorOper();
             XH.name = "XH";
@@ -153,7 +153,7 @@ public class EnhanceCtrlB : MonoBehaviour
     void XhTakeCard()
     {
         XH.gameObject.SetActive(true);
-        XH.Complete += XhTakeCardCallback;
+        //XH.Complete += XhTakeCardCallback;
         XH.timePointEvent = (a) =>
         {
             if (a == 110)
@@ -167,6 +167,23 @@ public class EnhanceCtrlB : MonoBehaviour
                     }
                 };
                 GTB.PlayForward("onePaper");
+            }
+
+            if (a==187)
+            {
+                XHCtrl ctrl = XH.GetComponent<XHCtrl>();
+                string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                transform.Find("tuka_" + name).gameObject.SetActive(false);
+                ctrl.r_tuka2.gameObject.SetActive(true);
+            }
+            if (a==404)
+            {
+                XH.timePointEvent = null;
+                XH.OnPause();
+                XhTakeCardCallback();
             }
         };
 
@@ -218,8 +235,27 @@ public class EnhanceCtrlB : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
-        LS.PlayForward("TY_LS_JK");
+        LS.timePointEvent = (a) =>
+        {
+            if (a == 55)
+            {
+                LS.timePointEvent = null;
+                LSCtrl ctrl = LS.GetComponent<LSCtrl>();
+                string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.ls_tuka2.transform.Find("LS_tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                ctrl.ls_tuka2.gameObject.SetActive(true);
+
+                XHCtrl xctrl = XH.GetComponent<XHCtrl>();
+                xctrl.r_tuka2.gameObject.SetActive(false);
+                XH.OnContinue();
+                //FDLS.PlayForward("idle");
+            }
+        };
+        LS.PlayForward("TY_LS_JK");//LS_tuka/LS_tuka 1  //tuka2        
     }
     /// <summary>
     /// 教师接收图卡回调
@@ -294,12 +330,43 @@ public class EnhanceCtrlB : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        Transform qhw = transform.Find(EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name);
+        LS.timePointEvent = (a) =>//老师递给物品
+        {
+            if (a == 32)//挂载到老师手上强化物时间点
+            {
+                LS.timePointEvent = null;
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("ls");
+            }
+
+            if (a == 20)//小华接卡动画播放延迟
+            {
+                XH.Complete += XHJiewuCallback;
+                //XH.timePointEvent = (b) => {
+                //    if (b<20)
+                //    {
+                //        XH.transform.localPosition = new Vector3(1.4f, 0, 0);
+                //    }
+                //};
+                XH.PlayForward("TY_XH_JG");
+            }
+        };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
 
-
+        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
+        {
+            if (a == 42)
+            {
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("xh");
+            }
+        };
     }
     void LsGiveObjCallback()
     {
