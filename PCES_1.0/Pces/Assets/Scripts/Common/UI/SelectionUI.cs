@@ -8,20 +8,25 @@ public class SelectionUI : MonoBehaviour
     Toggle[] toggles;
     Transform tip;
     int selectedObjIndex = -1;
+    int lastIndex = -1;
     public event System.Action<int> okEvent;
     public event System.Action closeEvent;
     Dictionary<string, Texture> spDic;
+    ToggleGroup tgroup;
     private void Awake()
     {
         gameObject.SetActive(false);
+        tgroup = GetComponentInChildren<ToggleGroup>();
+        tgroup.allowSwitchOff = true;
         //RectTransform rt = GetComponent<RectTransform>();
     }
     private void OnEnable()
     {
-        selectedObjIndex = -1;
+        ToggleGroupOff();
     }
     private void Start()
     {
+        lastIndex = selectedObjIndex = -1;
         tip = transform.Find("panel/tip");
         tip.gameObject.SetActive(false);
         okBtn = transform.Find("panel/okBtn").GetComponent<Button>();
@@ -67,15 +72,20 @@ public class SelectionUI : MonoBehaviour
     {
         if (selectedObjIndex >= 0)
         {
-            //Debug.Log(((PropsTag)selectedObjIndex).ToString());
             gameObject.SetActive(false);
+            //Debug.Log(((PropsTag)selectedObjIndex).ToString());           
             if (okEvent != null)
             {
-                okEvent(selectedObjIndex);
+                if (lastIndex != selectedObjIndex)
+                {
+                    lastIndex = selectedObjIndex;
+                    okEvent(selectedObjIndex);
+                }
             }
         }
         else
         {
+            /*|| tgroup.AnyTogglesOn()*/
             tip.gameObject.SetActive(true);
             Invoke("HideTipText", 0.5f);
         }
@@ -99,6 +109,10 @@ public class SelectionUI : MonoBehaviour
     void HideTipText()
     {
         tip.gameObject.SetActive(false);
+    }
+    void ToggleGroupOff()
+    {
+        tgroup.SetAllTogglesOff();
     }
     public void Show()
     {

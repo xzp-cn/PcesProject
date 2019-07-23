@@ -90,7 +90,7 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
         HighlightableObject ho = go.GetComponent<HighlightableObject>();
         if (ho != null)
         {
-            Debug.Log("flash off  " + ho.name);
+            //Debug.Log("flash off  " + ho.name);
             ho.FlashingOff();
         }
     }

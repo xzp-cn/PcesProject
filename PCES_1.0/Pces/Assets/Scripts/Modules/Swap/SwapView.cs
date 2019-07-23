@@ -29,10 +29,15 @@ public class SwapView : MonoBehaviour
         //spACtrl.transform.SetParent(transform);
         //spACtrl.evtFinished += OnSpACtrlFinished;
         //spACtrl.evtRedo += OnSpACtrlRedo;
-        spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
-        spBCtrl.transform.SetParent(transform);
-        spBCtrl.evtFinished += OnSpBCtrlFinished;
-        spBCtrl.evtRedo += OnSpBCtrlRedo;
+        //spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
+        //spBCtrl.transform.SetParent(transform);
+        //spBCtrl.evtFinished += OnSpBCtrlFinished;
+        //spBCtrl.evtRedo += OnSpBCtrlRedo;
+        spCCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapC").GetComponent<SwapCtrlC>();
+        spCCtrl.transform.SetParent(transform);
+        spCCtrl.evtFinished += OnSpCCtrlFinished;
+        spCCtrl.evtRedo += OnSpCCtrlRedo;
+
     }
     void OnSpACtrlFinished()
     {

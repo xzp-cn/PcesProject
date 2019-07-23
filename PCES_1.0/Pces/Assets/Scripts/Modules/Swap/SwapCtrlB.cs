@@ -46,7 +46,7 @@ public class SwapCtrlB : MonoBehaviour
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
-        FDLS.PlayForward("idle");
+        FDLS.PlayForward("FDLS_A_2ND_D_idle");
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
@@ -60,23 +60,19 @@ public class SwapCtrlB : MonoBehaviour
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
-            Transform objectsTr = new GameObject("objectsParent").transform;
-            objectsTr.localPosition = Vector3.zero;
-            objectsTr.localScale = Vector3.one;
-            objectsTr.rotation = Quaternion.identity;
-            objectsTr.SetParent(transform);
+
             int objId = rfc.pData.id;
             GameObject obj = Instantiate(SwapModel.GetInstance().GetObj(objId));
             obj.name = ((PropsTag)objId).ToString();
-            obj.transform.SetParent(objectsTr);
+            obj.transform.SetParent(transform);
             PropsObject po = obj.GetComponent<PropsObject>();
-            po.setPos(new Vector3(2.55f, 0.57f, -0.11f));//TODO:每个物体的位置有待调整     
+            po.setPos(new Vector3(2.55f, 0.57f, 0.234f));//TODO:每个物体的位置有待调整     
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
             GameObject deskTuka = Instantiate(SwapModel.GetInstance().GetTuKa(_tuka));
-            deskTuka.transform.SetParent(objectsTr);
+            deskTuka.transform.SetParent(transform);
             deskTuka.name = _tuka;
             PropsObject pot = deskTuka.GetComponent<PropsObject>();
-            pot.setPos(new Vector3(2.18f, 0.57f, -0.001f));
+            pot.setPos(new Vector3(2.186f, 0.57f, 0.343f));
             Invoke("SnatchXh", 1);
         }
         else
@@ -193,7 +189,25 @@ public class SwapCtrlB : MonoBehaviour
     #region 小华拿卡并给卡
     void XhTakeCard()
     {
-        XH.Complete += XhTakeCardCallback;
+        XH.timePointEvent = (a) =>
+        {
+            if (a == 16)
+            {
+                XHCtrl ctrl = XH.GetComponent<XHCtrl>();
+                string name = SwapModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                transform.Find("tuka_" + name).gameObject.SetActive(false);
+                ctrl.r_tuka2.gameObject.SetActive(true);
+            }
+            if (a == 52)
+            {
+                XH.timePointEvent = null;
+                XH.OnPause();
+                XhTakeCardCallback();
+            }
+        };
         XH.PlayForward("TY_XH_NKDK");
     }
     /// <summary>
@@ -231,7 +245,7 @@ public class SwapCtrlB : MonoBehaviour
     void RedoLsJieka()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOn(jshand);
+        HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickLsHandTip");
@@ -241,7 +255,26 @@ public class SwapCtrlB : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
+
         LS.Complete += LsJiekaCallback;
+        LS.timePointEvent = (a) =>
+        {
+            if (a == 55)
+            {
+                LS.timePointEvent = null;
+                LSCtrl ctrl = LS.GetComponent<LSCtrl>();
+                string name = SwapModel.GetInstance().CurReinforcement.pData.name;
+                Material matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                Material matTar = ctrl.ls_tuka2.transform.Find("LS_tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                matTar.CopyPropertiesFromMaterial(matSource);
+                ctrl.ls_tuka2.gameObject.SetActive(true);
+
+                XHCtrl xctrl = XH.GetComponent<XHCtrl>();
+                xctrl.r_tuka2.gameObject.SetActive(false);
+                XH.OnContinue();
+                FDLS.PlayForward("FDLS_A_2ND_D_idle");
+            }
+        };
         LS.PlayForward("TY_LS_JK");
     }
     /// <summary>
@@ -314,15 +347,42 @@ public class SwapCtrlB : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        Transform qhw = transform.Find(SwapModel.GetInstance().CurReinforcement.pData.name);
+        LS.timePointEvent = (a) =>//老师递给物品
+        {
+            if (a == 32)//挂载到老师手上强化物时间点
+            {
+                LS.timePointEvent = null;
+                LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
+                lsctrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("ls");
+            }
+
+            if (a == 20)//小华接卡动画播放延迟
+            {
+                XH.Complete += XHJiewuCallback;
+                XH.PlayForward("TY_XH_JG");
+            }
+        };
+
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-        XH.Complete += XHJiewuCallback;
-        XH.PlayForward("TY_XH_JG");
+
+        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
+        {
+            if (a == 42)
+            {
+                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                xhCtrl.SetJoint(qhw.gameObject);
+                //Debug.LogError("xh");
+            }
+        };
     }
     void LsGiveObjCallback()
     {
+        swapUI.gameObject.SetActive(false);
         ShowFinalUI();
-
     }
     void XHJiewuCallback()
     {
