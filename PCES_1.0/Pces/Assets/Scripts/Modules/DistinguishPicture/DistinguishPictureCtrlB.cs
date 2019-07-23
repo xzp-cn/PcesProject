@@ -54,7 +54,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
-        tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
+        tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
         _tukaA.transform.localPosition = new Vector3(2.288f, 0.5466f, 0.408f);
@@ -79,7 +79,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
         //负强化物图卡B
         string tukaNameB = "tuka_" + goodB.name;
-        tukaB = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB);
+        tukaB = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB));
         GameObject _tukaB = new GameObject("tukaB");
         _tukaB.transform.SetParent(emptyRoot.transform, false);
 

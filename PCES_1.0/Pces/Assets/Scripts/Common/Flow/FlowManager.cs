@@ -17,12 +17,12 @@ public class FlowManager : MonoBehaviour
         StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
         GameObject go = ResManager.GetPrefab(sb.ToString());
         FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
-        PreInitComm();        
+        //PreInitComm();        
     }
     /// <summary>
     /// 预初始化
     /// </summary>
-    private static void PreInitComm()
+    public static void PreInitComm()
     {
         GameObject uilayer = ResManager.GetPrefab("Prefabs/UI/UILayer");
         UIManager.Instance.InitUI("UILayer", uilayer.transform);
@@ -38,6 +38,6 @@ public class FlowManager : MonoBehaviour
         FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
         StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
         GameObject module = ResManager.GetPrefab(sb.ToString());
-        FlowModel.GetInstance().PushPrefabToMem(mt.ToString(), module);
+        FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), module);
     }
 }

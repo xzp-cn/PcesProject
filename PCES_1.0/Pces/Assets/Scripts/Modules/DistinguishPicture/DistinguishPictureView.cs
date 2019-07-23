@@ -66,6 +66,7 @@ public class DistinguishPictureView : MonoBehaviour {
     {
         Debug.Log("DistinguishPictureView.OnDpaCtrlRedo(): 第三阶段 第一关 区辨喜欢和不喜欢物品的图卡 下一关!!!");
         dpaCtrl.evtFinished -= OnDpaCtrlFinished;
+        dpaCtrl.evtRedo -= OnDpaCtrlRedo;
         dpaCtrl.Dispose();
 
         dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
@@ -99,6 +100,7 @@ public class DistinguishPictureView : MonoBehaviour {
     {
         Debug.Log("DistinguishPictureView.OnDpaCtrlRedo(): 第三阶段 第二关 区辨喜欢和不喜欢物品的图卡 下一关!!!");
         dpbCtrl.evtFinished -= OnDpbCtrlFinished;
+        dpbCtrl.evtRedo -= OnDpbCtrlRedo;
         dpbCtrl.Dispose();
 
         dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
@@ -109,10 +111,11 @@ public class DistinguishPictureView : MonoBehaviour {
     private void OnDpcCtrlFinished()
     {
         dpcCtrl.evtFinished -= OnDpcCtrlFinished;
+        dpcCtrl.evtRedo -= OnDpcCtrlRedo;
         dpcCtrl.Dispose();
 
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
-        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
 

@@ -56,7 +56,7 @@ public class SpeakUpCtrlA : MonoBehaviour
         qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
         //强化物图卡A源
         string tukaNameA = "tuka_" + goodA.name;
-        tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
+        tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
         _tukaA.transform.localPosition = new Vector3(999f, 999f, 999f);

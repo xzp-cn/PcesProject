@@ -92,7 +92,7 @@ public class SpeakUpView : MonoBehaviour {
         spcCtrl.Dispose();
 
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
-        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
 

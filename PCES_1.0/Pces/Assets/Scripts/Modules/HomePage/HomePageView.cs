@@ -9,31 +9,28 @@ public class HomePageView : MonoBehaviour
         Enter,//进入游戏
         Exit,//退出游戏
     }
-    Button startButton;
+    public Button startButton;
     private void Awake()
     {
-        //AnimationOper aop = AnimationManager.GetInstance().Get(gameObject);
-        //aop.Complete +=
-        //aop.PlayForward("");
-        //aop.Complete -=；
+        DontDestroyOnLoad(gameObject);
     }
-    HomePageUI homePageUI;
-    CommonUI com;
+    //HomePageUI homePageUI;
+    //CommonUI com;
     void Start()
     {
-        com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        com.name = "commonUI";
-        Canvas canvas = FindObjectOfType<Canvas>();
-        com.transform.SetParent(canvas.transform);
+        //com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        //com.name = "commonUI";
+        //Canvas canvas = FindObjectOfType<Canvas>();
+        //com.transform.SetParent(canvas.transform);
 
-        this.name = "HomePage";
-        homePageUI = UIManager.Instance.GetUI<HomePageUI>("HomePageUI");
-        HomePageModel.GetInstance().PushHomePageObject(homePageUI.gameObject);
-        startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
-        startButton.transition = Selectable.Transition.SpriteSwap;
-        SpriteState ss = new SpriteState();
-        ss.highlightedSprite = ResManager.GetSprite("Images/schoolLogo");
-        startButton.spriteState = ss;
+        //this.name = "HomePage";
+        //homePageUI = UIManager.Instance.GetUI<HomePageUI>("HomePageUI");
+        //HomePageModel.GetInstance().PushHomePageObject(homePageUI.gameObject);
+        //startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
+        //startButton.transition = Selectable.Transition.SpriteSwap;
+        //SpriteState ss = new SpriteState();
+        //ss.highlightedSprite = ResManager.GetSprite("Images/schoolLogo");
+        //startButton.spriteState = ss;
         startButton.onClick.AddListener(StartButtonClick);
     }
     /// <summary>
@@ -53,13 +50,21 @@ public class HomePageView : MonoBehaviour
     /// </summary>
     void Finish()
     {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnLevelLoaded;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+
+       
+    }
+
+    private void OnLevelLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)
+    {
+        
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
         //通知当前阶段完成
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
+        FlowManager.PreInitComm();
     }
-    void Update()
-    {
 
-    }
     void RemoveListens()
     {
 
