@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * 
+ * 
+ */
 public class EnhanceCtrlC : MonoBehaviour
 {
     public event System.Action evtFinished;
@@ -80,7 +83,7 @@ public class EnhanceCtrlC : MonoBehaviour
         if (rfc != null)
         {
             Debug.Log("GetTukaObject");
-          
+
             int objId = rfc.pData.id;
             GameObject obj = Instantiate(EnhanceCommunityModel.GetInstance().GetObj(objId));
             obj.name = ((PropsTag)objId).ToString();
@@ -148,8 +151,9 @@ public class EnhanceCtrlC : MonoBehaviour
         XH.gameObject.SetActive(true);
         //XH.Complete += XhTakeCardCallback;
 
-        XH.timePointEvent = (a) => {
-            if (a==173)
+        XH.timePointEvent = (a) =>
+        {
+            if (a == 173)
             {
                 GTB.timePointEvent = (b) =>
                 {
@@ -173,14 +177,14 @@ public class EnhanceCtrlC : MonoBehaviour
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
 
-            if (a==407)
+            if (a == 407)
             {
                 XH.timePointEvent = null;
                 XH.OnPause();
                 XhTakeCardCallback();
             }
         };
-        XH.PlayForward("XH_B_3RD_ZFNZD");       
+        XH.PlayForward("XH_B_3RD_ZFNZD");
     }
     /// <summary>
     /// 小华拿卡递卡回调
@@ -314,7 +318,7 @@ public class EnhanceCtrlC : MonoBehaviour
         ClickLsGiveObjTip();
     }
     void LsGiveObj()
-    {       
+    {
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;

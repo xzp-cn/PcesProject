@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * 小华接收物品时,动画有位移TY_XH_JG和当前关卡时有位移冲突
+ * 
+ */
 public class EnhanceCtrlB : MonoBehaviour
 {
     public event System.Action evtFinished;
@@ -169,7 +172,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 GTB.PlayForward("onePaper");
             }
 
-            if (a==187)
+            if (a == 187)
             {
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
@@ -179,7 +182,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 transform.Find("tuka_" + name).gameObject.SetActive(false);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
-            if (a==404)
+            if (a == 404)
             {
                 XH.timePointEvent = null;
                 XH.OnPause();
