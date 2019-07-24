@@ -51,6 +51,16 @@ public class TestPaperView : MonoBehaviour
     private void OnNextDo()
     {
         TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();//数据清除
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i].item_right == Items[i].item_wrong)
+            {
+                TipUI tipUI = UIManager.Instance.GetUI<TipUI>("TipUI");
+                tipUI.SetTipMessage("还有题目为未做 !");
+                UIManager.Instance.SetUIDepthTop("TipUI");
+                return;
+            }
+        }
         int right = 0, wrong = 0;
         for (int i = 0; i < Items.Length; i++)
         {
@@ -78,10 +88,13 @@ public class TestPaperView : MonoBehaviour
     {
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+
+        Debug.Log(FlowModel.GetInstance().CurrFlowTask.thisFlowStepName + "     正确个数和错误个数统计     " + TestPaperModel.GetInstance().TotalCount());
     }
 
     void Redo()
     {
+        Finished();
         if (evtRedo != null)
         {
             evtRedo();

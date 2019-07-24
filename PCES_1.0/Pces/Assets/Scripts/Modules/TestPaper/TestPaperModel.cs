@@ -50,24 +50,20 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
     /// 正确和错误计数
     /// </summary>
     /// <returns></returns>
-    public int TotalCount(bool right)
+    public string TotalCount()
     {
-        int num = 0;
-        if (right)
+        int right_num = 0;
+        for (int i = 0; i < paperList.Count; i++)
         {
-            for (int i = 0; i < paperList.Count; i++)
-            {
-                num += paperList[i].rightNum;
-            }
+            right_num += paperList[i].rightNum;
         }
-        else
+
+        int wrong_num = 0;
+        for (int i = 0; i < paperList.Count; i++)
         {
-            for (int i = 0; i < paperList.Count; i++)
-            {
-                num += paperList[i].wrongNum;
-            }
+            wrong_num += paperList[i].wrongNum;
         }
-        return num;
+        return right_num + "_" + wrong_num;
     }
 }
 public class PaperItem//单个题目

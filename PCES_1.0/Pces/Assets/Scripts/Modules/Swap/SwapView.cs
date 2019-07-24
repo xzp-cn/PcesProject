@@ -17,18 +17,40 @@ public class SwapView : MonoBehaviour
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
         UnityEngine.Debug.Log("SwapView::Awake(): 第一阶段 以物换物");
         this.name = "SwapView";
-
     }
     private void Start()
+    {
+        Introduct();
+    }
+    void Introduct()
     {
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第一阶段 以物换物");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
+
+        if (SwapModel.GetInstance().hpUI == null)
+        {
+            HomePageUI homePageUI = UIManager.Instance.GetUI<HomePageUI>("HomePageUI");
+            SwapModel.GetInstance().hpUI = homePageUI;
+            homePageUI.transform.SetParent(canvas.transform, false);
+            Button startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
+            startButton.onClick.AddListener(StartPro);
+        }
+        else
+        {
+            StartPro();
+        }
+    }
+    private void StartPro()
+    {
+        SwapModel.GetInstance().hpUI.gameObject.SetActive(false);
+
         spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
         spACtrl.transform.SetParent(transform);
         spACtrl.evtFinished += OnSpACtrlFinished;
         spACtrl.evtRedo += OnSpACtrlRedo;
+        Debug.Log("fsfds");
         //spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
         //spBCtrl.transform.SetParent(transform);
         //spBCtrl.evtFinished += OnSpBCtrlFinished;
@@ -51,6 +73,7 @@ public class SwapView : MonoBehaviour
     }
     void OnSpACtrlRedo()
     {
+        Debug.Log("OnSpACtrlRedo");
         spACtrl.evtFinished -= OnSpACtrlFinished;
         spACtrl.evtRedo -= OnSpACtrlRedo;
         spACtrl.Dispose();
@@ -85,7 +108,7 @@ public class SwapView : MonoBehaviour
         spCCtrl.evtRedo -= OnSpCCtrlRedo;
         spCCtrl.Dispose();
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
-        tpv.evtFinished += OnTestPaperRedo;
+        tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
     private void OnSpCCtrlRedo()

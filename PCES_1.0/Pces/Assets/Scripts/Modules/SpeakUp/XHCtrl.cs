@@ -110,4 +110,26 @@ public class XHCtrl : MonoBehaviour
             go.transform.SetParent(l_guadian.transform, false);
         }
     }
+    public void DestroyGuadian()
+    {
+        if (l_guadian != null)
+        {
+            for (int i = 0; i < l_guadian.transform.childCount; i++)
+            {
+                GameObject go = l_guadian.transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                Destroy(go);
+            }
+        }
+
+        if (r_guadian != null)
+        {
+            for (int i = 0; i < r_guadian.transform.childCount; i++)
+            {
+                GameObject go = r_guadian.transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                Destroy(go);
+            }
+        }
+    }
 }

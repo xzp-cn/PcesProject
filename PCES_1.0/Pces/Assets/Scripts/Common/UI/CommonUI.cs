@@ -31,6 +31,8 @@ public class CommonUI : MonoBehaviour
         resetBtn.onClick.AddListener(BtnResetClick);
         nextBtn = final.Find("next").GetComponent<Button>();
         nextBtn.onClick.AddListener(NextBtnClick);
+
+        transform.Find("bottom/companyLogo").gameObject.SetActive(false);
     }
     public void BtnResetClick()
     {

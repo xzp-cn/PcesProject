@@ -278,12 +278,12 @@ public class AcceptQuesCtrlB : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
-        string behaveMode = "吃";
-        if (curObjName.Equals("小汽车"))
-        {
-            behaveMode = "玩";
-        }
-        dlog.SetDialogMessage("你要" + behaveMode + curObjName);
+        //string behaveMode = "吃";
+        //if (curObjName.Equals("小汽车"))
+        //{
+        //    behaveMode = "玩";
+        //}
+        dlog.SetDialogMessage("你要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }

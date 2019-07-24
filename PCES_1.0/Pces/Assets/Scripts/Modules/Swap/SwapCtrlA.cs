@@ -425,18 +425,30 @@ public class SwapCtrlA : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
+
         RemoveAllListeners();
     }
     void ReDo()
     {
-        Debug.Log("redo");
         Finish();
-        evtRedo();
+        if (evtRedo != null)
+        {
+            evtRedo();
+        }
     }
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
@@ -448,13 +460,12 @@ public class SwapCtrlA : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
-
-        evtFinished = null;
-        evtRedo = null;
     }
     public void Dispose()
     {
         RemoveAllListeners();
+        evtFinished = null;
+        evtRedo = null;
         Destroy(gameObject);
     }
     private void OnDestroy()

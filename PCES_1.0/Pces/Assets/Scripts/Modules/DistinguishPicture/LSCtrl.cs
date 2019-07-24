@@ -59,4 +59,17 @@ public class LSCtrl : MonoBehaviour
     {
         transform.Find("Group2/Main").gameObject.SetActive(val);
     }
+
+    public void DestroyGuadian()
+    {
+        if (l_guadian != null)
+        {
+            for (int i = 0; i < l_guadian.transform.childCount; i++)
+            {
+                GameObject go = l_guadian.transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                Destroy(go);
+            }
+        }
+    }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class SwapModel : SingleTemplate<SwapModel>
 {
+    public HomePageUI hpUI = null;
     /// <summary>
     ///通过名字得到道具/涂卡
     /// </summary>
