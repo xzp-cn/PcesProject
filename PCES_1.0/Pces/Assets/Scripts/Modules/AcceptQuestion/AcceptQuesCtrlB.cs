@@ -382,14 +382,23 @@ public class AcceptQuesCtrlB : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
+
     }
     void RemoveAllListeners()
     {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
+        com = null;
+
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        evtFinished = null;
+        evtRedo = null;
     }
     void ReDo()
     {

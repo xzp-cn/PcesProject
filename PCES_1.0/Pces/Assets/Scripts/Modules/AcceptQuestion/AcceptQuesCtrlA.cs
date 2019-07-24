@@ -85,7 +85,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Transform tkPar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB");
 
         string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡        
-        GameObject tkSource = AcceptQuestionModel.GetInstance().GetTuKa(_tuka);
+        GameObject tkSource = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(_tuka));
         //Debug.Log(tkSource);
         Material[] matsSour = tkSource.GetComponent<MeshRenderer>().materials;
         Transform tkGtb = tkPar.Find("tukaB 1");
@@ -407,7 +407,12 @@ public class AcceptQuesCtrlA : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.nextClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
+        com = null;
+
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        evtFinished = null;
+        evtRedo = null;
     }
     void ReDo()
     {

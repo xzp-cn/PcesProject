@@ -25,18 +25,18 @@ public class SwapView : MonoBehaviour
         com.SetComUITitle("第一阶段 以物换物");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        //spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
-        //spACtrl.transform.SetParent(transform);
-        //spACtrl.evtFinished += OnSpACtrlFinished;
-        //spACtrl.evtRedo += OnSpACtrlRedo;
+        spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
+        spACtrl.transform.SetParent(transform);
+        spACtrl.evtFinished += OnSpACtrlFinished;
+        spACtrl.evtRedo += OnSpACtrlRedo;
         //spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
         //spBCtrl.transform.SetParent(transform);
         //spBCtrl.evtFinished += OnSpBCtrlFinished;
         //spBCtrl.evtRedo += OnSpBCtrlRedo;
-        spCCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapC").GetComponent<SwapCtrlC>();
-        spCCtrl.transform.SetParent(transform);
-        spCCtrl.evtFinished += OnSpCCtrlFinished;
-        spCCtrl.evtRedo += OnSpCCtrlRedo;
+        //spCCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapC").GetComponent<SwapCtrlC>();
+        //spCCtrl.transform.SetParent(transform);
+        //spCCtrl.evtFinished += OnSpCCtrlFinished;
+        //spCCtrl.evtRedo += OnSpCCtrlRedo;
 
     }
     void OnSpACtrlFinished()
@@ -122,6 +122,22 @@ public class SwapView : MonoBehaviour
     }
     public void Dispose()
     {
+        if (spACtrl != null)
+        {
+            spACtrl.Dispose();
+        }
+        if (spBCtrl != null)
+        {
+            spBCtrl.Dispose();
+        }
+        if (spCCtrl != null)
+        {
+            spCCtrl.Dispose();
+        }
+        if (tpv != null)
+        {
+            tpv.Dispose();
+        }
         //销毁、资源释放、监听移除            
         RemoveListens();
         Destroy(gameObject);

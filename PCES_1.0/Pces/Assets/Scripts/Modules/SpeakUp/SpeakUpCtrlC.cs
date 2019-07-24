@@ -6,7 +6,8 @@ using UnityEngine;
 /// <summary>
 /// 第三关 主动要求镜头跟随小华旋转
 /// </summary>
-public class SpeakUpCtrlC : MonoBehaviour {
+public class SpeakUpCtrlC : MonoBehaviour
+{
     public System.Action evtFinished;
     public System.Action evtRedo;
     private CommonUI comUI;
@@ -19,12 +20,14 @@ public class SpeakUpCtrlC : MonoBehaviour {
     private LegacyAnimationOper FBNKT_KA_AnimOper;
     private AnimationOper LS;
 
-    void Start () {
+    void Start()
+    {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        
+
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
-            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () => {
+            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () =>
+            {
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka2.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_judai.SetActive(false);
@@ -33,7 +36,7 @@ public class SpeakUpCtrlC : MonoBehaviour {
         }
 
         //初始化老师位置和相机位置
-        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = new Vector3(1.2f,0,0);
+        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = new Vector3(1.2f, 0, 0);
         Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
         emptyRoot = new GameObject("Root");
 
@@ -56,7 +59,7 @@ public class SpeakUpCtrlC : MonoBehaviour {
         qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
-        tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
+        tukaA = Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         GameObject _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
         _tukaA.transform.localPosition = new Vector3(999f, 999f, 999f);
@@ -83,7 +86,8 @@ public class SpeakUpCtrlC : MonoBehaviour {
     {
         int start0 = 160;
         int end0 = 161;
-        xiaohuaAnim.timePointEvent = (t) => {
+        xiaohuaAnim.timePointEvent = (t) =>
+        {
             if (t >= start0 && t <= end0)
             {
                 xiaohuaAnim.timePointEvent = null;
@@ -109,7 +113,7 @@ public class SpeakUpCtrlC : MonoBehaviour {
                         int end1 = 450;
                         xiaohuaAnim.timePointEvent = (ts) =>
                         {
-                            if(ts >= start1 && ts <= end1)
+                            if (ts >= start1 && ts <= end1)
                             {
                                 xiaohuaAnim.timePointEvent = null;
                                 xiaohuaAnim.OnPause();
@@ -123,14 +127,14 @@ public class SpeakUpCtrlC : MonoBehaviour {
                                 ClickDispatcher.Inst.EnableClick = true;
                                 ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
                             }
-                           
+
                         };
                     }
                 };
             }
         };
 
-  
+
         xiaohuaAnim.PlayForward("XH_D_3RD_ZGJD");
     }
 

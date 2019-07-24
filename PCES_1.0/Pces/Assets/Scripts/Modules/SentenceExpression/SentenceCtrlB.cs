@@ -38,6 +38,7 @@ public class SentenceCtrlB : MonoBehaviour
         }
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).SetActive(true);
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
@@ -388,7 +389,10 @@ public class SentenceCtrlB : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
@@ -396,6 +400,10 @@ public class SentenceCtrlB : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     void ReDo()
     {

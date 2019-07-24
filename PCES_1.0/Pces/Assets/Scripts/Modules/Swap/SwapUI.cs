@@ -34,7 +34,6 @@ public class SwapUI : MonoBehaviour
     }
     void OnChooseBtnClick()
     {
-
         if (chooseEvent != null)
         {
             chooseEvent();
@@ -83,5 +82,9 @@ public class SwapUI : MonoBehaviour
         {
             speakEvent = null;
         }
+    }
+    private void OnDisable()
+    {
+        Debug.Log("swapUI");
     }
 }

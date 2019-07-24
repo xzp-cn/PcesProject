@@ -26,9 +26,10 @@ public class SpeakUpCtrlA : MonoBehaviour
     void Start()
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
-        if(xiaohuaGo.GetComponent<XHCtrl>() == null)
+        if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
-            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = ()=> {
+            xiaohuaGo.AddComponent<XHCtrl>().InitComplete = () =>
+            {
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_tuka2.SetActive(false);
                 xiaohuaGo.GetComponent<XHCtrl>().r_judai.SetActive(false);
@@ -79,9 +80,10 @@ public class SpeakUpCtrlA : MonoBehaviour
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
-       
+
         xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
         GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
+        fdlsObj2.SetActive(true);
         fdlsAnim = fdlsObj2.GetAnimatorOper();
 
         fdlsAnim.PlayForward("FDLS_D_1ST_TJD");
@@ -195,7 +197,7 @@ public class SpeakUpCtrlA : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(shou);
 
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-           
+
             int st = 22;
             int et = 24;
             LS.timePointEvent = (a) =>//老师接卡时间点
@@ -291,6 +293,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     /// </summary>
     void Finished()
     {
+        fdlsAnim.OnContinue();
         if (evtFinished != null)
         {
             evtFinished();

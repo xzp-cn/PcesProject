@@ -564,7 +564,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 18&& a < 20 && passXh)//小华接卡动画播放延迟
+            if (a > 18 && a < 20 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.timePointEvent = null;
@@ -614,14 +614,20 @@ public class SentenceCtrlC : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-        //swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     void ReDo()
     {

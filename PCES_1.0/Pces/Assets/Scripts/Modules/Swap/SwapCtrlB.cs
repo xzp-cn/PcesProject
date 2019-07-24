@@ -381,7 +381,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void LsGiveObjCallback()
     {
-        swapUI.gameObject.SetActive(false);
+        //swapUI.gameObject.SetActive(false);
         ShowFinalUI();
     }
     void XHJiewuCallback()
@@ -421,9 +421,12 @@ public class SwapCtrlB : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
+        com = null;
+
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
     }
     public void Dispose()
     {

@@ -18,14 +18,16 @@ public class SentenceExpressionView : MonoBehaviour
     }
     private void Start()
     {
+        SentenceExpressionModel.GetInstance().Jiaoshi();
+
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第六阶段 增强自发性沟通");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        //stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
-        //stACtrl.transform.SetParent(transform);
-        //stACtrl.evtFinished += OnstACtrlFinished;
-        //stACtrl.evtRedo += OnstACtrlRedo;
+        stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
+        stACtrl.transform.SetParent(transform);
+        stACtrl.evtFinished += OnstACtrlFinished;
+        stACtrl.evtRedo += OnstACtrlRedo;
         //stBCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlB").GetComponent<SentenceCtrlB>();
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;
@@ -150,7 +152,27 @@ public class SentenceExpressionView : MonoBehaviour
     }
     public void Dispose()
     {
-        //销毁、资源释放、监听移除            
+        //销毁、资源释放、监听移除        
+        if (stACtrl != null)
+        {
+            stACtrl.Dispose();
+        }
+        if (stBCtrl != null)
+        {
+            stBCtrl.Dispose();
+        }
+        if (stCCtrl != null)
+        {
+            stCCtrl.Dispose();
+        }
+        if (stDCtrl != null)
+        {
+            stDCtrl.Dispose();
+        }
+        if (tpv != null)
+        {
+            tpv.Dispose();
+        }
         RemoveListens();
         Destroy(gameObject);
     }

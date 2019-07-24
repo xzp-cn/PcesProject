@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
- * 小华接收物品时,动画有位移TY_XH_JG和当前关卡时有位移冲突
- * 
- */
+
 public class EnhanceCtrlB : MonoBehaviour
 {
     public event System.Action evtFinished;
@@ -406,7 +403,11 @@ public class EnhanceCtrlB : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
+
     }
     void RemoveAllListeners()
     {
@@ -416,6 +417,10 @@ public class EnhanceCtrlB : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     public void Dispose()
     {

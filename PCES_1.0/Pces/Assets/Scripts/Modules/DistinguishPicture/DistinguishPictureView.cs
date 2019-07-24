@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 第三阶段--分辨图片
 /// </summary>
-public class DistinguishPictureView : MonoBehaviour {
+public class DistinguishPictureView : MonoBehaviour
+{
     //1-3关控制器
     DistinguishPictureCtrlA dpaCtrl;
     DistinguishPictureCtrlB dpbCtrl;
@@ -24,7 +25,8 @@ public class DistinguishPictureView : MonoBehaviour {
     }
 
 
-    private void Start () {
+    private void Start()
+    {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第三阶段 分辨图片");
 

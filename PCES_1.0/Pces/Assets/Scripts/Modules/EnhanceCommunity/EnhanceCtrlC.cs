@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
- * 
- * 
- */
+
 public class EnhanceCtrlC : MonoBehaviour
 {
     public event System.Action evtFinished;
@@ -397,7 +394,10 @@ public class EnhanceCtrlC : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
@@ -407,6 +407,10 @@ public class EnhanceCtrlC : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     public void Dispose()
     {

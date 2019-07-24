@@ -423,7 +423,10 @@ public class SentenceCtrlD : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
@@ -431,6 +434,10 @@ public class SentenceCtrlD : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     public void Dispose()
     {

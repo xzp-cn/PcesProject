@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
 {
+    GameObject jiaoshi;
+    public GameObject Jiaoshi()
+    {
+        if (jiaoshi == null)
+        {
+            jiaoshi = GameObject.Find("jiaoshi").gameObject;
+        }
+        return jiaoshi;
+    }
     /// <summary>
     ///通过名字得到道具/涂卡
     /// </summary>

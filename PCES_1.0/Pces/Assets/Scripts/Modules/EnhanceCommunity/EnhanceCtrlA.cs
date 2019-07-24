@@ -46,10 +46,12 @@ public class EnhanceCtrlA : MonoBehaviour
         UIManager.Instance.SetUIDepthTop("selectionUI");
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).gameObject.SetActive(true);
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         FDLS.PlayForward("idle");
+
         //FDLS.PlayForward("FDLS_A_2ND_D");
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
@@ -65,7 +67,7 @@ public class EnhanceCtrlA : MonoBehaviour
             gtb.name = "TY_GTB";
             gtb.transform.SetParent(transform);
             gtb.transform.localPosition = new Vector3(2.27f, 0.5672f, 0.376f);
-            GTB = gtb.GetComponent<AnimationOper>();
+            GTB = gtb.AddComponent<AnimationOper>();
         }
         //Reinforcement rfc = EnhanceCommunityModel.GetInstance().CurReinforcement;
         //rfc = new Reinforcement(new PropsData("chips", 2, PropsType.reinforcement, "薯片"));//测试代码 
@@ -440,7 +442,11 @@ public class EnhanceCtrlA : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)//TODO
+        {
+            evtFinished();
+        }
+
     }
     void RemoveAllListeners()
     {
@@ -450,6 +456,10 @@ public class EnhanceCtrlA : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     public void Dispose()
     {

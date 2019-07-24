@@ -55,7 +55,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
-        tukaA = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA);
+        tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
         _tukaA.transform.localPosition = new Vector3(2.297f, 0.5466f, -0.231f);
@@ -80,7 +80,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
         //负强化物图卡B
         string tukaNameB = "tuka_" + goodB.name;
-        tukaB = DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB);
+        tukaB = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB));
         GameObject _tukaB = new GameObject("tukaB");
         _tukaB.transform.SetParent(emptyRoot.transform, false);
 
@@ -103,8 +103,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         lsCtrl.ls_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaB.GetComponentInChildren<MeshRenderer>().materials[1]);
         int start = 24;
         int end = 26;
-        xiaohuaAnim.timePointEvent += (t) => {
-            if(t>= start && t <= end)
+        xiaohuaAnim.timePointEvent += (t) =>
+        {
+            if (t >= start && t <= end)
             {
                 xiaohuaAnim.timePointEvent = null;
                 xhctrl.r_tuka.SetActive(true);
@@ -165,8 +166,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             //播放老师接图卡动画
             int start = 47;
             int end = 48;
-            teacherAnim.timePointEvent += (t) => {
-                if(t >= start && t <= end)
+            teacherAnim.timePointEvent += (t) =>
+            {
+                if (t >= start && t <= end)
                 {
                     teacherAnim.timePointEvent = null;
                     xhctrl.r_tuka.SetActive(false);
@@ -175,7 +177,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 }
             };
 
-            teacherAnim.Complete += () => {
+            teacherAnim.Complete += () =>
+            {
                 lsCtrl.ls_tuka2.SetActive(false);
                 xhctrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
                 OnReceiveTuKa();
@@ -233,7 +236,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int start = 66;
             int end = 68;
             bool passed = false;
-            teacherAnim.timePointEvent = (t) => {
+            teacherAnim.timePointEvent = (t) =>
+            {
                 if (t >= st && t <= et && !passed)
                 {
                     if (lsCtrl != null)
@@ -313,7 +317,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
                 int start = 24;
                 int end = 26;
-                xiaohuaAnim.timePointEvent = (t) => {
+                xiaohuaAnim.timePointEvent = (t) =>
+                {
                     if (t >= start && t <= end)
                     {
                         xiaohuaAnim.timePointEvent = null;
@@ -389,7 +394,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             //播放老师接图卡动画
             int start = 47;
             int end = 48;
-            teacherAnim.timePointEvent = (t) => {
+            teacherAnim.timePointEvent = (t) =>
+            {
                 if (t >= start && t <= end)
                 {
                     teacherAnim.timePointEvent = null;

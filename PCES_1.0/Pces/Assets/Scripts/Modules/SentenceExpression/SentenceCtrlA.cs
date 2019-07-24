@@ -15,7 +15,6 @@ public class SentenceCtrlA : MonoBehaviour
     AnimationOper LS;
     AnimationOper XH;
     AnimationOper FDLS;
-    //AnimationOper GTB;//沟通本
     LegacyAnimationOper gtb;
     private void Awake()
     {
@@ -36,9 +35,16 @@ public class SentenceCtrlA : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
+        PeopleManager.Instance.gameObject.SetActive(true);
+
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+
+        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).gameObject.SetActive(true);
+
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
+        //LS.gameObject.SetActive(true);
+        //XH.gameObject.SetActive(true);
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         FDLS.PlayForward("idle");
@@ -213,6 +219,8 @@ public class SentenceCtrlA : MonoBehaviour
         //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
         FDLS.PlayForward("FDLS_B_1ST_FGTB");
 
+        //Debug.LogError("FDLS_B_1ST_FGTB");
+
         bool pass = true;
         FDLS.timePointEvent = (a) =>
         {
@@ -246,7 +254,6 @@ public class SentenceCtrlA : MonoBehaviour
                 gtb.PlayForward("XH_D_1ST_FBNKT_KA");
             }
         };
-        //GTB.PlayForward("onePaper");
 
     }
     /// <summary>
@@ -439,7 +446,10 @@ public class SentenceCtrlA : MonoBehaviour
     void NextDo()
     {
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
     }
     void RemoveAllListeners()
     {
@@ -447,6 +457,10 @@ public class SentenceCtrlA : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        com = null;
+        evtFinished = null;
+        evtRedo = null;
     }
     void ReDo()
     {

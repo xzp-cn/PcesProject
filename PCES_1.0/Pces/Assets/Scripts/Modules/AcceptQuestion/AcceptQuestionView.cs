@@ -17,22 +17,23 @@ public class AcceptQuestionView : MonoBehaviour
     }
     private void Start()
     {
+        AcceptQuestionModel.GetInstance().Jiaoshi();
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第五阶段 接受性问句");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
-        aqACtrl.transform.SetParent(transform);
-        aqACtrl.evtFinished += OnaqACtrlFinished;
-        aqACtrl.evtRedo += OnaqACtrlRedo;
+        //aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
+        //aqACtrl.transform.SetParent(transform);
+        //aqACtrl.evtFinished += OnaqACtrlFinished;
+        //aqACtrl.evtRedo += OnaqACtrlRedo;
         //aqBCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlB").GetComponent<AcceptQuesCtrlB>();
         //aqBCtrl.transform.SetParent(transform);
         //aqBCtrl.evtFinished += OnaqBCtrlFinished;
         //aqBCtrl.evtRedo += OnaqBCtrlRedo;
-        //aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
-        //aqCCtrl.transform.SetParent(transform);
-        //aqCCtrl.evtFinished += OnstCCtrlFinished;
-        //aqCCtrl.evtRedo += OnstCCtrlRedo;
+        aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
+        aqCCtrl.transform.SetParent(transform);
+        aqCCtrl.evtFinished += OnstCCtrlFinished;
+        aqCCtrl.evtRedo += OnstCCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -111,12 +112,12 @@ public class AcceptQuestionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        if (aqCCtrl.gameObject != null)
-        {
-            Destroy(aqCCtrl.gameObject);
-        }
+        //if (aqCCtrl.gameObject != null)
+        //{
+        //    Destroy(aqCCtrl.gameObject);
+        //}
         //通知当前阶段完成
-        GameObject.Find("jiaoshi").gameObject.SetActive(true);
+        AcceptQuestionModel.GetInstance().Jiaoshi().SetActive(true);
         PeopleManager.Instance.gameObject.SetActive(true);
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.AcceptQuestion);
     }
@@ -127,6 +128,22 @@ public class AcceptQuestionView : MonoBehaviour
     }
     public void Dispose()
     {
+        if (aqACtrl != null)
+        {
+            aqACtrl.Dispose();
+        }
+        if (aqBCtrl != null)
+        {
+            aqBCtrl.Dispose();
+        }
+        if (aqCCtrl != null)
+        {
+            aqCCtrl.Dispose();
+        }
+        if (tpv != null)
+        {
+            tpv.Dispose();
+        }
         //销毁、资源释放、监听移除            
         RemoveListens();
         Destroy(gameObject);
