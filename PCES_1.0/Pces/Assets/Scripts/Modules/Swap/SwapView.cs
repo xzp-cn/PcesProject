@@ -46,19 +46,19 @@ public class SwapView : MonoBehaviour
     {
         SwapModel.GetInstance().hpUI.gameObject.SetActive(false);
 
-        spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
-        spACtrl.transform.SetParent(transform);
-        spACtrl.evtFinished += OnSpACtrlFinished;
-        spACtrl.evtRedo += OnSpACtrlRedo;
+        //spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
+        //spACtrl.transform.SetParent(transform);
+        //spACtrl.evtFinished += OnSpACtrlFinished;
+        //spACtrl.evtRedo += OnSpACtrlRedo;
         //Debug.Log("fsfds");
         //spBCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapB").GetComponent<SwapCtrlB>();
         //spBCtrl.transform.SetParent(transform);
         //spBCtrl.evtFinished += OnSpBCtrlFinished;
         //spBCtrl.evtRedo += OnSpBCtrlRedo;
-        //spCCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapC").GetComponent<SwapCtrlC>();
-        //spCCtrl.transform.SetParent(transform);
-        //spCCtrl.evtFinished += OnSpCCtrlFinished;
-        //spCCtrl.evtRedo += OnSpCCtrlRedo;
+        spCCtrl = ResManager.GetPrefab("Prefabs/Swap/SwapC").GetComponent<SwapCtrlC>();
+        spCCtrl.transform.SetParent(transform);
+        spCCtrl.evtFinished += OnSpCCtrlFinished;
+        spCCtrl.evtRedo += OnSpCCtrlRedo;
 
     }
     void OnSpACtrlFinished()
