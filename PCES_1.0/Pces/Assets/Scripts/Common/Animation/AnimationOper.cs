@@ -68,12 +68,12 @@ public class AnimationOper : MonoBehaviour
     public System.Action<int> timePointEvent; //时间点事件,参数为当前时间
     float timeLength;
     float currLength;
-    public float transitionTime = 0.2f;//过渡时间
+    public float transitionTime = 0f;//过渡时间    
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
     /// <param name="clipName"></param>
-    public void PlayForward(string clipName)
+    public void PlayForward(string clipName,float offset=0)
     {
         if (anim)
         {
@@ -81,7 +81,7 @@ public class AnimationOper : MonoBehaviour
             //Debug.Log(animName);  
             currLength = 0;
             IsStart = false;
-            anim.CrossFade(clipName, transitionTime, 0, 0);
+            anim.CrossFade(clipName, transitionTime, 0, offset);
             //anim.Play(clipName, 0, 0);
             System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
             {
@@ -130,7 +130,7 @@ public class AnimationOper : MonoBehaviour
                         //播放完成
                         IsStart = false;
                         IsComplete = true;
-                        currLength = 0;
+                        currLength = 0;                                   
                         if (_complete != null)
                         {
                             _complete();

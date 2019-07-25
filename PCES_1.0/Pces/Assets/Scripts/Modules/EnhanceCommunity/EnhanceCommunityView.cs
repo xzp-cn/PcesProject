@@ -25,7 +25,7 @@ public class EnhanceCommunityView : MonoBehaviour
         //ecACtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceA").GetComponent<EnhanceCtrlA>();
         //ecACtrl.transform.SetParent(transform);
         //ecACtrl.evtFinished += OnecACtrlFinished;
-        //ecACtrl.evtRedo += OnecACtrlRedo;
+        //ecACtrl.evtRedo += OnecACtrlRedo;   
         //ecBCtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceB").GetComponent<EnhanceCtrlB>();
         //ecBCtrl.transform.SetParent(transform);
         //ecBCtrl.evtFinished += OnecBCtrlFinished;

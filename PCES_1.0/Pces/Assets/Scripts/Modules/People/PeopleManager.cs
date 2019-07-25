@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class PeopleManager : SingleTon<PeopleManager>
 {
-    Dictionary<string, GameObject> pDic = new Dictionary<string, GameObject>();
+    Dictionary<string, GameObject> pDic = new Dictionary<string, GameObject>();    
+    public void Reset()
+    {
+        foreach (KeyValuePair<string,GameObject> temp in pDic)
+        {
+            temp.Value.SetActive(true);
+            temp.Value.GetAnimatorOper().OnContinue();
+        }
+    }
     public void CtrlShow(string name, bool isShow = true)
     {
         if (!pDic.ContainsKey(name))
