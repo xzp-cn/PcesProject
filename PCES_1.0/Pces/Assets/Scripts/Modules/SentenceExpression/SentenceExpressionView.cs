@@ -24,10 +24,10 @@ public class SentenceExpressionView : MonoBehaviour
         com.SetComUITitle("第六阶段 增强自发性沟通");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
-        stACtrl.transform.SetParent(transform);
-        stACtrl.evtFinished += OnstACtrlFinished;
-        stACtrl.evtRedo += OnstACtrlRedo;
+        //stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
+        //stACtrl.transform.SetParent(transform);
+        //stACtrl.evtFinished += OnstACtrlFinished;
+        //stACtrl.evtRedo += OnstACtrlRedo;
         //stBCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlB").GetComponent<SentenceCtrlB>();
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;

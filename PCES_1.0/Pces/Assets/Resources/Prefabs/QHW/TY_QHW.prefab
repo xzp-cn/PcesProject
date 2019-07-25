@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4783200007266590}
-  - component: {fileID: 114479498486797560}
+  - component: {fileID: 114479174115526940}
   m_Layer: 0
   m_Name: TY_QHW
   m_TagString: Untagged
@@ -552,7 +552,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1006866401922070}
   m_Mesh: {fileID: 4300008, guid: 467693fd78a37c641b57951c5d5c6114, type: 3}
---- !u!114 &114479498486797560
+--- !u!114 &114479174115526940
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

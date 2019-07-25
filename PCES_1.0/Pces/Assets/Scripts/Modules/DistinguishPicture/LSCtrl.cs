@@ -34,7 +34,7 @@ public class LSCtrl : MonoBehaviour
         if (ls_Lf != null)
         {
             l_guadian = new GameObject("L_guadian");
-            l_guadian.transform.SetParent(ls_Lf.transform, false);
+            l_guadian.transform.SetParent(ls_Lf.transform);
         }
     }
 
@@ -46,8 +46,8 @@ public class LSCtrl : MonoBehaviour
     {
         if (l_guadian != null)
         {
-            obj.transform.SetParent(l_guadian.transform, false);
-            obj.transform.localPosition = Vector3.zero;
+            obj.transform.SetParent(l_guadian.transform);
+            //obj.transform.localPosition = Vector3.zero;
         }
     }
 

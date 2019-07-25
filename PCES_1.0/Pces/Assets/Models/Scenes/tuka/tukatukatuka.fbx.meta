@@ -1,0 +1,143 @@
+fileFormatVersion: 2
+guid: 7cb9c320f20ca0b4eb5d5f8f89ddd657
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: jd_tuka
+    100002: jd_tuka2
+    100004: LS_judai
+    100006: LS_judai 1
+    100008: LS_JZS_TUKA
+    100010: LS_TUKA
+    100012: LS_ZS_TUKA
+    100014: //RootNode
+    100016: XH_GTB_TUKA
+    100018: XH_ZS_TUKA
+    400000: jd_tuka
+    400002: jd_tuka2
+    400004: LS_judai
+    400006: LS_judai 1
+    400008: LS_JZS_TUKA
+    400010: LS_TUKA
+    400012: LS_ZS_TUKA
+    400014: //RootNode
+    400016: XH_GTB_TUKA
+    400018: XH_ZS_TUKA
+    2100000: tuka_RGB
+    2100002: tuke_tex
+    2100004: tuka_RGB1
+    2100006: tuke_tex1
+    2100008: tuka_RGB5
+    2100010: tuke_tex5
+    2100012: judai_RGB1
+    2100014: judai_RGB2
+    2100016: tuka_RGB6
+    2100018: tuke_tex6
+    2100020: tuka_RGB7
+    2100022: tuke_tex7
+    2300000: jd_tuka
+    2300002: jd_tuka2
+    2300004: LS_judai 1
+    2300006: LS_JZS_TUKA
+    2300008: LS_TUKA
+    2300010: LS_ZS_TUKA
+    2300012: XH_GTB_TUKA
+    2300014: XH_ZS_TUKA
+    3300000: jd_tuka
+    3300002: jd_tuka2
+    3300004: LS_judai 1
+    3300006: LS_JZS_TUKA
+    3300008: LS_TUKA
+    3300010: LS_ZS_TUKA
+    3300012: XH_GTB_TUKA
+    3300014: XH_ZS_TUKA
+    4300000: XH_ZS_TUKA
+    4300002: XH_GTB_TUKA
+    4300004: LS_ZS_TUKA
+    4300006: LS_judai
+    4300008: jd_tuka
+    4300010: LS_TUKA
+    4300012: jd_tuka2
+    4300014: LS_JZS_TUKA
+    11100000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 1
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

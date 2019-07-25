@@ -4,7 +4,7 @@ using UnityEngine;
 public class HighLightCtrl : SingleTemplate<HighLightCtrl>
 {
     List<HighlightableObject> hoList = new List<HighlightableObject>();
-    Camera camera;
+    Camera[] cameras;
     Color32 c1 = new Color(190, 171, 71, 255), c2 = new Color32(210, 27, 255, 255);
     //float freq = 2f;
     /// <summary>
@@ -12,15 +12,18 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
     /// </summary>
     void Init()
     {
-        if (camera == null)
+        if (cameras == null)
         {
-            camera = UnityEngine.Object.FindObjectOfType<Camera>();
-            if (camera != null)
+            cameras = UnityEngine.Object.FindObjectsOfType<Camera>();
+            if (cameras != null)
             {
-                HighlightingEffect hef = camera.GetComponent<HighlightingEffect>();
-                if (hef == null)
+                for (int i = 0; i < cameras.Length; i++)
                 {
-                    hef = camera.gameObject.AddComponent<HighlightingEffect>();
+                    HighlightingEffect hef = cameras[i].GetComponent<HighlightingEffect>();
+                    if (hef == null)
+                    {
+                        hef = cameras[i].gameObject.AddComponent<HighlightingEffect>();
+                    }
                 }
             }
             else

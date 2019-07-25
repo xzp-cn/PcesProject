@@ -7,6 +7,7 @@ public class QHWCtrl : MonoBehaviour
     GameObject go;
     private void Awake()
     {
+        transform.localPosition = Vector3.zero;
         InitObjs();
     }
     /// <summary>
@@ -18,10 +19,6 @@ public class QHWCtrl : MonoBehaviour
         InitObjs();
         go = transform.Find(_name).gameObject;
         go.SetActive(true);
-    }
-    public void SetPos()
-    {
-        go.transform.localPosition = Vector3.zero;
     }
     void InitObjs()
     {

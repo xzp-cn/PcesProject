@@ -34,6 +34,7 @@ public class UIFlah : MonoBehaviour
     }
     IEnumerator Flash()
     {
+        //Debug.LogError("Flash");
         WaitForSeconds wf = new WaitForSeconds(0.12f);
         while (isFlash)
         {

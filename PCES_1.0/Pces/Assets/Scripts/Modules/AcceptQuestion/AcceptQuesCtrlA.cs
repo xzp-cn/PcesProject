@@ -294,12 +294,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
-        string playMode = "吃";
-        if (curObjName == "小汽车")
-        {
-            playMode = "玩";
-        }
-        dlog.SetDialogMessage("你要" + playMode + curObjName);
+        dlog.SetDialogMessage("你要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -342,7 +337,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 pass = false;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhwCtrl.gameObject);
-                qhwCtrl.SetPos();
+                //qhwCtrl.SetPos();
                 //Debug.LogError("ls");
             }
 
@@ -365,7 +360,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 passJG = false;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                 xhCtrl.SetJoint(qhwCtrl.gameObject);
-                qhwCtrl.SetPos();
+                //qhwCtrl.SetPos();
                 //Debug.LogError("xh");
             }
         };

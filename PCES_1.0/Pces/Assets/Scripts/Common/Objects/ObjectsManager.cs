@@ -187,11 +187,15 @@ public class ObjectsManager : MonoBehaviour
     public GameObject GetQHW()
     {
         GameObject qhw = ResManager.GetPrefab("Prefabs/QHW/TY_QHW");
-        qhw.transform.SetParent(transform, false);
+        //qhw.transform.SetParent(transform, false);
         qhw.name = "QHW";
         return qhw;
     }
 
+    public GameObject GetdeskTuka()
+    {
+        return ResManager.GetPrefab("Prefabs/Objects/deskTuka");
+    }
     private PropsTag ConvertToPropsTag(int i)
     {
         PropsTag pt = (PropsTag)i;

@@ -326,7 +326,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
                 pass = false;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
                 lsctrl.SetJoint(qhwCtrl.gameObject);
-                qhwCtrl.SetPos();
+                //qhwCtrl.SetPos();
                 //Debug.LogError("ls");
             }
 
@@ -349,7 +349,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
                 passJG = false;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                 xhCtrl.SetJoint(qhwCtrl.gameObject);
-                qhwCtrl.SetPos();
+                //qhwCtrl.SetPos();
                 //Debug.LogError("xh");
             }
         };

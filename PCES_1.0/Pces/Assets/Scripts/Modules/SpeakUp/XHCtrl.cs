@@ -96,7 +96,7 @@ public class XHCtrl : MonoBehaviour
     {
         if (XH_R2 != null)
         {
-            go.transform.SetParent(r_guadian.transform, false);
+            go.transform.SetParent(r_guadian.transform);
         }
     }
     /// <summary>
@@ -107,7 +107,7 @@ public class XHCtrl : MonoBehaviour
     {
         if (XH_L1 != null)
         {
-            go.transform.SetParent(l_guadian.transform, false);
+            go.transform.SetParent(l_guadian.transform);
         }
     }
     public void DestroyGuadian()

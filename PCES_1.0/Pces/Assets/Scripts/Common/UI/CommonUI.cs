@@ -32,7 +32,7 @@ public class CommonUI : MonoBehaviour
         nextBtn = final.Find("next").GetComponent<Button>();
         nextBtn.onClick.AddListener(NextBtnClick);
 
-        transform.Find("bottom/companyLogo").gameObject.SetActive(false);
+        SetLogo(false);
     }
     public void BtnResetClick()
     {
@@ -51,6 +51,11 @@ public class CommonUI : MonoBehaviour
         }
     }
 
+    public void SetLogo(bool show)
+    {
+        transform.Find("bottom/companyLogo").gameObject.SetActive(show);
+        transform.Find("top/schoolImg").gameObject.SetActive(show);
+    }
     /// <summary>
     /// 下一关和重做按钮的显示隐藏
     /// </summary>
