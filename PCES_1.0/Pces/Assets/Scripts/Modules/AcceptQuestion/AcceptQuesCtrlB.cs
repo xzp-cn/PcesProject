@@ -80,7 +80,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         //设置老师旁边的强化物模型
         string objName = rfc.pData.name;//强化物
-        GameObject obj = Instantiate(ObjectsManager.instanse.GetQHW());
+        GameObject obj = ObjectsManager.instanse.GetQHW();
         obj.name = "QHW";
         obj.transform.SetParent(transform, false);
         qhwCtrl = obj.GetComponent<QHWCtrl>();
@@ -184,6 +184,18 @@ public class AcceptQuesCtrlB : MonoBehaviour
     {
         ClickDispatcher.Inst.EnableClick = false;
         XH.PlayForward("XH_D_2ND_FYFT_DW");
+
+        GameObject tkb = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB").gameObject;
+        tkb.SetActive(false);
+
+        gtb.framePointEvent = (a) =>
+        {
+            if (a == 167)
+            {
+                gtb.timePointEvent = null;
+                tkb.SetActive(true);
+            }
+        };
         gtb.PlayForward("XH_D_2ND_FYFT_KA_DK");
         //GTB.PlayForward("onePaper");
         XH.Complete += XhTakeCardCallback;
@@ -377,6 +389,13 @@ public class AcceptQuesCtrlB : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
+
         RemoveAllListeners();
     }
     void NextDo()
@@ -397,18 +416,23 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
-        evtFinished = null;
-        evtRedo = null;
     }
     void ReDo()
     {
-        Debug.Log("redo");
         Finish();
+        if (evtRedo != null)
+        {
+            evtRedo();
+        }
         evtRedo();
     }
     public void Dispose()
     {
         RemoveAllListeners();
+
+        evtFinished = null;
+        evtRedo = null;
+
         Destroy(gameObject);
     }
     private void OnDestroy()

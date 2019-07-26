@@ -25,6 +25,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        ResetGuaDian();
         Init();
     }
     public void Init()
@@ -36,13 +37,17 @@ public class AcceptQuesCtrlA : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
+
+        PeopleManager.Instance.Reset();
+
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         //FDLS.PlayForward("idle");
-        FDLS.gameObject.SetActive(false);
+        FDLS.transform.localPosition = new Vector3(0, 0, 10000);
+
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }
@@ -65,7 +70,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
 
         //设置老师旁边的强化物模型
         string objName = rfc.pData.name;//强化物
-        GameObject obj = Instantiate(ObjectsManager.instanse.GetQHW());
+        GameObject obj = ObjectsManager.instanse.GetQHW();
         obj.name = "QHW";
         obj.transform.SetParent(objectsTr, false);
         qhwCtrl = obj.GetComponent<QHWCtrl>();
@@ -85,7 +90,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Transform tkPar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB");
 
         string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡        
-        GameObject tkSource = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(_tuka));
+        GameObject tkSource = AcceptQuestionModel.GetInstance().GetTuKa(_tuka);
         //Debug.Log(tkSource);
         Material[] matsSour = tkSource.GetComponent<MeshRenderer>().materials;
         Transform tkGtb = tkPar.Find("tukaB 1");
@@ -110,6 +115,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Debug.Log("点中 " + cobj.objname);
         if (cobj.objname == "fdls_shou")
         {
+            ClickDispatcher.Inst.EnableClick = false;
             ChooseDo.Instance.Clicked();
         }
     }
@@ -152,6 +158,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         Debug.Log("点中 " + cobj.objname);
         if (cobj.objname == "shou")
         {
+            ClickDispatcher.Inst.EnableClick = false;
             ChooseDo.Instance.Clicked();
         }
     }
@@ -209,7 +216,6 @@ public class AcceptQuesCtrlA : MonoBehaviour
     {
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
-        ClickDispatcher.Inst.EnableClick = true;
         ClickLsHandJiekaTip();
     }
     void ClickLsHandJiekaTip()
@@ -239,13 +245,11 @@ public class AcceptQuesCtrlA : MonoBehaviour
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD");
 
-        bool pass = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > 20 && a < 24 && pass)
+            if (a == 22)
             {
-                //Debug.LogError("event");
-                pass = false;
+                LS.timePointEvent = null;
                 transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
                 XH.PlayForward("XH_D_1ST_BACK");//小华手收回
             }
@@ -270,7 +274,6 @@ public class AcceptQuesCtrlA : MonoBehaviour
     /// </summary>
     void LsJiekaCallback()
     {
-        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         ClickDispatcher.Inst.EnableClick = false;
         ClickmicroPhoneJiekaTip();
     }
@@ -328,43 +331,35 @@ public class AcceptQuesCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-        bool pass = true;
-        bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a > 25 && a < 30 && pass)//挂载到老师手上强化物时间点
+            if (a == 27)//挂载到老师手上强化物时间点
             {
-                pass = false;
+                LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhwCtrl.gameObject);
                 //qhwCtrl.SetPos();
                 //Debug.LogError("ls");
             }
 
-            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟一边挂载强化物
+            if (a == 24)//小华接卡动画播放延迟一边挂载强化物
             {
-                passXh = false;
                 XH.Complete += XHJiewuCallback;
+                XH.timePointEvent = (b) =>//小华接过物品
+                {
+                    if (b == 43)
+                    {
+                        XH.timePointEvent = null;
+                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        xhCtrl.SetJoint(qhwCtrl.gameObject);
+                    }
+                };
                 XH.PlayForward("TY_XH_JG");
             }
         };
 
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
-
-        bool passJG = true;
-        XH.timePointEvent = (a) =>//小华接过物品
-        {
-            if (a > 40 && a < 45 && passJG)
-            {
-                passJG = false;
-                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                xhCtrl.SetJoint(qhwCtrl.gameObject);
-                //qhwCtrl.SetPos();
-                //Debug.LogError("xh");
-            }
-        };
-
     }
     void LsGiveObjCallback()
     {
@@ -389,13 +384,27 @@ public class AcceptQuesCtrlA : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        ResetGuaDian();
+
         RemoveAllListeners();
+    }
+    void ResetGuaDian()
+    {
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
     }
     void NextDo()
     {
-        Debug.Log("nextdo");
         Finish();
-        evtFinished();
+        if (evtFinished != null)
+        {
+            evtFinished();
+        }
+
     }
     void RemoveAllListeners()
     {
@@ -405,19 +414,20 @@ public class AcceptQuesCtrlA : MonoBehaviour
         com = null;
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
-
-        evtFinished = null;
-        evtRedo = null;
     }
     void ReDo()
     {
-        Debug.Log("redo");
         Finish();
-        evtRedo();
+        if (evtRedo != null)
+        {
+            evtRedo();
+        }
     }
     public void Dispose()
     {
         RemoveAllListeners();
+        evtFinished = null;
+        evtRedo = null;
         Destroy(gameObject);
     }
     private void OnDestroy()

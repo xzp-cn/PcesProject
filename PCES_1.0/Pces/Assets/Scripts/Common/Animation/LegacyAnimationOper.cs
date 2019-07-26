@@ -47,6 +47,7 @@ public class LegacyAnimationOper : MonoBehaviour
     public System.Action<int> framePointEvent; //帧事件,参数为当前帧数
     float timeLength;
     float currLength;
+    int lastFrame = -1, curFrame = -1;
 
     public float transitionTime = 0f;//过渡时间-
     /// <summary>
@@ -58,15 +59,16 @@ public class LegacyAnimationOper : MonoBehaviour
         if (anim)
         {
             animName = clipName;
-            //if (clipName == "MM_F_4TH_DBY_KA")
-            //{
-            //    Debug.Log(anim.IsPlaying(clipName) + "   " + anim[clipName].normalizedTime);
-            //}
+            if (clipName == "MM_E_3RE_DY_KA")
+            {
+                Debug.Log(anim.IsPlaying(clipName) + "   " + anim[clipName].normalizedTime);
+            }
 
             if (!anim.IsPlaying(clipName))
             {
                 anim[clipName].normalizedTime = 0;
                 anim.Play(clipName);
+                lastFrame = curFrame = -1;
             }
             //anim.Play(clipName, 0, 0);
             timeLength = anim[clipName].length;
@@ -119,9 +121,14 @@ public class LegacyAnimationOper : MonoBehaviour
 
                     if (framePointEvent != null)
                     {
-                        float curFrame = anim[animName].clip.frameRate * anim[animName].length * anim[animName].normalizedTime;
+                        float cur = anim[animName].clip.frameRate * anim[animName].length * anim[animName].normalizedTime;
                         //Debug.Log(Mathf.RoundToInt(curFrame));
-                        framePointEvent(Mathf.RoundToInt(curFrame));
+                        curFrame = Mathf.RoundToInt(cur);
+                        if (lastFrame != curFrame)
+                        {
+                            framePointEvent(curFrame);
+                        }
+                        lastFrame = curFrame;
                     }
                     currLength += Time.deltaTime;
                 }
@@ -130,6 +137,7 @@ public class LegacyAnimationOper : MonoBehaviour
                     IsStart = false;
                     IsComplete = true;
                     currLength = 0;
+                    lastFrame = curFrame = -1;
                     if (Complete != null)
                     {
                         Complete();

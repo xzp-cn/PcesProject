@@ -22,7 +22,6 @@ public class AcceptQuesCtrlC : MonoBehaviour
     private void Start()
     {
         GameObject.Find("jiaoshi").gameObject.SetActive(false);
-        PeopleManager.Instance.gameObject.SetActive(false);
 
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");
         market.transform.SetParent(transform);
@@ -41,11 +40,15 @@ public class AcceptQuesCtrlC : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
-        XH = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.XH_BD)).GetAnimatorOper();
-        XH.transform.SetParent(transform);
-        XH.transform.localPosition = new Vector3(2.224f, 0, 0);
-        XH.transform.localEulerAngles = new Vector3(0, -154.7f, 0);
-        XH.PlayForward("idle");
+
+        PeopleManager.Instance.Reset();
+
+        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).transform.localPosition = new Vector3(0, 0, 10000);
+        PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).transform.localPosition = new Vector3(0, 0, 10000);
+
+        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+        XH.PlayForward("XH_E_3RD_FNN");
+        XH.OnPause();
         //XH.transform.localPosition = Vector3.zero;
         //XH.transform.localScale = Vector3.zero;
 
@@ -85,6 +88,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Debug.Log("点中 " + cobj.objname);
         if (cobj.objname == "fdls_shou")
         {
+            ClickDispatcher.Inst.EnableClick = false;
             ChooseDo.Instance.Clicked();
         }
     }
@@ -137,7 +141,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         XH.transform.localPosition = Vector3.zero;
         XH.transform.localEulerAngles = Vector3.zero;
         XH.Complete += XhTzkCallback;
-        XH.PlayForward("XH_E_3RD_FNN");
+        XH.OnContinue();
+        Debug.Log("continue");
 
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
@@ -185,12 +190,10 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
-        bool pass = true;
         MM.timePointEvent = (a) =>//mama借卡时间点
         {
-            if (a > 39 && a < 43 && pass)//给定一个帧区间范围
+            if (a == 41)//给定一个帧区间范围
             {
-                pass = false;
                 //Debug.LogError("event");
                 transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
                                                                               //XH.PlayForward("XH_D_1ST_BACK");//小华手收回
@@ -237,12 +240,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
-        string behaveMode = "吃";
-        if (curObjName.Equals("小汽车"))
-        {
-            behaveMode = "玩";
-        }
-        dlog.SetDialogMessage("你要" + behaveMode + curObjName);
+        dlog.SetDialogMessage("你要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -271,23 +269,14 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void LsGiveObj()
     {
-        Debug.Log("妈妈给物品");
+        Debug.Log("妈妈接卡");
         transform.Find("MM_E_3RD_JG_KA").gameObject.SetActive(false);
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
-        //bool pass = true;
-        //MM.timePointEvent = (a) =>
-        //{
-        //    if (pass)
-        //    {
-
-        //    }
-        //};
         MM.Complete += LsGiveObjCallback;
         MM.PlayForward("MM_E_3RE_DY");
-
 
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();//mm手中卡显示
         ka.transform.SetParent(transform);
@@ -297,8 +286,14 @@ public class AcceptQuesCtrlC : MonoBehaviour
         {
             par.GetChild(i).gameObject.SetActive(false);
         }
-        par.Find("judai2").gameObject.SetActive(true);
-        par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
+        Transform jd = par.Find("judai2");
+        jd.gameObject.SetActive(true);
+        Material tkmat = jd.Find("tuka10 1").GetComponent<MeshRenderer>().materials[1];
+        //par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
+        Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
+        Material matSource = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
+        tkmat.CopyPropertiesFromMaterial(matSource);
+
         ka.PlayForward("MM_E_3RE_DY_KA");
     }
     void LsGiveObjCallback()
@@ -339,6 +334,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        ResetGuaDian();
         RemoveAllListeners();
     }
     void NextDo()
@@ -367,9 +363,18 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Finish();
         evtRedo();
     }
+    void ResetGuaDian()
+    {
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        //LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        //lsctrl.DestroyGuadian();
+    }
     public void Dispose()
     {
         RemoveAllListeners();
+        PeopleManager.Instance.Reset();
         Destroy(gameObject);
 
     }

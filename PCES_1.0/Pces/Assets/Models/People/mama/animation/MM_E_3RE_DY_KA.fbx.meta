@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b60b5fda6c0e1c74b85d68242b63cb19
+guid: e7f36a7083866af46b0cdb64c4b21026
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -24,9 +24,13 @@ ModelImporter:
     100036: ShoulderPart2_R
     100038: shupian40
     100040: Spine1_M
-    100042: Wrist_L
-    100044: Wrist_R
-    100046: xiaoche
+    100042: tuka10
+    100044: tuka10 1
+    100046: tuka9
+    100048: tuka9 1
+    100050: Wrist_L
+    100052: Wrist_R
+    100054: xiaoche
     400000: Chest_M
     400002: DeformationSystem
     400004: Elbow_L
@@ -48,34 +52,52 @@ ModelImporter:
     400036: ShoulderPart2_R
     400038: shupian40
     400040: Spine1_M
-    400042: Wrist_L
-    400044: Wrist_R
-    400046: xiaoche
+    400042: tuka10
+    400044: tuka10 1
+    400046: tuka9
+    400048: tuka9 1
+    400050: Wrist_L
+    400052: Wrist_R
+    400054: xiaoche
     2100000: judai_RGB1
     2100002: judai_RGB2
-    2100004: kx_cl_qkl_map
-    2100006: shupian_tex
-    2100008: haitaibinggan_tex1
-    2100010: xiaoche_01
-    2100012: xiaoche_02
+    2100004: tuka_RGB
+    2100006: tuke_tex
+    2100008: kx_cl_qkl_map
+    2100010: shupian_tex
+    2100012: haitaibinggan_tex1
+    2100014: xiaoche_01
+    2100016: xiaoche_02
     2300000: haitaibinggan31
     2300002: judai2
     2300004: judai3
     2300006: qiaokeli6
     2300008: shupian40
-    2300010: xiaoche
+    2300010: tuka10
+    2300012: tuka10 1
+    2300014: tuka9
+    2300016: tuka9 1
+    2300018: xiaoche
     3300000: haitaibinggan31
     3300002: judai2
     3300004: judai3
     3300006: qiaokeli6
     3300008: shupian40
-    3300010: xiaoche
+    3300010: tuka10
+    3300012: tuka10 1
+    3300014: tuka9
+    3300016: tuka9 1
+    3300018: xiaoche
     4300000: judai2
-    4300002: qiaokeli6
-    4300004: shupian40
-    4300006: haitaibinggan31
-    4300008: xiaoche
-    4300010: judai3
+    4300002: tuka9
+    4300004: tuka10
+    4300006: qiaokeli6
+    4300008: shupian40
+    4300010: haitaibinggan31
+    4300012: xiaoche
+    4300014: judai3
+    4300016: tuka9
+    4300018: tuka10
     7400000: MM_E_3RE_DY_KA
     9500000: //RootNode
     11100000: //RootNode

@@ -24,7 +24,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     public FlowModel()
     {
         InitFlowTasks();
-        CurrFlowTask = FlowTaskList[0];
+        CurrFlowTask = FlowTaskList[5];
     }
 
     /// <summary>
