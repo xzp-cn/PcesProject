@@ -10,6 +10,7 @@ public class XHCtrl : MonoBehaviour
     /// <summary>
     /// 小华右手图卡
     /// </summary>
+    /// //
     public GameObject r_tuka;
 
     /// <summary>

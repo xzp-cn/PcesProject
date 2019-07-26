@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class PeopleManager : SingleTon<PeopleManager>
 {
-    Dictionary<string, GameObject> pDic = new Dictionary<string, GameObject>();    
+    Dictionary<string, GameObject> pDic = new Dictionary<string, GameObject>();
+    Vector3[] posArr = new Vector3[3];
+    private void Start()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            posArr[i] = transform.GetChild(i).localPosition;
+        }
+    }
     public void Reset()
     {
-        foreach (KeyValuePair<string,GameObject> temp in pDic)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            temp.Value.SetActive(true);
-            temp.Value.GetAnimatorOper().OnContinue();
+            Transform temp = transform.GetChild(i);
+            temp.localPosition = posArr[i];
+            temp.gameObject.SetActive(true);
+            temp.gameObject.GetAnimatorOper().OnContinue();
         }
     }
     public void CtrlShow(string name, bool isShow = true)

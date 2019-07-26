@@ -47,7 +47,6 @@ public class LSCtrl : MonoBehaviour
         if (l_guadian != null)
         {
             obj.transform.SetParent(l_guadian.transform);
-            //obj.transform.localPosition = Vector3.zero;
         }
     }
 

@@ -20,6 +20,7 @@ public class EnhanceCtrlC : MonoBehaviour
     GameObject xhTk;
     GameObject lsTk;
     GameObject qhw;
+    Vector3 fdlspos;
     private void Awake()
     {
         this.name = "EnhanceCtrlC";
@@ -35,8 +36,8 @@ public class EnhanceCtrlC : MonoBehaviour
         if (swapUI == null)
         {
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
-            swapUI.chooseEvent += ChooseBtnClickCallback;
-            swapUI.speakEvent += SpeakBtnClickCallback;
+            swapUI.chooseEvent = ChooseBtnClickCallback;
+            swapUI.speakEvent = SpeakBtnClickCallback;
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, true);
         }
@@ -54,10 +55,7 @@ public class EnhanceCtrlC : MonoBehaviour
         //LS.transform.localPosition = new Vector3(1.3f, 0, 0);
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        FDLS.gameObject.SetActive(false);
-
-        XH.gameObject.SetActive(false);
-        XH.gameObject.SetActive(true);
+        FDLS.transform.localPosition = new Vector3(0, 0, 10000);
 
         LS.PlayForward("idle");
         XH.PlayForward("idle");
@@ -183,6 +181,7 @@ public class EnhanceCtrlC : MonoBehaviour
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.SetActive(false);
@@ -242,25 +241,19 @@ public class EnhanceCtrlC : MonoBehaviour
     }
     void LsJieka()
     {
-        Debug.LogError("lsjieka");
-        HighLightCtrl.GetInstance().FlashOff(jshand);
+        //Debug.LogError("lsjieka");
         ClickDispatcher.Inst.EnableClick = false;
+        HighLightCtrl.GetInstance().FlashOff(jshand);
+
 
         LS.Complete += LsGiveObjCallback;
 
-        bool pause1 = true;
-        bool pause2 = true;
-        bool pause3 = true;
-        bool pause4 = true;
-        bool pause5 = true;
-        bool pause6= true;
+        bool pause = true;
         LS.timePointEvent = (a) =>
         {
             //Debug.Log(a + "      ===");
-            if (a == 53&& pause1)//老师接卡
+            if (a == 53)//老师接卡
             {
-                //Debug.LogError("ls  +=============");
-                pause1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
@@ -274,9 +267,8 @@ public class EnhanceCtrlC : MonoBehaviour
                 XH.timePointEvent = null;
             }
 
-            if (a == 83&&pause2)//老师桌子放卡片
+            if (a == 83)//老师桌子放卡片
             {
-                pause2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
@@ -285,31 +277,28 @@ public class EnhanceCtrlC : MonoBehaviour
 
             }
 
-            if (a == 96 && pause3)
+            if (a == 96 && pause)
             {
-                pause3 = false;
+                pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
 
                 LsJiekaCallback();//提示
             }
 
-            if (a == 124&&pause4)//强化物挂到老师手上
+            if (a == 124)//强化物挂到老师手上
             {
-                pause4 = false;
                 LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a == 105&&pause5)//小华接受物体时间点
+            if (a == 105)//小华接受物体时间点
             {
-                pause5 = false;               
                 //               
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b == 42&&pause6)
-                    {                     
-                        pause6 = false;
+                    if (b == 42)
+                    {
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         xhCtrl.SetJoint(qhw);
@@ -335,6 +324,7 @@ public class EnhanceCtrlC : MonoBehaviour
     #region 点击话筒提示
     void ClickmicroPhoneTip()
     {
+        //Debug.Log("ClickmicroPhoneTip");
         ChooseDo.Instance.DoWhat(5, RedoLsSpeak, ShowSpeakContent);
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
     }
@@ -349,10 +339,10 @@ public class EnhanceCtrlC : MonoBehaviour
     }
     void SpeakBtnClickCallback()
     {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
         Debug.Log("按钮点击");
         UIFlah uf = swapUI.GetMicroBtn.gameObject.GetUIFlash();
         uf.StopFlash();
-        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
         ChooseDo.Instance.Clicked();
     }
     void ShowSpeakContent()
@@ -360,7 +350,7 @@ public class EnhanceCtrlC : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("小华要吃" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -420,16 +410,23 @@ public class EnhanceCtrlC : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
+
         RemoveAllListeners();
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }        
+        }
     }
     void NextDo()
     {
@@ -449,7 +446,7 @@ public class EnhanceCtrlC : MonoBehaviour
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
         com = null;
-       
+
     }
     public void Dispose()
     {

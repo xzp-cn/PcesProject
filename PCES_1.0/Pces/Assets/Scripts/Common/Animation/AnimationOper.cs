@@ -120,13 +120,11 @@ public class AnimationOper : MonoBehaviour
                         //Debug.Log("---" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate);
                         //Debug.Log(Mathf.RoundToInt(currentFrame));
                         curFrame = Mathf.RoundToInt(currentFrame);
-                        if (lastFrame != curFrame)//仅仅调用一帧。
+                        if (lastFrame != curFrame)//仅仅调用一帧。动画播放和Update不一致，update会延迟捕捉当前贞数，update帧数会>=暂停时帧数//所以暂停时 ，要在调用处做特殊处理，在OnPause或OnContinue不可赋值，会漏帧事件
                         {
-                            //Debug.Log(curFrame + "------------------");
-                            lastFrame = curFrame;
                             timePointEvent(curFrame);
                         }
-
+                        lastFrame = curFrame;
                     }
                     if (IsStart)
                     {
@@ -141,6 +139,7 @@ public class AnimationOper : MonoBehaviour
                         IsStart = false;
                         IsComplete = true;
                         currLength = 0;
+                        lastFrame = curFrame = -1;
                         if (_complete != null)
                         {
                             _complete();

@@ -85,7 +85,7 @@ public class EnhanceCtrlA : MonoBehaviour
             qhw.transform.SetParent(transform);
             string qhwName = ((PropsTag)objId).ToString();
             qhw.name = qhwName;
-            QHWCtrl qhwCtrl = qhw.GetComponent<QHWCtrl>();                     
+            QHWCtrl qhwCtrl = qhw.GetComponent<QHWCtrl>();
             qhwCtrl.ShowObj(qhwName);
 
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
@@ -204,7 +204,7 @@ public class EnhanceCtrlA : MonoBehaviour
     void FdlsClickXhHand()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOff(fdlshand);       
+        HighLightCtrl.GetInstance().FlashOff(fdlshand);
         //FDLS.Complete += FdlsClickXhHandCalllback;
         //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
         FDLS.PlayForward("FDLS_B_1ST_FGTB");
@@ -230,6 +230,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.gameObject.SetActive(false);
@@ -293,7 +294,7 @@ public class EnhanceCtrlA : MonoBehaviour
     void LsJieka()
     {
         ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOff(jshand);      
+        HighLightCtrl.GetInstance().FlashOff(jshand);
 
         LS.Complete += LsGiveObjCallback;
 
@@ -424,7 +425,7 @@ public class EnhanceCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
-      
+
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
         LS.OnContinue();//老师给物品。
@@ -466,7 +467,7 @@ public class EnhanceCtrlA : MonoBehaviour
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
         }
@@ -489,7 +490,7 @@ public class EnhanceCtrlA : MonoBehaviour
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
         com = null;
-     
+
     }
     public void Dispose()
     {

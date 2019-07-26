@@ -21,6 +21,7 @@ public class EnhanceCtrlB : MonoBehaviour
     GameObject xhTk;
     GameObject lsTk;
     GameObject qhw;
+    GameObject xhqhw;
     private void Awake()
     {
         this.name = "EnhanceCtrlB";
@@ -50,21 +51,19 @@ public class EnhanceCtrlB : MonoBehaviour
         }
         UIManager.Instance.SetUIDepthTop("selectionUI");
 
+        PeopleManager.Instance.Reset();
+
         if (LS == null)
         {
-            LS = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.LS_BD)).GetAnimatorOper();
-            LS.name = "LS";
-            LS.transform.SetParent(transform);
+            LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
             LS.transform.localPosition = new Vector3(1.461f, 0, 0.022f);
+            //LS.PlayForward("idle");
 
-            XH = Instantiate(PeopleManager.Instance.GetPeople(PeopleTag.XH_BD)).GetAnimatorOper();
-            XH.name = "XH";
-            XH.transform.SetParent(transform);
+            FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
+            FDLS.transform.localPosition = new Vector3(0, 0, 10000);
 
-            PeopleManager.Instance.gameObject.SetActive(false);
-
-            LS.PlayForward("idle");
-            XH.gameObject.SetActive(false);
+            XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+            XH.transform.localPosition = new Vector3(0, 0, 10000);
         }
 
         HighLightCtrl.GetInstance().OffAllObjs();
@@ -99,6 +98,7 @@ public class EnhanceCtrlB : MonoBehaviour
             QHWCtrl qhwCtrl = qhw.GetComponent<QHWCtrl>();
             qhw.transform.localPosition = new Vector3(1.431f, 0, 0);
             qhwCtrl.ShowObj(qhwName);
+
 
             string _tuka = "tuka_" + ((PropsTag)objId).ToString();
             Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];//图卡材质
@@ -164,22 +164,16 @@ public class EnhanceCtrlB : MonoBehaviour
     #region 小华走动拿卡并给卡
     void XhTakeCard()
     {
-        XH.gameObject.SetActive(true);
-        //XH.Complete += XhTakeCardCallback;
-        bool pause1 = true;
-        bool pause2 = true;
-        bool pause3 = true;
-        bool pause4 = true;
+        XH.transform.localPosition = Vector3.zero;
+        //XH.Complete += XhTakeCardCallback;        
         XH.timePointEvent = (a) =>
         {
-            if (a == 110&& pause1)
+            if (a == 110)
             {
-                pause1 = false;                
                 GTB.timePointEvent = (b) =>
                 {
-                    if (b == 28&&pause2)
+                    if (b == 28)
                     {
-                        pause2 = false;
                         GTB.timePointEvent = null;
                         deskTuka.gameObject.SetActive(true);
                     }
@@ -187,28 +181,25 @@ public class EnhanceCtrlB : MonoBehaviour
                 GTB.PlayForward("onePaper");
             }
 
-            if (a == 187&&pause3)
+            if (a == 187)
             {
-                pause3 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.SetActive(false);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
-            if (a == 404&&pause4)
+            if (a == 404)
             {
-                pause4 = false;
                 XH.timePointEvent = null;
                 XH.OnPause();
                 XhTakeCardCallback();
             }
         };
-
         XH.PlayForward("XH_B_2ND_ZFNZD");
-
     }
     /// <summary>
     /// 小华拿卡递卡回调
@@ -283,7 +274,7 @@ public class EnhanceCtrlB : MonoBehaviour
 
                 deskTuka.transform.localPosition = new Vector3(1.44f, 0.0014f, 0.12f);
                 lsTk.gameObject.SetActive(true);
-          
+
             }
 
             if (a == 96 && pause)
@@ -296,25 +287,28 @@ public class EnhanceCtrlB : MonoBehaviour
 
             if (a == 124)//强化物挂到老师手上
             {
-                LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
+                //qhw.transform.localPosition = Vector3.zero;
                 ctrl.SetJoint(qhw);
             }
 
-            if (a == 105)//小华接受物体时间点
+            if (a == 145)//小华接受物体时间点
             {
                 //               
+                LS.timePointEvent = null;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
                     if (b == 42)
                     {
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //qhw.transform.localPosition = Vector3.zero;                     
                         xhCtrl.SetJoint(qhw);
+
                         //Debug.LogError("xh");
                     }
                 };
-                XH.PlayForward("TY_XH_JG");
+                XH.PlayForward("TY_XH_JG_B2-3");
             }
         };
         LS.PlayForward("TY_LS_JKDW");//LS_tuka/LS_tuka 1  //tuka2
@@ -357,7 +351,7 @@ public class EnhanceCtrlB : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("小华要吃" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -385,9 +379,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void LsGiveObj()
     {
-        //XH.PlayForward("empty");    
         XH.transitionTime = 0f;
-        XH.transform.localPosition = new Vector3(1.4f, 0, 0);
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -419,6 +411,13 @@ public class EnhanceCtrlB : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
+
         RemoveAllListeners();
     }
     void ReDo()
@@ -446,10 +445,10 @@ public class EnhanceCtrlB : MonoBehaviour
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
         com = null;
-      
+
     }
     public void Dispose()
-    {        
+    {
         RemoveAllListeners();
         evtFinished = null;
         evtRedo = null;
