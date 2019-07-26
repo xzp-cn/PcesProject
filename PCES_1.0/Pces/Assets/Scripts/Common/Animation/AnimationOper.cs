@@ -68,12 +68,13 @@ public class AnimationOper : MonoBehaviour
     public System.Action<int> timePointEvent; //时间点事件,参数为当前时间
     float timeLength;
     float currLength;
-    public float transitionTime = 0f;//过渡时间    
+    public float transitionTime = 0f;//过渡时间   
+    int lastFrame = -1, curFrame = -1;
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
     /// <param name="clipName"></param>
-    public void PlayForward(string clipName,float offset=0)
+    public void PlayForward(string clipName, float offset = 0)
     {
         if (anim)
         {
@@ -81,6 +82,7 @@ public class AnimationOper : MonoBehaviour
             //Debug.Log(animName);  
             currLength = 0;
             IsStart = false;
+            curFrame = lastFrame = -1;
             anim.CrossFade(clipName, transitionTime, 0, offset);
             //anim.Play(clipName, 0, 0);
             System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
@@ -116,7 +118,15 @@ public class AnimationOper : MonoBehaviour
                         //Debug.LogError(asif.normalizedTime);
                         float currentFrame = asif.length * asif.normalizedTime * frameRate;
                         //Debug.Log("---" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate);
-                        timePointEvent(Mathf.RoundToInt(currentFrame));
+                        //Debug.Log(Mathf.RoundToInt(currentFrame));
+                        curFrame = Mathf.RoundToInt(currentFrame);
+                        if (lastFrame != curFrame)//仅仅调用一帧。
+                        {
+                            //Debug.Log(curFrame + "------------------");
+                            lastFrame = curFrame;
+                            timePointEvent(curFrame);
+                        }
+
                     }
                     if (IsStart)
                     {
@@ -130,7 +140,7 @@ public class AnimationOper : MonoBehaviour
                         //播放完成
                         IsStart = false;
                         IsComplete = true;
-                        currLength = 0;                                   
+                        currLength = 0;
                         if (_complete != null)
                         {
                             _complete();
