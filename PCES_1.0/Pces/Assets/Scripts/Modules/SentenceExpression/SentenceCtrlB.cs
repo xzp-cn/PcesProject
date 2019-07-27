@@ -15,6 +15,7 @@ public class SentenceCtrlB : MonoBehaviour
     AnimationOper LS;
     AnimationOper XH;
     AnimationOper FDLS;
+    QHWCtrl qhwCtrl;
     //AnimationOper GTB;//沟通本
     LegacyAnimationOper gtb;
     private void Awake()
@@ -36,13 +37,14 @@ public class SentenceCtrlB : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
+        PeopleManager.Instance.Reset();
+
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
-        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).SetActive(true);
+        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();    
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
-        FDLS.PlayForward("idle");
+        FDLS.transform.localPosition = new Vector3(0, 0, 10000);
         //FDLS.gameObject.SetActive(false);
         //FDLS.PlayForward("FDLS_A_2ND_D");
         HighLightCtrl.GetInstance().OffAllObjs();
@@ -55,8 +57,15 @@ public class SentenceCtrlB : MonoBehaviour
     {
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.neutralStimulator);//中性刺激物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
-        SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-        Debug.Log("GetTukaObject  " + rfc.pData.name);
+        SentenceExpressionModel.GetInstance().CurneutralStimulator = rfc;//设置强化物
+        Debug.Log("中性刺激物  " + rfc.pData.name);
+
+        string objName = rfc.pData.name;//桌子上中兴刺激物
+        GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
+        obj.name = "neutralStimulator";
+        obj.transform.SetParent(transform, false);
+        obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
+        obj.transform.localScale = Vector3.one * 0.6F;
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();
         gtb.name = PropsTag.TY_GTB.ToString();
@@ -76,14 +85,16 @@ public class SentenceCtrlB : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
 
         //设置老师旁边的中性刺激物模型
-        string objName = rfc.pData.name;//
-        GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
+        pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
+        rfc = new Reinforcement(pObj.pData);//测试代码 
+        SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
+        objName = rfc.pData.name;//                          
+
+        obj = ObjectsManager.instanse.GetQHW();
         obj.name = "QHW";
-        obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.587f, 0.578f, 0.249f);
-        obj.transform.localScale = Vector3.one * 0.3f;
-        //qhwCtrl = obj.GetComponent<QHWCtrl>();
-        //qhwCtrl.ShowObj(objName);
+        obj.transform.SetParent(transform);
+        qhwCtrl = obj.GetComponent<QHWCtrl>();
+        qhwCtrl.ShowObj(objName);
 
         LS.Complete += ClickmicroPhoneTip;
         LS.PlayForward("LS_E_1ST_ZB");
@@ -290,8 +301,8 @@ public class SentenceCtrlB : MonoBehaviour
     {
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
-        string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("是的，你看见了" + curObjName + "，你表现得很好!");
+        string curObjName = SentenceExpressionModel.GetInstance().CurneutralStimulator.pData.name_cn;
+        dlog.SetDialogMessage("是的，小华看见了" + curObjName + "，小华表现得很好!");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -338,7 +349,7 @@ public class SentenceCtrlB : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟
+            if (a > 25 && a < 29 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.Complete += XHJiewuCallback;
@@ -384,6 +395,7 @@ public class SentenceCtrlB : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        ResetGuaDian();
         RemoveAllListeners();
     }
     void NextDo()
@@ -401,19 +413,30 @@ public class SentenceCtrlB : MonoBehaviour
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
-        com = null;
-        evtFinished = null;
-        evtRedo = null;
+        com = null;     
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        evtRedo();
+        if (evtRedo!=null)
+        {
+            evtRedo();
+        }     
+    }
+    void ResetGuaDian()
+    {
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        lsctrl.DestroyGuadian();
     }
     public void Dispose()
     {
         RemoveAllListeners();
+        evtFinished = null;
+        evtRedo = null;
         Destroy(gameObject);
     }
     private void OnDestroy()

@@ -59,7 +59,7 @@ public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
     /// <summary>
     /// 当前选择的强化物
     /// </summary>
-    Reinforcement rf;
+    Reinforcement rf, ns;
     public Reinforcement CurReinforcement
     {
         get
@@ -69,6 +69,17 @@ public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
         set
         {
             rf = value;
+        }
+    }
+    public Reinforcement CurneutralStimulator
+    {
+        get
+        {
+            return ns;
+        }
+        set
+        {
+            ns = value;
         }
     }
 }

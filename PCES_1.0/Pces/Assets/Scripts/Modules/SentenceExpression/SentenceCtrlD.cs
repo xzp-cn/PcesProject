@@ -16,14 +16,7 @@ public class SentenceCtrlD : MonoBehaviour
     private void Awake()
     {
         this.name = "SentenceCtrlD";
-        PeopleManager.Instance.gameObject.SetActive(false);
-        foreach (GameObject item in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
-        {
-            if (item.name == "jiaoshi")
-            {
-                item.SetActive(false);
-            }
-        }
+        SentenceExpressionModel.GetInstance().Jiaoshi().SetActive(false);
     }
     //public bool Finished;
     private void Start()
@@ -41,8 +34,21 @@ public class SentenceCtrlD : MonoBehaviour
         MM = ResManager.GetPrefab("Scenes/park/MM").GetAnimatorOper();
         MM.transform.SetParent(park);
 
-        XH = ResManager.GetPrefab("Scenes/park/XH").GetAnimatorOper();
-        XH.transform.SetParent(park);
+        PeopleManager.Instance.Reset();
+        PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).transform.localPosition = new Vector3(0, 0, 10000);
+        PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).transform.localPosition = new Vector3(0, 0, 10000);
+        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
+        bool pass = true;
+        XH.timePointEvent = (a) =>
+          {
+              if (a>=1&&a<=3&&pass)
+              {
+                  pass = false;
+                  XH.timePointEvent = null;
+                  XH.OnPause();
+              }
+          };
+        XH.PlayForward("XH_F_4TH_FNN");
 
         LegacyAnimationOper dog = ResManager.GetPrefab("Scenes/park/dog").GetLegacyAnimationOper();
         dog.transform.SetParent(park);
@@ -91,14 +97,14 @@ public class SentenceCtrlD : MonoBehaviour
 
         XH.transitionTime = 0;
         //XH.Complete += XHTZkaCallback;
-        XH.PlayForward("XH_F_4TH_FNN");
+        XH.OnContinue();       
         XH.timePointEvent = (a) =>//
         {
-            if (a == 617)
+            if (a==617)
             {
                 XH.timePointEvent = null;
                 XH.OnPause();
-
+                //Debug.LogError("pause");
                 XHTZkaCallback();//mm高亮
             }
         };
@@ -120,6 +126,7 @@ public class SentenceCtrlD : MonoBehaviour
         Debug.Log("点中 " + cobj.objname);
         if (cobj.objname == "click")
         {
+            ClickDispatcher.Inst.EnableClick = false;
             ChooseDo.Instance.Clicked();
         }
     }
@@ -153,15 +160,19 @@ public class SentenceCtrlD : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         ClickDispatcher.Inst.EnableClick = false;
 
+        bool pass = true;
+        bool pasxh = true;
         MM.timePointEvent = (a) =>
         {
-            if (a == 40)
+            if (a >=38&&a<=40&& pasxh)
             {
+                pasxh = false;
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
             }
-            if (a == 181)
+            if (a >=178&&a<=181&& pass)
             {
+                pass = false;
                 MM.timePointEvent = null;
                 MM.OnPause();
                 DBYCallback();
@@ -203,7 +214,7 @@ public class SentenceCtrlD : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师说话");
+        tip.SetTipMessage("需要妈妈说话");
         CancelInvoke("ClickmicroPhoneTip");
         Invoke("ClickmicroPhoneTip", 2);
     }
@@ -219,9 +230,10 @@ public class SentenceCtrlD : MonoBehaviour
     {
         MM.OnContinue();
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        dlog.transform.localPosition = new Vector3(403, 420, 0);
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("是的，你看到了" + curObjName + ", 你表现的很好。");
+        dlog.SetDialogMessage("是的，小华看到了" + curObjName + ", 小华表现的很好。");
         Invoke("WyXhZka", 1);
     }
 
@@ -243,10 +255,12 @@ public class SentenceCtrlD : MonoBehaviour
         XH.transitionTime = 0;
         //XH.Complete += XHTZkaCallback;
         XH.PlayForward("XH_F_4TH_FNN");
+        bool pass = true;
         XH.timePointEvent = (a) =>//
         {
-            if (a == 617)
+            if (a>613&&a<617&&pass)
             {
+                pass = false;
                 XH.timePointEvent = null;
                 XH.OnPause();
 
@@ -311,16 +325,20 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMGiveObj()//接卡给物
     {
+        bool passxh = true;
+        bool passmm = true;
         MM.timePointEvent = (a) =>
         {
-            if (a == 40)
+            if (a >=38&&a<=40&&passxh)
             {
+                passxh = false;
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
                 WYXhBY();
             }
-            if (a == 181)
+            if (a >=179&&a<=181&&passmm)
             {
+                passmm = false;
                 MM.timePointEvent = null;
                 MMGiveObjCallback();
             }
@@ -358,10 +376,12 @@ public class SentenceCtrlD : MonoBehaviour
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
         //MM.Complete += WYXHJiewu;
+        bool pass = true;
         MM.timePointEvent = (a) =>
         {
-            if (a == 60)
+            if (a >=58&&a<=60&&pass)
             {
+                pass = false;
                 MM.timePointEvent = null;
                 MMCtrl ctrl = MM.GetComponent<MMCtrl>();
                 string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
@@ -377,10 +397,12 @@ public class SentenceCtrlD : MonoBehaviour
     void WYXHJiewu()
     {
         XH.Complete += WYXHJiewuCallback;
+        bool pass = true;
         XH.timePointEvent = (a) =>
         {
-            if (a == 20)
+            if (a >=19&&a<=21&&pass)
             {
+                pass = false;
                 XH.timePointEvent = null;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 GameObject go = MM.GetComponent<MMCtrl>().l_guadian.transform.Find("QHW").gameObject;
@@ -412,13 +434,17 @@ public class SentenceCtrlD : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        ResetGuaDian();
         RemoveAllListeners();
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        evtRedo();
+        if (evtRedo!=null)
+        {
+            evtRedo();
+        }      
     }
     void NextDo()
     {
@@ -428,6 +454,14 @@ public class SentenceCtrlD : MonoBehaviour
             evtFinished();
         }
     }
+    void ResetGuaDian()
+    {
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.DestroyGuadian();
+
+        //LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        //lsctrl.DestroyGuadian();
+    }
     void RemoveAllListeners()
     {
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
@@ -435,14 +469,14 @@ public class SentenceCtrlD : MonoBehaviour
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
-        com = null;
-        evtFinished = null;
-        evtRedo = null;
+        com = null;      
     }
     public void Dispose()
     {
         RemoveAllListeners();
         //Destroy(gameObject);
+        evtRedo = null;
+        evtFinished = null;
     }
     private void OnDestroy()
     {

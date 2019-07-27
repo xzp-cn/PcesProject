@@ -13,6 +13,9 @@ public class PeopleManager : SingleTon<PeopleManager>
             posArr[i] = transform.GetChild(i).localPosition;
         }
     }
+    /// <summary>
+    /// 将人物状态全部初始化
+    /// </summary>
     public void Reset()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -21,7 +24,18 @@ public class PeopleManager : SingleTon<PeopleManager>
             temp.localPosition = posArr[i];
             temp.gameObject.SetActive(true);
             temp.gameObject.GetAnimatorOper().OnContinue();
-        }
+
+            XHCtrl xhctrl=temp.GetComponent<XHCtrl>();
+            if (xhctrl!=null)
+            {
+                xhctrl.DestroyGuadian();
+            }
+           LSCtrl lsctrl =temp.GetComponent<LSCtrl>();
+            if (lsctrl!=null)
+            {
+                lsctrl.DestroyGuadian();
+            }         
+        }  
     }
     public void CtrlShow(string name, bool isShow = true)
     {

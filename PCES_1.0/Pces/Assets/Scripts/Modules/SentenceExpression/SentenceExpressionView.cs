@@ -24,10 +24,10 @@ public class SentenceExpressionView : MonoBehaviour
         com.SetComUITitle("第六阶段 增强自发性沟通");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
-        stACtrl.transform.SetParent(transform);
-        stACtrl.evtFinished += OnstACtrlFinished;
-        stACtrl.evtRedo += OnstACtrlRedo;
+        //stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
+        //stACtrl.transform.SetParent(transform);
+        //stACtrl.evtFinished += OnstACtrlFinished;
+        //stACtrl.evtRedo += OnstACtrlRedo;
         //stBCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlB").GetComponent<SentenceCtrlB>();
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;
@@ -36,10 +36,10 @@ public class SentenceExpressionView : MonoBehaviour
         //stCCtrl.transform.SetParent(transform);
         //stCCtrl.evtFinished += OnstCCtrlFinished;
         //stCCtrl.evtRedo += OnstCCtrlRedo;
-        //stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
-        //stDCtrl.transform.SetParent(transform);
-        //stDCtrl.evtFinished += OnstDCtrlFinished;
-        //stDCtrl.evtRedo += OnstCCtrlRedo;
+        stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
+        stDCtrl.transform.SetParent(transform);
+        stDCtrl.evtFinished += OnstDCtrlFinished;
+        stDCtrl.evtRedo += OnstCCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -109,7 +109,7 @@ public class SentenceExpressionView : MonoBehaviour
     {
         stDCtrl.evtFinished -= OnstDCtrlFinished;
         stDCtrl.evtRedo -= OnstDCtrlRedo;
-        //stDCtrl.Dispose();
+        stDCtrl.Dispose();
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
@@ -138,10 +138,11 @@ public class SentenceExpressionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        if (stDCtrl != null)
+        if (stDCtrl.gameObject!= null)
         {
-            stDCtrl.Dispose();
+            Destroy(stDCtrl.gameObject);           
         }
+        PeopleManager.Instance.Reset();
         //通知当前阶段完成
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SentenceExpression);
     }
