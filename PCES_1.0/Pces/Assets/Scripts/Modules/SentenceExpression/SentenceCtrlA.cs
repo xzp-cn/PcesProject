@@ -36,6 +36,8 @@ public class SentenceCtrlA : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
+        UIManager.Instance.GetUI<Dialog>("Dialog");
+
         PeopleManager.Instance.Reset();
 
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
@@ -234,7 +236,7 @@ public class SentenceCtrlA : MonoBehaviour
         bool pass = true;
         FDLS.timePointEvent = (a) =>
         {
-            if (a > 41 && a < 44 && pass)
+            if (a > 41 && a <=44 && pass)
             {
                 pass = false;
                 //               

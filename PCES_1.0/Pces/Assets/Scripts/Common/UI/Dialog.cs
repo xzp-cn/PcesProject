@@ -13,6 +13,14 @@ public class Dialog : MonoBehaviour
         upText = GetComponent<Text>();
         contentText = transform.Find("Image/Text").GetComponent<Text>();
     }
+    public void SetPos(Vector3? pos=null)
+    {
+        if (pos!=null)
+        {
+            transform.localPosition =(Vector3)pos;                
+        }
+        transform.localPosition = new Vector3();
+    }
     public void Show(bool _show = false)
     {
         gameObject.SetActive(_show);

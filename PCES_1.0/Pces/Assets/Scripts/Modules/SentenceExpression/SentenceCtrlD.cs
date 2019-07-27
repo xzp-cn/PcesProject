@@ -100,7 +100,7 @@ public class SentenceCtrlD : MonoBehaviour
         XH.OnContinue();       
         XH.timePointEvent = (a) =>//
         {
-            if (a==617)
+            if (a>=615&&a<=617)
             {
                 XH.timePointEvent = null;
                 XH.OnPause();
@@ -110,11 +110,13 @@ public class SentenceCtrlD : MonoBehaviour
         };
 
         LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
+        bool pass = true;
         lao.framePointEvent = (a) =>
         {
-            if (a == 617)
+            if (a >=615&&a<=617&&pass)
             {
                 lao.framePointEvent = null;
+                pass = false;
                 lao.OnPause();
             }
         };
@@ -286,10 +288,12 @@ public class SentenceCtrlD : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
 
         LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
+        bool kpass = true;
         lao.framePointEvent = (a) =>
         {
-            if (a == 617)
+            if (a >= 613&&a<=617&&kpass)
             {
+                kpass = false;
                 lao.framePointEvent = null;
                 lao.OnPause();
             }
