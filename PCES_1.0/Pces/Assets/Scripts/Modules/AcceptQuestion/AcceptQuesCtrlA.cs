@@ -24,8 +24,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     }
     //public bool Finished;
     private void Start()
-    {
-        ResetGuaDian();
+    {        
         Init();
     }
     public void Init()
@@ -38,7 +37,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
 
-        PeopleManager.Instance.Reset();
+        PeopleManager.Instance.Reset();        
 
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
@@ -48,6 +47,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         //FDLS.PlayForward("idle");
         FDLS.transform.localPosition = new Vector3(0, 0, 10000);
 
+        ResetGuaDian();
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
     }

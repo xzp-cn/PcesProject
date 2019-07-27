@@ -69,7 +69,7 @@ public class AnimationOper : MonoBehaviour
     float timeLength;
     float currLength;
     public float transitionTime = 0f;//过渡时间   
-    int lastFrame = -1, curFrame = -1;
+    int lastFrame = -1, curFrame = -1; 
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
@@ -118,9 +118,9 @@ public class AnimationOper : MonoBehaviour
                         //Debug.LogError(asif.normalizedTime);                       
                         float currentFrame = asif.length * asif.normalizedTime * frameRate;
                         //Debug.Log("---" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate);
-                        //Debug.Log(Mathf.RoundToInt(currentFrame));
+                        //Debug.Log("----------------------"+Mathf.RoundToInt(currentFrame));
                         curFrame = Mathf.RoundToInt(currentFrame);
-                        if (lastFrame != curFrame)//作用：在该帧仅仅调用一次。（但是暂停时 ，要在调用处做特殊处理。因为下次启动时仍会在该帧调用）.         原因：动画播放和Update不一致，update会延迟捕捉当前贞数，update帧数会>=暂停时帧数//所以
+                        if (lastFrame != curFrame)//作用：在该帧仅仅调用一次。（但是暂停时 ，要在调用处做特殊处理。因为下次启动时仍会在该帧调用）.         原因：动画播放和Update不一致，update会延迟捕捉当前贞数，update帧数会>=暂停时帧数,   有跳帧现象外部调用在几帧之间
                         {
                             timePointEvent(curFrame);
                         }

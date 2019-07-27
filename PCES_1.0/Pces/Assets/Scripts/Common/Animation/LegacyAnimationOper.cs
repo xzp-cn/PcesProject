@@ -59,10 +59,10 @@ public class LegacyAnimationOper : MonoBehaviour
         if (anim)
         {
             animName = clipName;
-            if (clipName == "MM_E_3RE_DY_KA")
-            {
-                Debug.Log(anim.IsPlaying(clipName) + "   " + anim[clipName].normalizedTime);
-            }
+            //if (clipName == "MM_E_3RE_DY_KA")
+            //{
+            //    Debug.Log(anim.IsPlaying(clipName) + "   " + anim[clipName].normalizedTime);
+            //}
 
             if (!anim.IsPlaying(clipName))
             {

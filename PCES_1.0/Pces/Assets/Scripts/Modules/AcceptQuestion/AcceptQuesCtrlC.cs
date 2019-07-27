@@ -14,6 +14,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     AnimationOper XH;
     //AnimationOper GTB;//沟通本
     LegacyAnimationOper gtb;
+    GameObject qhw;
     private void Awake()
     {
         this.name = "AcceptQuesCtrlC";
@@ -75,7 +76,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         {
             panzi.GetChild(i).gameObject.SetActive(false);
         }
-        panzi.Find(rfc.pData.name).gameObject.SetActive(true);
+        qhw = panzi.Find(rfc.pData.name).gameObject;
+        qhw.SetActive(true);
 
         ClickmicroPhoneTip();
     }
@@ -120,6 +122,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     void ShowSpeakContent()
     {
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
+        dlog.transform.localPosition = new Vector3(475,196,0);
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华要什么");
         MM.Complete += MMAskQuesCallback;
@@ -164,6 +167,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Debug.Log("点中 " + cobj.objname);
         if (cobj.objname == "click")
         {
+            ClickDispatcher.Inst.EnableClick = false;
             ChooseDo.Instance.Clicked();
         }
     }
@@ -190,13 +194,19 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
+        MM.OnContinue();
         MM.timePointEvent = (a) =>//mama借卡时间点
-        {
-            if (a == 41)//给定一个帧区间范围
+        {         
+            if (a >= 41&&a<=43)//给定一个帧区间范围
             {
-                //Debug.LogError("event");
+                MM.timePointEvent = null;
                 transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
-                                                                              //XH.PlayForward("XH_D_1ST_BACK");//小华手收回
+
+                int stateHash = XH.anim.GetCurrentAnimatorStateInfo(0).tagHash;
+               float length=XH.anim.GetCurrentAnimatorStateInfo(0).length;
+                XH.anim.Play("XH_E_3RD_JG", 0, -length);
+                //XH.anim.speed = -1;
+                //XH.PlayForward("XH_E_3RD_JG");//小华手收回
             }
         };
         MM.Complete += LsJiekaCallback;
@@ -240,7 +250,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("你要" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName);
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -276,6 +286,21 @@ public class AcceptQuesCtrlC : MonoBehaviour
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
         MM.Complete += LsGiveObjCallback;
+        MM.timePointEvent = (a) =>
+        {
+            if (a >= 120 && a <= 123)//
+            {
+                //Debug.LogError("MM");
+                MM.timePointEvent = null;
+                MMCtrl mctrl = MM.GetComponent<MMCtrl>();
+                if (mctrl == null)
+                {
+                    mctrl = MM.gameObject.AddComponent<MMCtrl>();
+                }
+                mctrl.SetJoint(qhw);
+                qhw.transform.localPosition = Vector3.zero;
+            }
+        };
         MM.PlayForward("MM_E_3RE_DY");
 
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();//mm手中卡显示
@@ -294,29 +319,29 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Material matSource = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         tkmat.CopyPropertiesFromMaterial(matSource);
 
+        ka.timePointEvent = (a) =>
+        {
+            if (a>=118&&a<=120)
+            {
+                ka.timePointEvent = null;
+                par.Find(rfc.pData.name).gameObject.SetActive(true);
+                qhw.SetActive(false);
+            }
+        };
         ka.PlayForward("MM_E_3RE_DY_KA");
     }
     void LsGiveObjCallback()
     {
+        XH.anim.speed = 1;
         XH.Complete += XHJiewuCallback;
-        XH.PlayForward("XH_E_3RD_JG");
-
-        string name = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name;
-        Transform par = transform.Find("MM_E_3RE_DY_KA/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R");
-        par.Find(name).gameObject.SetActive(false);
-
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        GameObject obj = Instantiate(AcceptQuestionModel.GetInstance().GetTuKa(name));
-        obj.transform.localPosition = new Vector3(0.026f, -0.04f, 0.007f);
-        obj.transform.rotation = Quaternion.identity;
-        xhctrl.SetJointL(obj);
-        //LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_JG_KA").GetLegacyAnimationOper();
-        //ka.transform.SetParent(transform);
-        //ka.PlayForward("XH_E_3RD_JG_KA");
+        XH.PlayForward("XH_E_3RD_JG");            
     }
     void XHJiewuCallback()
     {
         Debug.Log("xh给物品回调用");
+        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        xhctrl.SetJointL(qhw);
+        qhw.transform.localPosition = Vector3.zero;
         ShowFinalUI();
     }
     /// <summary>
@@ -354,14 +379,16 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
-        evtFinished = null;
-        evtRedo = null;
+    
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        evtRedo();
+        if (evtRedo!=null)
+        {
+            evtRedo();
+        }        
     }
     void ResetGuaDian()
     {
@@ -373,10 +400,10 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     public void Dispose()
     {
-        RemoveAllListeners();
-        PeopleManager.Instance.Reset();
-        Destroy(gameObject);
-
+        RemoveAllListeners();       
+        evtFinished = null;
+        evtRedo = null;
+        //Destroy(gameObject);
     }
     private void OnDestroy()
     {
