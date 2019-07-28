@@ -19,7 +19,7 @@ public class Dialog : MonoBehaviour
         {
             transform.localPosition =(Vector3)pos;                
         }
-        transform.localPosition = new Vector3();
+        transform.localPosition = new Vector3(-55,-490,0);
     }
     public void Show(bool _show = false)
     {

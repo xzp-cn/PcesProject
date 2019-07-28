@@ -43,7 +43,12 @@ public class SwapCtrlC : MonoBehaviour
             selectUI.okEvent += SelectUIOkBtnCallback;
             selectUI.closeEvent += CloseSelectUICallback;
         }
+        UIManager.Instance.GetUI<Dialog>("Dialog").SetPos();
+
         UIManager.Instance.SetUIDepthTop("selectionUI");
+
+        PeopleManager.Instance.Reset();
+
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper().gameObject.SetActive(false);
@@ -135,10 +140,13 @@ public class SwapCtrlC : MonoBehaviour
     #region 小华拿卡并给卡
     void XhTakeCard()
     {
+        bool pass1 = true;
+        bool pass2 = true;
         XH.timePointEvent = (a) =>
         {
-            if (a == 16)
+            if (a>=14&&a <= 16&&pass1)
             {
+                pass1 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
@@ -147,8 +155,9 @@ public class SwapCtrlC : MonoBehaviour
                 xhTk.gameObject.SetActive(false);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
-            if (a == 52)
+            if (a>=50&&a <= 52&&pass2)
             {
+                pass2 = false;
                 XH.timePointEvent = null;
                 XH.OnPause();
                 XhTakeCardCallback();
@@ -204,11 +213,16 @@ public class SwapCtrlC : MonoBehaviour
         LS.Complete += LsGiveObjCallback;
 
         bool pause = true;
+        bool pass1 = true;
+        bool pass2 = true;
+        bool pass3 = true;
+        bool pass4 = true;
+        bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a == 53)//老师接卡
+            if (a>=51&&a <= 53&&pass1)//老师接卡
             {
-
+                pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
@@ -221,16 +235,16 @@ public class SwapCtrlC : MonoBehaviour
                 XH.OnContinue();
             }
 
-            if (a == 83)//老师桌子放卡片
+            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
             {
-
+                pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
                 lsTk.gameObject.SetActive(true);
             }
 
-            if (a == 96 && pause)
+            if (a>=94&&a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -238,20 +252,23 @@ public class SwapCtrlC : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a == 124)//强化物挂到老师手上
+            if (a>=122&&a <= 124&&pass3)//强化物挂到老师手上
             {
+                pass3 = false;
                 LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a == 105)//小华接受物体时间点
+            if (a>=103&&a <= 105&&pass4)//小华接受物体时间点
             {
                 //               
+                pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b == 42)
+                    if (b>=40&&b <= 42&&pass5)
                     {
+                        pass5 = false;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         xhCtrl.SetJoint(qhw);
                         //Debug.LogError("xh");

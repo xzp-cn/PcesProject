@@ -44,7 +44,9 @@ public class EnhanceCtrlA : MonoBehaviour
             selectUI = UIManager.Instance.GetUI<SelectionUI>("selectionUI");
             selectUI.okEvent += SelectUIOkBtnCallback;
             selectUI.closeEvent += CloseSelectUICallback;
-        }
+        }       
+        UIManager.Instance.GetUI<Dialog>("Dialog").SetPos();
+
         UIManager.Instance.SetUIDepthTop("selectionUI");
         PeopleManager.Instance.Reset();
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
@@ -209,14 +211,20 @@ public class EnhanceCtrlA : MonoBehaviour
         //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
         FDLS.PlayForward("FDLS_B_1ST_FGTB");
 
+        bool pass1 = true;
+        bool pass2 = true;
+        bool pass3 = true;
+        bool passgtb = true;
         XH.timePointEvent = (a) =>
         {
-            if (a == 43)
+            if (a>=41&&a <= 43&&pass1)
             {
+                pass1 = false;
                 GTB.timePointEvent = (b) =>
                 {
-                    if (b == 28)
+                    if (b>=26&&b <= 28&&passgtb)
                     {
+                        passgtb = false;
                         GTB.timePointEvent = null;
                         deskTuka.gameObject.SetActive(true);
                     }
@@ -224,9 +232,10 @@ public class EnhanceCtrlA : MonoBehaviour
                 GTB.PlayForward("onePaper");
             }
 
-            if (a == 125)//
+            if (a>=123&&a <= 125&&pass2)//
             {
                 //XH.timePointEvent = null;
+                pass2 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
@@ -237,8 +246,9 @@ public class EnhanceCtrlA : MonoBehaviour
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
 
-            if (a == 166)
+            if (a>=164&&a <= 166&&pass3)
             {
+                pass3 = false;
                 XH.timePointEvent = null;
                 XH.OnPause();
                 XhTakeCardCallback();
@@ -299,10 +309,16 @@ public class EnhanceCtrlA : MonoBehaviour
         LS.Complete += LsGiveObjCallback;
 
         bool pause = true;
+        bool pass1 = true;
+        bool pass2 = true;
+        bool pass3 = true;
+        bool pass4 = true;
+        bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a == 53)//老师接卡
+            if (a>=51&&a <= 53&&pass1)//老师接卡
             {
+                pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
@@ -315,16 +331,16 @@ public class EnhanceCtrlA : MonoBehaviour
                 XH.OnContinue();
             }
 
-            if (a == 83)//老师桌子放卡片
+            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
             {
-
+                pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
                 lsTk.gameObject.SetActive(true);
             }
 
-            if (a == 96 && pause)
+            if (a>=94&&a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -332,20 +348,23 @@ public class EnhanceCtrlA : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a == 124)//强化物挂到老师手上
+            if (a>=122&&a<= 124&&pass3)//强化物挂到老师手上
             {
+                pass3 = false;
                 LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a == 105)//小华接受物体时间点
+            if (a>=103&&a <= 105&&pass4)//小华接受物体时间点
             {
                 //               
+                pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b == 42)
+                    if (b>=40&&b <= 42&&pass5)
                     {
+                        pass5 = false;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         xhCtrl.SetJoint(qhw);
                         //Debug.LogError("xh");

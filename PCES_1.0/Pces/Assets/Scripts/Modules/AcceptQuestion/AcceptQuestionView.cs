@@ -14,10 +14,11 @@ public class AcceptQuestionView : MonoBehaviour
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
         UnityEngine.Debug.Log("AcceptQuestionView::Awake(): 第五阶段 接受性问句");
         this.name = "AcceptQuestionView";
+        GlobalDataManager.GetInstance().SetPcesCamera();
     }
     private void Start()
     {
-        AcceptQuestionModel.GetInstance().Jiaoshi();
+        AcceptQuestionModel.GetInstance().Jiaoshi();     
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第五阶段 接受性问句");
         Canvas canvas = FindObjectOfType<Canvas>();

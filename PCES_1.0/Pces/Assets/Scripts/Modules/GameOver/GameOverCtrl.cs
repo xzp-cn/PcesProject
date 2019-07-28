@@ -20,9 +20,9 @@ public class GameOverCtrl : MonoBehaviour {
         string[] str= TestPaperModel.GetInstance().TotalCount().Split('_');
         int right=int.Parse(str[0]);
         int wrong = int.Parse(str[1]);
-        double a=(double)right / wrong;
-        double ratio=Math.Round(a,2);
-        transform.Find("Text").GetComponent<Text>().text =@"答对题目: " + right + "/n" + "答错题目: " + wrong + "/n'" + "正确率: "+ratio.ToString();
+        double a=((double)right)/(right+ wrong);
+        double ratio=Math.Round(a,4)*100;
+        transform.Find("Text").GetComponent<Text>().text = @"答对题目: " + right + "\n" + "答错题目: " + wrong + "\n'" + "正确率: " + ratio.ToString() + "%";
 
         Settle();
     }

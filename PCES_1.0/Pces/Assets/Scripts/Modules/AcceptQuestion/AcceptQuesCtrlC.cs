@@ -30,6 +30,11 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         Camera cam = transform.GetComponentInChildren<Camera>();
         ClickDispatcher.Inst.cam = cam;
+        HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
+        if (hf==null)
+        {
+            hf = cam.gameObject.AddComponent<HighlightingEffect>();
+        }
         Init();
     }
     public void Init()
@@ -109,7 +114,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师说话");
+        tip.SetTipMessage("需要妈妈说话");
         CancelInvoke("ClickmicroPhoneTip");
         Invoke("ClickmicroPhoneTip", 2);
     }
@@ -186,7 +191,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接卡");
+        tip.SetTipMessage("需要妈妈接卡");
         CancelInvoke("ClickLsHandJiekaTip");
         Invoke("ClickLsHandJiekaTip", 2);
     }
