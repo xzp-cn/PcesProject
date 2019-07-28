@@ -112,4 +112,14 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     {
         return ObjectsManager.instanse.propList.Find(tuka => { return tuka.name == tukaName; }).gameObject;
     }
+
+    public Vector3 GetVecPos(string name)
+    {
+        switch (name)
+        {
+            case "apple":
+                return new Vector3(0.0113f, -0.0466f, 0.0374f);
+        }
+        return Vector3.zero;
+    }
 }

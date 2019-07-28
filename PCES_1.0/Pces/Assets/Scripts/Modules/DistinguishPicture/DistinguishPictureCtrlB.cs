@@ -509,6 +509,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+        xhctrl.DestroyGuadian();
+        lsCtrl.DestroyGuadian();
     }
 
     private void OnReDo()
