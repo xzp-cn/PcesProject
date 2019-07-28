@@ -36,7 +36,7 @@ public class SentenceCtrlA : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
-        UIManager.Instance.GetUI<Dialog>("Dialog");
+        UIManager.Instance.GetUI<Dialog>("Dialog").SetPos(new Vector3(-55, -490, 0));
 
         PeopleManager.Instance.Reset();
 

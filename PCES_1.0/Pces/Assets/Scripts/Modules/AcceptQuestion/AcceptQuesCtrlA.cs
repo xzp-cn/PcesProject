@@ -247,7 +247,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a == 22)
+            if (a >=19&&a<22)
             {
                 LS.timePointEvent = null;
                 transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
@@ -333,7 +333,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a == 27)//挂载到老师手上强化物时间点
+            if (a >=25&&a<=27)//挂载到老师手上强化物时间点
             {
                 LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
@@ -342,12 +342,12 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a == 24)//小华接卡动画播放延迟一边挂载强化物
+            if (a>=21&&a<24)//小华接卡动画播放延迟一边挂载强化物
             {
                 XH.Complete += XHJiewuCallback;
                 XH.timePointEvent = (b) =>//小华接过物品
                 {
-                    if (b == 43)
+                    if (b>=40&&b<43)
                     {
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();

@@ -23,6 +23,13 @@ public class SentenceCtrlD : MonoBehaviour
     {
         Transform park = ResManager.GetPrefab("Scenes/park/park").transform;
         park.SetParent(transform);
+        GameObject cam=transform.Find("park(Clone)/Camera").gameObject;
+       HighlightingEffect hf= cam.GetComponent<HighlightingEffect>();
+        if (hf==null)
+        {
+            hf = cam.gameObject.AddComponent<HighlightingEffect>();
+        }
+
         if (swapUI == null)
         {
             swapUI = UIManager.Instance.GetUI<SwapUI>("SwapUI");
@@ -31,6 +38,7 @@ public class SentenceCtrlD : MonoBehaviour
             swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         }
+        UIManager.Instance.GetUI<Dialog>("Dialog").SetPos(new Vector3(-55, -490, 0));
         MM = ResManager.GetPrefab("Scenes/park/MM").GetAnimatorOper();
         MM.transform.SetParent(park);
 

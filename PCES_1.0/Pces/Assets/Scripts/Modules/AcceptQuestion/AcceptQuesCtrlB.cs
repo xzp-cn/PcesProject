@@ -190,7 +190,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         gtb.framePointEvent = (a) =>
         {
-            if (a == 167)
+            if (a>=165&&a<=167)
             {
                 gtb.timePointEvent = null;
                 tkb.SetActive(true);
@@ -237,10 +237,12 @@ public class AcceptQuesCtrlB : MonoBehaviour
         LS.Complete += LsJiekaCallback;
         LS.PlayForward("TY_LS_JTKJD_JG");
 
+        bool pass = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > 21 && a < 25)
+            if (a > 21 && a < 25&&pass)
             {
+                pass = false;
                 //Debug.LogError("event");
                 XH.PlayForward("XH_D_2ND_FYFT_JW");//小华手收回
                 transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏

@@ -24,7 +24,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     public FlowModel()
     {
         InitFlowTasks();
-        CurrFlowTask = FlowTaskList[5];
+        CurrFlowTask = FlowTaskList[6];
     }
 
     /// <summary>
@@ -113,6 +113,9 @@ public class FlowModel : SingleTemplate<FlowModel>
                 }
                 else
                 {
+                   GameOverCtrl ctrl=UIManager.Instance.GetUI<GameOverCtrl>("GameOverCtrl");
+                    ctrl.Init();
+                    ResetAllFlowTask();
                     throw new Exception("索引有问题");
                 }
             }
@@ -129,6 +132,7 @@ public class FlowModel : SingleTemplate<FlowModel>
         {
             FlowTaskList[i].thisFlowStepState = FlowStepState.UnFinished;
         }
+        CurrFlowTask = FlowTaskList[0];
     }
 
     /// <summary>
