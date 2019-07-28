@@ -12,7 +12,7 @@ TrueTypeFontImporter:
   fontNames:
   - Source Han Sans CN
   fallbackFontReferences:
-  - {fileID: 12800000, guid: b205aaf73d3048e4f9f593b1e02e473e, type: 3}
+  - {instanceID: 0}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
