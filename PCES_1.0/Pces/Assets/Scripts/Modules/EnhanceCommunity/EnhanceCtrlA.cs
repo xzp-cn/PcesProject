@@ -44,7 +44,7 @@ public class EnhanceCtrlA : MonoBehaviour
             selectUI = UIManager.Instance.GetUI<SelectionUI>("selectionUI");
             selectUI.okEvent += SelectUIOkBtnCallback;
             selectUI.closeEvent += CloseSelectUICallback;
-        }       
+        }
         UIManager.Instance.GetUI<Dialog>("Dialog").SetPos();
 
         UIManager.Instance.SetUIDepthTop("selectionUI");
@@ -192,7 +192,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void RedoClickFdlsHand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要辅导老师协助");
@@ -205,6 +205,7 @@ public class EnhanceCtrlA : MonoBehaviour
     /// </summary>
     void FdlsClickXhHand()
     {
+        CancelInvoke("ClickFdlsHandTip");
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         //FDLS.Complete += FdlsClickXhHandCalllback;
@@ -217,12 +218,12 @@ public class EnhanceCtrlA : MonoBehaviour
         bool passgtb = true;
         XH.timePointEvent = (a) =>
         {
-            if (a>=41&&a <= 43&&pass1)
+            if (a >= 41 && a <= 43 && pass1)
             {
                 pass1 = false;
                 GTB.timePointEvent = (b) =>
                 {
-                    if (b>=26&&b <= 28&&passgtb)
+                    if (b >= 26 && b <= 28 && passgtb)
                     {
                         passgtb = false;
                         GTB.timePointEvent = null;
@@ -232,7 +233,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 GTB.PlayForward("onePaper");
             }
 
-            if (a>=123&&a <= 125&&pass2)//
+            if (a >= 123 && a <= 125 && pass2)//
             {
                 //XH.timePointEvent = null;
                 pass2 = false;
@@ -246,7 +247,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
 
-            if (a>=164&&a <= 166&&pass3)
+            if (a >= 164 && a <= 166 && pass3)
             {
                 pass3 = false;
                 XH.timePointEvent = null;
@@ -294,7 +295,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -303,6 +304,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandTip");
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
 
@@ -316,7 +318,7 @@ public class EnhanceCtrlA : MonoBehaviour
         bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a>=51&&a <= 53&&pass1)//老师接卡
+            if (a >= 51 && a <= 53 && pass1)//老师接卡
             {
                 pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
@@ -331,7 +333,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 XH.OnContinue();
             }
 
-            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
+            if (a >= 81 && a <= 83 && pass2)//老师桌子放卡片
             {
                 pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
@@ -340,7 +342,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 lsTk.gameObject.SetActive(true);
             }
 
-            if (a>=94&&a <= 96 && pause)
+            if (a >= 94 && a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -348,7 +350,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a>=122&&a<= 124&&pass3)//强化物挂到老师手上
+            if (a >= 122 && a <= 124 && pass3)//强化物挂到老师手上
             {
                 pass3 = false;
                 LS.timePointEvent = null;
@@ -356,13 +358,13 @@ public class EnhanceCtrlA : MonoBehaviour
                 ctrl.SetJoint(qhw);
             }
 
-            if (a>=103&&a <= 105&&pass4)//小华接受物体时间点
+            if (a >= 103 && a <= 105 && pass4)//小华接受物体时间点
             {
                 //               
                 pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b>=40&&b <= 42&&pass5)
+                    if (b >= 40 && b <= 42 && pass5)
                     {
                         pass5 = false;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
@@ -393,7 +395,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -410,6 +412,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -433,14 +436,16 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         ClickDispatcher.Inst.EnableClick = false;
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);

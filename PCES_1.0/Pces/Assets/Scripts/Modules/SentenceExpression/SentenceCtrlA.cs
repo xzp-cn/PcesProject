@@ -41,7 +41,7 @@ public class SentenceCtrlA : MonoBehaviour
         PeopleManager.Instance.Reset();
 
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();     
+        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         //LS.gameObject.SetActive(true);
         //XH.gameObject.SetActive(true);
@@ -68,7 +68,7 @@ public class SentenceCtrlA : MonoBehaviour
         obj.name = "neutralStimulator";
         obj.transform.SetParent(transform, false);
         obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
-        obj.transform.localScale = Vector3.one*0.6F;
+        obj.transform.localScale = Vector3.one * 0.6F;
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();
         gtb.name = PropsTag.TY_GTB.ToString();
@@ -89,10 +89,10 @@ public class SentenceCtrlA : MonoBehaviour
 
         //设置老师旁边的强化物模型
 
-         pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
-         rfc = new Reinforcement(pObj.pData);//测试代码 
+        pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
+        rfc = new Reinforcement(pObj.pData);//测试代码 
         SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
-         objName = rfc.pData.name;//                          
+        objName = rfc.pData.name;//                          
 
         obj = ObjectsManager.instanse.GetQHW();
         obj.name = "QHW";
@@ -132,7 +132,7 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -148,6 +148,7 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
@@ -175,7 +176,7 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoLsPointJudai()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师指句带");
@@ -184,6 +185,7 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void LsPointJudai()
     {
+        CancelInvoke("ClickLsHandTip");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -212,7 +214,7 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoClickFdlsHand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要辅导老师协助");
@@ -225,6 +227,7 @@ public class SentenceCtrlA : MonoBehaviour
     /// </summary>
     void FdlsClickXhHand()
     {
+        CancelInvoke("ClickFdlsHandTip");
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
         //FDLS.Complete += FdlsClickXhHandCalllback;
@@ -236,7 +239,7 @@ public class SentenceCtrlA : MonoBehaviour
         bool pass = true;
         FDLS.timePointEvent = (a) =>
         {
-            if (a > 41 && a <=44 && pass)
+            if (a > 41 && a <= 44 && pass)
             {
                 pass = false;
                 //               
@@ -290,15 +293,17 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
-        CancelInvoke("ClickLsHandTip");
-        Invoke("ClickLsHandTip", 2);
+        CancelInvoke("ClickLsHandJiekaTip");
+        Invoke("ClickLsHandJiekaTip", 2);
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
+
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -348,19 +353,20 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
-        CancelInvoke("ClickmicroPhoneTip");
-        Invoke("ClickmicroPhoneTip", 2);
+        CancelInvoke("ClickmicroPhoneJiekaTip");
+        Invoke("ClickmicroPhoneJiekaTip", 2);
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurneutralStimulator.pData.name_cn;
-        dlog.SetDialogMessage("是的，你看见了" + curObjName + "，你表现得很好!");
+        dlog.SetDialogMessage("是的，小华看见了" + curObjName + "，小华表现得很好!");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -381,14 +387,16 @@ public class SentenceCtrlA : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -472,16 +480,16 @@ public class SentenceCtrlA : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
         com = null;
-        
+
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }        
+        }
     }
     void ResetGuaDian()
     {

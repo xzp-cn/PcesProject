@@ -44,7 +44,7 @@ public class SentenceCtrlC : MonoBehaviour
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        FDLS.transform.localPosition=new Vector3(0,0,10000);
+        FDLS.transform.localPosition = new Vector3(0, 0, 10000);
         LS.PlayForward("idle");
         XH.PlayForward("idle");
 
@@ -154,7 +154,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -163,6 +163,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsJiekaCallback;
@@ -170,7 +171,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a >=19 && a <= 21)
+            if (a >= 19 && a <= 21)
             {
                 //Debug.LogError("event");
                 LS.timePointEvent = null;
@@ -217,7 +218,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -226,6 +227,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -250,14 +252,17 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
+        //ClickLsGiveObjTip();
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -275,7 +280,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 22 && a < 26&& passXh)//小华接卡动画播放延迟
+            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.Complete += XHJiewuCallback;
@@ -288,7 +293,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
         {
-            if (a >=40 && a <= 42)
+            if (a >= 40 && a <= 42)
             {
                 XH.timePointEvent = null;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
@@ -397,6 +402,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
@@ -459,7 +465,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -468,6 +474,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJLsJieka()
     {
+        CancelInvoke("KJClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -476,7 +483,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a >=19 && a <= 23)
+            if (a >= 19 && a <= 23)
             {
                 //Debug.LogError("event");
                 LS.timePointEvent = null;
@@ -516,7 +523,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -525,6 +532,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJShowSpeakJiekaContent()
     {
+        CancelInvoke("KJClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurneutralStimulator.pData.name_cn;
@@ -553,7 +561,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
@@ -562,6 +570,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJLsGiveObj()
     {
+        CancelInvoke("KJClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -571,7 +580,7 @@ public class SentenceCtrlC : MonoBehaviour
         bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a >=25 && a <= 27)//挂载到老师手上强化物时间点
+            if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
             {
                 LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
@@ -579,7 +588,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 22&& a < 26 && passXh)//小华接卡动画播放延迟
+            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.timePointEvent = null;
@@ -641,16 +650,16 @@ public class SentenceCtrlC : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
 
-        com = null;      
+        com = null;
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }        
+        }
     }
     void ResetGuaDian()
     {
