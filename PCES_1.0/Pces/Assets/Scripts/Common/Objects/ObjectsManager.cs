@@ -160,7 +160,7 @@ public class ObjectsManager : MonoBehaviour
     /// 获得道具中文名字
     /// </summary>
     private Dictionary<string, string> objectCns = new Dictionary<string, string>();
-    private string GetCnNameOfObject(string enName)
+    public string GetCnNameOfObject(string enName)
     {
         if (objectCns.Count == 0)
         {

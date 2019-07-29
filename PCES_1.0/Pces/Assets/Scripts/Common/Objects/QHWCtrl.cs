@@ -20,7 +20,16 @@ public class QHWCtrl : MonoBehaviour
         go = transform.Find(_name).gameObject;
         go.SetActive(true);
     }
-    void InitObjs()
+
+    public GameObject GetObj(string _name)
+    {
+        //InitObjs();
+        go = transform.Find(_name).gameObject;
+        go.SetActive(true);
+        return go;
+    }
+
+    public void InitObjs()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
