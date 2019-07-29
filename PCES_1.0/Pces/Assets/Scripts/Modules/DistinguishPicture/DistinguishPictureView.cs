@@ -171,6 +171,10 @@ public class DistinguishPictureView : MonoBehaviour
         {
             dpcCtrl.Dispose();
         }
+        if (tpv != null)
+        {
+            tpv.Dispose();
+        }
         Destroy(gameObject);
     }
 }

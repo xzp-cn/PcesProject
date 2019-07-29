@@ -144,7 +144,7 @@ public class SwapCtrlC : MonoBehaviour
         bool pass2 = true;
         XH.timePointEvent = (a) =>
         {
-            if (a>=14&&a <= 16&&pass1)
+            if (a >= 14 && a <= 16 && pass1)
             {
                 pass1 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
@@ -155,7 +155,7 @@ public class SwapCtrlC : MonoBehaviour
                 xhTk.gameObject.SetActive(false);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
-            if (a>=50&&a <= 52&&pass2)
+            if (a >= 50 && a <= 52 && pass2)
             {
                 pass2 = false;
                 XH.timePointEvent = null;
@@ -220,7 +220,7 @@ public class SwapCtrlC : MonoBehaviour
         bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a>=51&&a <= 53&&pass1)//老师接卡
+            if (a >= 51 && a <= 53 && pass1)//老师接卡
             {
                 pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
@@ -235,7 +235,7 @@ public class SwapCtrlC : MonoBehaviour
                 XH.OnContinue();
             }
 
-            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
+            if (a >= 81 && a <= 83 && pass2)//老师桌子放卡片
             {
                 pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
@@ -244,7 +244,7 @@ public class SwapCtrlC : MonoBehaviour
                 lsTk.gameObject.SetActive(true);
             }
 
-            if (a>=94&&a <= 96 && pause)
+            if (a >= 94 && a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -252,7 +252,7 @@ public class SwapCtrlC : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a>=122&&a <= 124&&pass3)//强化物挂到老师手上
+            if (a >= 122 && a <= 124 && pass3)//强化物挂到老师手上
             {
                 pass3 = false;
                 LS.timePointEvent = null;
@@ -260,13 +260,13 @@ public class SwapCtrlC : MonoBehaviour
                 ctrl.SetJoint(qhw);
             }
 
-            if (a>=103&&a <= 105&&pass4)//小华接受物体时间点
+            if (a >= 107 && a <= 110 && pass4)//小华接受物体时间点
             {
                 //               
                 pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b>=40&&b <= 42&&pass5)
+                    if (b >= 42 && b <= 44 && pass5)
                     {
                         pass5 = false;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();

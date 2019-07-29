@@ -123,6 +123,7 @@ public class XHCtrl : MonoBehaviour
             }
         }
 
+
         if (r_guadian != null)
         {
             for (int i = 0; i < r_guadian.transform.childCount; i++)
@@ -132,5 +133,10 @@ public class XHCtrl : MonoBehaviour
                 Destroy(go);
             }
         }
+
+        r_tuka.SetActive(false);
+        r_tuka2.SetActive(false);
+        r_judai.SetActive(false);
+        r_judai2.SetActive(false);
     }
 }
