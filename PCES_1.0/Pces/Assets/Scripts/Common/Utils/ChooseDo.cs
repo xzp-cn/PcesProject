@@ -19,7 +19,7 @@ public class ChooseDo : SingleTon<ChooseDo>
     /// <param name="_nextdo"></param>
     public void DoWhat(float _time, System.Action _redo, System.Action _nextdo)
     {
-        StopCoroutine("LoopCalll");
+        StopCoroutine("LoopCall");
         StopCoroutine("LoopCallParam");
         time = _time;
         bNextDo = false;
