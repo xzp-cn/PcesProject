@@ -104,7 +104,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         lsCtrl.ls_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
         int start = 24;
         int end = 26;
-        xiaohuaAnim.timePointEvent += (t) => {
+        xiaohuaAnim.timePointEvent += (t) =>
+        {
             if (t >= start && t <= end)
             {
                 xiaohuaAnim.timePointEvent = null;
@@ -166,7 +167,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             //2. 播放结束，提醒操作者点击教师的手，点击后触发接A图卡的动作。
             int start = 47;
             int end = 48;
-            teacherAnim.timePointEvent = (t) => {
+            teacherAnim.timePointEvent = (t) =>
+            {
                 if (t >= start && t <= end)
                 {
                     teacherAnim.timePointEvent = null;
@@ -176,7 +178,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 }
             };
 
-            teacherAnim.Complete += () => {
+            teacherAnim.Complete += () =>
+            {
                 lsCtrl.ls_tuka2.SetActive(false);
                 xhctrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
                 OnClickHuaTong();
@@ -209,8 +212,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
             int start = 20;
             int end = 21;
-            xiaohuaAnim.timePointEvent = (t) => {
-                if(t >= start && t<= end)
+            xiaohuaAnim.timePointEvent = (t) =>
+            {
+                if (t >= start && t <= end)
                 {
                     xiaohuaAnim.timePointEvent = null;
                     dialog.Show(false);
@@ -276,8 +280,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
             int start = 29;
             int end = 30;
-            teacherAnim.timePointEvent = (t) => {
-                if(t >= start && t <= end)
+            teacherAnim.timePointEvent = (t) =>
+            {
+                if (t >= start && t <= end)
                 {
                     teacherAnim.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
@@ -339,7 +344,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         xhctrl.r_tuka.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaB.GetComponentInChildren<MeshRenderer>().materials[1]);
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if(t >= start && t <= end)
+            if (t >= start && t <= end)
             {
                 xiaohuaAnim.timePointEvent = null;
                 xhctrl.r_tuka.SetActive(true);
@@ -364,7 +369,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         {
             int start = 47;
             int end = 48;
-            teacherAnim.timePointEvent = (t) => {
+            teacherAnim.timePointEvent = (t) =>
+            {
                 if (t >= start && t <= end)
                 {
                     teacherAnim.timePointEvent = null;
@@ -374,7 +380,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 }
             };
 
-            teacherAnim.Complete += () => {
+            teacherAnim.Complete += () =>
+            {
                 lsCtrl.ls_tuka2.SetActive(false);
                 //9. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                 SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
@@ -509,6 +516,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+        xiaohuaAnim.timePointEvent = null;
+        teacherAnim.timePointEvent = null;
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
     }

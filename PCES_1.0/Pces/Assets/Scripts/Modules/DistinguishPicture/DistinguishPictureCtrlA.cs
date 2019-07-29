@@ -497,6 +497,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
                 if (a > 45 && a < 47)//小华接卡动画播放延迟一边挂载强化物
                 {
+                    teacherAnim.timePointEvent = null;
                     xiaohuaAnim.Complete += () =>
                     {
                         //11. 播放结束，出现下一关和重做的按钮。
@@ -551,6 +552,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+
+        xiaohuaAnim.timePointEvent = null;
+        teacherAnim.timePointEvent = null;
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
     }

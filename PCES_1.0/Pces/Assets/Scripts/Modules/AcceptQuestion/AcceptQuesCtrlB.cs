@@ -190,7 +190,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         gtb.framePointEvent = (a) =>
         {
-            if (a>=165&&a<=167)
+            if (a >= 165 && a <= 167)
             {
                 gtb.timePointEvent = null;
                 tkb.SetActive(true);
@@ -240,7 +240,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         bool pass = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > 21 && a < 25&&pass)
+            if (a > 21 && a < 25 && pass)
             {
                 pass = false;
                 //Debug.LogError("event");
@@ -415,6 +415,10 @@ public class AcceptQuesCtrlB : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         com = null;
+
+        LS.timePointEvent = null;
+        XH.timePointEvent = null;
+        //FDLS.timePointEvent = null;
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
 

@@ -20,6 +20,7 @@ public class SwapView : MonoBehaviour
     }
     private void Start()
     {
+        GlobalDataManager.GetInstance().GetCamera();
         Introduct();
     }
     void Introduct()

@@ -24,12 +24,12 @@ public class SpeakUpView : MonoBehaviour
         com.SetComUITitle("第四阶段 句型表达");
 
         UnityEngine.Debug.Log("SpeakUpView::Start(): 第四阶段 第一关 句型表达");
-        //spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
-        //spaCtrl.evtFinished += OnSpaCtrlFinished;
-        //spaCtrl.evtRedo += OnSpaCtrlRedo;
-        spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
-        spcCtrl.evtFinished += OnSpcCtrlFinished;
-        spcCtrl.evtRedo += OnSpcCtrlRedo;
+        spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
+        spaCtrl.evtFinished += OnSpaCtrlFinished;
+        spaCtrl.evtRedo += OnSpaCtrlRedo;
+        //spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
+        //spcCtrl.evtFinished += OnSpcCtrlFinished;
+        //spcCtrl.evtRedo += OnSpcCtrlRedo;
 
         InitPersonsState();
     }

@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 第三关 -- 区辨多张图片
 /// </summary>
-public class DistinguishPictureCtrlC : MonoBehaviour {
+public class DistinguishPictureCtrlC : MonoBehaviour
+{
 
     public event System.Action evtFinished;
     public event System.Action evtRedo;
@@ -54,7 +55,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         emptyRoot = new GameObject("Root");
     }
 
-    void Start () {
+    void Start()
+    {
 
         //初始化沟通本
         PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
@@ -69,7 +71,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         DistinguishPictureModel.GetInstance().GetRndReinforcements(3, rndReinforcements);
         int i = 0;
         //初始化摆放强化物
-        rndReinforcements.ForEach((ob) => {
+        rndReinforcements.ForEach((ob) =>
+        {
             GameObject qhw = CreateObj(ob, i);
             qhw.transform.localPosition = qhwPos[i++];
         });
@@ -91,18 +94,18 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         Invoke("OnXiaoHuaPassGouTongBenToTeacher", 1f);
     }
 
-    private GameObject CreateObj(PropsObject source,int index)
+    private GameObject CreateObj(PropsObject source, int index)
     {
         GameObject scopy = GameObject.Instantiate(source.gameObject);
         scopy.GetComponent<PropsObject>().pData = source.pData;
-        GameObject qhw = new GameObject("qhw"+index);
+        GameObject qhw = new GameObject("qhw" + index);
         qhw.transform.SetParent(emptyRoot.transform, false);
         scopy.transform.SetParent(qhw.transform, false);
         scopy.transform.localPosition = Vector3.zero;
 
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
-        qhwtks[index].transform.SetParent(index > 1 ? twopage.transform : onepage.transform,false);
+        qhwtks[index].transform.SetParent(index > 1 ? twopage.transform : onepage.transform, false);
         qhwtks[index].transform.localPosition = qhwtkPos[index];
         qhwtks[index].transform.localScale = new Vector3(0.5f, 1, 0.5f);
         return qhw;
@@ -120,7 +123,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         string tukaNameB = "tuka_" + source.gameObject.name;
         nqhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB));
 
-        nqhwtks[index].transform.SetParent(onepage.transform,false);
+        nqhwtks[index].transform.SetParent(onepage.transform, false);
         nqhwtks[index].transform.localPosition = nqhwtkPos[index];
         nqhwtks[index].transform.localScale = new Vector3(0.5f, 1, 0.5f);
         return nqhw;
@@ -143,8 +146,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         int et = 171;
         int start0 = 198;
         int end0 = 200;
-        xiaohuaAnim.timePointEvent = (t) => {
-            if(t >= start && t <= end)
+        xiaohuaAnim.timePointEvent = (t) =>
+        {
+            if (t >= start && t <= end)
             {
                 start = end + 1;
                 end++;
@@ -152,7 +156,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
 
             }
 
-            if(t >= st && t <= et)
+            if (t >= st && t <= et)
             {
                 st = et + 1;
                 et++;
@@ -195,7 +199,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         passed = true;
         int start0 = 52;
         int end0 = 54;
-        gtbAnim.timePointEvent = (t) => {
+        gtbAnim.timePointEvent = (t) =>
+        {
             if (t >= start0 && t <= end0)
             {
                 gtbAnim.timePointEvent = null;
@@ -232,8 +237,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             int st = 42;
             int et = 43;
-            teacherAnim.timePointEvent = (tt) => {
-                if(tt >= st && tt <= et)
+            teacherAnim.timePointEvent = (tt) =>
+            {
+                if (tt >= st && tt <= et)
                 {
                     st = et + 1;
                     et++;
@@ -268,7 +274,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
             string gift = RndReinforcementA.GetComponentInChildren<PropsObject>().pData.name_cn;
-            dialog.SetDialogMessage("你要"+gift + "呀。");
+            dialog.SetDialogMessage("你要" + gift + "呀。");
 
             //4. 播放结束，触发小华拿起B的动画。
             xiaohuaAnim.Complete += () =>
@@ -390,6 +396,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour {
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+        xiaohuaAnim.timePointEvent = null;
+        teacherAnim.timePointEvent = null;
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
     }

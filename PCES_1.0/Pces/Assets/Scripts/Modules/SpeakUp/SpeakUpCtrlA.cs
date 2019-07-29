@@ -304,6 +304,7 @@ public class SpeakUpCtrlA : MonoBehaviour
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+        xiaohuaAnim.timePointEvent = null;
     }
 
     void Redo()
