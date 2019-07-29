@@ -177,7 +177,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void RedoClickFdlsHand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要辅导老师协助");
@@ -190,6 +190,7 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void FdlsDragHandTakeCard()
     {
+        CancelInvoke("ClickFdlsHandTip");
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         FDLS.PlayForward("FDLS_A_1ST_ZN");
@@ -222,10 +223,11 @@ public class SwapCtrlA : MonoBehaviour
     }
     void RedoFdlsDika()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要辅导老师协助");
+        CancelInvoke("ClickFdlsDikaHandTip");
         Invoke("ClickFdlsDikaHandTip", 2);
     }
     /// <summary>
@@ -233,6 +235,7 @@ public class SwapCtrlA : MonoBehaviour
     /// </summary>
     void FdlsDika()
     {
+        CancelInvoke("ClickFdlsDikaHandTip");
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsDikaCallBack;
@@ -280,7 +283,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -289,6 +292,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandTip");
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
         LS.Complete += LsGiveObjCallback;
@@ -377,7 +381,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -394,6 +398,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -417,14 +422,16 @@ public class SwapCtrlA : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
