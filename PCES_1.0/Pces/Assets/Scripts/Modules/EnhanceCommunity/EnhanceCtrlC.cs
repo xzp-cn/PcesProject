@@ -189,11 +189,11 @@ public class EnhanceCtrlC : MonoBehaviour
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
-                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
-                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().enabled = true;
+                Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.SetActive(false);
-                ctrl.r_tuka2.gameObject.SetActive(true);
+                ctrl.r_tuka.gameObject.SetActive(true);
             }
 
             if (a >= 405 && a <= 407 && pass3)
@@ -278,7 +278,7 @@ public class EnhanceCtrlC : MonoBehaviour
                 ctrl.ls_tuka2.gameObject.SetActive(true);
 
                 XHCtrl xctrl = XH.GetComponent<XHCtrl>();
-                xctrl.r_tuka2.gameObject.SetActive(false);
+                xctrl.r_tuka.gameObject.SetActive(false);
                 XH.OnContinue();
                 XH.timePointEvent = null;
             }
@@ -305,14 +305,14 @@ public class EnhanceCtrlC : MonoBehaviour
             if (a >= 122 && a <= 124 && pass3)//强化物挂到老师手上
             {
                 pass3 = false;
-                LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a >= 103 && a <= 105 && pass4)//小华接受物体时间点
+            if (a >= 150 && a <= 153 && pass4)//小华接受物体时间点
             {
                 //               
+                LS.timePointEvent = null;
                 pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
@@ -322,6 +322,7 @@ public class EnhanceCtrlC : MonoBehaviour
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         xhCtrl.SetJoint(qhw);
+                        qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
                     }
                 };

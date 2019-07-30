@@ -18,6 +18,8 @@ public class EnhanceCommunityView : MonoBehaviour
     }
     private void Start()
     {
+        EnhanceCommunityModel.GetInstance().Jiaoshi();
+
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第二阶段 增强自发性沟通");
         Canvas canvas = FindObjectOfType<Canvas>();

@@ -22,11 +22,12 @@ public class EnhanceCtrlB : MonoBehaviour
     GameObject lsTk;
     GameObject qhw;
     GameObject xhqhw;
+    Vector3 zhuozi2Pos;
     private void Awake()
     {
         this.name = "EnhanceCtrlB";
         camPos = Camera.main.transform.parent.localPosition;
-        Camera.main.transform.parent.localPosition = new Vector3(3.981f, 1.071f, 0.43f);
+        Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
     }
     //public bool Finished;
     private void Start()
@@ -57,7 +58,7 @@ public class EnhanceCtrlB : MonoBehaviour
         if (LS == null)
         {
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-            LS.transform.localPosition = new Vector3(1.461f, 0, 0.022f);
+            LS.transform.localPosition = new Vector3(1.516f, 0, 0.022f);
             //LS.PlayForward("idle");
 
             FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
@@ -66,6 +67,10 @@ public class EnhanceCtrlB : MonoBehaviour
             XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
             XH.transform.localPosition = new Vector3(0, 0, 10000);
         }
+
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2Pos = zhuozi2.transform.localPosition;
+        zhuozi2.localPosition = new Vector3(0.0608f, 0, 0.036536f);
 
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
@@ -97,7 +102,7 @@ public class EnhanceCtrlB : MonoBehaviour
             string qhwName = ((PropsTag)objId).ToString();
             qhw.name = qhwName;
             QHWCtrl qhwCtrl = qhw.GetComponent<QHWCtrl>();
-            qhw.transform.localPosition = new Vector3(1.431f, 0, 0);
+            qhw.transform.localPosition = new Vector3(1.508f, 0, 0);
             qhwCtrl.ShowObj(qhwName);
 
 
@@ -194,11 +199,11 @@ public class EnhanceCtrlB : MonoBehaviour
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
-                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
-                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().enabled = true;
+                Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.SetActive(false);
-                ctrl.r_tuka2.gameObject.SetActive(true);
+                ctrl.r_tuka.gameObject.SetActive(true);
             }
             if (a >= 402 && a <= 404 && pass3)
             {
@@ -278,7 +283,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 ctrl.ls_tuka2.gameObject.SetActive(true);
 
                 XHCtrl xctrl = XH.GetComponent<XHCtrl>();
-                xctrl.r_tuka2.gameObject.SetActive(false);
+                xctrl.r_tuka.gameObject.SetActive(false);
                 XH.OnContinue();
             }
 
@@ -288,9 +293,8 @@ public class EnhanceCtrlB : MonoBehaviour
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
-                deskTuka.transform.localPosition = new Vector3(1.44f, 0.0014f, 0.12f);
+                deskTuka.transform.localPosition = new Vector3(1.504f, 0.0014f, 0.12f);
                 lsTk.gameObject.SetActive(true);
-
             }
 
             if (a >= 94 && a <= 96 && pause)
@@ -309,7 +313,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 ctrl.SetJoint(qhw);
             }
 
-            if (a >= 143 && a <= 145 && pass4)//小华接受物体时间点
+            if (a >= 150 && a <= 153 && pass4)//小华接受物体时间点
             {
                 //               
                 pass4 = false;
@@ -323,7 +327,7 @@ public class EnhanceCtrlB : MonoBehaviour
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         //qhw.transform.localPosition = Vector3.zero;                     
                         xhCtrl.SetJoint(qhw);
-
+                        qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
                     }
                 };
@@ -439,6 +443,9 @@ public class EnhanceCtrlB : MonoBehaviour
 
         LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
         lsctrl.DestroyGuadian();
+
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2.transform.localPosition = zhuozi2Pos;
 
         RemoveAllListeners();
     }

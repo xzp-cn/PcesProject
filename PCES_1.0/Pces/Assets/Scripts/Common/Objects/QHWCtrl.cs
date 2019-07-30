@@ -28,6 +28,14 @@ public class QHWCtrl : MonoBehaviour
         go.SetActive(true);
         return go;
     }
+    public void ResetPos()
+    {
+        transform.localPosition = Vector3.zero;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).localPosition = Vector3.zero;
+        }
+    }
 
     public void InitObjs()
     {
