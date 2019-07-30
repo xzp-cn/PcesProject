@@ -27,7 +27,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour
     private GameObject[] nqhwtks;
     private XHCtrl xhctrl;
     private LSCtrl lsCtrl;
+    private QHWCtrl qhwCtrl;
     private GameObject RndReinforcementA;
+    private GameObject goodA;
     /*
      小华坐在桌子的一边，老师坐在对面。桌上沟通本里有3张强化物和2张负强化物的图卡，桌子上有5个实物。
   小华翻开沟通本，第一页（橙色）有4张图卡（有2负强化物和2强化物），第二页（红色）只有一张图卡（是强化物）。
@@ -57,6 +59,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     void Start()
     {
+        GameObject qhwm = ObjectsManager.instanse.GetQHW();
+        qhwm.transform.SetParent(emptyRoot.transform);
+        qhwCtrl = qhwm.GetComponent<QHWCtrl>();
 
         //初始化沟通本
         PropsObject gtbProp = ObjectsManager.instanse.GetProps((int)PropsTag.TY_GTB);
@@ -96,13 +101,24 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     private GameObject CreateObj(PropsObject source, int index)
     {
-        GameObject scopy = GameObject.Instantiate(source.gameObject);
-        scopy.GetComponent<PropsObject>().pData = source.pData;
         GameObject qhw = new GameObject("qhw" + index);
-        qhw.transform.SetParent(emptyRoot.transform, false);
-        scopy.transform.SetParent(qhw.transform, false);
-        scopy.transform.localPosition = Vector3.zero;
+        if (index < 2)
+        {
+            GameObject scopy = GameObject.Instantiate(source.gameObject);
+            scopy.GetComponent<PropsObject>().pData = source.pData;
 
+            qhw.transform.SetParent(emptyRoot.transform, false);
+            scopy.transform.SetParent(qhw.transform, false);
+            scopy.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            //第2个索引为触发的强化物
+            goodA = GameObject.Instantiate(source.gameObject);
+            goodA.GetComponent<PropsObject>().pData = source.pData;
+            RndReinforcementA = qhwCtrl.GetObj(source.name);
+            qhw = RndReinforcementA;
+        }
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         qhwtks[index].transform.SetParent(index > 1 ? twopage.transform : onepage.transform, false);
@@ -218,7 +234,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("请点击教师的手");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -262,7 +278,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     void OnClickHuaTong()
     {
-        RndReinforcementA = emptyRoot.transform.Find("qhw2").gameObject;
         SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
         swapui.SetButtonVisiable(SwapUI.BtnName.microButton, true);
         swapui.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
@@ -273,15 +288,16 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             swapui.speakEvent = null;
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
-            string gift = RndReinforcementA.GetComponentInChildren<PropsObject>().pData.name_cn;
-            dialog.SetDialogMessage("你要" + gift + "呀。");
+            string gift = goodA.GetComponentInChildren<PropsObject>().pData.name_cn;
+            dialog.SetDialogMessage("小华要" + gift + "呀。");
 
+            Invoke("ClickTeachersHandFinal", 1);
             //4. 播放结束，触发小华拿起B的动画。
-            xiaohuaAnim.Complete += () =>
-            {
-                ClickTeachersHandFinal();
-            };
-            xiaohuaAnim.PlayForward("TY_XH_NKDK");
+            //xiaohuaAnim.Complete += () =>
+            //{
+
+            //};
+            //xiaohuaAnim.PlayForward("TY_XH_NKDK");
         };
     }
 
@@ -302,7 +318,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手给小华");
+        tip.SetTipMessage("请点击教师的手给小华");
         Invoke("ClickTeachersPromptFinal", 2);
     }
 
@@ -337,6 +353,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     et++;
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndReinforcementA);
+                    RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
                 if (a > s && a < e)//小华接卡动画播放延迟一边挂载强化物
@@ -366,6 +383,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                             xiaohuaAnim.timePointEvent = null;
 
                             xhctrl.SetJoint(RndReinforcementA);
+                            RndReinforcementA.transform.localPosition = Vector3.zero;
                         }
                     };
                     xiaohuaAnim.PlayForward("TY_XH_JG");
