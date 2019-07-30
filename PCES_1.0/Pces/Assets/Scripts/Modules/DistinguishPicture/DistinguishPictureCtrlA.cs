@@ -186,7 +186,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().OffAllObjs();
-            
+
 
             //播放老师接图卡动画
             int start = 47;
@@ -200,9 +200,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     teacherAnim.timePointEvent = null;
 
                     xhctrl.r_tuka2.SetActive(false);
-                    
+
                     lsCtrl.ls_tuka2.SetActive(true);
-                   
+
                     xiaohuaAnim.OnContinue();
                 }
             };
@@ -210,7 +210,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             teacherAnim.Complete += () =>
             {
                 lsCtrl.ls_tuka2.SetActive(false);
-                
+
                 OnReceiveTuKa();
             };
 
@@ -220,7 +220,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
     private void OnReceiveTuKa()
     {
-        
+
         Debug.Log("DistinguishPictureCtrlA.OnReceiveTuKa(): 3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。");
         //3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
@@ -260,7 +260,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
             //播放教师给小华B的动画--(做在接图卡里)
             teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
-            
+
             //指定一个时间段，和时间点做近似比较
             int st = 18;
             int et = 19;
@@ -274,7 +274,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 {
                     if (lsCtrl != null)
                     {
-                        lsCtrl.SetJoint(RndNegReinforcementB);
+                        lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
                         //RndNegReinforcementB.transform.localPosition = DistinguishPictureModel.GetInstance().GetVecPos(RndNegReinforcementB.GetComponent<PropsObject>().pData.name);
                     }
                     passed = true;
@@ -350,7 +350,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 //{
                 //    //OnXiaoHuaBringAToTeacher();
                 //};
-                
+
                 int start = 24;
                 int end = 26;
                 xiaohuaAnim.timePointEvent = (t) =>
@@ -374,7 +374,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                                 end0++;
                                 xiaohuaAnim.timePointEvent = null;
                                 xiaohuaAnim.OnPause();
-                                
+
                                 OnXiaoHuaBringAToTeacher();
                             }
                         };

@@ -482,7 +482,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 if (a > st && a < et)//挂载到老师手上强化物时间点
                 {
                     //将当前强化物挂在老师手上
-                    lsCtrl.SetJoint(RndNegReinforcementB);
+                    lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
                     RndNegReinforcementB.transform.localPosition = Vector3.zero;
                 }
 
@@ -508,7 +508,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                         {
                             xiaohuaAnim.timePointEvent = null;
 
-                            xhctrl.SetJoint(RndNegReinforcementB);
+                            xhctrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
                             RndNegReinforcementB.transform.localPosition = Vector3.zero;
                         }
                     };

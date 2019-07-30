@@ -352,7 +352,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     st = et + 1;
                     et++;
                     //将当前强化物挂在老师手上
-                    lsCtrl.SetJoint(RndReinforcementA);
+                    lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
@@ -382,7 +382,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                             xhet++;
                             xiaohuaAnim.timePointEvent = null;
 
-                            xhctrl.SetJoint(RndReinforcementA);
+                            xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                             RndReinforcementA.transform.localPosition = Vector3.zero;
                         }
                     };

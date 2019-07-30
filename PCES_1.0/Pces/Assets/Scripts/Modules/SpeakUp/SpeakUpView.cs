@@ -27,6 +27,11 @@ public class SpeakUpView : MonoBehaviour
         spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
         spaCtrl.evtFinished += OnSpaCtrlFinished;
         spaCtrl.evtRedo += OnSpaCtrlRedo;
+
+        //spbCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpB").GetComponent<SpeakUpCtrlB>();
+        //spbCtrl.evtFinished += OnSpbCtrlFinished;
+        //spbCtrl.evtRedo += OnSpbCtrlRedo;
+
         //spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
         //spcCtrl.evtFinished += OnSpcCtrlFinished;
         //spcCtrl.evtRedo += OnSpcCtrlRedo;
