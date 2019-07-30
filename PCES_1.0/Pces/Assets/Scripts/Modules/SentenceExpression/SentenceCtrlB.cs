@@ -421,6 +421,7 @@ public class SentenceCtrlB : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
         com = null;
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     void ReDo()
     {

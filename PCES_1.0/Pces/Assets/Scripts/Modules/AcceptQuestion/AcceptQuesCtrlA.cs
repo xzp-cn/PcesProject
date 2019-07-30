@@ -422,8 +422,9 @@ public class AcceptQuesCtrlA : MonoBehaviour
         LS.timePointEvent = null;
         XH.timePointEvent = null;
         //FDLS.timePointEvent = null;
-
         swapUI.speakEvent -= SpeakBtnClickCallback;
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }
     void ReDo()
     {

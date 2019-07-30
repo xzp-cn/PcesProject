@@ -31,13 +31,13 @@ public class DistinguishPictureView : MonoBehaviour
         com.SetComUITitle("第三阶段 分辨图片");
 
         UnityEngine.Debug.Log("DistinguishPictureView::Start(): 第三阶段 第一关 区辨喜欢和不喜欢物品的图卡");
-        //dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
-        //dpaCtrl.evtFinished += OnDpaCtrlFinished;
-        //dpaCtrl.evtRedo += OnDpaCtrlRedo;
+        dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
+        dpaCtrl.evtFinished += OnDpaCtrlFinished;
+        dpaCtrl.evtRedo += OnDpaCtrlRedo;
 
-        dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
-        dpcCtrl.evtFinished += OnDpcCtrlFinished;
-        dpcCtrl.evtRedo += OnDpcCtrlRedo;
+        //dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
+        //dpcCtrl.evtFinished += OnDpcCtrlFinished;
+        //dpcCtrl.evtRedo += OnDpcCtrlRedo;
 
         InitPersonsState();
 

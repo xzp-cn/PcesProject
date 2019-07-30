@@ -414,6 +414,8 @@ public class SwapCtrlC : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()
     {

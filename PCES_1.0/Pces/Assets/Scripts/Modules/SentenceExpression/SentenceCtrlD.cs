@@ -483,8 +483,9 @@ public class SentenceCtrlD : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
-
         com = null;
+
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickMMhandCallback);
     }
     public void Dispose()
     {

@@ -480,7 +480,8 @@ public class SentenceCtrlA : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
         com = null;
-
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }
     void ReDo()
     {

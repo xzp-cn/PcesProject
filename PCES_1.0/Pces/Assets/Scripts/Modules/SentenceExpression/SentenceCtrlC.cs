@@ -649,8 +649,10 @@ public class SentenceCtrlC : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-
         com = null;
+
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+
     }
     void ReDo()
     {

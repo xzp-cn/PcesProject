@@ -389,7 +389,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         com = null;
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
-
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
 
     }
     void ReDo()
