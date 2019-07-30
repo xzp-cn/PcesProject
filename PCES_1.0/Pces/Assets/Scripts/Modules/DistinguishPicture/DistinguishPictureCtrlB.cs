@@ -12,7 +12,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     public event System.Action evtRedo;
     private CommonUI comUI;
     private GameObject emptyRoot;
-    private GameObject RndReinforcementA;
+    //private GameObject RndReinforcementA;
     private GameObject RndNegReinforcementB;
     private GameObject qhwB;
     private GameObject tukaA;
@@ -25,6 +25,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private QHWCtrl qhwCtrl;
     private GameObject goodA;
     private GameObject goodB;
+    private Vector3 oldPos;
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
         //随机一个强化物A
         goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
-        RndReinforcementA = qhwCtrl.GetObj(goodA.name);
+        //RndReinforcementA = qhwCtrl.GetObj(goodA.name);
         //RndReinforcementA = GameObject.Instantiate(goodA);
         //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
         //GameObject qhwA = new GameObject("ReinforcementA");
@@ -218,7 +219,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             /*
              小华伸手拿起了老师面前的强化物B。（小华手还没接触到强物化B，物品被老师用左手移到左边，老师的右手指了指强化物B的图卡）。
              */
-
+            Debug.Log("DistinguishPictureCtrlB::OnClickHuaTong(): 4. 播放结束，触发小华拿起B的动画。");
             int start = 20;
             int end = 21;
             xiaohuaAnim.timePointEvent = (t) =>
@@ -230,7 +231,6 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     xiaohuaAnim.OnPause();
 
                     OnXiaoHuaBringB();
-
                 }
             };
 
@@ -295,7 +295,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 {
                     teacherAnim.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
-                    //qhwB.transform.localPosition = new Vector3(2.5328f, 0.6098f, 0.085f);
+                    oldPos = RndNegReinforcementB.transform.localPosition;
+                    RndNegReinforcementB.transform.localPosition = new Vector3(2.5328f, 0.6098f, 0.085f);
                 }
             };
 
@@ -358,13 +359,24 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 xiaohuaAnim.timePointEvent = null;
                 xhctrl.r_tuka2.SetActive(true);
                 tukaB.SetActive(false);
-                xiaohuaAnim.OnPause();
 
-                //8. 播放结束，提醒操作者点击教师的手，点击后触发教师接卡的动画。
-                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
-                ClickDispatcher.Inst.EnableClick = true;
-                GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-                HighLightCtrl.GetInstance().FlashOn(shou);
+                int start0 = 44;
+                int end0 = 46;
+                xiaohuaAnim.timePointEvent = (tt) =>
+                {
+                    if (tt >= start0 && tt <= end0)
+                    {
+                        start0 = end0 + 1;
+                        end0++;
+                        xiaohuaAnim.timePointEvent = null;
+                        xiaohuaAnim.OnPause();
+                        //8. 播放结束，提醒操作者点击教师的手，点击后触发教师接卡的动画。
+                        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
+                        ClickDispatcher.Inst.EnableClick = true;
+                        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+                        HighLightCtrl.GetInstance().FlashOn(shou);
+                    }
+                };
             }
 
         };
@@ -384,6 +396,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 {
                     teacherAnim.timePointEvent = null;
                     xhctrl.r_tuka2.SetActive(false);
+                    lsCtrl.ls_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaB.GetComponentInChildren<MeshRenderer>().materials[1]);
                     lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
                 }
@@ -405,7 +418,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
                     string gift = goodB.GetComponent<PropsObject>().pData.name_cn;
                     dialog.SetDialogMessage("小华要" + gift + "呀");
-
+                    RndNegReinforcementB.transform.localPosition = oldPos;
                     //10. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                     Invoke("ClickTeachersHandFinal", 2f);
                 };
@@ -470,6 +483,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 {
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndNegReinforcementB);
+                    RndNegReinforcementB.transform.localPosition = Vector3.zero;
                 }
 
                 if (a > 45 && a < 47)//小华接卡动画播放延迟一边挂载强化物
@@ -495,6 +509,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                             xiaohuaAnim.timePointEvent = null;
 
                             xhctrl.SetJoint(RndNegReinforcementB);
+                            RndNegReinforcementB.transform.localPosition = Vector3.zero;
                         }
                     };
                     xiaohuaAnim.PlayForward("TY_XH_JG");
