@@ -25,6 +25,7 @@ public class TestPaperView : MonoBehaviour
     {
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         //curIndex = 1;//测试
+        //Debug.LogError(indexe)
         Paper paper = TestPaperModel.GetInstance().paperList[curIndex];
         paper.ResetData();
         transform.Find("bg/Image/title").GetComponent<Text>().text = paper.title;
@@ -47,6 +48,8 @@ public class TestPaperView : MonoBehaviour
         int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
         TestPaperModel.GetInstance().paperList[curIndex].ResetData();
         Redo();
+        //Debug.LogError("redo");
+        //Redo();
     }
     private void OnNextDo()
     {
@@ -73,12 +76,14 @@ public class TestPaperView : MonoBehaviour
         paper.rightNum = right;
         paper.wrongNum = wrong;
 
+        //Debug.LogError(curIndex);
+
         Finished();
         if (evtFinished != null)
         {
             evtFinished();
         }
-
+        Debug.Log(FlowModel.GetInstance().CurrFlowTask.thisFlowStepName + "     正确个数和错误个数统计     " + TestPaperModel.GetInstance().TotalCount());
     }
 
     /// <summary>
@@ -89,7 +94,7 @@ public class TestPaperView : MonoBehaviour
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
 
-        Debug.Log(FlowModel.GetInstance().CurrFlowTask.thisFlowStepName + "     正确个数和错误个数统计     " + TestPaperModel.GetInstance().TotalCount());
+
     }
 
     void Redo()

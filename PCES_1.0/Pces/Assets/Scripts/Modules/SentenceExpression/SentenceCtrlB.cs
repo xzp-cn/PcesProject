@@ -68,10 +68,10 @@ public class SentenceCtrlB : MonoBehaviour
         obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();
         gtb.name = PropsTag.TY_GTB.ToString();
         gtb.transform.SetParent(transform);
-        gtb.name = "XH_D_1ST_FBNKT_ka";
+        gtb.name = "XH_D_1ST_FBNKT_KA";
         gtb.transform.SetParent(transform);
 
         //沟通本我看见图卡
@@ -259,7 +259,7 @@ public class SentenceCtrlB : MonoBehaviour
                 //Debug.LogError("event");
                 passJG = false;
                 XH.OnContinue();//小华手收回
-                transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+                transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
             }
         };
 
@@ -269,8 +269,8 @@ public class SentenceCtrlB : MonoBehaviour
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
         Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
         Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
-        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
-        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
         matWy.CopyPropertiesFromMaterial(matSourceWy);
         matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
 

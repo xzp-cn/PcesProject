@@ -114,7 +114,7 @@ public class EnhanceCommunityView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        //通知当前阶段完成
+        //通知当前阶段完成       
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.EnhanceCommunity);
     }
     void RemoveListens()

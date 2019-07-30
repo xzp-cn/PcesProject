@@ -191,6 +191,7 @@ public class SwapCtrlB : MonoBehaviour
     /// </summary>
     void FdlsClickXhHand()
     {
+        CancelInvoke("ClickFdlsHandTip");
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsClickXhHandCalllback;
