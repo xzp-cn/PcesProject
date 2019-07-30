@@ -337,6 +337,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
+        bool pass = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
             if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
@@ -348,8 +349,9 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a >= 21 && a < 24)//小华接卡动画播放延迟一边挂载强化物
+            if (a >= 21 && a < 24 && pass)//小华接卡动画播放延迟一边挂载强化物
             {
+                pass = false;
                 XH.Complete += XHJiewuCallback;
                 XH.timePointEvent = (b) =>//小华接过物品
                 {
