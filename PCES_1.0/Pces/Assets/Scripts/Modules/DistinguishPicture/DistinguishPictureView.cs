@@ -35,6 +35,10 @@ public class DistinguishPictureView : MonoBehaviour
         dpaCtrl.evtFinished += OnDpaCtrlFinished;
         dpaCtrl.evtRedo += OnDpaCtrlRedo;
 
+        //dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
+        //dpbCtrl.evtFinished += OnDpbCtrlFinished;
+        //dpbCtrl.evtRedo += OnDpbCtrlRedo;
+
         //dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
         //dpcCtrl.evtFinished += OnDpcCtrlFinished;
         //dpcCtrl.evtRedo += OnDpcCtrlRedo;

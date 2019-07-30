@@ -102,6 +102,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
     private GameObject CreateObj(PropsObject source, int index)
     {
         GameObject qhw = new GameObject("qhw" + index);
+        qhw.transform.SetParent(emptyRoot.transform, false);
         if (index < 2)
         {
             GameObject scopy = GameObject.Instantiate(source.gameObject);
@@ -118,6 +119,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             goodA.GetComponent<PropsObject>().pData = source.pData;
             RndReinforcementA = qhwCtrl.GetObj(source.name);
             qhw = RndReinforcementA;
+            qhw.transform.SetParent(emptyRoot.transform, false);
         }
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
@@ -353,6 +355,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     et++;
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                    lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
@@ -383,6 +388,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                             xiaohuaAnim.timePointEvent = null;
 
                             xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                            xhctrl.XH_R2.transform.localPosition = Vector3.zero;
+                            RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+                            RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                             RndReinforcementA.transform.localPosition = Vector3.zero;
                         }
                     };

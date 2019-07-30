@@ -12,7 +12,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     public event System.Action evtRedo;
     private CommonUI comUI;
     private GameObject emptyRoot;
-    //private GameObject RndReinforcementA;
+    private GameObject RndReinforcementA;
     private GameObject RndNegReinforcementB;
     private GameObject qhwB;
     private GameObject tukaA;
@@ -53,6 +53,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
         //随机一个强化物A
         goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
+        RndReinforcementA = qhwCtrl.GetObj(goodA.name);
+        //RndReinforcementA.SetActive(false);
         //RndReinforcementA = qhwCtrl.GetObj(goodA.name);
         //RndReinforcementA = GameObject.Instantiate(goodA);
         //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
@@ -215,6 +217,12 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             string gift = "自己拿";
             dialog.SetDialogMessage(gift);
 
+
+            //RndNegReinforcementB.SetActive(false);
+            RndReinforcementA.transform.SetParent(emptyRoot.transform);
+            RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+            RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+            RndNegReinforcementB.SetActive(true);
             //4. 播放结束，触发小华拿起B的动画。
             /*
              小华伸手拿起了老师面前的强化物B。（小华手还没接触到强物化B，物品被老师用左手移到左边，老师的右手指了指强化物B的图卡）。
@@ -296,7 +304,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     teacherAnim.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
                     oldPos = RndNegReinforcementB.transform.localPosition;
-                    RndNegReinforcementB.transform.localPosition = new Vector3(2.5328f, 0.6098f, 0.085f);
+                    RndReinforcementA.transform.localPosition = new Vector3(2.5328f, 0.6098f, 0.085f);
                 }
             };
 
@@ -483,6 +491,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 {
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
+                    lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
+                    RndNegReinforcementB.transform.parent.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                     RndNegReinforcementB.transform.localPosition = Vector3.zero;
                 }
 
@@ -509,6 +520,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                             xiaohuaAnim.timePointEvent = null;
 
                             xhctrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
+                            xhctrl.XH_R2.transform.localPosition = Vector3.zero;
+                            RndNegReinforcementB.transform.parent.localPosition = Vector3.zero;
+                            RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                             RndNegReinforcementB.transform.localPosition = Vector3.zero;
                         }
                     };

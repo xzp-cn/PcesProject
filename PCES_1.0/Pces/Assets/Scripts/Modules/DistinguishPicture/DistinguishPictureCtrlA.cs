@@ -57,6 +57,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //随机一个强化物A
         goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
         RndReinforcementA = qhwCtrl.GetObj(goodA.name);
+        RndReinforcementA.SetActive(false);
         //RndReinforcementA = GameObject.Instantiate(goodA);
         //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
         //GameObject qhwA = new GameObject("ReinforcementA");
@@ -275,7 +276,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     if (lsCtrl != null)
                     {
                         lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
-                        //RndNegReinforcementB.transform.localPosition = DistinguishPictureModel.GetInstance().GetVecPos(RndNegReinforcementB.GetComponent<PropsObject>().pData.name);
+                        //RndNegReinforcementB.transform.localPosition = DistinguishPictureModel.GetInstance().GetVecPos(RndNegReinforcementB.GetComponent<PropsObject>().pData.name);                    
                     }
                     passed = true;
                 }
@@ -308,6 +309,10 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         //RecoverB();
         RndNegReinforcementB.SetActive(false);
+        RndNegReinforcementB.transform.parent.SetParent(emptyRoot.transform);
+        RndNegReinforcementB.transform.parent.localPosition = Vector3.zero;
+        RndNegReinforcementB.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+        RndReinforcementA.SetActive(true);
 
         //5. 播放结束，提醒操作者点击教师的手，点击后触发教师指A卡的动画。
         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandThird, null);
