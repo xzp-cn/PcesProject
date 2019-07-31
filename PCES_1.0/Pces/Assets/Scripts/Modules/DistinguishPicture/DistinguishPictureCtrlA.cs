@@ -104,15 +104,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     }
 
     /// <summary>
-    /// 恢复强化物B初始位置
-    /// </summary>
-    void RecoverB()
-    {
-        //RndNegReinforcementB.transform.SetParent(qhwB.transform, false);
-        //RndNegReinforcementB.transform.localPosition = Vector3.zero;
-    }
-
-    /// <summary>
     /// 播放小华拿B卡递卡动画
     /// </summary>
     void OnXiaoHuaBring()
@@ -276,7 +267,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     if (lsCtrl != null)
                     {
                         lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
-                        //RndNegReinforcementB.transform.localPosition = DistinguishPictureModel.GetInstance().GetVecPos(RndNegReinforcementB.GetComponent<PropsObject>().pData.name);                    
+                        //RndNegReinforcementB.transform.localPosition = DistinguishPictureModel.GetInstance().GetVecPos(RndNegReinforcementB.GetComponent<PropsObject>().pData.name);
                     }
                     passed = true;
                 }
@@ -587,17 +578,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         {
             evtFinished();
         }
-        if (comUI == null)
-        {
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
 
-        xiaohuaAnim.timePointEvent = null;
-        teacherAnim.timePointEvent = null;
-        xhctrl.DestroyGuadian();
-        lsCtrl.DestroyGuadian();
     }
 
     void Redo()
@@ -621,9 +602,29 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFinal);
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
+
+        xiaohuaAnim.timePointEvent = null;
+        teacherAnim.timePointEvent = null;
+        xhctrl.DestroyGuadian();
+        lsCtrl.DestroyGuadian();
+
+        if (goodA != null)
+        {
+            Destroy(goodA);
+        }
+
+        if (goodB != null)
+        {
+            Destroy(goodB);
+        }
+
 
         evtFinished = null;
         evtRedo = null;

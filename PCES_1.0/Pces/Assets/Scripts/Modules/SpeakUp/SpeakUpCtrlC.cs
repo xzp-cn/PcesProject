@@ -24,6 +24,7 @@ public class SpeakUpCtrlC : MonoBehaviour
     private GameObject goodA;
     Vector3 zhuozi2Pos;
     Vector3 camPos;
+    Vector3 lsOldPos;
     void Start()
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
@@ -49,6 +50,7 @@ public class SpeakUpCtrlC : MonoBehaviour
 
         //初始化老师位置和相机位置
         LS=PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+        lsOldPos = LS.transform.localPosition;
         LS.transform.localPosition = new Vector3(1.516f, 0.02f, 0.022f);
         //Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
         emptyRoot = new GameObject("Root");
@@ -404,22 +406,7 @@ public class SpeakUpCtrlC : MonoBehaviour
         {
             evtFinished();
         }
-        if (comUI == null)
-        {
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
-        xiaohuaAnim.timePointEvent = null;
-        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
-        zhuozi2.transform.localPosition = zhuozi2Pos;
-        Camera.main.transform.parent.localPosition = camPos;
 
-        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
 
     void Redo()
@@ -438,9 +425,36 @@ public class SpeakUpCtrlC : MonoBehaviour
 
     public void Dispose()
     {
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
+
+        xiaohuaAnim.timePointEvent = null;
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2.transform.localPosition = zhuozi2Pos;
+
+
+        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+        if (xhctrl != null)
+        {
+            xhctrl.DestroyGuadian();
+        }
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        if (lsctrl != null)
+        {
+            lsctrl.DestroyGuadian();
+        }
+
+        if (goodA != null)
+        {
+            Destroy(goodA);
+        }
+
         evtFinished = null;
         evtRedo = null;
         if (emptyRoot != null)
@@ -449,9 +463,8 @@ public class SpeakUpCtrlC : MonoBehaviour
             emptyRoot = null;
         }
         //恢复老师位置和相机位置
-        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = Vector3.zero;
-        Camera.main.transform.parent.localPosition = new Vector3(2.65f, 1.071f, 0.05f);
-
+        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = lsOldPos;
+        Camera.main.transform.parent.localPosition = camPos;
         Destroy(gameObject);
     }
 

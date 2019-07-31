@@ -13,7 +13,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     private CommonUI comUI;
     private GameObject emptyRoot;
     private GameObject judaiGobj; //我要句带
-    private GameObject RndReinforcementA; //强化物
+    //private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
     private GameObject _tukaA;
     private GameObject FBNKT_KA_Anim;
@@ -22,13 +22,12 @@ public class SpeakUpCtrlA : MonoBehaviour
     private AnimationOper fdlsAnim;
     private LegacyAnimationOper FBNKT_KA_AnimOper;
     private AnimationOper LS;
-    private LSCtrl lsctrl;
+    //private LSCtrl lsctrl;
     private QHWCtrl qhwCtrl;
     private GameObject goodA;
 
     void Start()
     {
-
 
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
@@ -57,7 +56,7 @@ public class SpeakUpCtrlA : MonoBehaviour
 
         //随机一个强化物A
         goodA = SpeakUpModel.GetInstance().GetRndReinforcement();
-        RndReinforcementA = qhwCtrl.GetObj(goodA.name);
+        qhwCtrl.GetObj(goodA.name);
         //RndReinforcementA = GameObject.Instantiate(goodA);
         //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
         //GameObject qhwA = new GameObject("ReinforcementA");
@@ -170,11 +169,9 @@ public class SpeakUpCtrlA : MonoBehaviour
                 }
             };
 
-
             xiaohuaAnim.OnContinue();
             fdlsAnim.OnContinue();
             FBNKT_KA_AnimOper.OnContinue();
-
         }
     }
 
@@ -208,10 +205,7 @@ public class SpeakUpCtrlA : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(shou);
 
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-            lsctrl = LS.GetComponent<LSCtrl>();
-
-
-            //LS.Complete += ClickTeachersHandFinal;
+            //lsctrl = LS.GetComponent<LSCtrl>();
 
             LS.OnContinue();
             LS.timePointEvent = (a) =>//老师借卡时间点
@@ -220,7 +214,6 @@ public class SpeakUpCtrlA : MonoBehaviour
                 {
                     UnityEngine.Debug.Log("SpeakUpCtrlA::OnClickTeacherHandFinal(): 隐藏沟通本句带");
                     LS.timePointEvent = null;
-                    //transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
                     xiaohuaAnim.OnContinue();
                     FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
 /*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回
@@ -380,19 +373,6 @@ public class SpeakUpCtrlA : MonoBehaviour
         {
             evtFinished();
         }
-        if (comUI == null)
-        {
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
-        xiaohuaAnim.timePointEvent = null;
-
-        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
 
     void Redo()
@@ -413,6 +393,32 @@ public class SpeakUpCtrlA : MonoBehaviour
     {
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
+
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
+        comUI.redoClickEvent -= OnReDo;
+        comUI.nextClickEvent -= OnNextDo;
+        xiaohuaAnim.timePointEvent = null;
+
+        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+        if (xhctrl != null)
+        {
+            xhctrl.DestroyGuadian();
+        }
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        if (lsctrl != null)
+        {
+            lsctrl.DestroyGuadian();
+        }
+
+        if (goodA != null)
+        {
+            Destroy(goodA);
+        }
+
         comUI = null;
         evtFinished = null;
         evtRedo = null;

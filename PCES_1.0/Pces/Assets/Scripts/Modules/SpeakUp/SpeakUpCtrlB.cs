@@ -15,7 +15,7 @@ public class SpeakUpCtrlB : MonoBehaviour
     private GameObject emptyRoot;
     private GameObject gtNotebook; //沟通本
     private GameObject judaiGobj; //句带
-    private GameObject RndReinforcementA; //强化物
+    //private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
     private GameObject FBNKT_KA_Anim;
 
@@ -52,7 +52,7 @@ public class SpeakUpCtrlB : MonoBehaviour
 
         //随机一个强化物A
         goodA = SpeakUpModel.GetInstance().GetRndReinforcement();
-        RndReinforcementA = qhwCtrl.GetObj(goodA.name);
+        qhwCtrl.GetObj(goodA.name);
         //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
         //GameObject qhwA = new GameObject("ReinforcementA");
         //qhwA.transform.SetParent(emptyRoot.transform, false);
@@ -354,19 +354,7 @@ public class SpeakUpCtrlB : MonoBehaviour
         {
             evtFinished();
         }
-        if (comUI == null)
-        {
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
-        xiaohuaAnim.timePointEvent = null;
 
-        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
 
     void Redo()
@@ -385,9 +373,34 @@ public class SpeakUpCtrlB : MonoBehaviour
 
     public void Dispose()
     {
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
+
+        xiaohuaAnim.timePointEvent = null;
+
+        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+        if (xhctrl != null)
+        {
+            xhctrl.DestroyGuadian();
+        }
+
+        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+        if (lsctrl != null)
+        {
+            lsctrl.DestroyGuadian();
+        }
+
+        if (goodA != null)
+        {
+            Destroy(goodA);
+        }
+
+
         evtFinished = null;
         evtRedo = null;
         if (emptyRoot != null)

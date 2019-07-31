@@ -416,16 +416,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         {
             evtFinished();
         }
-        if (comUI == null)
-        {
-            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        }
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
-        xiaohuaAnim.timePointEvent = null;
-        teacherAnim.timePointEvent = null;
-        xhctrl.DestroyGuadian();
-        lsCtrl.DestroyGuadian();
     }
 
     private void OnReDo()
@@ -444,8 +434,27 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     public void Dispose()
     {
+
+        if (comUI == null)
+        {
+            comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+        }
+        comUI.redoClickEvent -= OnReDo;
+        comUI.nextClickEvent -= OnNextDo;
+
         comUI = null;
+
+        xiaohuaAnim.timePointEvent = null;
+        teacherAnim.timePointEvent = null;
+        xhctrl.DestroyGuadian();
+        lsCtrl.DestroyGuadian();
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        if (goodA != null)
+        {
+            Destroy(goodA);
+        }
+
         if (emptyRoot != null)
         {
             Destroy(emptyRoot);
