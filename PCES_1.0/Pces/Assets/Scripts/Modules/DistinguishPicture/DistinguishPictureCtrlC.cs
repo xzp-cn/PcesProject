@@ -117,9 +117,10 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             //第2个索引为触发的强化物
             goodA = GameObject.Instantiate(source.gameObject);
             goodA.GetComponent<PropsObject>().pData = source.pData;
+            goodA.SetActive(false);
             RndReinforcementA = qhwCtrl.GetObj(source.name);
-            qhw = RndReinforcementA;
-            qhw.transform.SetParent(emptyRoot.transform, false);
+            //qhw = RndReinforcementA;
+            //qhw.transform.SetParent(emptyRoot.transform, false);
         }
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
