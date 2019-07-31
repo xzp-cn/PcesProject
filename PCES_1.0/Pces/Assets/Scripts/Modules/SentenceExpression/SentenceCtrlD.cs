@@ -87,7 +87,9 @@ public class SentenceCtrlD : MonoBehaviour
         Material matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_02/tuka5").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
+        tk10.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk10.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         //实物
         index = Random.Range(101, 1001) % 3 + 25;
@@ -95,7 +97,9 @@ public class SentenceCtrlD : MonoBehaviour
         matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_03/tuka7").GetComponent<MeshRenderer>().materials[1];
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9").GetComponent<MeshRenderer>().materials[1];
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9");
+        tk9.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>();
@@ -203,6 +207,8 @@ public class SentenceCtrlD : MonoBehaviour
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
+
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
         //Invoke("ClickmicroPhoneTip", 1);
     }
@@ -288,13 +294,17 @@ public class SentenceCtrlD : MonoBehaviour
         Material matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_02/tuka5").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
+        tk10.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk10.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_03/tuka7").GetComponent<MeshRenderer>().materials[1];
-        matSource = SentenceExpressionModel.GetInstance().GetTuKa(rfc.pData.name).GetComponent<MeshRenderer>().materials[0];
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9").GetComponent<MeshRenderer>().materials[1];
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9");
+        tk9.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
@@ -368,11 +378,12 @@ public class SentenceCtrlD : MonoBehaviour
         ka.transform.SetParent(transform);
 
         //string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
-
+        ka.transform.Find("judai/tuka1").localEulerAngles = new Vector3(0, -90, 0);
         Material matTar = ka.transform.Find("judai/tuka1").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        ka.transform.Find("judai/tuka").localEulerAngles = new Vector3(0, -90, 0);
         matTar = ka.transform.Find("judai/tuka").GetComponent<MeshRenderer>().materials[1];
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);

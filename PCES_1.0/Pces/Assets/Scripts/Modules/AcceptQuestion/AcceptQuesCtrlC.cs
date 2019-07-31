@@ -156,12 +156,18 @@ public class AcceptQuesCtrlC : MonoBehaviour
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
         ka.name = "XH_E_3RD_FNN_KA";
-        ka.PlayForward("XH_E_3RD_FNN_KA");
+
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
+        Vector3 tkeular = tk9.localEulerAngles;
+        tkeular.y = -90;
+        tk9.localEulerAngles = tkeular;
 
         Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//物品图卡
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
+
+        ka.PlayForward("XH_E_3RD_FNN_KA");
     }
     void XhTzkCallback()
     {
@@ -222,6 +228,11 @@ public class AcceptQuesCtrlC : MonoBehaviour
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RD_JG_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
         ka.name = "MM_E_3RD_JG_KA";
+        Transform tk9 = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka9");
+        Vector3 tk9Angle = tk9.localEulerAngles;
+        tk9Angle.y = -90.3f;
+        tk9.localEulerAngles = tk9Angle;
+
         Material matSource = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka10").GetComponent<MeshRenderer>().materials[1];
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];

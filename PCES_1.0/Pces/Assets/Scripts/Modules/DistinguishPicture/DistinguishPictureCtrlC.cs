@@ -118,8 +118,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             goodA = GameObject.Instantiate(source.gameObject);
             goodA.GetComponent<PropsObject>().pData = source.pData;
             RndReinforcementA = qhwCtrl.GetObj(source.name);
-            qhw = RndReinforcementA;
-            qhw.transform.SetParent(emptyRoot.transform, false);
+            //qhw = RndReinforcementA;
+            //qhw.transform.SetParent(emptyRoot.transform, false);
         }
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));

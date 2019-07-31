@@ -21,6 +21,7 @@ public class SwapView : MonoBehaviour
     private void Start()
     {
         GlobalDataManager.GetInstance().GetCamera();
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Introduct();
     }
     void Introduct()
