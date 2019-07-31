@@ -67,7 +67,7 @@ public class SentenceCtrlA : MonoBehaviour
         GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
         obj.name = "neutralStimulator";
         obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
+        obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();
@@ -102,8 +102,20 @@ public class SentenceCtrlA : MonoBehaviour
         //qhwCtrl = obj.GetComponent<QHWCtrl>();
         //qhwCtrl.ShowObj(objName);
 
-        LS.Complete += ClickmicroPhoneTip;
-        LS.PlayForward("LS_E_1ST_ZB");
+        //LS.Complete += ClickmicroPhoneTip;
+        //LS.PlayForward("LS_E_1ST_ZB");
+        //
+        bool passPoint = true;
+        LS.timePointEvent = (a) =>
+        {
+            if (a >= 40 && a <= 45 && passPoint)//
+            {
+                passPoint = false;
+                LS.OnPause();
+                ClickmicroPhoneTip();
+            }
+        };
+        LS.PlayForward("LS_F_1ST_ZCJW");
         //Debug.Log("ls");
     }
     /// <summary>
@@ -152,9 +164,21 @@ public class SentenceCtrlA : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
-        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
-        ClickDispatcher.Inst.EnableClick = true;
-        ClickLsHandTip();
+        LsBack();
+
+    }
+    /// <summary>
+    /// 老师收手
+    /// </summary>
+    void LsBack()
+    {
+        LS.Complete += () =>
+        {
+            GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+            ClickLsHandTip();
+        };
+        LS.OnContinue();
+
     }
     void ClickLsCallBack(ClickedObj cobj)
     {
@@ -190,7 +214,7 @@ public class SentenceCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsPointJudaiCallback;
-        LS.PlayForward("LS_E_1ST_ZK");
+        LS.PlayForward("LS_E_1ST_ZBZK");
     }
     /// <summary>
     /// 教师接收图卡回调

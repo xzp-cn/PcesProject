@@ -14,7 +14,7 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         if (main == null)
         {
             main = Camera.main;
-            GameObject.DontDestroyOnLoad(main.transform.root.gameObject);
+            //GameObject.DontDestroyOnLoad(main.transform.root.gameObject);
         }
         return main;
     }
@@ -29,11 +29,11 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         {
             if (pos != null)
             {
-                cam.transform.parent.localPosition = (Vector3)pos;
+                cam.transform.parent.localPosition = new Vector3(4.933f, 1.071f, 0.43f);
             }
             else
             {
-                cam.transform.parent.localPosition = new Vector3(2.636f, 1.071f, 0.33f);//相机默认位置
+                cam.transform.parent.localPosition = new Vector3(3.5f, 1.071f, 0.43f);//相机默认位置
             }
         }
         else

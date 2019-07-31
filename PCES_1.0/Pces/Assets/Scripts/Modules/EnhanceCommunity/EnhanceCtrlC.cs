@@ -332,8 +332,13 @@ public class EnhanceCtrlC : MonoBehaviour
                         pass5 = false;
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhw);
                         qhw.GetComponent<QHWCtrl>().ResetPos();
+                        xhCtrl.SetJoint(qhw);
+                        Vector3 pos = qhw.transform.localPosition;
+                        pos.x = 0;
+                        pos.y = 0;
+                        qhw.transform.localPosition = pos;
+                        //
                         //Debug.LogError("xh");
                     }
                 };

@@ -29,8 +29,9 @@ public class SpeakUpCtrlC : MonoBehaviour
     {
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
 
-        camPos = Camera.main.transform.parent.localPosition;
-        Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
+        //camPos = Camera.main.transform.parent.localPosition;
+        //Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
+        GlobalDataManager.GetInstance().SetPcesCamera(Vector3.zero);
 
         Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
         zhuozi2Pos = zhuozi2.transform.localPosition;
@@ -49,7 +50,7 @@ public class SpeakUpCtrlC : MonoBehaviour
 
 
         //初始化老师位置和相机位置
-        LS=PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
+        LS = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
         lsOldPos = LS.transform.localPosition;
         LS.transform.localPosition = new Vector3(1.516f, 0.02f, 0.022f);
         //Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
@@ -459,7 +460,7 @@ public class SpeakUpCtrlC : MonoBehaviour
         }
         //恢复老师位置和相机位置
         PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = lsOldPos;
-        Camera.main.transform.parent.localPosition = camPos;
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }
 

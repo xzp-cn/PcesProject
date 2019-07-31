@@ -138,9 +138,9 @@ public class SentenceExpressionView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        if (stDCtrl.gameObject!= null)
+        if (stDCtrl.gameObject != null)
         {
-            Destroy(stDCtrl.gameObject);           
+            Destroy(stDCtrl.gameObject);
         }
         PeopleManager.Instance.Reset();
         //通知当前阶段完成

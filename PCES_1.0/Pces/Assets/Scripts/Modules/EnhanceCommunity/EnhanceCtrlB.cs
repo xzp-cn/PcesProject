@@ -26,8 +26,9 @@ public class EnhanceCtrlB : MonoBehaviour
     private void Awake()
     {
         this.name = "EnhanceCtrlB";
-        camPos = Camera.main.transform.parent.localPosition;
-        Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
+        //camPos = Camera.main.transform.parent.localPosition;
+        //Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
+        GlobalDataManager.GetInstance().SetPcesCamera(Vector3.zero);
     }
     //public bool Finished;
     private void Start()
@@ -492,13 +493,13 @@ public class EnhanceCtrlB : MonoBehaviour
         evtRedo = null;
         //PeopleManager.Instance.Reset();
         XH.gameObject.SetActive(false);
-        XH.transform.Find("Group/Main").localPosition = Vector3.zero;
+        XH.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
         //XH.transform.localPosition = new Vector3(0, 0, 10000);
-        //XH.gameObject.SetActive(true);
-        //XH.OnContinue();
-        //XH.PlayForward("idle");
+        XH.gameObject.SetActive(true);
+        XH.OnContinue();
+        XH.PlayForward("idle");
 
-        Camera.main.transform.parent.localPosition = camPos;
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }
     private void OnDestroy()

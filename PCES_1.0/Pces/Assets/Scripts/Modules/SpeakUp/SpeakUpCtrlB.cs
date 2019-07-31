@@ -15,7 +15,7 @@ public class SpeakUpCtrlB : MonoBehaviour
     private GameObject emptyRoot;
     private GameObject gtNotebook; //沟通本
     private GameObject judaiGobj; //句带
-    //private GameObject RndReinforcementA; //强化物
+    //private GameObject RndReinforcementA; //强化物   
     private GameObject tukaA;  //图卡
     private GameObject FBNKT_KA_Anim;
 
