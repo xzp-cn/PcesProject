@@ -582,14 +582,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         teacherAnim.timePointEvent = null;
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
-        if (goodA != null)
-        {
-            Destroy(goodA);
-        }
-        if (goodB != null)
-        {
-            Destroy(goodB);
-        }
+
 
         comUI = null;
         evtFinished = null;

@@ -414,11 +414,6 @@ public class SpeakUpCtrlA : MonoBehaviour
             lsctrl.DestroyGuadian();
         }
 
-        if (goodA != null)
-        {
-            Destroy(goodA);
-        }
-
         comUI = null;
         evtFinished = null;
         evtRedo = null;

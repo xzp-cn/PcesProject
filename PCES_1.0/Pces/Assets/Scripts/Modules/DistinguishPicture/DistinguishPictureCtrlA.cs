@@ -21,7 +21,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private AnimationOper xiaohuaAnim;
     private LSCtrl lsCtrl;
     private XHCtrl xhctrl;
-    //private GameObject qhwB;
     private QHWCtrl qhwCtrl;
     private GameObject goodA;
     private GameObject goodB;
@@ -614,16 +613,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         teacherAnim.timePointEvent = null;
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
-
-        if (goodA != null)
-        {
-            Destroy(goodA);
-        }
-
-        if (goodB != null)
-        {
-            Destroy(goodB);
-        }
 
 
         evtFinished = null;
