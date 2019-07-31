@@ -277,7 +277,7 @@ public enum PropsTag : int
     /// <summary>
     /// 饼干
     /// </summary>
-    [Description("饼干")]
+    [Description("海苔饼干")]
     biscuit = 1,
     /// <summary>
     /// 薯片

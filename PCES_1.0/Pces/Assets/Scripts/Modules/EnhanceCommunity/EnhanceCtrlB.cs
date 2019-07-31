@@ -332,7 +332,7 @@ public class EnhanceCtrlB : MonoBehaviour
                         //qhw.transform.localRotation = Quaternion.Euler(Vector3.zero);
                         //xhCtrl.XH_R2.transform.localPosition = Vector3.zero;
 
-                        qhw.GetComponent<QHWCtrl>().ResetPos();
+                        //qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
                     }
                 };
@@ -490,6 +490,12 @@ public class EnhanceCtrlB : MonoBehaviour
         RemoveAllListeners();
         evtFinished = null;
         evtRedo = null;
+        //PeopleManager.Instance.Reset();
+        XH.gameObject.SetActive(false);
+        XH.transform.Find("Group/Main").localPosition = Vector3.zero;
+        XH.transform.localPosition = new Vector3(0, 0, 10000);
+        XH.gameObject.SetActive(true);
+        XH.OnContinue();
         Camera.main.transform.parent.localPosition = camPos;
         Destroy(gameObject);
     }

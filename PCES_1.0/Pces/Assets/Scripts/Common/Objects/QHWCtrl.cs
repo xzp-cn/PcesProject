@@ -32,7 +32,7 @@ public class QHWCtrl : MonoBehaviour
     {
         transform.parent.localPosition = Vector3.zero;
         transform.localPosition = Vector3.zero;
-        //transform.localRotation = Quaternion.Euler(Vector3.zero);
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).localPosition = Vector3.zero;

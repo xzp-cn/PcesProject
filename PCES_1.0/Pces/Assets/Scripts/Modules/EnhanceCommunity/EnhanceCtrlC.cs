@@ -58,6 +58,8 @@ public class EnhanceCtrlC : MonoBehaviour
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         FDLS.transform.localPosition = new Vector3(0, 0, 10000);
 
+        XH.transform.localPosition = new Vector3(0, 0, 10000);
+
         LS.PlayForward("idle");
         XH.PlayForward("idle");
         //XH.gameObject.SetActive(false);
@@ -160,14 +162,22 @@ public class EnhanceCtrlC : MonoBehaviour
     void XhTakeCard()
     {
         XH.gameObject.SetActive(true);
+
         //XH.Complete += XhTakeCardCallback;
         //bool pass = true;
         bool pass1 = true;
         bool pass2 = true;
         bool pass3 = true;
         bool passgtb = true;
+        bool passreset = true;
         XH.timePointEvent = (a) =>
         {
+            if (a >= 10 && a <= 12 && passreset)
+            {
+                passreset = false;
+                XH.transform.localPosition = Vector3.zero;
+            }
+
             if (a >= 138 && a <= 140 && pass1)
             {
                 pass1 = false;
@@ -205,6 +215,7 @@ public class EnhanceCtrlC : MonoBehaviour
             }
         };
         XH.PlayForward("XH_B_3RD_ZFNZD");
+
     }
     /// <summary>
     /// 小华拿卡递卡回调

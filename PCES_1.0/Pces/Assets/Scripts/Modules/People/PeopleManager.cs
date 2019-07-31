@@ -22,20 +22,33 @@ public class PeopleManager : SingleTon<PeopleManager>
         {
             Transform temp = transform.GetChild(i);
             temp.localPosition = posArr[i];
+            //temp.gameObject.SetActive(false);
+            //if (temp.name == "FDLS_BD")
+            //{
+            //    temp.Find("Group3/Main").localPosition = Vector3.zero;
+            //}
+            //else if (temp.name == "LS_BD")
+            //{
+            //    temp.Find("Group2/Main").localPosition = Vector3.zero;
+            //}
+            //else
+            //{
+            //    temp.Find("Group/Main").localPosition = Vector3.zero;
+            //}
             temp.gameObject.SetActive(true);
             temp.gameObject.GetAnimatorOper().OnContinue();
 
-            XHCtrl xhctrl=temp.GetComponent<XHCtrl>();
-            if (xhctrl!=null)
+            XHCtrl xhctrl = temp.GetComponent<XHCtrl>();
+            if (xhctrl != null)
             {
                 xhctrl.DestroyGuadian();
             }
-           LSCtrl lsctrl =temp.GetComponent<LSCtrl>();
-            if (lsctrl!=null)
+            LSCtrl lsctrl = temp.GetComponent<LSCtrl>();
+            if (lsctrl != null)
             {
                 lsctrl.DestroyGuadian();
-            }         
-        }  
+            }
+        }
     }
     public void CtrlShow(string name, bool isShow = true)
     {
