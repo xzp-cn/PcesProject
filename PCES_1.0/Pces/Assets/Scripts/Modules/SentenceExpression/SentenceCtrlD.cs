@@ -23,9 +23,9 @@ public class SentenceCtrlD : MonoBehaviour
     {
         Transform park = ResManager.GetPrefab("Scenes/park/park").transform;
         park.SetParent(transform);
-        GameObject cam=transform.Find("park(Clone)/Camera").gameObject;
-       HighlightingEffect hf= cam.GetComponent<HighlightingEffect>();
-        if (hf==null)
+        GameObject cam = transform.Find("park(Clone)/Camera").gameObject;
+        HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
+        if (hf == null)
         {
             hf = cam.gameObject.AddComponent<HighlightingEffect>();
         }
@@ -49,7 +49,7 @@ public class SentenceCtrlD : MonoBehaviour
         bool pass = true;
         XH.timePointEvent = (a) =>
           {
-              if (a>=1&&a<=3&&pass)
+              if (a >= 1 && a <= 3 && pass)
               {
                   pass = false;
                   XH.timePointEvent = null;
@@ -87,7 +87,9 @@ public class SentenceCtrlD : MonoBehaviour
         Material matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_02/tuka5").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
+        tk10.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk10.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         //实物
         index = Random.Range(101, 1001) % 3 + 25;
@@ -95,7 +97,9 @@ public class SentenceCtrlD : MonoBehaviour
         matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_03/tuka7").GetComponent<MeshRenderer>().materials[1];
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9").GetComponent<MeshRenderer>().materials[1];
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9");
+        tk9.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>();
@@ -105,10 +109,10 @@ public class SentenceCtrlD : MonoBehaviour
 
         XH.transitionTime = 0;
         //XH.Complete += XHTZkaCallback;
-        XH.OnContinue();       
+        XH.OnContinue();
         XH.timePointEvent = (a) =>//
         {
-            if (a>=615&&a<=617)
+            if (a >= 615 && a <= 617)
             {
                 XH.timePointEvent = null;
                 XH.OnPause();
@@ -121,7 +125,7 @@ public class SentenceCtrlD : MonoBehaviour
         bool pass = true;
         lao.framePointEvent = (a) =>
         {
-            if (a >=615&&a<=617&&pass)
+            if (a >= 615 && a <= 617 && pass)
             {
                 lao.framePointEvent = null;
                 pass = false;
@@ -158,7 +162,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void RedoClickMMHand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         //swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈接卡");
@@ -167,6 +171,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMJieObj()
     {
+        CancelInvoke("ClickMMhandTip");
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -174,13 +179,13 @@ public class SentenceCtrlD : MonoBehaviour
         bool pasxh = true;
         MM.timePointEvent = (a) =>
         {
-            if (a >=38&&a<=40&& pasxh)
+            if (a >= 38 && a <= 40 && pasxh)
             {
                 pasxh = false;
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
             }
-            if (a >=178&&a<=181&& pass)
+            if (a >= 178 && a <= 181 && pass)
             {
                 pass = false;
                 MM.timePointEvent = null;
@@ -202,6 +207,8 @@ public class SentenceCtrlD : MonoBehaviour
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
+
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
         //Invoke("ClickmicroPhoneTip", 1);
     }
@@ -221,7 +228,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈说话");
@@ -238,6 +245,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         MM.OnContinue();
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         dlog.transform.localPosition = new Vector3(403, 420, 0);
@@ -268,7 +276,7 @@ public class SentenceCtrlD : MonoBehaviour
         bool pass = true;
         XH.timePointEvent = (a) =>//
         {
-            if (a>613&&a<617&&pass)
+            if (a > 613 && a < 617 && pass)
             {
                 pass = false;
                 XH.timePointEvent = null;
@@ -286,20 +294,24 @@ public class SentenceCtrlD : MonoBehaviour
         Material matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_02/tuka5").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
+        tk10.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk10.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_03/tuka7").GetComponent<MeshRenderer>().materials[1];
-        matSource = SentenceExpressionModel.GetInstance().GetTuKa(rfc.pData.name).GetComponent<MeshRenderer>().materials[0];
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        matTar = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9").GetComponent<MeshRenderer>().materials[1];
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka9");
+        tk9.localEulerAngles = new Vector3(0, -90, 0);
+        matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
         bool kpass = true;
         lao.framePointEvent = (a) =>
         {
-            if (a >= 613&&a<=617&&kpass)
+            if (a >= 613 && a <= 617 && kpass)
             {
                 kpass = false;
                 lao.framePointEvent = null;
@@ -321,7 +333,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void RedoWyClickMMhand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈接过物品");
@@ -330,6 +342,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void ClickMMhandCallback()
     {
+        CancelInvoke("WyClickMMHandTip");
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         ClickDispatcher.Inst.EnableClick = false;
         MMGiveObj();
@@ -341,14 +354,14 @@ public class SentenceCtrlD : MonoBehaviour
         bool passmm = true;
         MM.timePointEvent = (a) =>
         {
-            if (a >=38&&a<=40&&passxh)
+            if (a >= 38 && a <= 40 && passxh)
             {
                 passxh = false;
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
                 WYXhBY();
             }
-            if (a >=179&&a<=181&&passmm)
+            if (a >= 179 && a <= 181 && passmm)
             {
                 passmm = false;
                 MM.timePointEvent = null;
@@ -365,11 +378,12 @@ public class SentenceCtrlD : MonoBehaviour
         ka.transform.SetParent(transform);
 
         //string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
-
+        ka.transform.Find("judai/tuka1").localEulerAngles = new Vector3(0, -90, 0);
         Material matTar = ka.transform.Find("judai/tuka1").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        ka.transform.Find("judai/tuka").localEulerAngles = new Vector3(0, -90, 0);
         matTar = ka.transform.Find("judai/tuka").GetComponent<MeshRenderer>().materials[1];
         matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
@@ -391,7 +405,7 @@ public class SentenceCtrlD : MonoBehaviour
         bool pass = true;
         MM.timePointEvent = (a) =>
         {
-            if (a >=58&&a<=60&&pass)
+            if (a >= 58 && a <= 60 && pass)
             {
                 pass = false;
                 MM.timePointEvent = null;
@@ -412,7 +426,7 @@ public class SentenceCtrlD : MonoBehaviour
         bool pass = true;
         XH.timePointEvent = (a) =>
         {
-            if (a >=19&&a<=21&&pass)
+            if (a >= 19 && a <= 21 && pass)
             {
                 pass = false;
                 XH.timePointEvent = null;
@@ -453,10 +467,10 @@ public class SentenceCtrlD : MonoBehaviour
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }      
+        }
     }
     void NextDo()
     {
@@ -480,8 +494,9 @@ public class SentenceCtrlD : MonoBehaviour
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
+        com = null;
 
-        com = null;      
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickMMhandCallback);
     }
     public void Dispose()
     {

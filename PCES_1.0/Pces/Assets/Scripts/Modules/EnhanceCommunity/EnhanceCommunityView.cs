@@ -18,6 +18,8 @@ public class EnhanceCommunityView : MonoBehaviour
     }
     private void Start()
     {
+        EnhanceCommunityModel.GetInstance().Jiaoshi();
+
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第二阶段 增强自发性沟通");
         Canvas canvas = FindObjectOfType<Canvas>();
@@ -112,7 +114,7 @@ public class EnhanceCommunityView : MonoBehaviour
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
-        //通知当前阶段完成
+        //通知当前阶段完成       
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.EnhanceCommunity);
     }
     void RemoveListens()

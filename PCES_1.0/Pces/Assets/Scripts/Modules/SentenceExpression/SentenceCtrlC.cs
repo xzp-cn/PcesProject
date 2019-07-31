@@ -44,7 +44,7 @@ public class SentenceCtrlC : MonoBehaviour
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
-        FDLS.transform.localPosition=new Vector3(0,0,10000);
+        FDLS.transform.localPosition = new Vector3(0, 0, 10000);
         LS.PlayForward("idle");
         XH.PlayForward("idle");
 
@@ -66,9 +66,9 @@ public class SentenceCtrlC : MonoBehaviour
         SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
         Debug.Log("GetTukaObject");
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();//沟通本      
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();//沟通本      
         gtb.transform.SetParent(transform);
-        gtb.name = "XH_D_1ST_FBNKT_ka";//沟通本更新      
+        gtb.name = "XH_D_1ST_FBNKT_KA";//沟通本更新      
 
         //沟通本我要图卡
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
@@ -154,7 +154,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -163,6 +163,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsJiekaCallback;
@@ -170,12 +171,12 @@ public class SentenceCtrlC : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a >=19 && a <= 21)
+            if (a >= 19 && a <= 21)
             {
                 //Debug.LogError("event");
                 LS.timePointEvent = null;
                 XH.OnContinue();//小华手收回
-                transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+                transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
             }
         };
 
@@ -185,8 +186,8 @@ public class SentenceCtrlC : MonoBehaviour
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
         Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
         Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
-        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
-        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
         matWy.CopyPropertiesFromMaterial(matSourceWy);
         matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
 
@@ -217,7 +218,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -226,6 +227,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -250,14 +252,17 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
+        //ClickLsGiveObjTip();
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -275,7 +280,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 22 && a < 26&& passXh)//小华接卡动画播放延迟
+            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.Complete += XHJiewuCallback;
@@ -288,7 +293,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
         {
-            if (a >=40 && a <= 42)
+            if (a >= 40 && a <= 42)
             {
                 XH.timePointEvent = null;
                 XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
@@ -340,7 +345,7 @@ public class SentenceCtrlC : MonoBehaviour
         GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
         obj.name = "neutralStimulator";
         obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
+        obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_3RD_FBNKTK_KA").GetLegacyAnimationOper();//沟通本
@@ -397,6 +402,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
@@ -459,7 +465,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -468,6 +474,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJLsJieka()
     {
+        CancelInvoke("KJClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -476,7 +483,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a >=19 && a <= 23)
+            if (a >= 19 && a <= 23)
             {
                 //Debug.LogError("event");
                 LS.timePointEvent = null;
@@ -516,7 +523,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -525,6 +532,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJShowSpeakJiekaContent()
     {
+        CancelInvoke("KJClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurneutralStimulator.pData.name_cn;
@@ -553,7 +561,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJRedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
@@ -562,6 +570,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     void KJLsGiveObj()
     {
+        CancelInvoke("KJClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -571,7 +580,7 @@ public class SentenceCtrlC : MonoBehaviour
         bool passXh = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a >=25 && a <= 27)//挂载到老师手上强化物时间点
+            if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
             {
                 LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
@@ -579,7 +588,7 @@ public class SentenceCtrlC : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 22&& a < 26 && passXh)//小华接卡动画播放延迟
+            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
                 XH.timePointEvent = null;
@@ -640,17 +649,19 @@ public class SentenceCtrlC : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
+        com = null;
 
-        com = null;      
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }        
+        }
     }
     void ResetGuaDian()
     {

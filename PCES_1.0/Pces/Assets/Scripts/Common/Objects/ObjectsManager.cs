@@ -160,7 +160,7 @@ public class ObjectsManager : MonoBehaviour
     /// 获得道具中文名字
     /// </summary>
     private Dictionary<string, string> objectCns = new Dictionary<string, string>();
-    private string GetCnNameOfObject(string enName)
+    public string GetCnNameOfObject(string enName)
     {
         if (objectCns.Count == 0)
         {
@@ -277,7 +277,7 @@ public enum PropsTag : int
     /// <summary>
     /// 饼干
     /// </summary>
-    [Description("饼干")]
+    [Description("海苔饼干")]
     biscuit = 1,
     /// <summary>
     /// 薯片

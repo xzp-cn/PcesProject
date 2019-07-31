@@ -194,13 +194,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Scapula_R' has translation animation that will
-      be discarded.\n\t'Scapula_R' is inbetween humanoid transforms and has rotation
-      animation that will be discarded.\n\t'Shoulder_R' has translation animation
-      that will be discarded.\n\t'ShoulderPart2_R' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -241,11 +235,11 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 1
+    meshCompression: 2
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1

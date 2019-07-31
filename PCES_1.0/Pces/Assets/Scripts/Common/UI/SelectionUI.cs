@@ -38,13 +38,14 @@ public class SelectionUI : MonoBehaviour
             ToggleGroup tg = transform.GetComponentInChildren<ToggleGroup>();
             tg.SetAllTogglesOff();
             RawImage[] rws = tg.GetComponentsInChildren<RawImage>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 //toggles[i].name = i.ToString();
-                string path = "Images/tuka/tuka_" + ((PropsTag)i).ToString();
+                string path = "Images/selectUI/tuka_" + ((PropsTag)i).ToString();
                 Texture texture = ResManager.GetTexture(path);
                 spDic.Add(((PropsTag)i).ToString(), texture);
                 rws[i].texture = texture;
+                rws[i].transform.parent.Find("Text").GetComponent<Text>().text = ObjectsManager.instanse.GetCnNameOfObject(((PropsTag)i).ToString());
             }
         }
         for (int i = 0; i < toggles.Length; i++)

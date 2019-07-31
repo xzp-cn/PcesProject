@@ -14,32 +14,33 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         if (main == null)
         {
             main = Camera.main;
-            GameObject.DontDestroyOnLoad(main.transform.root.gameObject);
+            //GameObject.DontDestroyOnLoad(main.transform.root.gameObject);
         }
         return main;
     }
+
     /// <summary>
     /// 设置clasroom相机位置
     /// </summary>
-    public void SetPcesCamera(Vector3? pos=null)
+    public void SetPcesCamera(Vector3? pos = null)
     {
-        Transform cam= GameObject.Find("PcesCamera").transform;
-        if (cam!=null)
+        Camera cam = GetCamera();
+        if (cam != null)
         {
             if (pos != null)
             {
-                cam.localPosition =(Vector3)pos;
+                cam.transform.parent.localPosition = new Vector3(4.933f, 1.071f, 0.43f);
             }
             else
             {
-                cam.localPosition = new Vector3(2.636f, 1.071f, 0.33f);//相机默认位置
+                cam.transform.parent.localPosition = new Vector3(3.5f, 1.071f, 0.43f);//相机默认位置
             }
         }
         else
         {
             Debug.LogError("未找到相机");
         }
-      
+
     }
     /// <summary>
     /// 当前选择的强化物

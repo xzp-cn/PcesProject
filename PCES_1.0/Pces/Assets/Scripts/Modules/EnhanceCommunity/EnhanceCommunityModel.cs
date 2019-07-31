@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class EnhanceCommunityModel : SingleTemplate<EnhanceCommunityModel>
 {
+    GameObject jiaoshi;
+    public GameObject Jiaoshi()
+    {
+        if (jiaoshi == null)
+        {
+            jiaoshi = GameObject.Find("jiaoshi").gameObject;
+        }
+        return jiaoshi;
+    }
     //int idLevel = 1;
     /// <summary>
     ///通过名字得到道具/涂卡

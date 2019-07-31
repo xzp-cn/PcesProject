@@ -70,5 +70,12 @@ public class LSCtrl : MonoBehaviour
                 Destroy(go);
             }
         }
+        ls_judai.SetActive(false);
+
+        ls_judai2.SetActive(false);
+
+        ls_tuka1.SetActive(false);
+
+        ls_tuka2.SetActive(false);
     }
 }

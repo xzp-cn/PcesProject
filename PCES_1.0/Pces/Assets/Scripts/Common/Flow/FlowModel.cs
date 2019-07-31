@@ -24,7 +24,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     public FlowModel()
     {
         InitFlowTasks();
-        CurrFlowTask = FlowTaskList[0];
+        CurrFlowTask = FlowTaskList[6];
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class FlowModel : SingleTemplate<FlowModel>
                 }
                 else
                 {
-                   GameOverCtrl ctrl=UIManager.Instance.GetUI<GameOverCtrl>("GameOverCtrl");
+                    GameOverCtrl ctrl = UIManager.Instance.GetUI<GameOverCtrl>("GameOverCtrl");
                     ctrl.Init();
                     ResetAllFlowTask();
                     throw new Exception("索引有问题");

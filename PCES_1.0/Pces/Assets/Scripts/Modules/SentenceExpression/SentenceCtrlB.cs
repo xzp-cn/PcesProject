@@ -41,7 +41,7 @@ public class SentenceCtrlB : MonoBehaviour
         PeopleManager.Instance.Reset();
 
         LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();    
+        XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
         LS.PlayForward("idle");
         XH.PlayForward("idle");
@@ -65,13 +65,13 @@ public class SentenceCtrlB : MonoBehaviour
         GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
         obj.name = "neutralStimulator";
         obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.607f, 0.578f, -0.122f);
+        obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_ka").GetLegacyAnimationOper();
+        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();
         gtb.name = PropsTag.TY_GTB.ToString();
         gtb.transform.SetParent(transform);
-        gtb.name = "XH_D_1ST_FBNKT_ka";
+        gtb.name = "XH_D_1ST_FBNKT_KA";
         gtb.transform.SetParent(transform);
 
         //沟通本我看见图卡
@@ -97,8 +97,19 @@ public class SentenceCtrlB : MonoBehaviour
         qhwCtrl = obj.GetComponent<QHWCtrl>();
         qhwCtrl.ShowObj(objName);
 
-        LS.Complete += ClickmicroPhoneTip;
-        LS.PlayForward("LS_E_1ST_ZB");
+        //LS.Complete += ClickmicroPhoneTip;
+        //LS.PlayForward("LS_E_1ST_ZB");
+        bool passPoint = true;
+        LS.timePointEvent = (a) =>
+        {
+            if (a >= 40 && a <= 45 && passPoint)//
+            {
+                passPoint = false;
+                LS.OnPause();
+                ClickmicroPhoneTip();
+            }
+        };
+        LS.PlayForward("LS_F_1ST_ZCJW");
         //Debug.Log("ls");
     }
     /// <summary>
@@ -114,7 +125,7 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -130,12 +141,24 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
-        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
-        ClickDispatcher.Inst.EnableClick = true;
-        ClickLsHandTip();
+        LsBack();
+    }
+    /// <summary>
+    /// 老师收手
+    /// </summary>
+    void LsBack()
+    {
+        LS.Complete += () =>
+        {
+            GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+            ClickLsHandTip();
+        };
+        LS.OnContinue();
+
     }
     void ClickLsCallBack(ClickedObj cobj)
     {
@@ -157,7 +180,7 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void RedoLsPointJudai()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师指句带");
@@ -166,6 +189,7 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void LsPointJudai()
     {
+        CancelInvoke("ClickLsHandTip");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -233,15 +257,16 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
-        CancelInvoke("ClickLsHandTip");
-        Invoke("ClickLsHandTip", 2);
+        CancelInvoke("ClickLsHandJiekaTip");
+        Invoke("ClickLsHandJiekaTip", 2);
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -256,7 +281,7 @@ public class SentenceCtrlB : MonoBehaviour
                 //Debug.LogError("event");
                 passJG = false;
                 XH.OnContinue();//小华手收回
-                transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
+                transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
             }
         };
 
@@ -266,8 +291,8 @@ public class SentenceCtrlB : MonoBehaviour
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
         Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
         Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
-        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
-        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_ka/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+        Material matSourceWy = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+        Material matSourceObj = transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
         matWy.CopyPropertiesFromMaterial(matSourceWy);
         matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
 
@@ -291,15 +316,16 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
-        CancelInvoke("ClickmicroPhoneTip");
-        Invoke("ClickmicroPhoneTip", 2);
+        CancelInvoke("ClickmicroPhoneJiekaTip");
+        Invoke("ClickmicroPhoneJiekaTip", 2);
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurneutralStimulator.pData.name_cn;
@@ -324,14 +350,16 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -414,16 +442,17 @@ public class SentenceCtrlB : MonoBehaviour
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
 
-        com = null;     
+        com = null;
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }     
+        }
     }
     void ResetGuaDian()
     {

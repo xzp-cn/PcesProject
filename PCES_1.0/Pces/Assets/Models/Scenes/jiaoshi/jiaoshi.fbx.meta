@@ -83,12 +83,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: jiaoshi_qiang_tex
-    second: {fileID: 2100000, guid: 4d7bc359940fcb443ac6fbbd8972f564, type: 2}
+    second: {fileID: 2100000, guid: 8abbf2177f3f4f449b6c25dff4e22a31, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: jiaoshi_zhuoyi_tex
-    second: {fileID: 2100000, guid: 449ee306bb130bf419400a28deac9154, type: 2}
+    second: {fileID: 2100000, guid: 6992bf140bea7c6408a6fb339cafe77b, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -116,16 +116,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -144,7 +144,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

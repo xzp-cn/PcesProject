@@ -112,7 +112,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -127,6 +127,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华要什么");
@@ -154,7 +155,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void RedoLsPointJudai()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师指句带");
@@ -163,6 +164,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void LsPointJudai()
     {
+        CancelInvoke("ClickLsHandTip");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -190,7 +192,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         gtb.framePointEvent = (a) =>
         {
-            if (a>=165&&a<=167)
+            if (a >= 165 && a <= 167)
             {
                 gtb.timePointEvent = null;
                 tkb.SetActive(true);
@@ -222,7 +224,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -231,6 +233,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -240,7 +243,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         bool pass = true;
         LS.timePointEvent = (a) =>//老师借卡时间点
         {
-            if (a > 21 && a < 25&&pass)
+            if (a > 21 && a < 25 && pass)
             {
                 pass = false;
                 //Debug.LogError("event");
@@ -280,7 +283,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -289,6 +292,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -318,14 +322,17 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
+        //ClickLsGiveObjTip();
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -416,8 +423,13 @@ public class AcceptQuesCtrlB : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
-        swapUI.speakEvent -= SpeakBtnClickCallback;
+        LS.timePointEvent = null;
+        XH.timePointEvent = null;
+        //FDLS.timePointEvent = null;
 
+        swapUI.speakEvent -= SpeakBtnClickCallback;
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }
     void ReDo()
     {

@@ -30,10 +30,16 @@ public class DistinguishPictureView : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第三阶段 分辨图片");
 
+        //PeopleManager.Instance.ResetModel();
+
         UnityEngine.Debug.Log("DistinguishPictureView::Start(): 第三阶段 第一关 区辨喜欢和不喜欢物品的图卡");
         dpaCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureA").GetComponent<DistinguishPictureCtrlA>();
         dpaCtrl.evtFinished += OnDpaCtrlFinished;
         dpaCtrl.evtRedo += OnDpaCtrlRedo;
+
+        //dpbCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureB").GetComponent<DistinguishPictureCtrlB>();
+        //dpbCtrl.evtFinished += OnDpbCtrlFinished;
+        //dpbCtrl.evtRedo += OnDpbCtrlRedo;
 
         //dpcCtrl = ResManager.GetPrefab("Prefabs/DistinguishPicture/DistinguishPictureC").GetComponent<DistinguishPictureCtrlC>();
         //dpcCtrl.evtFinished += OnDpcCtrlFinished;
@@ -137,7 +143,8 @@ public class DistinguishPictureView : MonoBehaviour
     {
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
-        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.Dispose();
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }
@@ -170,6 +177,10 @@ public class DistinguishPictureView : MonoBehaviour
         if (dpcCtrl != null)
         {
             dpcCtrl.Dispose();
+        }
+        if (tpv != null)
+        {
+            tpv.Dispose();
         }
         Destroy(gameObject);
     }

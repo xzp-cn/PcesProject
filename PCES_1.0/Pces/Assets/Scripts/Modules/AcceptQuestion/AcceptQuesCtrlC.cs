@@ -31,7 +31,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Camera cam = transform.GetComponentInChildren<Camera>();
         ClickDispatcher.Inst.cam = cam;
         HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
-        if (hf==null)
+        if (hf == null)
         {
             hf = cam.gameObject.AddComponent<HighlightingEffect>();
         }
@@ -111,7 +111,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈说话");
@@ -126,8 +126,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
-        dlog.transform.localPosition = new Vector3(475,196,0);
+        dlog.transform.localPosition = new Vector3(475, 196, 0);
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华要什么");
         MM.Complete += MMAskQuesCallback;
@@ -155,12 +156,18 @@ public class AcceptQuesCtrlC : MonoBehaviour
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
         ka.name = "XH_E_3RD_FNN_KA";
-        ka.PlayForward("XH_E_3RD_FNN_KA");
+
+        Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
+        Vector3 tkeular = tk9.localEulerAngles;
+        tkeular.y = -90;
+        tk9.localEulerAngles = tkeular;
 
         Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//物品图卡
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
+
+        ka.PlayForward("XH_E_3RD_FNN_KA");
     }
     void XhTzkCallback()
     {
@@ -188,7 +195,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈接卡");
@@ -197,18 +204,19 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandJiekaTip");
         HighLightCtrl.GetInstance().FlashOff(mmhand);
         ClickDispatcher.Inst.EnableClick = false;
         MM.OnContinue();
         MM.timePointEvent = (a) =>//mama借卡时间点
-        {         
-            if (a >= 41&&a<=43)//给定一个帧区间范围
+        {
+            if (a >= 41 && a <= 43)//给定一个帧区间范围
             {
                 MM.timePointEvent = null;
                 transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
 
                 int stateHash = XH.anim.GetCurrentAnimatorStateInfo(0).tagHash;
-               float length=XH.anim.GetCurrentAnimatorStateInfo(0).length;
+                float length = XH.anim.GetCurrentAnimatorStateInfo(0).length;
                 XH.anim.Play("XH_E_3RD_JG", 0, -length);
                 //XH.anim.speed = -1;
                 //XH.PlayForward("XH_E_3RD_JG");//小华手收回
@@ -220,6 +228,11 @@ public class AcceptQuesCtrlC : MonoBehaviour
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RD_JG_KA").GetLegacyAnimationOper();
         ka.transform.SetParent(transform);
         ka.name = "MM_E_3RD_JG_KA";
+        Transform tk9 = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka9");
+        Vector3 tk9Angle = tk9.localEulerAngles;
+        tk9Angle.y = -90.3f;
+        tk9.localEulerAngles = tk9Angle;
+
         Material matSource = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka10").GetComponent<MeshRenderer>().materials[1];
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
@@ -243,7 +256,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void RedoLsJiekaSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈说话");
@@ -252,6 +265,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void ShowSpeakJiekaContent()
     {
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -276,14 +290,17 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要妈妈给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
+        //ClickLsGiveObjTip();
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("妈妈接卡");
         transform.Find("MM_E_3RD_JG_KA").gameObject.SetActive(false);
         HighLightCtrl.GetInstance().FlashOff(mmhand);
@@ -326,7 +343,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         ka.timePointEvent = (a) =>
         {
-            if (a>=118&&a<=120)
+            if (a >= 118 && a <= 120)
             {
                 ka.timePointEvent = null;
                 par.Find(rfc.pData.name).gameObject.SetActive(true);
@@ -339,7 +356,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         XH.anim.speed = 1;
         XH.Complete += XHJiewuCallback;
-        XH.PlayForward("XH_E_3RD_JG");            
+        XH.PlayForward("XH_E_3RD_JG");
     }
     void XHJiewuCallback()
     {
@@ -383,17 +400,18 @@ public class AcceptQuesCtrlC : MonoBehaviour
         com = null;
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
 
-    
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
-        }        
+        }
     }
     void ResetGuaDian()
     {
@@ -405,7 +423,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     public void Dispose()
     {
-        RemoveAllListeners();       
+        RemoveAllListeners();
         evtFinished = null;
         evtRedo = null;
         //Destroy(gameObject);

@@ -178,7 +178,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void RedoClickFdlsHand()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要辅导老师协助");
@@ -191,6 +191,7 @@ public class SwapCtrlB : MonoBehaviour
     /// </summary>
     void FdlsClickXhHand()
     {
+        CancelInvoke("ClickFdlsHandTip");
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsClickXhHandCalllback;
@@ -212,7 +213,7 @@ public class SwapCtrlB : MonoBehaviour
         bool pass2 = true;
         XH.timePointEvent = (a) =>
         {
-            if (a>=14&&a <= 16&&pass1)
+            if (a >= 18 && a <= 20 && pass1)
             {
                 pass1 = true;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
@@ -223,7 +224,7 @@ public class SwapCtrlB : MonoBehaviour
                 xhTk.gameObject.SetActive(false);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
-            if (a>=50&&a <= 52&&pass2)
+            if (a >= 50 && a <= 52 && pass2)
             {
                 pass2 = false;
                 XH.timePointEvent = null;
@@ -268,7 +269,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -277,6 +278,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandTip");
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
 
@@ -290,7 +292,7 @@ public class SwapCtrlB : MonoBehaviour
         bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a>=51&&a <= 53&&pass1)//老师接卡
+            if (a >= 51 && a <= 53 && pass1)//老师接卡
             {
                 pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
@@ -306,7 +308,7 @@ public class SwapCtrlB : MonoBehaviour
                 FDLS.PlayForward("idle");
             }
 
-            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
+            if (a >= 81 && a <= 83 && pass2)//老师桌子放卡片
             {
                 pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
@@ -315,7 +317,7 @@ public class SwapCtrlB : MonoBehaviour
                 lsTk.gameObject.SetActive(true);
             }
 
-            if (a>=94&&a <= 96 && pause)
+            if (a >= 94 && a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -323,21 +325,22 @@ public class SwapCtrlB : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a>=122&&a <= 124&&pass5)//强化物挂到老师手上
+            if (a >= 122 && a <= 124 && pass5)//强化物挂到老师手上
             {
                 pass5 = false;
-                LS.timePointEvent = null;
+                //LS.timePointEvent = null;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a>=103&&a <= 105&&pass3)//小华接受物体时间点
+            if (a >= 145 && a <= 147 && pass3)//小华接受物体时间点
             {
                 //               
+                LS.timePointEvent = null;
                 pass3 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b>=40&&b <= 42&&pass4)
+                    if (b >= 42 && b <= 44 && pass4)
                     {
                         pass4 = false;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
@@ -368,7 +371,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -385,6 +388,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SwapModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -408,14 +412,16 @@ public class SwapCtrlB : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
@@ -484,6 +490,8 @@ public class SwapCtrlB : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()
     {

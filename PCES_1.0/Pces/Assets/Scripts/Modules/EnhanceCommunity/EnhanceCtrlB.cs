@@ -22,11 +22,13 @@ public class EnhanceCtrlB : MonoBehaviour
     GameObject lsTk;
     GameObject qhw;
     GameObject xhqhw;
+    Vector3 zhuozi2Pos;
     private void Awake()
     {
         this.name = "EnhanceCtrlB";
-        camPos = Camera.main.transform.parent.localPosition;
-        Camera.main.transform.parent.localPosition = new Vector3(3.981f, 1.071f, 0.43f);
+        //camPos = Camera.main.transform.parent.localPosition;
+        //Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
+        GlobalDataManager.GetInstance().SetPcesCamera(Vector3.zero);
     }
     //public bool Finished;
     private void Start()
@@ -57,7 +59,7 @@ public class EnhanceCtrlB : MonoBehaviour
         if (LS == null)
         {
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-            LS.transform.localPosition = new Vector3(1.461f, 0, 0.022f);
+            LS.transform.localPosition = new Vector3(1.516f, 0, 0.022f);
             //LS.PlayForward("idle");
 
             FDLS = PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper();
@@ -66,6 +68,10 @@ public class EnhanceCtrlB : MonoBehaviour
             XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
             XH.transform.localPosition = new Vector3(0, 0, 10000);
         }
+
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2Pos = zhuozi2.transform.localPosition;
+        zhuozi2.localPosition = new Vector3(0.0608f, 0, 0.036536f);
 
         HighLightCtrl.GetInstance().OffAllObjs();
         GetTukaObject();
@@ -97,7 +103,7 @@ public class EnhanceCtrlB : MonoBehaviour
             string qhwName = ((PropsTag)objId).ToString();
             qhw.name = qhwName;
             QHWCtrl qhwCtrl = qhw.GetComponent<QHWCtrl>();
-            qhw.transform.localPosition = new Vector3(1.431f, 0, 0);
+            qhw.transform.localPosition = new Vector3(1.508f, 0, 0);
             qhwCtrl.ShowObj(qhwName);
 
 
@@ -173,12 +179,12 @@ public class EnhanceCtrlB : MonoBehaviour
         bool gtb = true;
         XH.timePointEvent = (a) =>
         {
-            if (a>=108&&a <= 110&&pass1)
+            if (a >= 108 && a <= 110 && pass1)
             {
                 pass1 = false;
                 GTB.timePointEvent = (b) =>
                 {
-                    if (b>=26&&b <= 28&&gtb)
+                    if (b >= 26 && b <= 28 && gtb)
                     {
                         gtb = false;
                         GTB.timePointEvent = null;
@@ -188,19 +194,19 @@ public class EnhanceCtrlB : MonoBehaviour
                 GTB.PlayForward("onePaper");
             }
 
-            if (a>=185&&a <= 187&&pass2)
+            if (a >= 185 && a <= 187 && pass2)
             {
                 pass2 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
-                ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().enabled = true;
-                Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
+                ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().enabled = true;
+                Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 xhTk.SetActive(false);
-                ctrl.r_tuka2.gameObject.SetActive(true);
+                ctrl.r_tuka.gameObject.SetActive(true);
             }
-            if (a>=402&&a <= 404&&pass3)
+            if (a >= 402 && a <= 404 && pass3)
             {
                 pass3 = false;
                 XH.timePointEvent = null;
@@ -244,7 +250,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void RedoLsJieka()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
@@ -253,6 +259,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void LsJieka()
     {
+        CancelInvoke("ClickLsHandTip");
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
 
@@ -266,7 +273,7 @@ public class EnhanceCtrlB : MonoBehaviour
         bool pass5 = true;
         LS.timePointEvent = (a) =>
         {
-            if (a>=51&&a <= 53&&pass1)//老师接卡
+            if (a >= 51 && a <= 53 && pass1)//老师接卡
             {
                 pass1 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
@@ -277,22 +284,21 @@ public class EnhanceCtrlB : MonoBehaviour
                 ctrl.ls_tuka2.gameObject.SetActive(true);
 
                 XHCtrl xctrl = XH.GetComponent<XHCtrl>();
-                xctrl.r_tuka2.gameObject.SetActive(false);
+                xctrl.r_tuka.gameObject.SetActive(false);
                 XH.OnContinue();
             }
 
-            if (a>=81&&a <= 83&&pass2)//老师桌子放卡片
+            if (a >= 81 && a <= 83 && pass2)//老师桌子放卡片
             {
                 pass2 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
-                deskTuka.transform.localPosition = new Vector3(1.44f, 0.0014f, 0.12f);
+                deskTuka.transform.localPosition = new Vector3(1.504f, 0.0014f, 0.12f);
                 lsTk.gameObject.SetActive(true);
-
             }
 
-            if (a>=94&&a <= 96 && pause)
+            if (a >= 94 && a <= 96 && pause)
             {
                 pause = false;
                 LS.OnPause();//在某一帧停止时，下一次还会从该帧执行
@@ -300,7 +306,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a>=122&&a <= 124&&pass3)//强化物挂到老师手上
+            if (a >= 122 && a <= 124 && pass3)//强化物挂到老师手上
             {
                 pass3 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
@@ -308,21 +314,26 @@ public class EnhanceCtrlB : MonoBehaviour
                 ctrl.SetJoint(qhw);
             }
 
-            if (a>=143&&a <= 145&&pass4)//小华接受物体时间点
+            if (a >= 150 && a <= 153 && pass4)//小华接受物体时间点
             {
                 //               
                 pass4 = false;
                 LS.timePointEvent = null;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
-                    if (b>=40&&b <= 42&&pass5)
+                    if (b >= 40 && b <= 42 && pass5)
                     {
                         pass5 = false;
                         XH.timePointEvent = null;
                         XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
                         //qhw.transform.localPosition = Vector3.zero;                     
                         xhCtrl.SetJoint(qhw);
+                        qhw.GetComponent<QHWCtrl>().ResetPos();
+                        //qhw.transform.localPosition = Vector3.zero;
+                        //qhw.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                        //xhCtrl.XH_R2.transform.localPosition = Vector3.zero;
 
+                        //qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
                     }
                 };
@@ -349,7 +360,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void RedoLsSpeak()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
@@ -366,6 +377,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void ShowSpeakContent()
     {
+        CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -389,14 +401,16 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void RedoLsGiveObj()
     {
-        ClickDispatcher.Inst.EnableClick = false;
+        //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师给相应物品");
-        ClickLsGiveObjTip();
+        CancelInvoke("ClickLsGiveObjTip");
+        Invoke("ClickLsGiveObjTip", 2);
     }
     void LsGiveObj()
     {
+        CancelInvoke("ClickLsGiveObjTip");
         XH.transitionTime = 0f;
         Debug.Log("教师给物品");
         HighLightCtrl.GetInstance().FlashOff(jshand);
@@ -436,17 +450,20 @@ public class EnhanceCtrlB : MonoBehaviour
         LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
         lsctrl.DestroyGuadian();
 
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2.transform.localPosition = zhuozi2Pos;
+
         RemoveAllListeners();
     }
     void ReDo()
     {
         Debug.Log("redo");
         Finish();
-        if (evtRedo!=null)
+        if (evtRedo != null)
         {
             evtRedo();
         }
-       
+
     }
     void NextDo()
     {
@@ -467,14 +484,22 @@ public class EnhanceCtrlB : MonoBehaviour
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
         com = null;
-
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()
     {
         RemoveAllListeners();
         evtFinished = null;
         evtRedo = null;
-        Camera.main.transform.parent.localPosition = camPos;
+        //PeopleManager.Instance.Reset();
+        XH.gameObject.SetActive(false);
+        XH.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
+        //XH.transform.localPosition = new Vector3(0, 0, 10000);
+        XH.gameObject.SetActive(true);
+        XH.OnContinue();
+        XH.PlayForward("idle");
+
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }
     private void OnDestroy()

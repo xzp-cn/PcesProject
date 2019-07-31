@@ -24,12 +24,17 @@ public class SpeakUpView : MonoBehaviour
         com.SetComUITitle("第四阶段 句型表达");
 
         UnityEngine.Debug.Log("SpeakUpView::Start(): 第四阶段 第一关 句型表达");
-        //spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
-        //spaCtrl.evtFinished += OnSpaCtrlFinished;
-        //spaCtrl.evtRedo += OnSpaCtrlRedo;
-        spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
-        spcCtrl.evtFinished += OnSpcCtrlFinished;
-        spcCtrl.evtRedo += OnSpcCtrlRedo;
+        spaCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpA").GetComponent<SpeakUpCtrlA>();
+        spaCtrl.evtFinished += OnSpaCtrlFinished;
+        spaCtrl.evtRedo += OnSpaCtrlRedo;
+
+        //spbCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpB").GetComponent<SpeakUpCtrlB>();
+        //spbCtrl.evtFinished += OnSpbCtrlFinished;
+        //spbCtrl.evtRedo += OnSpbCtrlRedo;
+
+        //spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
+        //spcCtrl.evtFinished += OnSpcCtrlFinished;
+        //spcCtrl.evtRedo += OnSpcCtrlRedo;
 
         InitPersonsState();
     }
@@ -105,7 +110,8 @@ public class SpeakUpView : MonoBehaviour
     {
         tpv.evtFinished -= OnTestPaperFinished;
         tpv.evtRedo -= OnTestPaperRedo;
-        tpv = UIManager.Instance.GetUI<TestPaperView>("TestPaperView");
+        tpv.Dispose();
+        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
     }

@@ -19,13 +19,21 @@ public class ChooseDo : SingleTon<ChooseDo>
     /// <param name="_nextdo"></param>
     public void DoWhat(float _time, System.Action _redo, System.Action _nextdo)
     {
-        StopCoroutine("LoopCalll");
+        StopCoroutine("LoopCall");
+        StopCoroutine("LoopCallParam");
         time = _time;
         bNextDo = false;
         currTime = 0;
         redo = _redo;
         nextdo = _nextdo;
-        StartCoroutine("LoopCall");
+        if (nextdo == null)
+        {
+            StartCoroutine("LoopCall");
+        }
+        else
+        {
+            StartCoroutine("LoopCallParam");
+        }
     }
     IEnumerator LoopCall()
     {
@@ -55,8 +63,40 @@ public class ChooseDo : SingleTon<ChooseDo>
 
         }
     }
+
+    IEnumerator LoopCallParam()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+            currTime += Time.deltaTime;
+            if (currTime < time)
+            {
+                if (bNextDo)
+                {
+                    if (nextdo != null)
+                    {
+                        nextdo();
+                    }
+                    break;
+                }
+            }
+            else
+            {
+                if (redo != null)
+                {
+                    currTime = 0;
+                    redo();
+                }
+                //break;
+            }
+
+        }
+    }
+
     public void ResetAll()
     {
+        StopCoroutine("LoopCallParam");
         StopCoroutine("LoopCalll");
         time = 0;
         bNextDo = false;
@@ -70,6 +110,7 @@ public class ChooseDo : SingleTon<ChooseDo>
     public void Clicked()
     {
         bNextDo = true;
+
     }
     void DelayCall()
     {

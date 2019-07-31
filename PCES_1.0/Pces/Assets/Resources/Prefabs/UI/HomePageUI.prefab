@@ -220,7 +220,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 37b20753195efec409bcd1181098ed95, type: 3}
+    m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -231,8 +231,14 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: "\u60A3\u8005\uFF1A\u5C0F\u534E\uFF0C4\u5C81\uFF0C\u4E2D\u5EA6\u81EA\u95ED\u75C7\r\n\u5C0F\u534E\u73B0\u72B6\uFF1A\u53E3\u8BED\u80FD\u529B\u5F31\uFF0C\u65E0\u6CD5\u8FDB\u884C\u4E3B\u52A8\u7684\u6C9F\u901A\u8868\u8FBE\r\n\u5BB6\u957F\u671F\u671B\uFF1A\u63D0\u5347\u5176\u6C9F\u901A\u4E0E\u4EA4\u5F80\u80FD\u529B\r\n\u89E3\u51B3\u65B9\u6848\uFF1A\u5229\u7528\u56FE\u7247\u4EA4\u6362\u6C9F\u901A\u7CFB\u7EDF\uFF08PECS\uFF09\u8FDB\u884C\u6559\u5B66\r\n\u5F3A\u5316\u7269\uFF1A\u5DE7\u514B\u529B\u8C46\u3001\u6D77\u82D4\u997C\u5E72\u3001\u85AF\u7247\u3001\u6A59\u6C41\u3001\u5C0F\u6C7D\u8F66\r\n\u8D1F\u5F3A\u5316\u7269\uFF1A\u9999\u8549\u3001\u82F9\u679C\u3001\u65FA\u65FA\u96EA\u997C\r\n\u4E2D\u6027\u523A\u6FC0\u7269\uFF1A\u5E3D\u5B50\u3001\u725B\u5976\u3001\u79EF\u6728\u3001\u6545\u4E8B\u4E66\u3002"
+    m_LineSpacing: 1.2
+  m_Text: "         <color=#666666>\u60A3\u8005</color>\uFF1A\u5C0F\u534E\uFF0C4\u5C81\uFF0C\u4E2D\u5EA6\u81EA\u95ED\u75C7\r\n
+    <color=#666666>\u5C0F\u534E\u73B0\u72B6</color> \uFF1A\u53E3\u8BED\u80FD\u529B\u5F31\uFF0C\u65E0\u6CD5\u8FDB\u884C\u4E3B\u52A8\u7684\u6C9F\u901A\u8868\u8FBE\r\n
+    \ <color=#666666>\u5BB6\u957F\u671F\u671B</color>\uFF1A\u63D0\u5347\u5176\u6C9F\u901A\u4E0E\u4EA4\u5F80\u80FD\u529B\r
+    \     \n  <color=#666666>\u89E3\u51B3\u65B9\u6848</color>\uFF1A\u5229\u7528\u56FE\u7247\u4EA4\u6362\u6C9F\u901A\u7CFB\u7EDF\uFF08PECS\uFF09\u8FDB\u884C\u6559\u5B66\r\n
+    \     <color=#666666>\u5F3A\u5316\u7269</color>\uFF1A\u5DE7\u514B\u529B\u3001\u6D77\u82D4\u997C\u5E72\u3001\u85AF\u7247\u3001\u5C0F\u6C7D\u8F66\r\n
+    \ <color=#666666>\u8D1F\u5F3A\u5316\u7269</color>\uFF1A\u9999\u8549\u3001\u82F9\u679C\u3001\u65FA\u65FA\u96EA\u997C\r\n
+    <color=#666666>\u4E2D\u6027\u523A\u6FC0\u7269</color>\uFF1A\u5E3D\u5B50\u3001\u725B\u5976\u3001\u79EF\u6728\u3001\u6545\u4E8B\u4E66\u3002"
 --- !u!114 &114147819294572010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,9 +313,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 37b20753195efec409bcd1181098ed95, type: 3}
+    m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
     m_FontSize: 38
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -319,7 +325,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5F00\u59CB"
+  m_Text: "\u5F00 \u59CB"
 --- !u!114 &114502488342805436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -419,7 +425,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 37b20753195efec409bcd1181098ed95, type: 3}
+    m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
     m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
@@ -452,7 +458,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 37b20753195efec409bcd1181098ed95, type: 3}
+    m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
     m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
@@ -464,7 +470,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5C0F\u534E 4\u5C81\n\u4E2D\u5EA6\u81EA\u95ED\u75C7"
+  m_Text: "\u5C0F\u534E <color=#ff8400>4\u5C81\n\u4E2D\u5EA6\u81EA\u95ED\u75C7</color> "
 --- !u!114 &114829809803399182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -512,7 +518,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 37b20753195efec409bcd1181098ed95, type: 3}
+    m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
     m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
@@ -661,7 +667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 488, y: -325}
+  m_AnchoredPosition: {x: 488.48, y: -325}
   m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224066161965909064
@@ -704,7 +710,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 23, y: 9}
-  m_SizeDelta: {x: 197, y: 89.3}
+  m_SizeDelta: {x: 197, y: 95.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224220778318962088
 RectTransform:
@@ -739,8 +745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -5.05}
+  m_SizeDelta: {x: 0, y: -10.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224407018790723796
 RectTransform:
@@ -775,8 +781,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -5.9, y: 0}
+  m_SizeDelta: {x: 11.8, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224522036368611642
 RectTransform:
@@ -793,8 +799,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.9, y: 11.675}
-  m_SizeDelta: {x: -19.9, y: -23.35}
+  m_AnchoredPosition: {x: -2.9, y: 9.5}
+  m_SizeDelta: {x: -19.9, y: -19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224667221244777284
 RectTransform:
@@ -850,6 +856,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -196, y: 74}
-  m_SizeDelta: {x: 621.8, y: 319.4}
+  m_AnchoredPosition: {x: -13, y: 86.6}
+  m_SizeDelta: {x: 773.3, y: 359.6}
   m_Pivot: {x: 1, y: 0.5}
