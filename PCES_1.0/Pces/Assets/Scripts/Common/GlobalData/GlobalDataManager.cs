@@ -18,6 +18,7 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         }
         return main;
     }
+
     /// <summary>
     /// 设置clasroom相机位置
     /// </summary>

@@ -493,9 +493,11 @@ public class EnhanceCtrlB : MonoBehaviour
         //PeopleManager.Instance.Reset();
         XH.gameObject.SetActive(false);
         XH.transform.Find("Group/Main").localPosition = Vector3.zero;
-        XH.transform.localPosition = new Vector3(0, 0, 10000);
-        XH.gameObject.SetActive(true);
-        XH.OnContinue();
+        //XH.transform.localPosition = new Vector3(0, 0, 10000);
+        //XH.gameObject.SetActive(true);
+        //XH.OnContinue();
+        //XH.PlayForward("idle");
+
         Camera.main.transform.parent.localPosition = camPos;
         Destroy(gameObject);
     }

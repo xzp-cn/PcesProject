@@ -37,6 +37,7 @@ public class PeopleManager : SingleTon<PeopleManager>
             //}
             temp.gameObject.SetActive(true);
             temp.gameObject.GetAnimatorOper().OnContinue();
+            temp.gameObject.GetAnimatorOper().PlayForward("idle");
 
             XHCtrl xhctrl = temp.GetComponent<XHCtrl>();
             if (xhctrl != null)
@@ -80,10 +81,12 @@ public class PeopleManager : SingleTon<PeopleManager>
             Transform temp = transform.Find(name);
             if (temp != null)
             {
+                Debug.Log("PeopleManager::GetPeople():" + temp.name);
                 pDic.Add(name, temp.gameObject);
             }
             else
             {
+                //z
                 string path = "Prefabs/People/";
                 temp = Instantiate<GameObject>(Resources.Load<GameObject>(path)).transform;
                 temp.SetParent(transform);
@@ -105,11 +108,12 @@ public class PeopleManager : SingleTon<PeopleManager>
             Transform temp = transform.Find(name);
             if (temp != null)
             {
+                Debug.Log("PeopleManager::GetPeople():" + temp.name);
                 pDic.Add(name, temp.gameObject);
             }
             else
             {
-                string path = "Prefabs/People/";
+                string path = "Prefabs/People/" + pName;
                 temp = Instantiate<GameObject>(Resources.Load<GameObject>(path)).transform;
                 temp.SetParent(transform);
             }
@@ -117,6 +121,26 @@ public class PeopleManager : SingleTon<PeopleManager>
         }
         return go;
     }
+
+    public void RemovePeople(PeopleTag pName)
+    {
+        string name = pName.ToString();
+        if (pDic.ContainsKey(name))
+        {
+            DestroyImmediate(pDic[name]);
+            pDic.Remove(name);
+        }
+    }
+
+    /// <summary>
+    /// 充值模型
+    /// </summary>
+    public void ResetModel()
+    {
+        RemovePeople(PeopleTag.XH_BD);
+        GetPeople("XH_BD");
+    }
+
     private void OnDestroy()
     {
 

@@ -139,4 +139,23 @@ public class XHCtrl : MonoBehaviour
         r_judai.SetActive(false);
         r_judai2.SetActive(false);
     }
+
+    void OnDestroy()
+    {
+        r_tuka = null;
+        r_tuka2 = null;
+        r_judai = null;
+        r_judai2 = null;
+        XH_R2 = null;
+        XH_L1 = null;
+
+        r_guadian = null;
+        l_guadian = null;
+
+        jd_tk1 = null;  //句带下图卡1
+        jd_tk2 = null;  //句带下图卡2
+        jd_tk3 = null;  //句带下图卡3
+
+        InitComplete = null;
+    }
 }
