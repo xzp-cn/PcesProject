@@ -144,7 +144,7 @@ public class SwapCtrlC : MonoBehaviour
         bool pass2 = true;
         XH.timePointEvent = (a) =>
         {
-            if (a >= 14 && a <= 16 && pass1)
+            if (a >= 18 && a <= 20 && pass1)
             {
                 pass1 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
@@ -256,14 +256,16 @@ public class SwapCtrlC : MonoBehaviour
             if (a >= 122 && a <= 124 && pass3)//强化物挂到老师手上
             {
                 pass3 = false;
-                LS.timePointEvent = null;
+
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a >= 107 && a <= 110 && pass4)//小华接受物体时间点
+            if (a >= 145 && a <= 147 && pass4)//小华接受物体时间点
             {
-                //               
+                //         
+                LS.timePointEvent = null;
+                //Debug.LogError("xh");
                 pass4 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {

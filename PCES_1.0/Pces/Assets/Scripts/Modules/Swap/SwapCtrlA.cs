@@ -208,8 +208,8 @@ public class SwapCtrlA : MonoBehaviour
         Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
         Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
-        xhTk.gameObject.SetActive(false);
         ctrl.r_tuka2.gameObject.SetActive(true);
+        xhTk.gameObject.SetActive(false);
 
         ClickFdlsDikaHandTip();
     }
@@ -302,6 +302,7 @@ public class SwapCtrlA : MonoBehaviour
         bool pass1 = true;
         bool pass2 = true;
         bool pass3 = true;
+        bool pass4 = true;
         LS.timePointEvent = (a) =>
         {
             if (a >= 51 && a <= 53 && pass)//老师接卡
@@ -337,16 +338,17 @@ public class SwapCtrlA : MonoBehaviour
                 LsJiekaCallback();//提示
             }
 
-            if (a >= 122 && a <= 124)//强化物挂到老师手上
+            if (a >= 122 && a <= 124 && pass4)//强化物挂到老师手上
             {
-                LS.timePointEvent = null;
+                pass4 = false;
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();
                 ctrl.SetJoint(qhw);
             }
 
-            if (a >= 107 && a <= 110 && pass2)//小华接受物体时间点
+            if (a >= 145 && a <= 147 && pass2)//小华接受物体时间点
             {
                 //               
+                LS.timePointEvent = null;
                 pass2 = false;
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {

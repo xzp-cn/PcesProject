@@ -328,6 +328,11 @@ public class EnhanceCtrlB : MonoBehaviour
                         //qhw.transform.localPosition = Vector3.zero;                     
                         xhCtrl.SetJoint(qhw);
                         qhw.GetComponent<QHWCtrl>().ResetPos();
+                        //qhw.transform.localPosition = Vector3.zero;
+                        //qhw.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                        //xhCtrl.XH_R2.transform.localPosition = Vector3.zero;
+
+                        qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
                     }
                 };
