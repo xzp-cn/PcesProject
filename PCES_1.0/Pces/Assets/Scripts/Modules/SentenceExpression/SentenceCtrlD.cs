@@ -383,14 +383,12 @@ public class SentenceCtrlD : MonoBehaviour
         };
         MM.PlayForward("MM_F_4TH_DBY");
 
-        //GameObject ka = transform.Find("MM_F_4TH_DBY_KA").gameObject;
-        //ka.gameObject.SetActive(false);
-
         GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
         ka.name = "MM_F_4TH_DBY_KA";
         ka.transform.SetParent(transform);
 
-        //string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+        string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+        //Debug.LogError(name);
         ka.transform.Find("judai/tuka1").localEulerAngles = new Vector3(0, -90, 0);
         Material matTar = ka.transform.Find("judai/tuka1").GetComponent<MeshRenderer>().materials[1];
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
@@ -398,9 +396,10 @@ public class SentenceCtrlD : MonoBehaviour
 
         ka.transform.Find("judai/tuka").localEulerAngles = new Vector3(0, -90, 0);
         matTar = ka.transform.Find("judai/tuka").GetComponent<MeshRenderer>().materials[1];
-        matSource = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<MeshRenderer>().materials[1];
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        ka.gameObject.SetActive(true);
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
     }
     void WYXhBY()
@@ -412,6 +411,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMGiveObjCallback()
     {
+        transform.Find("MM_F_4TH_DBY_KA").gameObject.SetActive(false);
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
         GameObject ka = transform.Find("MM_F_4TH_DBY_KA").gameObject;
@@ -451,6 +451,7 @@ public class SentenceCtrlD : MonoBehaviour
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 GameObject go = MM.GetComponent<MMCtrl>().l_guadian.transform.Find("QHW").gameObject;
                 ctrl.SetJointL(go);
+                go.transform.localPosition = Vector3.zero;
             }
         };
         XH.PlayForward("XH_F_4TH_JG");

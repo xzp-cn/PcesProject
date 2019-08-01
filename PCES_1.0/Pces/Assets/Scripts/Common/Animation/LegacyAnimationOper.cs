@@ -67,7 +67,7 @@ public class LegacyAnimationOper : MonoBehaviour
             if (!anim.IsPlaying(clipName))
             {
                 anim[clipName].normalizedTime = 0;
-                anim.Play(clipName);
+                anim.Play(clipName,PlayMode.StopSameLayer);
                 lastFrame = curFrame = -1;
             }
             //anim.Play(clipName, 0, 0);
