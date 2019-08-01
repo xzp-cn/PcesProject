@@ -208,6 +208,8 @@ public class SentenceCtrlD : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
 
         ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
+        ka.transform.Find("judai/tuka").localEulerAngles = new Vector3(0, -90, 0);
+        ka.transform.Find("judai/tuka1").localEulerAngles = new Vector3(0, -90, 0);
 
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
         //Invoke("ClickmicroPhoneTip", 1);
@@ -217,6 +219,7 @@ public class SentenceCtrlD : MonoBehaviour
     /// </summary>
     void DBYCallback()
     {
+
         Debug.Log("话筒提示");
         ClickmicroPhoneTip();
     }
@@ -255,11 +258,20 @@ public class SentenceCtrlD : MonoBehaviour
         Invoke("WyXhZka", 1);
     }
 
+
+
+
     /// <summary>
     /// 小华拿出我要字卡
     /// </summary>
     void WyXhZka()
     {
+        GameObject k = transform.Find("MM_F_4TH_DBY_KA").gameObject;
+        if (k != null)
+        {
+            Destroy(k);
+        }
+
         MM.PlayForward("idle");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
@@ -323,6 +335,7 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void WyXhZkaCallback()
     {
+
         WyClickMMHandTip();
     }
     void WyClickMMHandTip()
@@ -370,10 +383,10 @@ public class SentenceCtrlD : MonoBehaviour
         };
         MM.PlayForward("MM_F_4TH_DBY");
 
-        GameObject ka = transform.Find("MM_F_4TH_DBY_KA").gameObject;
-        ka.gameObject.SetActive(false);
+        //GameObject ka = transform.Find("MM_F_4TH_DBY_KA").gameObject;
+        //ka.gameObject.SetActive(false);
 
-        ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
         ka.name = "MM_F_4TH_DBY_KA";
         ka.transform.SetParent(transform);
 
@@ -401,6 +414,11 @@ public class SentenceCtrlD : MonoBehaviour
     {
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
+        GameObject ka = transform.Find("MM_F_4TH_DBY_KA").gameObject;
+        if (ka != null)
+        {
+            Destroy(ka);
+        }
         //MM.Complete += WYXHJiewu;
         bool pass = true;
         MM.timePointEvent = (a) =>
