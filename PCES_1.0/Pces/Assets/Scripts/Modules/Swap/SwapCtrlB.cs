@@ -490,6 +490,12 @@ public class SwapCtrlB : MonoBehaviour
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
+        LS.Complete -= LsGiveObjCallback;
+        XH.Complete -= XHJiewuCallback;
+
+        XH.timePointEvent = null;
+        LS.timePointEvent = null;
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }

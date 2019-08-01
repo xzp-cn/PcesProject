@@ -400,6 +400,13 @@ public class AcceptQuesCtrlC : MonoBehaviour
         com = null;
 
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        MM.Complete -= LsGiveObjCallback;
+        XH.Complete -= XHJiewuCallback;
+
+        XH.timePointEvent = null;
+        MM.timePointEvent = null;
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
 

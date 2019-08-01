@@ -651,6 +651,12 @@ public class SentenceCtrlC : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
+        LS.Complete -= KJLsGiveObjCallback;
+        XH.Complete -= KJXHJiewuCallback;
+
+        XH.timePointEvent = null;
+        LS.timePointEvent = null;
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
 
     }

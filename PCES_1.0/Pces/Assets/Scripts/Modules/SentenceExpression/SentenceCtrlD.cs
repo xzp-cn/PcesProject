@@ -398,6 +398,8 @@ public class SentenceCtrlD : MonoBehaviour
         matTar = ka.transform.Find("judai/tuka").GetComponent<MeshRenderer>().materials[1];
         matSource = SentenceExpressionModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
+        ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
+
 
         ka.gameObject.SetActive(true);
         ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
@@ -514,6 +516,12 @@ public class SentenceCtrlD : MonoBehaviour
         com.redoClickEvent -= ReDo;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         com = null;
+
+        //MM.Complete -= KJLsGiveObjCallback;
+        XH.Complete -= WYXHJiewuCallback;
+
+        XH.timePointEvent = null;
+        MM.timePointEvent = null;
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickMMhandCallback);
     }

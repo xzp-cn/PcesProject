@@ -476,6 +476,7 @@ public class SwapCtrlA : MonoBehaviour
     {
         //selectUI.gameObject.SetActive(false);
         //swapUI.gameObject.SetActive(false);
+        //Debug.LogError("LsGiveObjCallback");
         ShowFinalUI();
     }
     void XHJiewuCallback()
@@ -532,6 +533,12 @@ public class SwapCtrlA : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+
+        LS.Complete -= LsGiveObjCallback;
+        XH.Complete -= XHJiewuCallback;
+
+        XH.timePointEvent = null;
+        LS.timePointEvent = null;
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
