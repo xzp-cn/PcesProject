@@ -486,6 +486,13 @@ public class EnhanceCtrlC : MonoBehaviour
         selectUI.okEvent -= SelectUIOkBtnCallback;
 
         com = null;
+
+        LS.Complete -= LsGiveObjCallback;
+        XH.Complete -= XHJiewuCallback;
+
+        XH.timePointEvent = null;
+        LS.timePointEvent = null;
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()

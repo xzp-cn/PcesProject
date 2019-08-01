@@ -338,19 +338,21 @@ public class AcceptQuesCtrlA : MonoBehaviour
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
         bool pass = true;
+        bool pass1 = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
+            if (a >= 25 && a <= 27 && pass1)//挂载到老师手上强化物时间点
             {
-                LS.timePointEvent = null;
+                pass1 = false;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhwCtrl.gameObject);
                 //qhwCtrl.SetPos();
                 //Debug.LogError("ls");
             }
 
-            if (a >= 21 && a < 24 && pass)//小华接卡动画播放延迟一边挂载强化物
+            if (a >= 45 && a < 47 && pass)//小华接卡动画播放延迟一边挂载强化物
             {
+                LS.timePointEvent = null;
                 pass = false;
                 XH.Complete += XHJiewuCallback;
                 XH.timePointEvent = (b) =>//小华接过物品
@@ -425,6 +427,13 @@ public class AcceptQuesCtrlA : MonoBehaviour
         XH.timePointEvent = null;
         //FDLS.timePointEvent = null;
         swapUI.speakEvent -= SpeakBtnClickCallback;
+
+        LS.Complete -= LsGiveObjCallback;
+        XH.Complete -= XHJiewuCallback;
+
+        XH.timePointEvent = null;
+        LS.timePointEvent = null;
+
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }

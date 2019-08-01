@@ -237,7 +237,7 @@ public class SpeakUpCtrlA : MonoBehaviour
                     LS.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
                     FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
-/*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回
+                                                                                          /*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回
 
                     //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                     SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");

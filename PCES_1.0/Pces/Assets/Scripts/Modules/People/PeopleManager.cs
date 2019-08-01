@@ -87,7 +87,7 @@ public class PeopleManager : SingleTon<PeopleManager>
             else
             {
                 //z
-                string path = "Prefabs/People/";
+                string path = "Prefabs/People/" + pName.ToString("g");
                 temp = Instantiate<GameObject>(Resources.Load<GameObject>(path)).transform;
                 temp.SetParent(transform);
             }

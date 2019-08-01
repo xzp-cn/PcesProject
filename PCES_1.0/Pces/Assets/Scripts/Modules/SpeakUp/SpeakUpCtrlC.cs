@@ -458,17 +458,18 @@ public class SpeakUpCtrlC : MonoBehaviour
             Destroy(emptyRoot);
             emptyRoot = null;
         }
-        //恢复老师位置和相机位置
-        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = lsOldPos;
-        GlobalDataManager.GetInstance().SetPcesCamera();
 
-        xhctrl.gameObject.SetActive(false);
-        xhctrl.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
+        xiaohuaAnim.gameObject.SetActive(false);
+        xiaohuaAnim.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
         //XH.transform.localPosition = new Vector3(0, 0, 10000);
-        xhctrl.gameObject.SetActive(true);
+        xiaohuaAnim.gameObject.SetActive(true);
         xiaohuaAnim.OnContinue();
         xiaohuaAnim.PlayForward("idle");
 
+
+        //恢复老师位置和相机位置
+        PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = lsOldPos;
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }
 
