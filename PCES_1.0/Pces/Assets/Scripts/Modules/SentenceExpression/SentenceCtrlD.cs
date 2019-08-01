@@ -409,7 +409,7 @@ public class SentenceCtrlD : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("好的你要" + curObjName);
+        dlog.SetDialogMessage("好的,小华要" + curObjName);
     }
     void MMGiveObjCallback()
     {

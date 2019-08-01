@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,14 @@ public class CommonUI : MonoBehaviour
     Transform final;
     Button resetBtn;
     Button nextBtn;
+
+    public enum pEvent
+    {
+        /// <summary>
+        /// 关卡改变
+        /// </summary>
+        LevelChange,
+    }
 
     /// <summary>
     /// 重做\下一关事件
@@ -32,8 +41,18 @@ public class CommonUI : MonoBehaviour
         nextBtn = final.Find("next").GetComponent<Button>();
         nextBtn.onClick.AddListener(NextBtnClick);
 
+        levelTitle = transform.Find("top/title/level").GetComponent<Text>();
+
+        GlobalEntity.GetInstance().AddListener<string>(pEvent.LevelChange, OnLevelTxtChange);
+
         SetLogo(false);
     }
+
+    private void OnLevelTxtChange(string arg1)
+    {
+        levelTitle.text = arg1;
+    }
+
     public void BtnResetClick()
     {
         final.gameObject.SetActive(false);
@@ -70,7 +89,7 @@ public class CommonUI : MonoBehaviour
         final.gameObject.SetActive(false);
     }
 
-    Text topTitle;
+    Text topTitle, levelTitle;
     public void SetComUITitle(string title)
     {
         if (topTitle == null)
@@ -89,5 +108,7 @@ public class CommonUI : MonoBehaviour
         {
             nextBtn.onClick.RemoveListener(NextBtnClick);
         }
+
+        GlobalEntity.GetInstance().RemoveListener<string>(pEvent.LevelChange, OnLevelTxtChange);
     }
 }

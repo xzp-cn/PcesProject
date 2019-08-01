@@ -301,7 +301,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         //{
         //    behaveMode = "玩";
         //}
-        dlog.SetDialogMessage("你要" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName + "呀");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }
@@ -441,7 +441,6 @@ public class AcceptQuesCtrlB : MonoBehaviour
         {
             evtRedo();
         }
-        evtRedo();
     }
     public void Dispose()
     {

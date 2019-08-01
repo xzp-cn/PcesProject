@@ -381,7 +381,7 @@ public class EnhanceCtrlB : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = EnhanceCommunityModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("小华要" + curObjName);
+        dlog.SetDialogMessage("小华要" + curObjName + "呀");
         CancelInvoke("LsGiveInit");
         Invoke("LsGiveInit", 2);
     }

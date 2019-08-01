@@ -17,7 +17,7 @@ public class SelectionUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         tgroup = GetComponentInChildren<ToggleGroup>();
-        tgroup.allowSwitchOff = true;
+        tgroup.allowSwitchOff = false;
         //RectTransform rt = GetComponent<RectTransform>();
     }
     private void OnEnable()
