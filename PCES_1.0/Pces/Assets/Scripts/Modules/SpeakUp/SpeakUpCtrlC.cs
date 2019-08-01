@@ -165,7 +165,7 @@ public class SpeakUpCtrlC : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -317,7 +317,7 @@ public class SpeakUpCtrlC : MonoBehaviour
     private void RedoClickTeachersHandSecond()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师给相应物品");
         CancelInvoke("ClickTeachersPromptSecond");
         Invoke("ClickTeachersPromptSecond", 2);
     }

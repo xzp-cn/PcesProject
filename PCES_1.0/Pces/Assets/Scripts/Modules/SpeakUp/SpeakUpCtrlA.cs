@@ -26,6 +26,18 @@ public class SpeakUpCtrlA : MonoBehaviour
     private QHWCtrl qhwCtrl;
     private GameObject goodA;
 
+    /*
+     进入界面1秒后，触动小华翻开沟通本的动画。
+播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。
+播放结束，触发小华把句带递给教师的动画。
+播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+播放结束，提醒操作者点击话筒，点击后话筒旁边显示“小华要XXX呀”
+显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
+播放结束，触发小华接过XXX。
+播放结束，出现下一关和重做的按钮。
+     */
+
+
     void Start()
     {
 
@@ -133,7 +145,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     private void RedoClickFDTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击辅导教师的手");
+        tip.SetTipMessage("需要辅助教师协助");
         CancelInvoke("ClickFDTeachersPromptFirst");
         Invoke("ClickFDTeachersPromptFirst", 2);
     }
@@ -175,11 +187,20 @@ public class SpeakUpCtrlA : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 3 播放结束，触发小华把句带递给教师的动画。
+    ///
+    ///
+    /// 4 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+    /// ====需要教师接卡 To do...
+    /// </summary>
+
+
     private void RedoClickTeachersHandFinal()
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手给小华");
+        tip.SetTipMessage("需要教师给相应物品");  //5
         Invoke("ClickTeachersPromptFinal", 2);
     }
 

@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class DistinguishPictureCtrlA : MonoBehaviour
 {
+    //1小华结果即停止
+    //2 薯片等强化物处于手的位置调整(换动画)
+    //3  辅助教师和教师
+    //4 雪饼
+
 
     public event System.Action evtFinished;
     public event System.Action evtRedo;
@@ -158,7 +163,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -229,7 +234,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         PropsObject pb = goodA.GetComponentInChildren<PropsObject>();
         string cn_name = pb.pData.name_cn;
-        tip.SetTipMessage("请点击教师的手,递给小华" + cn_name);
+        tip.SetTipMessage("需要教师给相应物品");
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
@@ -316,7 +321,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptThird");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手");
+        tip.SetTipMessage("需要教师提示");
         Invoke("ClickTeachersPromptThird", 2);
     }
 
@@ -406,7 +411,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFourth");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手接图卡");
+        tip.SetTipMessage("需要教师接卡");
         Invoke("ClickTeachersPromptFourth", 2);
     }
 
@@ -463,7 +468,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
             string gift = goodA.GetComponent<PropsObject>().pData.name_cn;
-            dialog.SetDialogMessage("小华要" + gift + "呀。");
+            dialog.SetDialogMessage("小华要" + gift + "呀");
 
             //9. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
             Invoke("ClickTeachersHandFinal", 2f);
@@ -487,7 +492,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手给小华");
+        tip.SetTipMessage("需要教师给相应物品");
         Invoke("ClickTeachersPromptFinal", 2);
     }
 

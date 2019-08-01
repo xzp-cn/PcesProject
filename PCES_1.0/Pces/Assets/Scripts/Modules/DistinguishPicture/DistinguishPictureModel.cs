@@ -8,12 +8,7 @@ using UnityEngine;
 public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
 {
     public bool DebugMode;
-    public int ChoiceIndex;
-    public int ChoiceNegIndex;
-    public int ChoiceMidIndex;
 
-    public List<int> SelRnd { get; set; }
-    public List<int> SelNegRnd { get; set; }
 
     public DistinguishPictureModel()
     {
@@ -26,11 +21,11 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndReinforcement()
     {
-        if (DebugMode)
-        {
-            int index = ChoiceIndex;
-            return ObjectsManager.instanse.propList[index].gameObject;
-        }
+        //if (DebugMode)
+        //{
+        //    int index = ChoiceIndex;
+        //    return ObjectsManager.instanse.propList[index].gameObject;
+        //}
         int rnd = Random.Range(0,4);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
@@ -106,11 +101,11 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndNeutralStimulator()
     {
-        if (DebugMode)
-        {
-            int index = ChoiceMidIndex;
-            return ObjectsManager.instanse.propList[index].gameObject;
-        }
+        //if (DebugMode)
+        //{
+        //    int index = ChoiceMidIndex;
+        //    return ObjectsManager.instanse.propList[index].gameObject;
+        //}
         int rnd = Random.Range(7, 11);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
@@ -121,11 +116,11 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndNegReinforcement()
     {
-        if (DebugMode)
-        {
-            int index = ChoiceNegIndex;
-            return ObjectsManager.instanse.propList[index].gameObject;
-        }
+        //if (DebugMode)
+        //{
+        //    int index = ChoiceNegIndex;
+        //    return ObjectsManager.instanse.propList[index].gameObject;
+        //}
         int rnd = Random.Range(4, 7);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }

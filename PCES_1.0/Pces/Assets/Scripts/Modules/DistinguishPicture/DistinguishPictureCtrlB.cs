@@ -32,6 +32,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         emptyRoot = new GameObject("Root");
     }
 
+    //两个强化物  图卡和物品要对应
     void Start()
     {
         InitGoodsState();
@@ -155,7 +156,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -276,7 +277,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptSecond");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师提示");
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
@@ -334,7 +335,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void RedoClickTeachersHandThird()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptThird");
         Invoke("ClickTeachersPromptThird", 2);
     }
@@ -460,7 +461,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手给小华");
+        tip.SetTipMessage("需要教师给相应物品");
         Invoke("ClickTeachersPromptFinal", 2);
     }
 
