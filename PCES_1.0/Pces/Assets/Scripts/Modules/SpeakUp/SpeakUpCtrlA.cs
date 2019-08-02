@@ -133,7 +133,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     private void RedoClickFDTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击辅导教师的手");
+        tip.SetTipMessage("需要辅导教师协助");
         CancelInvoke("ClickFDTeachersPromptFirst");
         Invoke("ClickFDTeachersPromptFirst", 2);
     }
@@ -179,7 +179,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击教师的手给小华");
+        tip.SetTipMessage("需要教师给相应物品");
         Invoke("ClickTeachersPromptFinal", 2);
     }
 
@@ -230,7 +230,7 @@ public class SpeakUpCtrlA : MonoBehaviour
                         swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
                         Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
                         string gift = goodA.GetComponent<PropsObject>().pData.name_cn;
-                        dialog.SetDialogMessage("小华要" + gift + "呀。");
+                        dialog.SetDialogMessage("小华要" + gift + "呀");
 
                         //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                         Invoke("ClickTeachersHandFinal", 2f);

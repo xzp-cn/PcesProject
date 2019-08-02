@@ -155,7 +155,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师接图卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -276,7 +276,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptSecond");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师拿走相应物品");
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
@@ -334,7 +334,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void RedoClickTeachersHandThird()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师指图卡");
         CancelInvoke("ClickTeachersPromptThird");
         Invoke("ClickTeachersPromptThird", 2);
     }
@@ -460,7 +460,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFinal");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手给小华");
+        tip.SetTipMessage("需要教师给相应物品");
         Invoke("ClickTeachersPromptFinal", 2);
     }
 

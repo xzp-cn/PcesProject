@@ -15,7 +15,7 @@ public class SpeakUpCtrlB : MonoBehaviour
     private GameObject emptyRoot;
     private GameObject gtNotebook; //沟通本
     private GameObject judaiGobj; //句带
-    //private GameObject RndReinforcementA; //强化物   
+    //private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
     private GameObject FBNKT_KA_Anim;
 
@@ -117,7 +117,7 @@ public class SpeakUpCtrlB : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -238,7 +238,7 @@ public class SpeakUpCtrlB : MonoBehaviour
     private void RedoClickTeachersHandSecond()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("请点击老师的手");
+        tip.SetTipMessage("需要教师给相应物品");
         CancelInvoke("ClickTeachersPromptSecond");
         Invoke("ClickTeachersPromptSecond", 2);
     }
