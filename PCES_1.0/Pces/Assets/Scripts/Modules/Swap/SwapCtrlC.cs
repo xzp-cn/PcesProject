@@ -25,6 +25,7 @@ public class SwapCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
         Init();
     }
     public void Init()

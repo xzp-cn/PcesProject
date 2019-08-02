@@ -65,7 +65,7 @@ public class SentenceCtrlB : MonoBehaviour
         GameObject obj = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(objName));
         obj.name = "neutralStimulator";
         obj.transform.SetParent(transform, false);
-        obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
+        obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.867f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();

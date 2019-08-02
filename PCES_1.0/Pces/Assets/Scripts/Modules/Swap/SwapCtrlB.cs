@@ -26,6 +26,7 @@ public class SwapCtrlB : MonoBehaviour
     private void Start()
     {
         Init();
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第二关");
     }
     public void Init()
     {
@@ -135,6 +136,13 @@ public class SwapCtrlB : MonoBehaviour
     void CloseSelectUICallback()
     {
         Debug.Log("close");
+        Reinforcement rfc = SwapModel.GetInstance().CurReinforcement;
+        if (rfc == null)
+        {
+            swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, true);
+            UIFlah uf = swapUI.GetChooseBtn.gameObject.GetUIFlash();
+            uf.StartFlash();
+        }
         //ReDo();
     }
     void SnatchXh()
@@ -489,6 +497,7 @@ public class SwapCtrlB : MonoBehaviour
         swapUI.chooseEvent -= ChooseBtnClickCallback;
         swapUI.speakEvent -= SpeakBtnClickCallback;
         selectUI.okEvent -= SelectUIOkBtnCallback;
+        selectUI.closeEvent -= CloseSelectUICallback;
 
         LS.Complete -= LsGiveObjCallback;
         XH.Complete -= XHJiewuCallback;

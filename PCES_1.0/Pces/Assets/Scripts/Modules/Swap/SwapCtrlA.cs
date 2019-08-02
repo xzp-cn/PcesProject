@@ -21,11 +21,13 @@ public class SwapCtrlA : MonoBehaviour
     private void Awake()
     {
         this.name = "SwapA";
+
     }
     //public bool Finished;
     private void Start()
     {
         Init();
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第一关");
     }
     public void Init()
     {
@@ -134,7 +136,14 @@ public class SwapCtrlA : MonoBehaviour
     }
     void CloseSelectUICallback()
     {
-        Debug.Log("close");
+        //Debug.Log("close");
+        Reinforcement rfc = SwapModel.GetInstance().CurReinforcement;
+        if (rfc == null)
+        {
+            swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, true);
+            UIFlah uf = swapUI.GetChooseBtn.gameObject.GetUIFlash();
+            uf.StartFlash();
+        }
         //ReDo();
     }
     void SnatchXh()

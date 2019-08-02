@@ -22,7 +22,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
-        GameObject.Find("jiaoshi").gameObject.SetActive(false);
+        AcceptQuestionModel.GetInstance().Jiaoshi().SetActive(false);
 
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");
         market.transform.SetParent(transform);

@@ -185,7 +185,7 @@ public class SentenceCtrlD : MonoBehaviour
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
             }
-            if (a >= 178 && a <= 181 && pass)
+            if (a >= 72 && a <= 75 && pass)
             {
                 pass = false;
                 MM.timePointEvent = null;
@@ -434,6 +434,7 @@ public class SentenceCtrlD : MonoBehaviour
                 GameObject go = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(name));
                 go.name = "QHW";
                 go.transform.SetParent(transform);
+                go.transform.localEulerAngles = Vector3.zero;
                 ctrl.SetJoint(go);
                 WYXHJiewu();
             }
@@ -452,6 +453,7 @@ public class SentenceCtrlD : MonoBehaviour
                 XH.timePointEvent = null;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 GameObject go = MM.GetComponent<MMCtrl>().l_guadian.transform.Find("QHW").gameObject;
+                go.transform.localEulerAngles = Vector3.zero;
                 ctrl.SetJointL(go);
                 go.transform.localPosition = Vector3.zero;
             }

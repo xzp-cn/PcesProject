@@ -17,12 +17,14 @@ public class SelectionUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         tgroup = GetComponentInChildren<ToggleGroup>();
-        tgroup.allowSwitchOff = false;
+        tgroup.allowSwitchOff = true;
+        ToggleGroupOff();
         //RectTransform rt = GetComponent<RectTransform>();
     }
     private void OnEnable()
     {
-        ToggleGroupOff();
+        //ToggleGroupOff();
+        transform.SetAsLastSibling();
     }
     private void Start()
     {
@@ -104,7 +106,10 @@ public class SelectionUI : MonoBehaviour
         if (isOn)
         {
             selectedObjIndex = ObjIndex;
-            //Debug.Log(selectedObjName);
+        }
+        else
+        {
+            selectedObjIndex = -1;
         }
     }
     void HideTipText()
