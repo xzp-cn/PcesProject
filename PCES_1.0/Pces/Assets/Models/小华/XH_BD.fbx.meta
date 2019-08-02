@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b81b5b0a7420bea42bdf66c787cf1514
+guid: 5f96d484d41600c4092e97f1396da877
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -258,7 +258,6 @@ ModelImporter:
     4300030: jd_tuka_3
     4300032: tuka2
     4300034: tuka3
-    7400000: Take 001
     9500000: //RootNode
     13700000: arms_GEO1
     13700002: arms_GEO2
@@ -302,12 +301,12 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 1
+    meshCompression: 0
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1

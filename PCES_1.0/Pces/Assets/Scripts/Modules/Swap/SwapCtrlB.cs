@@ -181,7 +181,7 @@ public class SwapCtrlB : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要辅导老师协助");
+        tip.SetTipMessage("需要辅助教师协助");
         CancelInvoke("ClickFdlsHandTip");
         Invoke("ClickFdlsHandTip", 2);
     }
