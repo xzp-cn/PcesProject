@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: 9c5b7d34efe17de43be7898e03883407
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Chest_M
+    100002: DeformationSystem
+    100004: Elbow_R
+    100006: haitaibinggan1
+    100008: Main
+    100010: pingguo1
+    100012: qiaokeli3
+    100014: Root_M
+    100016: Scapula_R
+    100018: Shoulder_R
+    100020: ShoulderPart1_R
+    100022: ShoulderPart2_R
+    100024: shupian1
+    100026: Spine1_M
+    100028: //RootNode
+    100030: Wrist_R
+    100032: wwxuebing2
+    100034: XH_R2
+    100036: xiangjiao3
+    100038: xiaoche2
+    400000: Chest_M
+    400002: DeformationSystem
+    400004: Elbow_R
+    400006: haitaibinggan1
+    400008: Main
+    400010: pingguo1
+    400012: qiaokeli3
+    400014: Root_M
+    400016: Scapula_R
+    400018: Shoulder_R
+    400020: ShoulderPart1_R
+    400022: ShoulderPart2_R
+    400024: shupian1
+    400026: Spine1_M
+    400028: //RootNode
+    400030: Wrist_R
+    400032: wwxuebing2
+    400034: XH_R2
+    400036: xiangjiao3
+    400038: xiaoche2
+    2100000: kx_cl_qkl_map
+    2100002: xiangjiao_tex
+    2100004: xiaoche_01
+    2100006: xiaoche_02
+    2100008: haitaibinggan_tex
+    2100010: shupian_tex
+    2100012: sw_zw_pg_t
+    2100014: wwxuebing_tex
+    2300000: haitaibinggan1
+    2300002: pingguo1
+    2300004: qiaokeli3
+    2300006: shupian1
+    2300008: wwxuebing2
+    2300010: xiangjiao3
+    2300012: xiaoche2
+    3300000: haitaibinggan1
+    3300002: pingguo1
+    3300004: qiaokeli3
+    3300006: shupian1
+    3300008: wwxuebing2
+    3300010: xiangjiao3
+    3300012: xiaoche2
+    4300000: qiaokeli3
+    4300002: xiangjiao3
+    4300004: xiaoche2
+    4300006: haitaibinggan1
+    4300008: shupian1
+    4300010: pingguo1
+    4300012: wwxuebing2
+    7400000: TY_XH_JG_KA
+    9500000: //RootNode
+    11100000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: TY_XH_JG_KA
+      takeName: Take 001
+      firstFrame: 229
+      lastFrame: 315
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 1
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

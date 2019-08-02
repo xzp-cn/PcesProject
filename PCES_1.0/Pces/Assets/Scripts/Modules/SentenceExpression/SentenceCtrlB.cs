@@ -25,6 +25,7 @@ public class SentenceCtrlB : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第二关");
         Init();
     }
     public void Init()

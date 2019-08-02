@@ -22,6 +22,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
+
         AcceptQuestionModel.GetInstance().Jiaoshi().SetActive(false);
 
         GameObject market = ResManager.GetPrefab("Scenes/supermarket/chaoshi");

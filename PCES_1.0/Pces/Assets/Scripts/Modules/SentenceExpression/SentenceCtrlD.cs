@@ -21,6 +21,8 @@ public class SentenceCtrlD : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第四关");
+
         Transform park = ResManager.GetPrefab("Scenes/park/park").transform;
         park.SetParent(transform);
         GameObject cam = transform.Find("park(Clone)/Camera").gameObject;

@@ -29,6 +29,7 @@ public class EnhanceCtrlC : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
         Init();
     }
     public void Init()
@@ -451,6 +452,8 @@ public class EnhanceCtrlC : MonoBehaviour
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
 
+
+
         XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
         xhctrl.DestroyGuadian();
 
@@ -492,6 +495,8 @@ public class EnhanceCtrlC : MonoBehaviour
 
         XH.timePointEvent = null;
         LS.timePointEvent = null;
+
+        swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }

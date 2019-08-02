@@ -21,7 +21,6 @@ public class SwapCtrlA : MonoBehaviour
     private void Awake()
     {
         this.name = "SwapA";
-
     }
     //public bool Finished;
     private void Start()

@@ -24,7 +24,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     public FlowModel()
     {
         InitFlowTasks();
-        CurrFlowTask = FlowTaskList[1];
+        CurrFlowTask = FlowTaskList[2];
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     /// <summary>
     /// 移除
     /// </summary>
-    /// <param name="task"></param>
+    /// <param name="task"></param> 
     public void RemovePrefabFromMem(string task)
     {
         if (CreatedFlowStepPrefabMaps.ContainsKey(task))
