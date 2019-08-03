@@ -358,17 +358,24 @@ public class SwapCtrlA : MonoBehaviour
                 //               
                 LS.timePointEvent = null;
                 pass2 = false;
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
                     if (b >= 42 && b <= 44 && pass3)
                     {
                         pass3 = false;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhw);
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhw);
                         //Debug.LogError("xh");
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        xhqhw.ShowObj(qhw.name);
+                        qhw.gameObject.SetActive(false);
+
                     }
                 };
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
         LS.PlayForward("TY_LS_JKDW");//LS_tuka/LS_tuka 1  //tuka2
