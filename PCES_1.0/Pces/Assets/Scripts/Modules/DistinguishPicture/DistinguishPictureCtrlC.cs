@@ -116,10 +116,10 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         {
             //第2个索引为触发的强化物
             goodA = GameObject.Instantiate(source.gameObject);
+            goodA.transform.SetParent(emptyRoot.transform, false);
             goodA.GetComponent<PropsObject>().pData = source.pData;
+            goodA.transform.localPosition = new Vector3(9999, 9999, 9999);
             RndReinforcementA = qhwCtrl.GetObj(source.name);
-            //qhw = RndReinforcementA;
-            //qhw.transform.SetParent(emptyRoot.transform, false);
         }
         string tukaNameA = "tuka_" + source.gameObject.name;
         qhwtks[index] = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
@@ -164,28 +164,28 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         int et = 171;
         int start0 = 198;
         int end0 = 200;
+        bool passA = false;
+        bool passB = false;
+        bool passC = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if (t >= start && t <= end)
+            if (t >= start && t <= end && !passA)
             {
-                start = end + 1;
-                end++;
+                passA = true;
                 FanGTB();
-
             }
 
-            if (t >= st && t <= et)
+            if (t >= st && t <= et && !passB)
             {
-                st = et + 1;
-                et++;
+                passB = true;
                 xhctrl.r_tuka.SetActive(true);
-                qhwtks[2].SetActive(false);
+                qhwtks[2].SetActive(true);
+                qhwtks[2].transform.SetParent(emptyRoot.transform, false);
             }
 
-            if (t >= start0 && t <= end0)
+            if (t >= start0 && t <= end0 && !passC)
             {
-                start0 = end0 + 1;
-                end0++;
+                passC = true;
                 xiaohuaAnim.timePointEvent = null;
                 ProcessClickTeacherHandFirst();
             }
@@ -217,12 +217,13 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         passed = true;
         int start0 = 52;
         int end0 = 54;
+        bool passB = false;
         gtbAnim.timePointEvent = (t) =>
         {
-            if (t >= start0 && t <= end0)
+            if (t >= start0 && t <= end0 && !passB)
             {
+                passB = true;
                 gtbAnim.timePointEvent = null;
-                //gtbAnim.OnPause();
             }
         };
         gtbAnim.PlayForward("twoPaper");
@@ -255,26 +256,43 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
             int st = 42;
             int et = 43;
+            bool passA = false;
+            bool passA2 = false;
+            bool passA3 = false;
             teacherAnim.timePointEvent = (tt) =>
             {
-                if (tt >= st && tt <= et)
+                if (tt >= st && tt <= et && !passA)
                 {
-                    st = et + 1;
-                    et++;
+                    passA = true;
                     teacherAnim.timePointEvent = null;
                     xhctrl.r_tuka.SetActive(false);
                     lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
                 }
+
+                if (tt >= 81 && tt <= 83 && !passA2)
+                {
+                    passA2 = true;
+                    //老师放下图卡A
+                    lsCtrl.ls_tuka2.SetActive(false);
+                    xhctrl.r_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(qhwtks[2].GetComponentInChildren<MeshRenderer>().materials[1]);
+                    qhwtks[2].SetActive(true);
+                    qhwtks[2].transform.parent.localPosition = new Vector3(2.5f, 0.5466f, 0.388f);
+                    qhwtks[2].transform.localPosition = Vector3.zero;
+                }
+
+                if (tt >= 94 && tt <= 96 && !passA3)
+                {
+                    passA3 = true;
+                    //老师接图卡A动画结束
+                    teacherAnim.timePointEvent = null;
+                    teacherAnim.OnPause();
+                    lsCtrl.ls_tuka2.SetActive(false);
+                    OnClickHuaTong();
+                }
             };
 
-
-            teacherAnim.Complete += () =>
-            {
-                lsCtrl.ls_tuka2.SetActive(false);
-                OnClickHuaTong();
-            };
-            teacherAnim.PlayForward("TY_LS_JK");
+            teacherAnim.PlayForward("TY_LS_JKDW");
         }
     }
 
@@ -294,12 +312,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             dialog.SetDialogMessage("小华要" + gift + "呀。");
 
             Invoke("ClickTeachersHandFinal", 1);
-            //4. 播放结束，触发小华拿起B的动画。
-            //xiaohuaAnim.Complete += () =>
-            //{
-
-            //};
-            //xiaohuaAnim.PlayForward("TY_XH_NKDK");
         };
     }
 
@@ -341,18 +353,31 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
             HighLightCtrl.GetInstance().FlashOff(shou);
 
+            xiaohuaAnim.Complete += () =>
+            {
+                //11. 播放结束，触发小华接过XXX。
 
+                //12. 播放结束，出现下一关和重做的按钮。
+                Debug.Log("DistinguishPictureCtrlB.OnClickTeacherHandFinal(): 11. 播放结束，出现下一关和重做的按钮。");
+                comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+                comUI.redoClickEvent += OnReDo;
+                comUI.nextClickEvent += OnNextDo;
+                comUI.ShowFinalUI();
+            };
 
             int st = 37;
             int et = 39;
             int s = 45;
             int e = 47;
+            int xhst = 24;
+            int xhet = 26;
+            bool passA = false;
+            bool passB = false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
             {
-                if (a > st && a < et)//挂载到老师手上强化物时间点
+                if (a > st && a < et && !passA)//挂载到老师手上强化物时间点
                 {
-                    st = et + 1;
-                    et++;
+                    passA = true;
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
@@ -361,40 +386,21 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
-                if (a > s && a < e)//小华接卡动画播放延迟一边挂载强化物
+                if (a > s && a < e && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
-                    s = e + 1;
-                    e++;
-                    xiaohuaAnim.Complete += () =>
-                    {
-                        //11. 播放结束，触发小华接过XXX。
-
-                        //12. 播放结束，出现下一关和重做的按钮。
-                        Debug.Log("DistinguishPictureCtrlB.OnClickTeacherHandFinal(): 11. 播放结束，出现下一关和重做的按钮。");
-                        comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-                        comUI.redoClickEvent += OnReDo;
-                        comUI.nextClickEvent += OnNextDo;
-                        comUI.ShowFinalUI();
-                    };
-
-                    int xhst = 24;
-                    int xhet = 26;
-                    xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
-                    {
-                        if (aa > xhst && aa < xhet)
-                        {
-                            xhst = xhet + 1;
-                            xhet++;
-                            xiaohuaAnim.timePointEvent = null;
-
-                            xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-                            xhctrl.XH_R2.transform.localPosition = Vector3.zero;
-                            RndReinforcementA.transform.parent.localPosition = Vector3.zero;
-                            RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
-                            RndReinforcementA.transform.localPosition = Vector3.zero;
-                        }
-                    };
+                    passB = true;
                     xiaohuaAnim.PlayForward("TY_XH_JG");
+                }
+
+                if (a > xhst && a < xhet)
+                {
+                    xiaohuaAnim.timePointEvent = null;
+
+                    xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                    xhctrl.XH_R2.transform.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+                    RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
             };
 
