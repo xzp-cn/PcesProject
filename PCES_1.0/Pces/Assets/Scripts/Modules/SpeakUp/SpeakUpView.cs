@@ -160,6 +160,10 @@ public class SpeakUpView : MonoBehaviour
         {
             spcCtrl.Dispose();
         }
+        if (tpv != null)
+        {
+            tpv.Dispose();
+        }
         Destroy(gameObject);
     }
 }

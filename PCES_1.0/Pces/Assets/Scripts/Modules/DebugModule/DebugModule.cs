@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugModule : SingleTemplate<DebugModule> {
+public class DebugModule : SingleTemplate<DebugModule>
+{
 
-    public DebugModule(){
+    public DebugModule()
+    {
 
     }
 
