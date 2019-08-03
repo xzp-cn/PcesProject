@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class DistinguishPictureCtrlA : MonoBehaviour
 {
-
     public event System.Action evtFinished;
     public event System.Action evtRedo;
     private CommonUI comUI;
@@ -61,13 +60,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //随机一个强化物A
         goodA = DistinguishPictureModel.GetInstance().GetRndReinforcement();
         RndReinforcementA = qhwCtrl.GetObj(goodA.name);
-        //RndReinforcementA = GameObject.Instantiate(goodA);
-        //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
-        //GameObject qhwA = new GameObject("ReinforcementA");
-        //qhwA.transform.SetParent(emptyRoot.transform, false);
-        //RndReinforcementA.transform.SetParent(qhwA.transform, false);
-        //RndReinforcementA.transform.localPosition = Vector3.zero;
-        //qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
 
         //强化物图卡A
         string tukaNameA = "tuka_" + goodA.name;
@@ -82,17 +74,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         //随机一个负强化物B
         goodB = DistinguishPictureModel.GetInstance().GetRndNegReinforcement();
         RndNegReinforcementB = qhwCtrlB.GetObj(goodB.name);
-
-        //RndNegReinforcementB = GameObject.Instantiate(goodB);
-        //RndNegReinforcementB.GetComponent<PropsObject>().pData = goodB.GetComponent<PropsObject>().pData;
-        //qhwB = new GameObject("NegReinforcementB");
-        //qhwB.transform.SetParent(emptyRoot.transform, false);
-        //float offY = 0;
-        //if (goodB.name == "apple")
-        //{
-        //    offY = 0.04f;
-        //}
-        //qhwB.transform.localPosition = new Vector3(2.5328f, 0.5698f + offY, 0.0913f);
 
         //负强化物图卡B
         string tukaNameB = "tuka_" + goodB.name;
@@ -144,7 +125,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                         ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
                     }
                 };
-
             }
         };
         xiaohuaAnim.PlayForward("TY_XH_NKDK");
@@ -218,7 +198,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
     private void OnReceiveTuKa()
     {
-
         Debug.Log("DistinguishPictureCtrlA.OnReceiveTuKa(): 3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。");
         //3. 播放结束，提醒操作者点击教师的手，点击后触发教师给小华B的动画。
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
