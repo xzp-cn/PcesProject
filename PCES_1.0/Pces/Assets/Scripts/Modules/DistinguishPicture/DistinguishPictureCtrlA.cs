@@ -310,7 +310,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 OnXiaoHuaPushB();
             };
             teacherAnim.OnContinue();
-            //teacherAnim.PlayForward("TY_LS_DW");
         }
     }
 
@@ -435,22 +434,29 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             //播放老师接图卡动画
             int start = 47;
             int end = 48;
+            bool passed = false;
             teacherAnim.timePointEvent = (t) =>
             {
-                if (t >= start && t <= end)
+                if (t >= start && t <= end && !passed)
                 {
+                    passed = true;
                     UnityEngine.Debug.Log("DistinguishPictureCtrlA::OnClickTeacherHandFourth() : teacherAnim.timePointEvent");
                     xhctrl.r_tuka2.SetActive(false);
-                    teacherAnim.timePointEvent = null;
                     lsCtrl.ls_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
                     lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
                 }
+
+                if (t >= 94 && t <= 96)
+                {
+                    //老师接图卡动画结束
+                    teacherAnim.timePointEvent = null;
+                    teacherAnim.OnPause();
+                    ShowMicoUI();
+                }
             };
 
-            teacherAnim.Complete += ShowMicoUI;
-
-            teacherAnim.PlayForward("TY_LS_JK");
+            teacherAnim.PlayForward("TY_LS_JKDW");
         }
     }
 
@@ -482,7 +488,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
     private void ClickTeachersHandFinal()
     {
-        teacherAnim.Complete -= ShowMicoUI;
         Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
         dialog.Show(false);
         GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
@@ -545,8 +550,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
                 if (a > stm && a < etm)//小华接卡动画播放延迟一边挂载强化物
                 {
-                    teacherAnim.timePointEvent = null;
-
 
                     xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
                     {
@@ -554,14 +557,12 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                         {
                             xiaohuaAnim.timePointEvent = null;
 
-
-                            xiaohuaAnim.OnPause();
                         }
                     };
                     xiaohuaAnim.PlayForward("TY_XH_JG");
                 }
             };
-
+            teacherAnim.OnContinue();
             teacherAnim.PlayForward("TY_LS_DW");
         }
     }
