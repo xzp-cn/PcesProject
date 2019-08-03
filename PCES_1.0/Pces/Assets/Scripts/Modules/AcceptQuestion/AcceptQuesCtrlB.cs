@@ -341,6 +341,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
 
         bool pass = true;
         bool passXh = true;
+        bool passJG = true;
         LS.timePointEvent = (a) =>//老师递给物品
         {
             if (a > 25 && a < 30 && pass)//挂载到老师手上强化物时间点
@@ -352,10 +353,21 @@ public class AcceptQuesCtrlB : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 18 && a < 22 && passXh)//小华接卡动画播放延迟一边挂载强化物
+            if (a > 42 && a < 46 && passXh)//小华接卡动画播放延迟一边挂载强化物
             {
                 passXh = false;
                 XH.Complete += XHJiewuCallback;
+                XH.timePointEvent = (b) =>//小华接过物品
+                {
+                    if (b > 40 && b < 45 && passJG)
+                    {
+                        passJG = false;
+                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        xhCtrl.SetJoint(qhwCtrl.gameObject);
+                        //qhwCtrl.SetPos();
+                        //Debug.LogError("xh");
+                    }
+                };
                 XH.PlayForward("TY_XH_JG");
             }
         };
@@ -363,18 +375,6 @@ public class AcceptQuesCtrlB : MonoBehaviour
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 
-        bool passJG = true;
-        XH.timePointEvent = (a) =>//小华接过物品
-        {
-            if (a > 40 && a < 45 && passJG)
-            {
-                passJG = false;
-                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                xhCtrl.SetJoint(qhwCtrl.gameObject);
-                //qhwCtrl.SetPos();
-                //Debug.LogError("xh");
-            }
-        };
     }
     void LsGiveObjCallback()
     {

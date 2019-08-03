@@ -401,6 +401,8 @@ public enum PropsTag : int
     judai_woyao = 23,
     [Description("我看见句带")]
     judai_wokanjian = 24,
+    //[Description("我要句带normal")]
+    //judai_woyao_normal = 23,
     [Description("树木")]
     tuka_shumu = 25,
     [Description("花")]

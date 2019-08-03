@@ -268,7 +268,6 @@ F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\Boo.Lang.Useful.dll
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\Unity.CecilTools.dll
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\Unity.Cecil.Pdb.dll
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\Unity.Cecil.Mdb.dll
-F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\UnityEngine.xml
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\UnityEditor.xml
 F:\Pces_new\Pces\PCES_1.0\Pces\Temp\bin\Debug\UnityEngine.AIModule.xml

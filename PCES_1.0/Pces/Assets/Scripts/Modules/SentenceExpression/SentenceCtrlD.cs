@@ -177,26 +177,6 @@ public class SentenceCtrlD : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         ClickDispatcher.Inst.EnableClick = false;
 
-        bool pass = true;
-        bool pasxh = true;
-        MM.timePointEvent = (a) =>
-        {
-            if (a >= 38 && a <= 40 && pasxh)
-            {
-                pasxh = false;
-                XH.OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
-            }
-            if (a >= 72 && a <= 75 && pass)
-            {
-                pass = false;
-                MM.timePointEvent = null;
-                MM.OnPause();
-                DBYCallback();
-            }
-        };
-        MM.PlayForward("MM_F_4TH_DBY");
-
         GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
         ka.name = "MM_F_4TH_DBY_KA";
         ka.transform.SetParent(transform);
@@ -213,7 +193,33 @@ public class SentenceCtrlD : MonoBehaviour
         ka.transform.Find("judai/tuka").localEulerAngles = new Vector3(0, -90, 0);
         ka.transform.Find("judai/tuka1").localEulerAngles = new Vector3(0, -90, 0);
 
-        ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
+        lao.PlayForward("MM_F_4TH_DBY_KA");
+
+        bool pass = true;
+        bool pasxh = true;
+        MM.timePointEvent = (a) =>
+        {
+            if (a >= 38 && a <= 40 && pasxh)
+            {
+                pasxh = false;
+                XH.OnContinue();
+                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+            }
+            if (a >= 72 && a <= 75 && pass)
+            {
+                pass = false;
+                MM.timePointEvent = null;
+                MM.OnPause();
+                lao.OnPause();
+                DBYCallback();
+            }
+        };
+        MM.PlayForward("MM_F_4TH_DBY");
+
+
+
+
         //Invoke("ClickmicroPhoneTip", 1);
     }
     /// <summary>
@@ -251,13 +257,14 @@ public class SentenceCtrlD : MonoBehaviour
     void ShowSpeakContent()
     {
         CancelInvoke("ClickmicroPhoneTip");
+        MM.Complete += WyXhZka;
         MM.OnContinue();
+        transform.Find("MM_F_4TH_DBY_KA").GetComponent<LegacyAnimationOper>().OnContinue();
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         dlog.transform.localPosition = new Vector3(403, 420, 0);
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
         dlog.SetDialogMessage("是的，小华看到了" + curObjName + ", 小华表现的很好。");
-        Invoke("WyXhZka", 1);
     }
 
 
@@ -458,6 +465,7 @@ public class SentenceCtrlD : MonoBehaviour
                 go.transform.localEulerAngles = Vector3.zero;
                 ctrl.SetJointL(go);
                 go.transform.localPosition = Vector3.zero;
+                go.transform.localEulerAngles = Vector3.zero;
             }
         };
         XH.PlayForward("XH_F_4TH_JG");
@@ -535,6 +543,7 @@ public class SentenceCtrlD : MonoBehaviour
         //Destroy(gameObject);
         evtRedo = null;
         evtFinished = null;
+        Destroy(gameObject);
     }
     private void OnDestroy()
     {

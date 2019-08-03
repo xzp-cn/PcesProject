@@ -42,7 +42,7 @@ public class LegacyAnimationOper : MonoBehaviour
         set;
     }
 
-    public event System.Action Complete;
+    public System.Action Complete;
     public System.Action<float> timePointEvent; //时间点事件,参数为当前时间
     public System.Action<int> framePointEvent; //帧事件,参数为当前帧数
     float timeLength;

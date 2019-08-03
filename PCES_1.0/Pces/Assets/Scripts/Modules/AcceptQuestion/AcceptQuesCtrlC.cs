@@ -160,15 +160,22 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ka.name = "XH_E_3RD_FNN_KA";
 
         Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
-        Vector3 tkeular = tk9.localEulerAngles;
-        tkeular.y = -90;
-        tk9.localEulerAngles = tkeular;
+        tk9.localEulerAngles = Vector3.zero;
+
 
         Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//物品图卡
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
 
+        //bool pass = true;
+        ka.Complete = () =>
+        {
+            ka.Complete = null;
+            Vector3 tkeular = new Vector3(0, -90, 0);
+            tk9.localEulerAngles = tkeular;
+            Debug.LogError(tk9.localEulerAngles);
+        };
         ka.PlayForward("XH_E_3RD_FNN_KA");
     }
     void XhTzkCallback()

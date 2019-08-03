@@ -351,7 +351,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a >= 45 && a < 47 && pass)//小华接卡动画播放延迟一边挂载强化物
+            if (a >= 42 && a < 46 && pass)//小华接卡动画播放延迟一边挂载强化物
             {
                 LS.timePointEvent = null;
                 pass = false;
