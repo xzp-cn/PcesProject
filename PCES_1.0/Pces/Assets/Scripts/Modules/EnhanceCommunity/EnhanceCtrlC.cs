@@ -326,25 +326,31 @@ public class EnhanceCtrlC : MonoBehaviour
                 //               
                 LS.timePointEvent = null;
                 pass4 = false;
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
                     if (b >= 40 && b <= 42 && pass5)
                     {
                         pass5 = false;
                         XH.timePointEvent = null;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        qhw.GetComponent<QHWCtrl>().ResetPos();
-                        xhCtrl.SetJoint(qhw);
-                        Vector3 pos = qhw.transform.localPosition;
-                        pos.x = 0;
-                        pos.y = 0;
-                        qhw.transform.localPosition = pos;
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //qhw.GetComponent<QHWCtrl>().ResetPos();
+                        //xhCtrl.SetJoint(qhw);
+                        //Vector3 pos = qhw.transform.localPosition;
+                        //pos.x = 0;
+                        //pos.y = 0;
+                        //qhw.transform.localPosition = pos;
                         //
                         //Debug.LogError("xh");
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        xhqhw.ShowObj(qhw.name);
+                        qhw.gameObject.SetActive(false);
                     }
                 };
                 XH.transitionTime = 0;
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
         LS.PlayForward("TY_LS_JKDW");//LS_tuka/LS_tuka 1  //tuka2

@@ -355,17 +355,27 @@ public class AcceptQuesCtrlA : MonoBehaviour
             {
                 LS.timePointEvent = null;
                 pass = false;
+
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
+
                 XH.Complete += XHJiewuCallback;
                 XH.timePointEvent = (b) =>//小华接过物品
                 {
                     if (b >= 40 && b < 43)
                     {
                         XH.timePointEvent = null;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhwCtrl.gameObject);
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhwCtrl.gameObject);
+
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        string name = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name;
+                        xhqhw.ShowObj(name);
+                        qhwCtrl.gameObject.gameObject.SetActive(false);
                     }
                 };
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
 

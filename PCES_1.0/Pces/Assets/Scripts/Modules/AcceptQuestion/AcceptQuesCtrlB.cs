@@ -356,19 +356,26 @@ public class AcceptQuesCtrlB : MonoBehaviour
             if (a > 42 && a < 46 && passXh)//小华接卡动画播放延迟一边挂载强化物
             {
                 passXh = false;
+
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
+
                 XH.Complete += XHJiewuCallback;
                 XH.timePointEvent = (b) =>//小华接过物品
                 {
                     if (b > 40 && b < 45 && passJG)
                     {
                         passJG = false;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhwCtrl.gameObject);
-                        //qhwCtrl.SetPos();
-                        //Debug.LogError("xh");
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhwCtrl.gameObject);    
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        string name = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name;
+                        xhqhw.ShowObj(name);
+                        qhwCtrl.gameObject.gameObject.SetActive(false);
                     }
                 };
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
 

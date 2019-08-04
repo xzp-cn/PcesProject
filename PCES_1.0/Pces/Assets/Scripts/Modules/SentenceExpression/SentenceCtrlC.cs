@@ -275,33 +275,43 @@ public class SentenceCtrlC : MonoBehaviour
         {
             if (a > 25 && a < 28)//挂载到老师手上强化物时间点
             {
-                LS.timePointEvent = null;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhw.gameObject);
                 //Debug.LogError("ls");
             }
 
-            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
+            if (a > 40 && a < 43 && passXh)//小华接卡动画播放延迟
             {
+                LS.timePointEvent = null;
                 passXh = false;
+
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.name = "TY_XH_JG_KA";
+                go.transform.SetParent(transform);
+
                 XH.Complete += XHJiewuCallback;
+                XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
+                {
+                    if (b >= 40 && b <= 42)
+                    {
+                        //Debug.LogError(b);
+                        XH.timePointEvent = null;
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhw.gameObject);   
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+                        xhqhw.ShowObj(name);
+                        qhw.gameObject.SetActive(false);
+                    }
+                };
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
 
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 
-        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
-        {
-            if (a >= 40 && a <= 42)
-            {
-                XH.timePointEvent = null;
-                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                xhCtrl.SetJoint(qhw.gameObject);
-                //Debug.LogError("xh");
-            }
-        };
     }
     void LsGiveObjCallback()
     {
@@ -323,6 +333,8 @@ public class SentenceCtrlC : MonoBehaviour
         LS.timePointEvent = null;
         LS.gameObject.SetActive(false);
         LS.gameObject.SetActive(true);
+
+        transform.Find("TY_XH_JG_KA").gameObject.SetActive(false);
 
         InitKanjian();
     }
@@ -583,28 +595,39 @@ public class SentenceCtrlC : MonoBehaviour
         {
             if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
             {
-                LS.timePointEvent = null;
+
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上    
                 lsctrl.SetJoint(qhw.gameObject);
                 //Debug.LogError("ls");
             }
 
-            if (a > 22 && a < 26 && passXh)//小华接卡动画播放延迟
+            if (a > 40 && a < 43 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
+                LS.timePointEvent = null;
                 XH.timePointEvent = null;
+
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.name = "TY_XH_JG_KA";
+                go.transform.SetParent(transform);
+
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
                     //Debug.Log(b);
-                    if (b > 40 && b < 42)//卡在一帧，多帧updae -多次进入该方法-多次执行覆盖，B参数用的上一次
+                    if (b > 40 && b < 43)//卡在一帧，多帧updae -多次进入该方法-多次执行覆盖，B参数用的上一次
                     {
                         XH.timePointEvent = null;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhw.gameObject);
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhw.gameObject);
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+                        xhqhw.ShowObj(name);
+                        qhw.gameObject.SetActive(false);
                     }
                 };
                 XH.Complete += KJXHJiewuCallback;
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
 
