@@ -33,6 +33,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
     void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第一关");
         InitGoodsState();
         teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
         teacherAnim.PlayForward("idle");
@@ -102,29 +103,29 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         int end = 26;
         int start0 = 44;
         int end0 = 46;
+        bool passA = false;
+        bool passB = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if (t >= start && t <= end)
+            if (t >= start && t <= end && !passA)
             {
-                xiaohuaAnim.timePointEvent = null;
+                passA = true;
                 xhctrl.r_tuka2.SetActive(true);
                 tukaB.SetActive(false);
+            }
 
-                xiaohuaAnim.timePointEvent = (tt) =>
-                {
-                    if (tt >= start0 && tt <= end0)
-                    {
-                        xiaohuaAnim.timePointEvent = null;
-                        xiaohuaAnim.OnPause();
-                        GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-                        Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
-                        HighLightCtrl.GetInstance().FlashOn(shou);
-                        shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
-                        GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
-                        ClickDispatcher.Inst.EnableClick = true;
-                        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
-                    }
-                };
+            if (t >= start0 && t <= end0 && !passB)
+            {
+                passB = true;
+                xiaohuaAnim.timePointEvent = null;
+                xiaohuaAnim.OnPause();
+                GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+                Debug.Log("DistinguishPictureCtrlA.OnXiaoHuaBring(): 2. 播放结束，提醒操作者点击教师的手，点击后触发接图卡的动作");
+                HighLightCtrl.GetInstance().FlashOn(shou);
+                shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
+                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+                ClickDispatcher.Inst.EnableClick = true;
+                ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
             }
         };
         xiaohuaAnim.PlayForward("TY_XH_NKDK");
@@ -149,7 +150,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     /// <param name="cobj"></param>
     private void OnClickTeacherHandFirst(ClickedObj cobj)
     {
-        Debug.Log("DistinguishPictureCtrlA.OnClickTeacherHandFirst(): " + cobj.objname);
+        F3DDebug.Log(cobj.objname,new System.Diagnostics.StackTrace(true));
         if (cobj.objname == "shou")
         {
             ChooseDo.Instance.Clicked();
@@ -162,11 +163,14 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             //播放老师接图卡动画
             int start = 47;
             int end = 48;
+            bool passA = false;
+            bool passB = false;
+            bool passC = false;
             teacherAnim.timePointEvent = (t) =>
             {
-                if (t >= start && t <= end)
+                if (t >= start && t <= end && !passA)
                 {
-
+                    passA = true;
                     xhctrl.r_tuka2.SetActive(false);
 
                     lsCtrl.ls_tuka2.SetActive(true);
@@ -174,8 +178,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     xiaohuaAnim.OnContinue();
                 }
 
-                if(t >= 81 && t <= 83)
+                if(t >= 81 && t <= 83 && !passB)
                 {
+                    passB = true;
                     //老师放下图卡
                     lsCtrl.ls_tuka2.SetActive(false);
                     tukaB.SetActive(true);
@@ -183,8 +188,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     tukaB.transform.localPosition = Vector3.zero;
                 }
 
-                if (t >= 94 && t <= 96)
+                if (t >= 94 && t <= 96 && !passC)
                 {
+                    passC = true;
                     //老师接图卡动画结束
                     teacherAnim.timePointEvent = null;
                     teacherAnim.OnPause();
@@ -243,6 +249,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int end = 132;
             bool passed = false;
             bool passed2 = false;
+            bool passB = false;
             Vector3 oldPos = Vector3.zero;
             Vector3 oldParentPos = Vector3.zero;
             lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
@@ -252,6 +259,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 {
                     if (lsCtrl != null)
                     {
+                        passed = true;
                         //老师拿负强化物
                         oldParentPos = RndNegReinforcementB.transform.parent.localPosition;
                         oldPos = RndNegReinforcementB.transform.localPosition;
@@ -260,7 +268,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                         RndNegReinforcementB.transform.localPosition = Vector3.zero;
 
                     }
-                    passed = true;
+
                 }
 
                 if (t >= start && t <= end && !passed2)
@@ -271,8 +279,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     xiaohuaAnim.PlayForward("XH_C_1ST_JJ");
                 }
 
-                if (t >= 197 && t <= 199)
+                if (t >= 197 && t <= 199 && !passB)
                 {
+                    passB = true;
                     teacherAnim.timePointEvent = null;
                     UnityEngine.Debug.Log("DistinguishPictureCtrlA::teacherAnim.Complete(): ");
                     //老师放下负强化物
@@ -414,6 +423,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int start = 47;
             int end = 48;
             bool passed = false;
+            bool passB = false;
             teacherAnim.timePointEvent = (t) =>
             {
                 if (t >= start && t <= end && !passed)
@@ -426,8 +436,9 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     xiaohuaAnim.OnContinue();
                 }
 
-                if (t >= 94 && t <= 96)
+                if (t >= 94 && t <= 96 && !passB)
                 {
+                    passB = true;
                     //老师接图卡动画结束
                     teacherAnim.timePointEvent = null;
                     teacherAnim.OnPause();
@@ -517,28 +528,30 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int etm = 47;
             int xhst = 24;
             int xhet = 26;
+            bool passA = false;
+            bool passB = false;
+            bool passC = false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
             {
-                if (a > st && a < et)//挂载到老师手上强化物时间点
+                if (a > st && a < et && !passA)//挂载到老师手上强化物时间点
                 {
+                    passA = true;
                     //将当前强化物挂在老师手上
                     xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     RndReinforcementA.transform.parent.localPosition = Vector3.zero;
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
-                if (a > stm && a < etm)//小华接卡动画播放延迟一边挂载强化物
+                if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
-
-                    xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
-                    {
-                        if (aa > xhst && aa < xhet)
-                        {
-                            xiaohuaAnim.timePointEvent = null;
-
-                        }
-                    };
+                    passB = true;
                     xiaohuaAnim.PlayForward("TY_XH_JG");
+                }
+
+                if (a > xhst && a < xhet && !passC)
+                {
+                    passC = true;
+                    xiaohuaAnim.timePointEvent = null;
                 }
             };
             teacherAnim.OnContinue();

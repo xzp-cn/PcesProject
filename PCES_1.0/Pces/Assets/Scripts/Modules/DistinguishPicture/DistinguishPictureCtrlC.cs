@@ -59,6 +59,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
         GameObject qhwm = ObjectsManager.instanse.GetQHW();
         qhwm.transform.SetParent(emptyRoot.transform);
         qhwCtrl = qhwm.GetComponent<QHWCtrl>();

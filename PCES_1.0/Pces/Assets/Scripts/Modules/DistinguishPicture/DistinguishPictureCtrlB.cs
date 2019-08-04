@@ -34,6 +34,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
     void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第二关");
         InitGoodsState();
         teacherAnim = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
         teacherAnim.PlayForward("idle");
