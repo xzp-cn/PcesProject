@@ -93,10 +93,12 @@ public class SpeakUpCtrlB : MonoBehaviour
 
         int start = 180;
         int end = 182;
+        bool passA = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if (t >= start && t <= end)
+            if (t >= start && t <= end && !passA)
             {
+                passA = true;
                 xiaohuaAnim.timePointEvent = null;
                 xiaohuaAnim.OnPause();
                 FBNKT_KA_AnimOper.OnPause();
@@ -144,10 +146,12 @@ public class SpeakUpCtrlB : MonoBehaviour
 
 
             LS.OnContinue();
+            bool passB = false;
             LS.timePointEvent = (a) =>//老师借卡时间点
             {
-                if (a >= 22 && a < 24)
+                if (a >= 22 && a < 24 && !passB)
                 {
+                    passB = true;
                     UnityEngine.Debug.Log("SpeakUpCtrlA::OnClickTeacherHandFinal(): 隐藏沟通本句带");
                     LS.timePointEvent = null;
                     //transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
@@ -167,7 +171,7 @@ public class SpeakUpCtrlB : MonoBehaviour
                         swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
                         Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
                         string gift = goodA.GetComponent<PropsObject>().pData.name_cn;
-                        dialog.SetDialogMessage("小华要" + gift + "呀。");
+                        dialog.SetDialogMessage("小华要" + gift + "呀");
 
                         //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                         Invoke("ClickTeachersHandSecond", 2f);
@@ -272,7 +276,9 @@ public class SpeakUpCtrlB : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-
+            bool passA = false;
+            bool passB = false;
+            bool passC = false;
             LS.timePointEvent = (a) =>//老师递给物品
             {
                 //if (a > st && a < et)//挂载到老师手上强化物时间点
@@ -287,34 +293,28 @@ public class SpeakUpCtrlB : MonoBehaviour
 
 
 
-                if (a >= 25 && a <= 27)//挂载到老师手上强化物时间点
+                if (a >= 25 && a <= 27 && !passA)//挂载到老师手上强化物时间点
                 {
-
+                    passA = true;
                     LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
                     lsctrl.SetJoint(qhwCtrl.gameObject);
                     //qhwCtrl.SetPos();
                 }
 
-                if (a >= 21 && a < 24)//小华接卡动画播放延迟一边挂载强化物
+                if (a >= 21 && a < 24 && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
                     //xiaohuaAnim.Complete += XHJiewuCallback;
-                    xiaohuaAnim.timePointEvent = (b) =>//小华接过物品
-                    {
-                        if (b >= 40 && b < 43)
-                        {
-                            xiaohuaAnim.timePointEvent = null;
-                            XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
-                            xhCtrl.SetJoint(qhwCtrl.gameObject);
-                        }
-                    };
+                    passB = true;
                     xiaohuaAnim.PlayForward("TY_XH_JG");
                 }
 
-                //if (a > 45 && a < 47)//小华接卡动画播放延迟一边挂载强化物
-                //{
-                //    LS.timePointEvent = null;
-
-                //}
+                if (a >= 40 && a < 43 && !passC)
+                {
+                    passC = true;
+                    xiaohuaAnim.timePointEvent = null;
+                    XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                    xhCtrl.SetJoint(qhwCtrl.gameObject);
+                }
 
                 //xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
                 //{

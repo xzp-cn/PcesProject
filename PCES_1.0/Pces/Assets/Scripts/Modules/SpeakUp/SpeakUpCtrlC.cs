@@ -108,52 +108,37 @@ public class SpeakUpCtrlC : MonoBehaviour
 
     void OnXiaoHuaBring()
     {
-        int start0 = 160;
-        int end0 = 161;
+        int start = 287;
+        int end = 288;
+        int start1 = 465;
+        int end1 = 467;
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if (t >= start0 && t <= end0)
+
+            if (t >= start && t <= end)
+            {
+                XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                xhctrl.r_judai2.SetActive(true);
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_1").GetComponent<MeshRenderer>().enabled = false;
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_2").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_3").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
+
+                FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);
+            }
+
+            if (t >= start1 && t <= end1)
             {
                 xiaohuaAnim.timePointEvent = null;
+                xiaohuaAnim.OnPause();
 
-
-                int start = 287;
-                int end = 288;
-                xiaohuaAnim.timePointEvent = (tt) =>
-                {
-                    if (tt >= start && tt <= end)
-                    {
-                        xiaohuaAnim.timePointEvent = null;
-                        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-                        xhctrl.r_judai2.SetActive(true);
-                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_1").GetComponent<MeshRenderer>().enabled = false;
-                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_2").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
-                        xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_3").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
-
-                        FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);
-
-                        int start1 = 465;
-                        int end1 = 467;
-                        xiaohuaAnim.timePointEvent = (ts) =>
-                        {
-                            if (ts >= start1 && ts <= end1)
-                            {
-                                xiaohuaAnim.timePointEvent = null;
-                                xiaohuaAnim.OnPause();
-
-                                //2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
-                                GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
-                                Debug.Log("SpeakUpCtrlC.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
-                                HighLightCtrl.GetInstance().FlashOn(shou);
-                                shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
-                                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
-                                ClickDispatcher.Inst.EnableClick = true;
-                                ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
-                            }
-
-                        };
-                    }
-                };
+                //2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+                GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
+                Debug.Log("SpeakUpCtrlC.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
+                HighLightCtrl.GetInstance().FlashOn(shou);
+                shou.GetBoxCollider().size = new Vector3(1, 0.2f, 0.5f);
+                GlobalEntity.GetInstance().AddListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+                ClickDispatcher.Inst.EnableClick = true;
+                ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFirst, null);
             }
         };
 
@@ -192,16 +177,17 @@ public class SpeakUpCtrlC : MonoBehaviour
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
 
             LSCtrl lsCtrl = LS.GetComponent<LSCtrl>();
-            LS.OnContinue();
+
             int st = 22;
             int et = 24;
+            bool passA = false;
+            bool passB = false;
             LS.timePointEvent = (a) =>//老师借卡时间点
             {
 
-                if (a >= st && a < et)
+                if (a >= st && a < et && !passA)
                 {
-                    st = 9999;
-                    et = 9999;
+                    passA = true;
                     UnityEngine.Debug.Log("SpeakUpCtrlA::OnClickTeacherHandFinal(): 隐藏沟通本句带");
 
                     //transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
@@ -219,12 +205,11 @@ public class SpeakUpCtrlC : MonoBehaviour
                     jd1.Find("ls_jd_tuka_3").gameObject.GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
                     lsCtrl.ls_judai.gameObject.SetActive(true);
 
-
-
                 }
 
-                if (a >= 35 && a <= 37)
+                if (a >= 35 && a <= 37 && !passB)
                 {
+                    passB = true;
                     LS.timePointEvent = null;
                     lsCtrl.ls_judai.gameObject.SetActive(false);
 
@@ -246,7 +231,6 @@ public class SpeakUpCtrlC : MonoBehaviour
                         Invoke("ClickTeachersHandSecond", 2f);
                     };
                 }
-
             };
 
 
@@ -265,7 +249,7 @@ public class SpeakUpCtrlC : MonoBehaviour
 
             //ka.transform.Find("tuka4").gameObject.SetActive(false);//
             //ka.PlayForward("TY_LS_JTKJD_KA");//播放老师图卡动画        图卡等待一帧隐藏
-
+            LS.OnContinue();
             LS.PlayForward("TY_LS_JTKJD_JG");
 
 
