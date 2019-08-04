@@ -472,6 +472,7 @@ public class SentenceCtrlD : MonoBehaviour
         //GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_JG_KA");
         //ka.transform.SetParent(transform);
         //ka.GetLegacyAnimationOper().PlayForward("XH_F_4TH_JG_KA");
+        transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
     }
     void WYXHJiewuCallback()
     {

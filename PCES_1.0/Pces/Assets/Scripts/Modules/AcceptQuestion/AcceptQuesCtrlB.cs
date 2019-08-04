@@ -170,7 +170,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsPointJudaiCallback;
-        LS.PlayForward("LS_C_1ST_ZZ");
+        LS.PlayForward("LS_E_1ST_ZBZK");
     }
     /// <summary>
     /// 教师接收图卡回调

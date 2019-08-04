@@ -145,7 +145,7 @@ public class SentenceCtrlB : MonoBehaviour
         CancelInvoke("ClickmicroPhoneTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
-        dlog.SetDialogMessage("小华你看这是什么");
+        dlog.SetDialogMessage("小华看见什么");
         LsBack();
     }
     /// <summary>
