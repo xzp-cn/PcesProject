@@ -368,6 +368,7 @@ public class SentenceCtrlB : MonoBehaviour
 
         bool pass = true;
         bool passXh = true;
+        bool passJG = true;
         Transform qhw = transform.Find("QHW");
         LS.timePointEvent = (a) =>//老师递给物品
         {
@@ -379,28 +380,36 @@ public class SentenceCtrlB : MonoBehaviour
                 //Debug.LogError("ls");
             }
 
-            if (a > 25 && a < 29 && passXh)//小华接卡动画播放延迟
+            if (a > 40 && a < 43 && passXh)//小华接卡动画播放延迟
             {
                 passXh = false;
+
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
+
                 XH.Complete += XHJiewuCallback;
+                XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
+                {
+                    if (b > 40 && b < 45 && passJG)
+                    {
+                        passJG = false;
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhw.gameObject);
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+                        xhqhw.ShowObj(name);
+                        qhw.gameObject.SetActive(false);
+                    }
+                };
                 XH.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
         };
 
         LS.Complete += LsGiveObjCallback;
         LS.PlayForward("TY_LS_DW");
 
-        bool passJG = true;
-        XH.timePointEvent = (a) =>//小华接过物品 挂载强化物
-        {
-            if (a > 40 && a < 45 && passJG)
-            {
-                passJG = false;
-                XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                xhCtrl.SetJoint(qhw.gameObject);
-                //Debug.LogError("xh");
-            }
-        };
+
     }
     void LsGiveObjCallback()
     {

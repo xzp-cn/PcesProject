@@ -322,8 +322,8 @@ public class EnhanceCtrlB : MonoBehaviour
                 pass4 = false;
                 LS.timePointEvent = null;
 
-                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
-                go.transform.SetParent(transform);
+                //LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                //go.transform.SetParent(transform);
 
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
@@ -331,9 +331,9 @@ public class EnhanceCtrlB : MonoBehaviour
                     {
                         pass5 = false;
                         XH.timePointEvent = null;
-                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();                                  
-                        //xhCtrl.SetJoint(qhw);
-                        //qhw.GetComponent<QHWCtrl>().ResetPos();
+                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        xhCtrl.SetJoint(qhw);
+                        qhw.GetComponent<QHWCtrl>().ResetPos();
                         //qhw.transform.localPosition = Vector3.zero;
                         //qhw.transform.localRotation = Quaternion.Euler(Vector3.zero);
                         //xhCtrl.XH_R2.transform.localPosition = Vector3.zero;
@@ -341,9 +341,9 @@ public class EnhanceCtrlB : MonoBehaviour
                         //qhw.GetComponent<QHWCtrl>().ResetPos();
                         //Debug.LogError("xh");
 
-                        XhQHW xhqhw = go.GetComponent<XhQHW>();
-                        xhqhw.ShowObj(qhw.name);
-                        qhw.gameObject.SetActive(false);
+                        //XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        //xhqhw.ShowObj(qhw.name);
+                        //qhw.gameObject.SetActive(false);
                     }
                 };
                 XH.PlayForward("TY_XH_JG_B2-3");
