@@ -118,7 +118,7 @@ public class SentenceExpressionView : MonoBehaviour
     {
         stDCtrl.evtFinished -= OnstDCtrlFinished;
         stDCtrl.evtRedo -= OnstDCtrlRedo;
-        stDCtrl.Dispose();
+        stDCtrl.RedoDispose();
         stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
         stDCtrl.transform.SetParent(transform);
         stDCtrl.evtFinished += OnstDCtrlFinished;

@@ -16,7 +16,7 @@ public class SentenceCtrlC : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
-    LegacyAnimationOper gtb;
+    LegacyAnimationOper gtb,gtbKJ;
     QHWCtrl qhwCtrl;
     //QHWCtrl qhwCtrl;
     private void Awake()
@@ -70,6 +70,12 @@ public class SentenceCtrlC : MonoBehaviour
         gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA").GetLegacyAnimationOper();//沟通本      
         gtb.transform.SetParent(transform);
         gtb.name = "XH_D_1ST_FBNKT_KA";//沟通本更新      
+
+        gtbKJ = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_3RD_FBNKTK_KA").GetLegacyAnimationOper();//沟通本
+        gtbKJ.name = PropsTag.TY_GTB.ToString();
+        gtbKJ.transform.SetParent(transform);
+        gtbKJ.name = "XH_D_3RD_FBNKTK_KA";//沟通本更新在日志
+        gtbKJ.transform.Find("goutongben").gameObject.SetActive(false); 
 
         //沟通本我要图卡
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
@@ -361,20 +367,17 @@ public class SentenceCtrlC : MonoBehaviour
         obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
-        gtb = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_3RD_FBNKTK_KA").GetLegacyAnimationOper();//沟通本
-        gtb.name = PropsTag.TY_GTB.ToString();
-        gtb.transform.SetParent(transform);
-        gtb.name = "XH_D_3RD_FBNKTK_KA";//沟通本更新在日志
+        gtbKJ.transform.Find("goutongben").gameObject.SetActive(true);
 
         //沟通本我要图卡
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
-        Material matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
+        Material matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         //沟通本之中性刺激物图卡
         string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
         matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
-        matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
+        matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         //设置老师旁边的中性刺激物模型
@@ -445,15 +448,15 @@ public class SentenceCtrlC : MonoBehaviour
         };
         XH.PlayForward("XH_D_3RD_FBNKTK");
 
-        gtb.framePointEvent = (b) =>
+        gtbKJ.framePointEvent = (b) =>
         {
             if (b > 180 && b < 185)
             {
-                gtb.timePointEvent = null;
-                gtb.OnPause();
+                gtbKJ.timePointEvent = null;
+                gtbKJ.OnPause();
             }
         };
-        gtb.PlayForward("XH_D_3RD_FBNKTK_KA");
+        gtbKJ.PlayForward("XH_D_3RD_FBNKTK_KA");
     }
     /// <summary>
     /// 小华拿卡递卡回调

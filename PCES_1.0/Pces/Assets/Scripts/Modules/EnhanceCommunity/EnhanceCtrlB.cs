@@ -204,9 +204,9 @@ public class EnhanceCtrlB : MonoBehaviour
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().enabled = true;
                 Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
-                matTar.CopyPropertiesFromMaterial(matSource);
-                xhTk.SetActive(false);
+                matTar.CopyPropertiesFromMaterial(matSource);               
                 ctrl.r_tuka.gameObject.SetActive(true);
+                xhTk.SetActive(false);
             }
             if (a >= 402 && a <= 404 && pass3)
             {

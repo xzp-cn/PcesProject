@@ -63,6 +63,7 @@ public class SentenceCtrlD : MonoBehaviour
         LegacyAnimationOper dog = ResManager.GetPrefab("Scenes/park/dog").GetLegacyAnimationOper();
         dog.transform.SetParent(park);
         dog.transform.localScale = Vector3.one * 2;
+        dog.transform.localPosition = new Vector3(-1.205f, 0, 0);
         dog.PlayForward("idle");
         dog.SetWrapMode = WrapMode.Loop;
 
@@ -90,6 +91,9 @@ public class SentenceCtrlD : MonoBehaviour
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
+        
+
+
         tk10.localEulerAngles = new Vector3(0, -90, 0);
         matTar = tk10.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
@@ -103,6 +107,10 @@ public class SentenceCtrlD : MonoBehaviour
         tk9.localEulerAngles = new Vector3(0, -90, 0);
         matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
+
+        Transform tk8 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/tuka8");
+        Material mat8 = tk8.GetComponent<MeshRenderer>().materials[1];
+        mat8.CopyPropertiesFromMaterial(matSource);
 
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>();
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
@@ -328,6 +336,10 @@ public class SentenceCtrlD : MonoBehaviour
         matTar = tk9.GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
+        Transform tk8 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/tuka8");
+        Material mat8 = tk8.GetComponent<MeshRenderer>().materials[1];
+        mat8.CopyPropertiesFromMaterial(matSource);
+
         LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
         bool kpass = true;
         lao.framePointEvent = (a) =>
@@ -372,26 +384,6 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMGiveObj()//接卡给物
     {
-        bool passxh = true;
-        bool passmm = true;
-        MM.timePointEvent = (a) =>
-        {
-            if (a >= 38 && a <= 40 && passxh)
-            {
-                passxh = false;
-                XH.OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
-                WYXhBY();
-            }
-            if (a >= 179 && a <= 181 && passmm)
-            {
-                passmm = false;
-                MM.timePointEvent = null;
-                MMGiveObjCallback();
-            }
-        };
-        MM.PlayForward("MM_F_4TH_DBY");
-
         GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DBY_KA");
         ka.name = "MM_F_4TH_DBY_KA";
         ka.transform.SetParent(transform);
@@ -409,12 +401,60 @@ public class SentenceCtrlD : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
         ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
 
-
         ka.gameObject.SetActive(true);
-        ka.GetLegacyAnimationOper().PlayForward("MM_F_4TH_DBY_KA");
+        LegacyAnimationOper lao=ka.GetLegacyAnimationOper();
+
+        bool passxh = true;
+        bool passmm = true;
+        bool pass = true;
+        MM.timePointEvent = (a) =>
+        {
+            if (a >= 38 && a <= 40 && passxh)
+            {
+                passxh = false;
+                XH.OnContinue();
+                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+               
+            }
+            if (a>=72&&a<=75&&pass)
+            {
+                pass = false;
+                MM.OnPause();
+                lao.OnPause();
+                WYXhBYTip();
+            }
+            if (a >= 179 && a <= 181 && passmm)
+            {
+                passmm = false;
+                MM.timePointEvent = null;
+                MMGiveObjCallback();
+            }
+        };
+        MM.PlayForward("MM_F_4TH_DBY");
+        lao.PlayForward("MM_F_4TH_DBY_KA");
+
     }
-    void WYXhBY()
+    void WYXhBYTip()
     {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, true);
+        ChooseDo.Instance.DoWhat(5, RedoWYXhBY, WYXhBYSpeak);
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
+    }
+    void RedoWYXhBY()
+    {
+        swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要妈妈说话");
+        CancelInvoke("WYXhBYTip");
+        Invoke("WYXhBYTip", 2);
+    }    
+    void WYXhBYSpeak()
+    {
+        swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
+
+        MM.OnContinue();
+        transform.Find("MM_F_4TH_DBY_KA").gameObject.GetLegacyAnimationOper().OnContinue();
+
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
@@ -538,13 +578,20 @@ public class SentenceCtrlD : MonoBehaviour
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickMMhandCallback);
     }
-    public void Dispose()
+    public void RedoDispose()
     {
         RemoveAllListeners();
         //Destroy(gameObject);
         evtRedo = null;
         evtFinished = null;
         Destroy(gameObject);
+    }
+    public void Dispose()
+    {
+        RemoveAllListeners();
+        //Destroy(gameObject);
+        evtRedo = null;
+        evtFinished = null;      
     }
     private void OnDestroy()
     {

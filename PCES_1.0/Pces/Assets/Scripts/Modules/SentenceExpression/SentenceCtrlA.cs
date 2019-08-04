@@ -165,7 +165,8 @@ public class SentenceCtrlA : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         dlog.SetDialogMessage("小华看见什么");
-        LsBack();
+        CancelInvoke("LsBack");
+        Invoke("LsBack", 2);
 
     }
     /// <summary>
@@ -215,7 +216,7 @@ public class SentenceCtrlA : MonoBehaviour
         HighLightCtrl.GetInstance().FlashOff(jshand);
         ClickDispatcher.Inst.EnableClick = false;
         LS.Complete += LsPointJudaiCallback;
-        LS.PlayForward("LS_E_1ST_ZBZK");
+        LS.PlayForward("LS_E_1ST_ZJD");
     }
     /// <summary>
     /// 教师接收图卡回调
