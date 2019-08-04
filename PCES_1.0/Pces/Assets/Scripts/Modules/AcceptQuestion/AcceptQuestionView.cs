@@ -93,7 +93,7 @@ public class AcceptQuestionView : MonoBehaviour
     {
         aqCCtrl.evtFinished -= OnstCCtrlFinished;
         aqCCtrl.evtRedo -= OnstCCtrlRedo;
-        aqCCtrl.Dispose();
+        aqCCtrl.RedoDispose();
         aqCCtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlC").GetComponent<AcceptQuesCtrlC>();
         aqCCtrl.transform.SetParent(transform);
         aqCCtrl.evtFinished += OnstCCtrlFinished;
@@ -114,7 +114,7 @@ public class AcceptQuestionView : MonoBehaviour
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
         if (aqCCtrl.gameObject != null)
-        {
+        {       
             Destroy(aqCCtrl.gameObject);
         }
         //通知当前阶段完成

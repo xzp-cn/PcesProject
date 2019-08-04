@@ -160,13 +160,15 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ka.name = "XH_E_3RD_FNN_KA";
 
         Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
-        tk9.localEulerAngles = Vector3.zero;
-
-
-        Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//物品图卡
+        Material mat= tk9.GetComponent<MeshRenderer>().materials[1];
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
-        matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
+        mat.CopyPropertiesFromMaterial(matTar);
+        tk9.localEulerAngles = Vector3.zero;
+
+        //Material matWy = AcceptQuestionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
+        Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//我要图卡       
+        //matSource.CopyPropertiesFromMaterial(matWy);//更换我要图卡物体材质
 
         //bool pass = true;
         ka.Complete = () =>
@@ -330,6 +332,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
                 }
                 mctrl.SetJoint(qhw);
                 qhw.transform.localPosition = Vector3.zero;
+                mctrl.ls_Lf.transform.localPosition = Vector3.zero;
             }
         };
         MM.PlayForward("MM_E_3RE_DY");
@@ -437,12 +440,18 @@ public class AcceptQuesCtrlC : MonoBehaviour
         //LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
         //lsctrl.DestroyGuadian();
     }
-    public void Dispose()
+   public void RedoDispose()
     {
         RemoveAllListeners();
         evtFinished = null;
         evtRedo = null;
-        //Destroy(gameObject);
+        Destroy(gameObject);
+    }
+    public void Dispose()
+    {
+        RemoveAllListeners();
+        evtFinished = null;
+        evtRedo = null;    
     }
     private void OnDestroy()
     {

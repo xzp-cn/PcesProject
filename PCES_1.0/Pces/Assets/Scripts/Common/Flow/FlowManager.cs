@@ -17,8 +17,9 @@ public class FlowManager : MonoBehaviour
         StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
         GameObject go = ResManager.GetPrefab(sb.ToString());
         FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
-        PreInitComm();
+        //PreInitComm();
     }
+
     /// <summary>
     /// 预初始化
     /// </summary>
