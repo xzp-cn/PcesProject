@@ -52,8 +52,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         nqhwtkPos = new Vector3[2] { new Vector3(-0.0485F, 0.0006f, 0.043F), new Vector3(-0.1129f, 0.0006f, 0.0389f) };
         qhwtks = new GameObject[3];
         nqhwtks = new GameObject[2];
-        qhwPos = new Vector3[3] { new Vector3(2.5328F, 0.5698F, -0.436F), new Vector3(2.5328F, 0.5698F, -0.229F), new Vector3(2.5328F, 0.5698F, -0.023F) };
-        nqhwPos = new Vector3[2] { new Vector3(2.5328f, 0.5698f, 0.166f), new Vector3(2.5328f, 0.5698f, 0.356f) };
+        qhwPos = new Vector3[3] { new Vector3(2.5328F, 0.57F, -0.436F), new Vector3(2.5328F, 0.57F, -0.229F), new Vector3(2.5328f, 0.57f, 0.166f) };
+        nqhwPos = new Vector3[2] { new Vector3(2.5328F, 0.57F, -0.023F), new Vector3(2.5328f, 0.57f, 0.879f) };
         emptyRoot = new GameObject("Root");
     }
 
@@ -91,6 +91,10 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         rndNegReinforcements.ForEach((ob) =>
         {
             GameObject nqhw = CreateNegObj(ob, i);
+            if(ob.name == "apple")
+            {
+                nqhwPos[i].y = 0.604f;
+            }
             nqhw.transform.localPosition = nqhwPos[i++];
         });
 

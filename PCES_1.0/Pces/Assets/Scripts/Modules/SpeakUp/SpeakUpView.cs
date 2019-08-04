@@ -81,7 +81,7 @@ public class SpeakUpView : MonoBehaviour
 
         spcCtrl = ResManager.GetPrefab("Prefabs/SpeakUp/SpeakUpC").GetComponent<SpeakUpCtrlC>();
         spcCtrl.evtFinished += OnSpcCtrlFinished;
-        spcCtrl.evtRedo += OnSpcCtrlFinished;
+        spcCtrl.evtRedo += OnSpcCtrlRedo;
     }
 
     private void OnSpcCtrlRedo()
@@ -98,7 +98,7 @@ public class SpeakUpView : MonoBehaviour
     private void OnSpcCtrlFinished()
     {
         spcCtrl.evtFinished -= OnSpcCtrlFinished;
-        spcCtrl.evtRedo -= OnSpcCtrlFinished;
+        spcCtrl.evtRedo -= OnSpcCtrlRedo;
         spcCtrl.Dispose();
 
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
