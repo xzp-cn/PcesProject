@@ -264,7 +264,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 if (tt >= st && tt <= et && !passA)
                 {
                     passA = true;
-                    teacherAnim.timePointEvent = null;
                     xhctrl.r_tuka.SetActive(false);
                     lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
@@ -274,11 +273,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 {
                     passA2 = true;
                     //老师放下图卡A
-                    lsCtrl.ls_tuka2.SetActive(false);
+                    //lsCtrl.ls_tuka2.SetActive(false);
                     xhctrl.r_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(qhwtks[2].GetComponentInChildren<MeshRenderer>().materials[1]);
-                    qhwtks[2].SetActive(true);
-                    qhwtks[2].transform.parent.localPosition = new Vector3(2.5f, 0.5466f, 0.388f);
-                    qhwtks[2].transform.localPosition = Vector3.zero;
                 }
 
                 if (tt >= 94 && tt <= 96 && !passA3)
@@ -288,6 +284,9 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     teacherAnim.timePointEvent = null;
                     teacherAnim.OnPause();
                     lsCtrl.ls_tuka2.SetActive(false);
+                    qhwtks[2].SetActive(true);
+                    qhwtks[2].transform.localPosition = new Vector3(2.502f, 0.5464f, 0.472f);
+                    qhwtks[2].transform.localScale = Vector3.one;
                     OnClickHuaTong();
                 }
             };
@@ -365,12 +364,12 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-            int st = 37;
-            int et = 39;
+            int st = 24;
+            int et = 26;
             int s = 45;
             int e = 47;
-            int xhst = 24;
-            int xhet = 26;
+            int xhst = 37;
+            int xhet = 39;
             bool passA = false;
             bool passB = false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
@@ -403,7 +402,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
             };
-
+            teacherAnim.OnContinue();
             teacherAnim.PlayForward("TY_LS_DW");
         }
     }
