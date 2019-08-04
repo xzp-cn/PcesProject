@@ -266,7 +266,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                         lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
                         RndNegReinforcementB.transform.parent.localPosition = Vector3.zero;
                         RndNegReinforcementB.transform.localPosition = Vector3.zero;
-
                     }
 
                 }
@@ -540,6 +539,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     RndReinforcementA.transform.parent.localPosition = Vector3.zero;
                     RndReinforcementA.transform.localPosition = Vector3.zero;
+                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                 }
 
                 if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物

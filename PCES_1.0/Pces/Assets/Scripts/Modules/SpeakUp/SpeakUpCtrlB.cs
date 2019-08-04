@@ -27,6 +27,7 @@ public class SpeakUpCtrlB : MonoBehaviour
 
     void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第二关");
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {

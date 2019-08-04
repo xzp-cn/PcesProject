@@ -27,6 +27,7 @@ public class SpeakUpCtrlC : MonoBehaviour
     Vector3 lsOldPos;
     void Start()
     {
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
 
         //camPos = Camera.main.transform.parent.localPosition;

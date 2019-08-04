@@ -22,13 +22,12 @@ public class SpeakUpCtrlA : MonoBehaviour
     private AnimationOper fdlsAnim;
     private LegacyAnimationOper FBNKT_KA_AnimOper;
     private AnimationOper LS;
-    //private LSCtrl lsctrl;
     private QHWCtrl qhwCtrl;
     private GameObject goodA;
 
     void Start()
     {
-
+        GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第一关");
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
         if (xiaohuaGo.GetComponent<XHCtrl>() == null)
         {
