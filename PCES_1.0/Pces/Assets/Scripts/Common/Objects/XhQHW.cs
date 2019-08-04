@@ -5,23 +5,24 @@ using UnityEngine;
 public class XhQHW : MonoBehaviour
 {
     Transform par;
-    private void Start()
+    private void Awake()
     {
         par = transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/XH_R2");
         InitObjs();
     }
 
-    public GameObject ShowObj(string _name)
+    public void ShowObj(string _name)
     {
         InitObjs();
         GameObject go = par.Find(_name).gameObject;
         go.SetActive(true);
-        return go;
+        //return go;
     }
 
     public void InitObjs()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        //Debug.LogError(par.name);
+        for (int i = 0; i < par.childCount; i++)
         {
             par.GetChild(i).gameObject.SetActive(false);
         }
