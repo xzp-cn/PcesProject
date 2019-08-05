@@ -150,7 +150,11 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     /// <param name="cobj"></param>
     private void OnClickTeacherHandFirst(ClickedObj cobj)
     {
-        F3DDebug.Log(cobj.objname,new System.Diagnostics.StackTrace(true));
+#if UNITY_EDITOR
+        F3DDebug.Log(cobj.objname, new System.Diagnostics.StackTrace(true));
+#else
+        Debug.Log("DistinguishPictureCtrlA:: OnClickTeacherHandFirst():第三阶段第一关");
+#endif
         if (cobj.objname == "shou")
         {
             ChooseDo.Instance.Clicked();
@@ -178,7 +182,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     xiaohuaAnim.OnContinue();
                 }
 
-                if(t >= 81 && t <= 83 && !passB)
+                if (t >= 81 && t <= 83 && !passB)
                 {
                     passB = true;
                     //老师放下图卡

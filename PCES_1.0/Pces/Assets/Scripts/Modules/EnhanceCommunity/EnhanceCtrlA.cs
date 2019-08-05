@@ -468,7 +468,7 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     void LsGiveObjCallback()
     {
-        swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
+        //swapUI.SetButtonVisiable(SwapUI.BtnName.chooseButton, false);
         ShowFinalUI();
     }
     void XHJiewuCallback()

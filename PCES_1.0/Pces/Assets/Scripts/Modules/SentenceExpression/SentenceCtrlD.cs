@@ -91,7 +91,7 @@ public class SentenceCtrlD : MonoBehaviour
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
-        
+
 
 
         tk10.localEulerAngles = new Vector3(0, -90, 0);
@@ -402,7 +402,7 @@ public class SentenceCtrlD : MonoBehaviour
         ka.transform.Find("Group/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai3").gameObject.SetActive(false);
 
         ka.gameObject.SetActive(true);
-        LegacyAnimationOper lao=ka.GetLegacyAnimationOper();
+        LegacyAnimationOper lao = ka.GetLegacyAnimationOper();
 
         bool passxh = true;
         bool passmm = true;
@@ -414,9 +414,9 @@ public class SentenceCtrlD : MonoBehaviour
                 passxh = false;
                 XH.OnContinue();
                 transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
-               
+
             }
-            if (a>=72&&a<=75&&pass)
+            if (a >= 72 && a <= 75 && pass)
             {
                 pass = false;
                 MM.OnPause();
@@ -447,9 +447,11 @@ public class SentenceCtrlD : MonoBehaviour
         tip.SetTipMessage("需要妈妈说话");
         CancelInvoke("WYXhBYTip");
         Invoke("WYXhBYTip", 2);
-    }    
+    }
     void WYXhBYSpeak()
     {
+        CancelInvoke("WYXhBYTip");
+
         swapUI.SetButtonVisiable(SwapUI.BtnName.microButton, false);
 
         MM.OnContinue();
@@ -591,7 +593,7 @@ public class SentenceCtrlD : MonoBehaviour
         RemoveAllListeners();
         //Destroy(gameObject);
         evtRedo = null;
-        evtFinished = null;      
+        evtFinished = null;
     }
     private void OnDestroy()
     {

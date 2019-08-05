@@ -160,14 +160,14 @@ public class AcceptQuesCtrlC : MonoBehaviour
         ka.name = "XH_E_3RD_FNN_KA";
 
         Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
-        Material mat= tk9.GetComponent<MeshRenderer>().materials[1];
+        Material mat = tk9.GetComponent<MeshRenderer>().materials[1];
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         mat.CopyPropertiesFromMaterial(matTar);
         tk9.localEulerAngles = Vector3.zero;
 
         //Material matWy = AcceptQuestionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
-        Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//我要图卡       
+        //Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//我要图卡       
         //matSource.CopyPropertiesFromMaterial(matWy);//更换我要图卡物体材质
 
         //bool pass = true;
@@ -440,7 +440,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         //LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
         //lsctrl.DestroyGuadian();
     }
-   public void RedoDispose()
+    public void RedoDispose()
     {
         RemoveAllListeners();
         evtFinished = null;
@@ -451,7 +451,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     {
         RemoveAllListeners();
         evtFinished = null;
-        evtRedo = null;    
+        evtRedo = null;
     }
     private void OnDestroy()
     {

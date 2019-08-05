@@ -16,7 +16,7 @@ public class SentenceCtrlC : MonoBehaviour
     AnimationOper XH;
     AnimationOper FDLS;
     //AnimationOper GTB;//沟通本
-    LegacyAnimationOper gtb,gtbKJ;
+    LegacyAnimationOper gtb, gtbKJ;
     QHWCtrl qhwCtrl;
     //QHWCtrl qhwCtrl;
     private void Awake()
@@ -75,7 +75,7 @@ public class SentenceCtrlC : MonoBehaviour
         gtbKJ.name = PropsTag.TY_GTB.ToString();
         gtbKJ.transform.SetParent(transform);
         gtbKJ.name = "XH_D_3RD_FBNKTK_KA";//沟通本更新在日志
-        gtbKJ.transform.Find("goutongben").gameObject.SetActive(false); 
+        gtbKJ.transform.Find("goutongben").gameObject.SetActive(false);
 
         //沟通本我要图卡
         Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];

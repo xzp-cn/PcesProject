@@ -33,7 +33,11 @@ public class EnhanceCtrlB : MonoBehaviour
     //public bool Finished;
     private void Start()
     {
+# if UNITY_EDITOR
         F3DDebug.Log("start", new System.Diagnostics.StackTrace(true));
+#else
+        Debug.Log("EnhanceCtrlB::Start(): 第二阶段第一关");
+#endif
         GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第二关");
         Init();
     }
@@ -204,7 +208,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 Material matSource = EnhanceCommunityModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().enabled = true;
                 Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
-                matTar.CopyPropertiesFromMaterial(matSource);               
+                matTar.CopyPropertiesFromMaterial(matSource);
                 ctrl.r_tuka.gameObject.SetActive(true);
                 xhTk.SetActive(false);
             }

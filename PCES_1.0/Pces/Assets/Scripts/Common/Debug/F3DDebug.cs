@@ -25,4 +25,6 @@ public class F3DDebug
         sb.Append(string.Format(" \n {0}", str));
         UnityEngine.Debug.Log(sb.ToString());
     }
+
 }
+

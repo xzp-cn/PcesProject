@@ -114,7 +114,7 @@ public class AcceptQuestionView : MonoBehaviour
         tpv.evtRedo -= OnTestPaperRedo;
         tpv.Dispose();
         if (aqCCtrl.gameObject != null)
-        {       
+        {
             Destroy(aqCCtrl.gameObject);
         }
         //通知当前阶段完成
