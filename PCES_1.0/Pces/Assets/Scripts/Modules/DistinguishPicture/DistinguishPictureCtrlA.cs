@@ -255,7 +255,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             bool passed2 = false;
             bool passB = false;
             Vector3 oldPos = Vector3.zero;
-            Vector3 oldParentPos = Vector3.zero;
             lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
             teacherAnim.timePointEvent = (t) =>
             {
@@ -265,9 +264,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     {
                         passed = true;
                         //老师拿负强化物
-                        oldParentPos = RndNegReinforcementB.transform.parent.localPosition;
-                        oldPos = RndNegReinforcementB.transform.localPosition;
                         lsCtrl.SetJoint(RndNegReinforcementB.transform.parent.gameObject);
+                        oldPos = RndNegReinforcementB.transform.localPosition;
                         RndNegReinforcementB.transform.parent.localPosition = Vector3.zero;
                         RndNegReinforcementB.transform.localPosition = Vector3.zero;
                     }
@@ -290,7 +288,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     //老师放下负强化物
                     RndNegReinforcementB.transform.parent.SetParent(emptyRoot.transform);
                     RndNegReinforcementB.transform.localPosition = oldPos;
-                    RndNegReinforcementB.transform.parent.localPosition = oldParentPos;
+                    RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+                    RndNegReinforcementB.transform.parent.localPosition = new Vector3(0,0,-0.255f);
                     RndNegReinforcementB.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
                 }
             };
@@ -318,7 +317,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptThird");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指图卡");
+        tip.SetTipMessage("需要教师指卡");
         Invoke("ClickTeachersPromptThird", 2);
     }
 
@@ -399,7 +398,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptFourth");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接图卡");
+        tip.SetTipMessage("需要教师接卡");
         Invoke("ClickTeachersPromptFourth", 2);
     }
 
@@ -473,6 +472,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
         swapui.speakEvent = () =>
         {
+            CancelInvoke("ClickPromptMicoUI");
+            ChooseDo.Instance.Clicked();
             swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
             swapui.speakEvent = null;
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
@@ -483,6 +484,21 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             //9. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
             Invoke("ClickTeachersHandFinal", 2f);
         };
+
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
+    }
+
+    private void RedoClickMicoUI()
+    {
+        CancelInvoke("ClickPromptMicoUI");
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickPromptMicoUI", 2);
+    }
+
+    private void ClickPromptMicoUI()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
     }
 
     private void ClickTeachersHandFinal()
