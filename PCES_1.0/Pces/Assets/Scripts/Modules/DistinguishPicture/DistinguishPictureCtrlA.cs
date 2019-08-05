@@ -525,18 +525,20 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int et = 39;
             int stm = 45;
             int etm = 47;
-            int xhst = 24;
-            int xhet = 26;
+            int xhjgs = 42;
+            int xhjge = 44;
+
             bool passA = false;
             bool passB = false;
-            bool passC = false;
+            bool passD= false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
             {
                 if (a > st && a < et && !passA)//挂载到老师手上强化物时间点
                 {
                     passA = true;
+
                     //将当前强化物挂在老师手上
-                    xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                    lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     RndReinforcementA.transform.parent.localPosition = Vector3.zero;
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                     RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
@@ -545,13 +547,22 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passB = true;
-                    xiaohuaAnim.PlayForward("TY_XH_JG");
-                }
 
-                if (a > xhst && a < xhet && !passC)
-                {
-                    passC = true;
-                    xiaohuaAnim.timePointEvent = null;
+                    LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                    go.transform.SetParent(transform,false);
+                    xiaohuaAnim.timePointEvent = (b) => {
+                        if (b > xhjgs && b < xhjge && !passD)
+                        {
+                            passD = true;
+                            XhQHW xhqhw = go.GetComponent<XhQHW>();
+                            xhqhw.ShowObj(goodA.name);
+                            RndReinforcementA.transform.parent.gameObject.SetActive(false);
+                        }
+                    };
+
+                    xiaohuaAnim.OnContinue();
+                    xiaohuaAnim.PlayForward("TY_XH_JG");
+                    go.PlayForward("TY_XH_JG_KA");
                 }
             };
             teacherAnim.OnContinue();
