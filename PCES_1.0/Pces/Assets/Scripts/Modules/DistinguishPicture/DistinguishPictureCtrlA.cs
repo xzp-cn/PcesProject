@@ -150,7 +150,11 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     /// <param name="cobj"></param>
     private void OnClickTeacherHandFirst(ClickedObj cobj)
     {
+#if UNITY_EDITOR
         F3DDebug.Log(cobj.objname,new System.Diagnostics.StackTrace(true));
+#else
+        Debug.Log("DistinguishPictureCtrlA::OnClickTeacherHandFirst():教师接图卡");
+#endif
         if (cobj.objname == "shou")
         {
             ChooseDo.Instance.Clicked();
@@ -342,27 +346,27 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 xhctrl.r_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
                 xhctrl.r_tuka2.SetActive(true);
 
-                int start = 24;
-                int end = 26;
+                int start = 18;
+                int end = 20;
                 int start0 = 44;
                 int end0 = 46;
+                bool passA = false;
+                bool passB = false;
                 xiaohuaAnim.timePointEvent = (t) =>
                 {
-                    if (t >= start && t <= end)
+                    if (t >= start && t <= end && !passA)
                     {
+                        passA = true;
                         tukaA.SetActive(false);
+                    }
 
-                        xiaohuaAnim.timePointEvent = (tt) =>
-                        {
-                            if (tt >= start0 && tt <= end0)
-                            {
-                                xiaohuaAnim.timePointEvent = null;
-                                xiaohuaAnim.OnPause();
+                    if (t >= start0 && t <= end0 && !passB)
+                    {
+                        passB = true;
+                        xiaohuaAnim.timePointEvent = null;
+                        xiaohuaAnim.OnPause();
 
-                                OnXiaoHuaBringAToTeacher();
-                            }
-                        };
-
+                        OnXiaoHuaBringAToTeacher();
                     }
                 };
                 xiaohuaAnim.PlayForward("TY_XH_NKDK");
@@ -423,6 +427,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             int end = 48;
             bool passed = false;
             bool passB = false;
+            bool passC = false;
             teacherAnim.timePointEvent = (t) =>
             {
                 if (t >= start && t <= end && !passed)
@@ -433,6 +438,13 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     lsCtrl.ls_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponentInChildren<MeshRenderer>().materials[1]);
                     lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
+                }
+
+                if(t >= 78 && t <= 81 && !passC)
+                {
+                    passC = true;
+                    tukaA.SetActive(true);
+                    tukaA.transform.parent.localPosition = new Vector3(2.5f, 0.5482f, 0.388f);
                 }
 
                 if (t >= 94 && t <= 96 && !passB)
@@ -453,8 +465,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         //老师第二次接下图卡
         lsCtrl.ls_tuka2.SetActive(false);
-        tukaA.SetActive(true);
-        tukaA.transform.parent.localPosition = new Vector3(2.5f, 0.5466f, 0.388f);
 
         //8. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
         SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
