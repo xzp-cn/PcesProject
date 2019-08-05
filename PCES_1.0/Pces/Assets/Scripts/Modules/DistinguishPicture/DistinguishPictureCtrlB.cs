@@ -542,7 +542,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                         {
                             passD = true;
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
-                            xhqhw.ShowObj(goodB.name);
+                            xhqhw.ShowObj(goodB.GetComponent<PropsObject>().pData.name);
                             RndReinforcementB.transform.parent.gameObject.SetActive(false);
                         }
                     };
