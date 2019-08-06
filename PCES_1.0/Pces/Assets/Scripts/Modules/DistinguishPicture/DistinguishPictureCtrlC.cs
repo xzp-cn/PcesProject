@@ -315,7 +315,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
             string gift = goodA.GetComponentInChildren<PropsObject>().pData.name_cn;
-            dialog.SetDialogMessage("小华要" + gift + "呀。");
+            dialog.SetDialogMessage("小华要" + gift + "呀");
 
             Invoke("ClickTeachersHandFinal", 1);
         };
