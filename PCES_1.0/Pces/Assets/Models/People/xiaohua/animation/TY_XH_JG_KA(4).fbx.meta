@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 16a50d072bb67a647b89e9ac710a1250
+guid: 83dddb13e4bb63d479957c23999e45b0
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -103,7 +103,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1

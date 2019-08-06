@@ -490,7 +490,12 @@ public class SentenceCtrlD : MonoBehaviour
                 WYXHJiewu();
             }
         };
+        GameObject KA = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DY_KA");
+        ka.name = "MM_F_4TH_DY_KA";
+        LegacyAnimationOper lao = KA.GetLegacyAnimationOper();
+        lao.PlayForward("MM_F_4TH_DY_KA");
         MM.PlayForward("MM_F_4TH_DY");
+
     }
     void WYXHJiewu()
     {
