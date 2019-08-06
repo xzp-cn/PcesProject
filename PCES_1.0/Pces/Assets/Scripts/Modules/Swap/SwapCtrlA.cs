@@ -217,9 +217,12 @@ public class SwapCtrlA : MonoBehaviour
         Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         ctrl.r_tuka2.gameObject.SetActive(true);
-        xhTk.gameObject.SetActive(false);
-
+        Invoke("HideDeskTK", 0.88f);
         ClickFdlsDikaHandTip();
+    }
+    void HideDeskTK()
+    {
+        xhTk.gameObject.SetActive(false);
     }
     #endregion
     #region 辅导老师抓手递卡
@@ -228,6 +231,7 @@ public class SwapCtrlA : MonoBehaviour
         ChooseDo.Instance.DoWhat(5, RedoFdlsDika, FdlsDika);//
         HighLightCtrl.GetInstance().FlashOn(fdlshand);
         ClickDispatcher.Inst.EnableClick = true;
+
     }
     void RedoFdlsDika()
     {

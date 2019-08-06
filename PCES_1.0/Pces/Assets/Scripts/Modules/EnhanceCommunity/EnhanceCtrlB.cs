@@ -210,7 +210,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 Material matTar = ctrl.r_tuka.transform.Find("tuka 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
                 ctrl.r_tuka.gameObject.SetActive(true);
-                xhTk.SetActive(false);
+                Invoke("HideTK", 0.4f);
             }
             if (a >= 402 && a <= 404 && pass3)
             {
@@ -221,6 +221,10 @@ public class EnhanceCtrlB : MonoBehaviour
             }
         };
         XH.PlayForward("XH_B_2ND_ZFNZD");
+    }
+    void HideTK()
+    {
+        xhTk.SetActive(false);
     }
     /// <summary>
     /// 小华拿卡递卡回调
@@ -300,7 +304,7 @@ public class EnhanceCtrlB : MonoBehaviour
                 LSCtrl ctrl = LS.GetComponent<LSCtrl>();//手上卡隐藏，桌子上的卡显示
                 ctrl.ls_tuka2.gameObject.SetActive(false);
 
-                deskTuka.transform.localPosition = new Vector3(1.504f, 0.0014f, 0.12f);
+                deskTuka.transform.localPosition = new Vector3(1.513f, 0.0014f, 0.051f);
                 lsTk.gameObject.SetActive(true);
             }
 
@@ -326,8 +330,9 @@ public class EnhanceCtrlB : MonoBehaviour
                 pass4 = false;
                 LS.timePointEvent = null;
 
-                //LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
-                //go.transform.SetParent(transform);
+                LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/XH_B_2ND_JG_KA").GetLegacyAnimationOper();
+                go.name = "XH_B_2ND_JG_KA";
+                go.transform.SetParent(transform);
 
                 XH.timePointEvent = (b) =>//小华接过物品 挂载强化物
                 {
@@ -335,21 +340,15 @@ public class EnhanceCtrlB : MonoBehaviour
                     {
                         pass5 = false;
                         XH.timePointEvent = null;
-                        XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
-                        xhCtrl.SetJoint(qhw);
-                        qhw.GetComponent<QHWCtrl>().ResetPos();
-                        //qhw.transform.localPosition = Vector3.zero;
-                        //qhw.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                        //xhCtrl.XH_R2.transform.localPosition = Vector3.zero;
-
-                        //qhw.GetComponent<QHWCtrl>().ResetPos();
-                        //Debug.LogError("xh");
-
-                        //XhQHW xhqhw = go.GetComponent<XhQHW>();
-                        //xhqhw.ShowObj(qhw.name);
-                        //qhw.gameObject.SetActive(false);
+                        //XHCtrl xhCtrl = XH.GetComponent<XHCtrl>();
+                        //xhCtrl.SetJoint(qhw);
+                        //qhw.GetComponent<QHWCtrl>().ResetPos();          
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        xhqhw.ShowObj(qhw.name);
+                        qhw.SetActive(false);
                     }
                 };
+                go.PlayForward("XH_B_2ND_JG_KA");
                 XH.PlayForward("TY_XH_JG_B2-3");
             }
         };

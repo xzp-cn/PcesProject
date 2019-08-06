@@ -229,7 +229,7 @@ public class SwapCtrlB : MonoBehaviour
                 Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
-                xhTk.gameObject.SetActive(false);
+                Invoke("HideKa", 0.3f);
                 ctrl.r_tuka2.gameObject.SetActive(true);
             }
             if (a >= 50 && a <= 52 && pass2)
@@ -241,6 +241,10 @@ public class SwapCtrlB : MonoBehaviour
             }
         };
         XH.PlayForward("TY_XH_NKDK");
+    }
+    void HideKa()
+    {
+        xhTk.gameObject.SetActive(false);
     }
     /// <summary>
     /// 小华拿卡递卡回调
