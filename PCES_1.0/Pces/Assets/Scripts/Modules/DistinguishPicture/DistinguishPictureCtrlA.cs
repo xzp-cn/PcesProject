@@ -649,6 +649,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         xiaohuaAnim.OnContinue();
         xiaohuaAnim.timePointEvent = null;
         teacherAnim.timePointEvent = null;
+        teacherAnim.OnContinue();
         xhctrl.DestroyGuadian();
         lsCtrl.DestroyGuadian();
 

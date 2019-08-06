@@ -291,7 +291,8 @@ public class SpeakUpCtrlA : MonoBehaviour
                     if (b >= 42 && b <= 44 && !pass3)
                     {
                         pass3 = true;
-
+                        xiaohuaAnim.timePointEvent = null;
+                        qhwCtrl.gameObject.SetActive(false);
                         XhQHW xhqhw = go.GetComponent<XhQHW>();
                         xhqhw.ShowObj(goodA.name);
                         goodA.transform.parent.gameObject.SetActive(false);
@@ -353,6 +354,11 @@ public class SpeakUpCtrlA : MonoBehaviour
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         xiaohuaAnim.timePointEvent = null;
+        xiaohuaAnim.OnContinue();
+        fdlsAnim.OnContinue();
+        fdlsAnim.timePointEvent = null;
+        LS.timePointEvent = null;
+        LS.OnContinue();
 
         XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
         if (xhctrl != null)

@@ -30,8 +30,6 @@ public class SpeakUpCtrlC : MonoBehaviour
         GlobalEntity.GetInstance().Dispatch<string>(CommonUI.pEvent.LevelChange, "第三关");
         GameObject xiaohuaGo = PeopleManager.Instance.GetPeople("XH_BD");
 
-        //camPos = Camera.main.transform.parent.localPosition;
-        //Camera.main.transform.parent.localPosition = new Vector3(4.032f, 1.071f, 0.43f);
         GlobalDataManager.GetInstance().SetPcesCamera(Vector3.zero);
 
         Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
@@ -54,7 +52,6 @@ public class SpeakUpCtrlC : MonoBehaviour
         LS = PeopleManager.Instance.GetPeople("LS_BD").GetAnimatorOper();
         lsOldPos = LS.transform.localPosition;
         LS.transform.localPosition = new Vector3(1.516f, 0.02f, 0.022f);
-        //Camera.main.transform.parent.localPosition = new Vector3(3.835f, 1.071f, 0.05f);
         emptyRoot = new GameObject("Root");
 
         GameObject qhwm = ObjectsManager.instanse.GetQHW();
@@ -99,7 +96,6 @@ public class SpeakUpCtrlC : MonoBehaviour
 
         PeopleManager.Instance.GetPeople("FDLS_BD").SetActive(false);
 
-        //xiaohuaGo.transform.localScale = Vector3.zero;
         xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
         xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
         //进入界面1秒后，触动小华翻开沟通本，并把字卡和图卡都粘在句带，并走到老师的面前的动画。
@@ -422,7 +418,8 @@ public class SpeakUpCtrlC : MonoBehaviour
         xiaohuaAnim.timePointEvent = null;
         Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
         zhuozi2.transform.localPosition = zhuozi2Pos;
-
+        LS.timePointEvent = null;
+        LS.OnContinue();
 
         XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
         if (xhctrl != null)
@@ -446,7 +443,6 @@ public class SpeakUpCtrlC : MonoBehaviour
 
         xiaohuaAnim.gameObject.SetActive(false);
         xiaohuaAnim.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
-        //XH.transform.localPosition = new Vector3(0, 0, 10000);
         xiaohuaAnim.gameObject.SetActive(true);
         xiaohuaAnim.OnContinue();
         xiaohuaAnim.PlayForward("idle");

@@ -383,6 +383,9 @@ public class SpeakUpCtrlB : MonoBehaviour
         comUI = null;
 
         xiaohuaAnim.timePointEvent = null;
+        xiaohuaAnim.OnContinue();
+        LS.timePointEvent = null;
+        LS.OnContinue();
 
         XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
         if (xhctrl != null)
