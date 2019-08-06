@@ -41,6 +41,7 @@ public class SpeakUpCtrlA : MonoBehaviour
         emptyRoot = new GameObject("Root");
         GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
         fdlsObj.transform.localPosition = Vector3.zero;
+        fdlsObj.SetActive(true);
 
         GameObject qhwm = ObjectsManager.instanse.GetQHW();
         qhwm.transform.SetParent(emptyRoot.transform);
@@ -85,7 +86,7 @@ public class SpeakUpCtrlA : MonoBehaviour
 
         xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
         GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-        fdlsObj2.SetActive(true);
+
         fdlsAnim = fdlsObj2.GetAnimatorOper();
 
         fdlsAnim.PlayForward("FDLS_D_1ST_TJD");
