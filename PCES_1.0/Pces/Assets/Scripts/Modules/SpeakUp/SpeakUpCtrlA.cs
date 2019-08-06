@@ -213,7 +213,6 @@ public class SpeakUpCtrlA : MonoBehaviour
                     LS.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
                     FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
-                                                                                          /*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回
 
                     //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                     SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
@@ -222,6 +221,8 @@ public class SpeakUpCtrlA : MonoBehaviour
                     swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
                     swapui.speakEvent = () =>
                     {
+                        CancelInvoke("ClickPromptMicoUI");
+                        ChooseDo.Instance.Clicked();
                         swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
                         swapui.speakEvent = null;
                         swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
@@ -232,6 +233,8 @@ public class SpeakUpCtrlA : MonoBehaviour
                         //6. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                         Invoke("ClickTeachersHandFinal", 2f);
                     };
+
+                    ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
                 }
             };
 
@@ -251,6 +254,19 @@ public class SpeakUpCtrlA : MonoBehaviour
 
             LS.PlayForward("TY_LS_JTKJD_JG");
         }
+    }
+
+    private void RedoClickMicoUI()
+    {
+        CancelInvoke("ClickPromptMicoUI");
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickPromptMicoUI", 2);
+    }
+
+    private void ClickPromptMicoUI()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
     }
 
     private void ClickTeachersHandFinal()
