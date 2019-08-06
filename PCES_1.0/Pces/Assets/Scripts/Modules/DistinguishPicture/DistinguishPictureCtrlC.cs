@@ -316,6 +316,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
         swapui.speakEvent = () =>
         {
+            CancelInvoke("ClickPromptMicoUI");
+            ChooseDo.Instance.Clicked();
             swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
             swapui.speakEvent = null;
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
@@ -325,6 +327,20 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
             Invoke("ClickTeachersHandFinal", 1);
         };
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
+    }
+
+    private void RedoClickMicoUI()
+    {
+        CancelInvoke("ClickPromptMicoUI");
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickPromptMicoUI", 2);
+    }
+
+    private void ClickPromptMicoUI()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
     }
 
 
