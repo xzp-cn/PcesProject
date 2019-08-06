@@ -305,13 +305,18 @@ public class SpeakUpCtrlC : MonoBehaviour
             bool passA = false;
             bool passB = false;
             bool passC = false;
+            GameObject qhwm = null;
             LS.timePointEvent = (a) =>//老师递给物品
             {
                 if (a > st && a < et && !passB)//挂载到老师手上强化物时间点
                 {
                     passB = true;
                     LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
-                    lsctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                    qhwm = ObjectsManager.instanse.GetQHW();
+                    qhwm.GetComponent<QHWCtrl>().ShowObj(goodA.name);
+                    qhwm.transform.localPosition = new Vector3(1.508f, 0, 0);
+                    lsctrl.SetJoint(qhwm);
+                    RndReinforcementA.transform.parent.gameObject.SetActive(false);
                 }
 
                 if (a > 40 && a < 43 && !passA)//小华接卡动画播放延迟一边挂载强化物
@@ -332,10 +337,9 @@ public class SpeakUpCtrlC : MonoBehaviour
                             xiaohuaAnim.timePointEvent = null;
                             //XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
                             //xhCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-
+                            qhwm.SetActive(false);
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodA.name);
-                            RndReinforcementA.transform.parent.gameObject.SetActive(false);
 
                             //8. 播放结束，出现下一关和重做的按钮。
                             Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
