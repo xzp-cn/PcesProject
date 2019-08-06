@@ -13,7 +13,6 @@ public class SpeakUpCtrlA : MonoBehaviour
     private CommonUI comUI;
     private GameObject emptyRoot;
     private GameObject judaiGobj; //我要句带
-    //private GameObject RndReinforcementA; //强化物
     private GameObject tukaA;  //图卡
     private GameObject _tukaA;
     private GameObject FBNKT_KA_Anim;
@@ -56,13 +55,7 @@ public class SpeakUpCtrlA : MonoBehaviour
         //随机一个强化物A
         goodA = SpeakUpModel.GetInstance().GetRndReinforcement();
         qhwCtrl.GetObj(goodA.name);
-        //RndReinforcementA = GameObject.Instantiate(goodA);
-        //RndReinforcementA.GetComponent<PropsObject>().pData = goodA.GetComponent<PropsObject>().pData;
-        //GameObject qhwA = new GameObject("ReinforcementA");
-        //qhwA.transform.SetParent(emptyRoot.transform, false);
-        //RndReinforcementA.transform.SetParent(qhwA.transform, false);
-        //RndReinforcementA.transform.localPosition = Vector3.zero;
-        //qhwA.transform.localPosition = new Vector3(2.5328F, 0.5698F, -0.118F);
+
         //强化物图卡A源
         string tukaNameA = "tuka_" + goodA.name;
         tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
@@ -208,7 +201,6 @@ public class SpeakUpCtrlA : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(shou);
 
             LS = PeopleManager.Instance.GetPeople(PeopleTag.LS_BD).GetAnimatorOper();
-            //lsctrl = LS.GetComponent<LSCtrl>();
 
             LS.OnContinue();
             bool passA = false;
@@ -243,8 +235,6 @@ public class SpeakUpCtrlA : MonoBehaviour
                 }
             };
 
-
-
             LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
             ka.name = "TY_LS_JTKJD_KA";
             ka.transform.SetParent(transform);
@@ -260,25 +250,6 @@ public class SpeakUpCtrlA : MonoBehaviour
             ka.PlayForward("TY_LS_JTKJD_KA");//播放老师图卡动画        图卡等待一帧隐藏
 
             LS.PlayForward("TY_LS_JTKJD_JG");
-
-            //int st = 22;
-            //int et = 24;
-            //LS.timePointEvent = (a) =>//老师接卡时间点
-            //{
-            //    if (a > st && a < et)
-            //    {
-            //        LS.timePointEvent = null;
-            //        lsctrl.ls_judai.SetActive(true);
-            //        xiaohuaAnim.OnContinue();
-
-
-            //    }
-            //};
-
-            //LS.Complete += () =>
-            //{
-            //    FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
-            //};
         }
     }
 
@@ -288,8 +259,6 @@ public class SpeakUpCtrlA : MonoBehaviour
         dialog.Show(false);
         bool passA = false;
         bool passB = false;
-        bool passC = false;
-        //int xhet = 43;
         xiaohuaAnim.Complete += () =>
         {
             //8. 播放结束，出现下一关和重做的按钮。
@@ -299,54 +268,38 @@ public class SpeakUpCtrlA : MonoBehaviour
             comUI.nextClickEvent += OnNextDo;
             comUI.ShowFinalUI();
         };
+
+        LegacyAnimationOper go = null;
         LS.timePointEvent = (a) =>//老师递给物品
         {
-            //if (a > st && a < et)//挂载到老师手上强化物时间点
-            //{
-            //    xiaohuaAnim.PlayForward("TY_XH_JG");
-            //    //将当前强化物挂在老师手上
-            //    //lsctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-            //    //lsctrl.l_guadian.transform.localPosition = Vector3.zero;
-            //    //lsctrl.l_guadian.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            //    //RndReinforcementA.transform.localPosition = Vector3.zero;
-            //}
-
-
-
             if (a >= 25 && a <= 27 && !passA)//挂载到老师手上强化物时间点
             {
                 passA = true;
                 LSCtrl lsctrl = LS.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
                 lsctrl.SetJoint(qhwCtrl.gameObject);
-                //qhwCtrl.SetPos();
             }
 
             if (a >= 21 && a < 24 && !passB)//小华接卡动画播放延迟一边挂载强化物
             {
                 passB = true;
+                go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                go.transform.SetParent(transform);
 
+                bool pass3 = false;
+                xiaohuaAnim.timePointEvent = (b) =>//小华接过物品 挂载强化物
+                {
+                    if (b >= 42 && b <= 44 && !pass3)
+                    {
+                        pass3 = true;
+
+                        XhQHW xhqhw = go.GetComponent<XhQHW>();
+                        xhqhw.ShowObj(goodA.name);
+                        goodA.transform.parent.gameObject.SetActive(false);
+                    }
+                };
                 xiaohuaAnim.PlayForward("TY_XH_JG");
+                go.PlayForward("TY_XH_JG_KA");
             }
-
-            if (a >= 40 && a < 43 && !passC)
-            {
-                passC = true;
-                xiaohuaAnim.timePointEvent = null;
-                XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
-                xhCtrl.SetJoint(qhwCtrl.gameObject);
-            }
-
-            //xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
-            //{
-            //    if (aa >= xhst && aa <= xhet)
-            //    {
-            //        xiaohuaAnim.timePointEvent = null;
-            //        XHCtrl xhCtrl = xiaohuaAnim.GetComponent<XHCtrl>();
-            //        xhCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-            //        //RndReinforcementA.transform.localPosition = Vector3.zero;
-            //    }
-            //};
-
         };
 
         LS.PlayForward("TY_LS_DW");

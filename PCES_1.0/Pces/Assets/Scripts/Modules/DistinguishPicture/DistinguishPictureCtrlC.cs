@@ -48,7 +48,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     private void Awake()
     {
-        qhwtkPos = new Vector3[3] { new Vector3(-0.049F, 0.0006f, -0.04F), new Vector3(-0.1152f, 0.0006f, -0.0413f), new Vector3(-0.096f, 0F, 0F) };
+        qhwtkPos = new Vector3[3] { new Vector3(-0.049F, 0.0006f, -0.04F), new Vector3(-0.1152f, 0.0006f, -0.0413f), new Vector3(-0.07263f, 0F, -0.0313F) };
         nqhwtkPos = new Vector3[2] { new Vector3(-0.0485F, 0.0006f, 0.043F), new Vector3(-0.1129f, 0.0006f, 0.0389f) };
         qhwtks = new GameObject[3];
         nqhwtks = new GameObject[2];
@@ -69,7 +69,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         gtNotebook = GameObject.Instantiate(gtbProp.gameObject);
         gtNotebook.GetComponent<PropsObject>().pData = gtbProp.pData;
         gtNotebook.transform.SetParent(emptyRoot.transform, false);
-        gtNotebook.transform.localPosition = new Vector3(2.266f, 0.56572f, 0.433f);
+        gtNotebook.transform.localPosition = new Vector3(2.2851f, 0.56572f, 0.3776f);
         onepage = gtNotebook.transform.Find("goutongben_02").gameObject;
         twopage = gtNotebook.transform.Find("goutongben_03").gameObject;
 
@@ -91,7 +91,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         rndNegReinforcements.ForEach((ob) =>
         {
             GameObject nqhw = CreateNegObj(ob, i);
-            if(ob.name == "apple")
+            if (ob.name == "apple")
             {
                 nqhwPos[i].y = 0.604f;
             }
@@ -178,14 +178,16 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             {
                 passA = true;
                 FanGTB();
+                qhwtks[2].transform.localScale = Vector3.one * 0.6f;
             }
 
             if (t >= st && t <= et && !passB)
             {
                 passB = true;
                 xhctrl.r_tuka.SetActive(true);
-                qhwtks[2].SetActive(true);
-                qhwtks[2].transform.SetParent(emptyRoot.transform, false);
+                qhwtks[2].SetActive(false);
+                qhwtks[2].transform.localPosition = new Vector3(-0.0726f, 0.00891f, -0.0313f);
+                //qhwtks[2].transform.SetParent(emptyRoot.transform, false);
             }
 
             if (t >= start0 && t <= end0 && !passC)
@@ -242,7 +244,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接图卡");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -369,19 +371,21 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-            int st = 24;
-            int et = 26;
-            int s = 45;
-            int e = 47;
-            int xhst = 37;
-            int xhet = 39;
+            int st = 37;
+            int et = 39;
+            int stm = 45;
+            int etm = 47;
+            int xhjgs = 42;
+            int xhjge = 44;
             bool passA = false;
             bool passB = false;
+            bool passD = false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
             {
                 if (a > st && a < et && !passA)//挂载到老师手上强化物时间点
                 {
                     passA = true;
+
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
                     lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
@@ -390,21 +394,25 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     RndReinforcementA.transform.localPosition = Vector3.zero;
                 }
 
-                if (a > s && a < e && !passB)//小华接卡动画播放延迟一边挂载强化物
+                if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passB = true;
+
+                    LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                    go.transform.SetParent(transform, false);
+                    xiaohuaAnim.timePointEvent = (b) => {
+                        if (b > xhjgs && b < xhjge && !passD)
+                        {
+                            passD = true;
+                            XhQHW xhqhw = go.GetComponent<XhQHW>();
+                            xhqhw.ShowObj(goodA.GetComponent<PropsObject>().pData.name);
+                            RndReinforcementA.transform.parent.gameObject.SetActive(false);
+                        }
+                    };
+
+                    xiaohuaAnim.OnContinue();
                     xiaohuaAnim.PlayForward("TY_XH_JG");
-                }
-
-                if (a > xhst && a < xhet)
-                {
-                    xiaohuaAnim.timePointEvent = null;
-
-                    xhctrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-                    xhctrl.XH_R2.transform.localPosition = Vector3.zero;
-                    RndReinforcementA.transform.parent.localPosition = Vector3.zero;
-                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
-                    RndReinforcementA.transform.localPosition = Vector3.zero;
+                    go.PlayForward("TY_XH_JG_KA");
                 }
             };
             teacherAnim.OnContinue();

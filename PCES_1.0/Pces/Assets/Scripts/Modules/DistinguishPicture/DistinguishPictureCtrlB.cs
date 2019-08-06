@@ -55,12 +55,12 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         GameObject qhwB = ObjectsManager.instanse.GetQHW();
         qhwB.transform.SetParent(emptyRoot.transform);
         qhwCtrlB = qhwB.GetComponent<QHWCtrl>();
-        qhwCtrlB.transform.localPosition = new Vector3(-0.15f, 0, 0);
+        qhwCtrlB.transform.localPosition = new Vector3(-0.101f, 0, 0);
 
         List<PropsObject> results = new List<PropsObject>();
 
         //随机一个强化物A和强化物B
-        DistinguishPictureModel.GetInstance().GetRndReinforcements(2,results);
+        DistinguishPictureModel.GetInstance().GetRndReinforcements(2, results);
         qhwCtrlA.GetObj(results[0].pData.name);
         goodA = GameObject.Instantiate(results[0].gameObject);
         goodA.GetComponent<PropsObject>().pData = results[0].pData;
@@ -120,7 +120,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 passA = true;
                 xhctrl.r_tuka2.SetActive(true);
                 tukaA.SetActive(false);
-
+                tukaB.transform.parent.localPosition = new Vector3(2.288f, 0.5466f, 0.408f);
             }
 
             if (t >= start0 && t <= end0 && !passB)
@@ -218,6 +218,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
         swapui.speakEvent = () =>
         {
+            CancelInvoke("ClickPromptMicoUI");
+            ChooseDo.Instance.Clicked();
+
             swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
             swapui.speakEvent = null;
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
@@ -248,7 +251,22 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
             xiaohuaAnim.PlayForward("XH_C_2ND_NA");
         };
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
     }
+
+    private void RedoClickMicoUI()
+    {
+        CancelInvoke("ClickPromptMicoUI");
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickPromptMicoUI", 2);
+    }
+
+    private void ClickPromptMicoUI()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
+    }
+
 
     /*
      小华坐在桌子的一边，老师坐在对面。桌上有一张强化物A图卡和另一张强化物B的图卡和实物。(图卡和实物相对应)
@@ -362,7 +380,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             };
             teacherAnim.OnContinue();
 
-           
+
         }
     }
 
@@ -420,7 +438,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     xiaohuaAnim.OnContinue();
                 }
 
-                if (t >= 94 && t <= 96 && !passB)
+                if (t >= 85 && t <= 87 && !passB)
                 {
                     passB = true;
                     tukaB.SetActive(true);
@@ -510,16 +528,19 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
             int st = 37;
             int et = 39;
-            int lsst = 24;
-            int lset = 26;
+            int stm = 45;
+            int etm = 47;
+            int xhjgs = 42;
+            int xhjge = 44;
             bool passA = false;
             bool passB = false;
-            bool passC = false;
+            bool passD = false;
             teacherAnim.timePointEvent = (a) =>//老师递给物品
             {
-                if (a > lsst && a < lset && !passA)//挂载到老师手上强化物时间点
+                if (a > st && a < et && !passA)//挂载到老师手上强化物时间点
                 {
                     passA = true;
+
                     //将当前强化物挂在老师手上
                     lsCtrl.SetJoint(RndReinforcementB.transform.parent.gameObject);
                     lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
@@ -528,22 +549,25 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     RndReinforcementB.transform.localPosition = Vector3.zero;
                 }
 
-                if (a > 45 && a < 47 && !passB)//小华接卡动画播放延迟一边挂载强化物
+                if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passB = true;
+
+                    LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
+                    go.transform.SetParent(transform, false);
+                    xiaohuaAnim.timePointEvent = (b) => {
+                        if (b > xhjgs && b < xhjge && !passD)
+                        {
+                            passD = true;
+                            XhQHW xhqhw = go.GetComponent<XhQHW>();
+                            xhqhw.ShowObj(goodB.GetComponent<PropsObject>().pData.name);
+                            RndReinforcementB.transform.parent.gameObject.SetActive(false);
+                        }
+                    };
+
+                    xiaohuaAnim.OnContinue();
                     xiaohuaAnim.PlayForward("TY_XH_JG");
-                }
-
-                if (a > st && a < et && !passC)
-                {
-                    passC = true;
-                    xiaohuaAnim.timePointEvent = null;
-
-                    xhctrl.SetJoint(RndReinforcementB.transform.parent.gameObject);
-                    xhctrl.XH_R2.transform.localPosition = Vector3.zero;
-                    RndReinforcementB.transform.parent.localPosition = Vector3.zero;
-                    RndReinforcementB.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
-                    RndReinforcementB.transform.localPosition = Vector3.zero;
+                    go.PlayForward("TY_XH_JG_KA");
                 }
             };
             teacherAnim.OnContinue();
