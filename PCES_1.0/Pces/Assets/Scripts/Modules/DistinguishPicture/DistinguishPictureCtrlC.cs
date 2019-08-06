@@ -187,7 +187,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 xhctrl.r_tuka.SetActive(true);
                 qhwtks[2].SetActive(false);
                 qhwtks[2].transform.localPosition = new Vector3(-0.0726f, 0.00891f, -0.0313f);
-                //qhwtks[2].transform.SetParent(emptyRoot.transform, false);
             }
 
             if (t >= start0 && t <= end0 && !passC)
@@ -266,6 +265,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             bool passA = false;
             bool passA2 = false;
             bool passA3 = false;
+            bool passA1 = false;
             teacherAnim.timePointEvent = (tt) =>
             {
                 if (tt >= st && tt <= et && !passA)
@@ -280,20 +280,26 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 {
                     passA2 = true;
                     //老师放下图卡A
-                    //lsCtrl.ls_tuka2.SetActive(false);
                     xhctrl.r_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(qhwtks[2].GetComponentInChildren<MeshRenderer>().materials[1]);
                 }
 
-                if (tt >= 94 && tt <= 96 && !passA3)
+                if(tt >= 85 && tt <= 87 && !passA1) {
+                    passA1 = true;
+                    qhwtks[2].SetActive(true);
+                    qhwtks[2].transform.SetParent(emptyRoot.transform);
+                    qhwtks[2].transform.localPosition = new Vector3(2.502f, 0.5464f, 0.472f);
+                    qhwtks[2].transform.localRotation = Quaternion.Euler(Vector3.zero);
+                    qhwtks[2].transform.localScale = Vector3.one;
+                    lsCtrl.ls_tuka2.SetActive(false);
+                }
+
+                if (tt >= 96 && tt <= 98 && !passA3)
                 {
                     passA3 = true;
                     //老师接图卡A动画结束
                     teacherAnim.timePointEvent = null;
                     teacherAnim.OnPause();
-                    lsCtrl.ls_tuka2.SetActive(false);
-                    qhwtks[2].SetActive(true);
-                    qhwtks[2].transform.localPosition = new Vector3(2.502f, 0.5464f, 0.472f);
-                    qhwtks[2].transform.localScale = Vector3.one;
+
                     OnClickHuaTong();
                 }
             };

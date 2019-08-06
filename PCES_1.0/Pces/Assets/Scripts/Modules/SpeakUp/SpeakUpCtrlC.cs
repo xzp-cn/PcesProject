@@ -311,6 +311,8 @@ public class SpeakUpCtrlC : MonoBehaviour
 
             int st = 33;
             int et = 35;
+            int xhst = 40;
+            int xhet = 43;
             LS.timePointEvent = (a) =>//老师递给物品
             {
                 if (a > st && a < et)//挂载到老师手上强化物时间点
@@ -324,8 +326,7 @@ public class SpeakUpCtrlC : MonoBehaviour
                     LS.timePointEvent = null;
 
                     //播放结束，触发小华接过XXX。
-                    int xhst = 40;
-                    int xhet = 43;
+
                     xiaohuaAnim.timePointEvent = (aa) =>//小华接过物品
                     {
                         if (aa > xhst && aa < xhet)
