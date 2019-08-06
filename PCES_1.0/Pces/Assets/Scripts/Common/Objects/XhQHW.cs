@@ -5,7 +5,7 @@ using UnityEngine;
 public class XhQHW : MonoBehaviour
 {
     Transform par;
-    private void Start()
+    private void Awake()
     {
         par = transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/XH_R2");
         InitObjs();

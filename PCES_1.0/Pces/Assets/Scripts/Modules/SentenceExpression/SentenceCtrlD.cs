@@ -212,7 +212,8 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 pasxh = false;
                 XH.OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                //transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
             }
             if (a >= 72 && a <= 75 && pass)
             {
@@ -315,7 +316,14 @@ public class SentenceCtrlD : MonoBehaviour
             }
         };
 
-        GameObject ka = transform.Find("XH_F_4TH_FNN_KA").gameObject;
+        GameObject kaa = transform.Find("XH_F_4TH_FNN_KA").gameObject;
+        if (kaa != null)
+        {
+            DestroyImmediate(kaa);
+        }
+        GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_FNN_KA");
+        ka.name = "XH_F_4TH_FNN_KA";
+        ka.transform.SetParent(transform);
         //ka.name = "XH_F_4TH_FNN_KA";
         //ka.transform.SetParent(transform);
 
@@ -413,7 +421,8 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 passxh = false;
                 XH.OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                //transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
 
             }
             if (a >= 72 && a <= 75 && pass)
@@ -473,6 +482,11 @@ public class SentenceCtrlD : MonoBehaviour
             Destroy(ka);
         }
         //MM.Complete += WYXHJiewu;
+        GameObject KA = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DY_KA");
+        KA.name = "MM_F_4TH_DY_KA";
+        KA.transform.SetParent(transform);
+        LegacyAnimationOper lao = KA.GetLegacyAnimationOper();
+
         bool pass = true;
         MM.timePointEvent = (a) =>
         {
@@ -480,21 +494,22 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 pass = false;
                 MM.timePointEvent = null;
-                MMCtrl ctrl = MM.GetComponent<MMCtrl>();
-                string name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
-                GameObject go = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(name));
-                go.name = "QHW";
-                go.transform.SetParent(transform);
-                go.transform.localEulerAngles = Vector3.zero;
-                ctrl.SetJoint(go);
+                //MMCtrl ctrl = MM.GetComponent<MMCtrl>();
+                int index = Random.Range(101, 1001) % 4;
+                string name = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>().pData.name;
+                //GameObject go = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(name));
+                //go.name = "QHW";
+                //go.transform.SetParent(transform);
+                //go.transform.localEulerAngles = Vector3.zero;
+                //ctrl.SetJoint(go);
+                XhQHW xhqhw = KA.GetComponent<XhQHW>();
+                xhqhw.ShowObj(name);
+
                 WYXHJiewu();
             }
         };
-        GameObject KA = ResManager.GetPrefab("Prefabs/AnimationKa/MM_F_4TH_DY_KA");
-        ka.name = "MM_F_4TH_DY_KA";
-        LegacyAnimationOper lao = KA.GetLegacyAnimationOper();
-        lao.PlayForward("MM_F_4TH_DY_KA");
         MM.PlayForward("MM_F_4TH_DY");
+        lao.PlayForward("MM_F_4TH_DY_KA");
 
     }
     void WYXHJiewu()
@@ -507,12 +522,12 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 pass = false;
                 XH.timePointEvent = null;
-                XHCtrl ctrl = XH.GetComponent<XHCtrl>();
-                GameObject go = MM.GetComponent<MMCtrl>().l_guadian.transform.Find("QHW").gameObject;
-                go.transform.localEulerAngles = Vector3.zero;
-                ctrl.SetJointL(go);
-                go.transform.localPosition = Vector3.zero;
-                go.transform.localEulerAngles = Vector3.zero;
+                //XHCtrl ctrl = XH.GetComponent<XHCtrl>();
+                //GameObject go = MM.GetComponent<MMCtrl>().l_guadian.transform.Find("QHW").gameObject;
+                //go.transform.localEulerAngles = Vector3.zero;
+                //ctrl.SetJointL(go);
+                //go.transform.localPosition = Vector3.zero;
+                //go.transform.localEulerAngles = Vector3.zero;
             }
         };
         XH.PlayForward("XH_F_4TH_JG");

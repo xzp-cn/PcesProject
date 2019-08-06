@@ -1,0 +1,1 @@
+var options = ["this.require = ",decompressor.require,"; var vv = this;this.decompress = ",decompressor.decompress,"; this.onmessage = ",function(e){var t={id:e.data.id,decompressed:vv.decompress(e.data.compressed)};postMessage(t,t.decompressed?[t.decompressed.buffer]:[])},"; postMessage({ ready: true });"];
