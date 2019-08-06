@@ -159,7 +159,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指句带");
+        tip.SetTipMessage("需要教师提示");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }
@@ -288,8 +288,8 @@ public class AcceptQuesCtrlB : MonoBehaviour
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师说话");
-        CancelInvoke("ClickmicroPhoneTip");
-        Invoke("ClickmicroPhoneTip", 2);
+        CancelInvoke("ClickmicroPhoneJiekaTip");
+        Invoke("ClickmicroPhoneJiekaTip", 2);
     }
     void ShowSpeakJiekaContent()
     {

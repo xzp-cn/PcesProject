@@ -210,9 +210,7 @@ public class EnhanceCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(fdlshand);
         //FDLS.Complete += FdlsClickXhHandCalllback;
-        //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移
-        FDLS.PlayForward("FDLS_B_1ST_FGTB");
-
+        //FDLS.PlayForward("FDLS_A_2ND_D");//TODO:教师动画播放时有位移        
         bool pass1 = true;
         bool pass2 = true;
         bool pass3 = true;
@@ -259,6 +257,7 @@ public class EnhanceCtrlA : MonoBehaviour
             }
         };
         XH.PlayForward("XH_B_1ST_FBNKDK",/*0.16f*/0);
+        FDLS.PlayForward("FDLS_B_1ST_FGTB");
     }
     /// <summary>
     /// 辅导老师点击小华手回调
