@@ -187,7 +187,7 @@ public class SentenceCtrlC : MonoBehaviour
             }
         };
 
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师提示移动卡片
         ka.name = "TY_LS_JTKJD_KA";
         ka.transform.SetParent(transform);
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
@@ -431,7 +431,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     //点中辅导老师手后的回调
     /// <summary>
-    ///小华贴句带
+    ///小华贴提示
     /// </summary>
     void KJXhTJudai()
     {
@@ -508,7 +508,7 @@ public class SentenceCtrlC : MonoBehaviour
             }
         };
 
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师提示移动卡片
         ka.name = "TY_LS_JTKJD_KA";
         ka.transform.SetParent(transform);
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡

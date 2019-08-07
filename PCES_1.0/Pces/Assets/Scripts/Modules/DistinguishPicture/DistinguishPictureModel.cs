@@ -19,7 +19,7 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// <returns></returns>
     public GameObject GetRndReinforcement()
     {
-        int rnd = Random.Range(0,4);
+        int rnd = Random.Range(0, 4);
         return ObjectsManager.instanse.propList[rnd].gameObject;
     }
 
@@ -28,16 +28,16 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public void GetRndReinforcements(int n,List<PropsObject> results)
+    public void GetRndReinforcements(int n, List<PropsObject> results)
     {
         List<int> tmps = new List<int>();
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             tmps.Add(i);
         }
 
         List<int> rets = new List<int>();
-        for(int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)
         {
             int rnd = Random.Range(0, tmps.Count);
             rets.Add(tmps[rnd]);

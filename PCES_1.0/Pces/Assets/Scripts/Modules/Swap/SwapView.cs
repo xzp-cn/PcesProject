@@ -38,6 +38,7 @@ public class SwapView : MonoBehaviour
             homePageUI.transform.SetParent(canvas.transform, false);
             Button startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
             startButton.onClick.AddListener(StartPro);
+            startButton.gameObject.GetUIFlash().StartFlash();
         }
         else
         {
@@ -46,6 +47,7 @@ public class SwapView : MonoBehaviour
     }
     private void StartPro()
     {
+
         SwapModel.GetInstance().hpUI.gameObject.SetActive(false);
 
         spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();

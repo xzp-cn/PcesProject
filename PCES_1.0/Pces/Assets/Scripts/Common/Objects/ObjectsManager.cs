@@ -146,6 +146,7 @@ public class ObjectsManager : MonoBehaviour
                 //startIndex += i;
                 tag = (PropsTag)System.Enum.ToObject(typeof(PropsTag), startIndex);
                 tukObj.pData = new PropsData(tuka.name, startIndex++, PropsType.Tuka, GetCnNameOfObject(tag.ToString()));
+
                 //Debug.Log(startIndex + "   " + tag.ToString());
             }
         }

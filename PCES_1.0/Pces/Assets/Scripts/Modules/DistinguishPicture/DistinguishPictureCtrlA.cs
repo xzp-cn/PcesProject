@@ -67,7 +67,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.297f, 0.5466f, 0.415f);
+        _tukaA.transform.localPosition = new Vector3(2.281f, 0.5466f, 0.538f);
         tukaA.transform.SetParent(_tukaA.transform, false);
         tukaA.transform.localPosition = Vector3.zero;
 
@@ -112,6 +112,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 passA = true;
                 xhctrl.r_tuka2.SetActive(true);
                 tukaB.SetActive(false);
+
+                tukaA.transform.parent.localPosition = new Vector3(2.277f, 0.5466f, 0.3855f);
             }
 
             if (t >= start0 && t <= end0 && !passB)
@@ -338,6 +340,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandThird);
             ClickDispatcher.Inst.EnableClick = false;
 
+
+
             teacherAnim.Complete += () =>
             {
                 //6. 播放结束，触发小华拿起A卡、递卡的动画。
@@ -443,7 +447,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 {
                     passC = true;
                     tukaA.SetActive(true);
-                    tukaA.transform.parent.localPosition = new Vector3(2.5f, 0.5482f, 0.388f);
+                    tukaA.transform.parent.localPosition = new Vector3(2.503f, 0.5482f, 0.495f);
                 }
 
                 if (t >= 94 && t <= 96 && !passB)
@@ -576,7 +580,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
                     LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
                     go.transform.SetParent(transform, false);
-                    xiaohuaAnim.timePointEvent = (b) => {
+                    xiaohuaAnim.timePointEvent = (b) =>
+                    {
                         if (b > xhjgs && b < xhjge && !passD)
                         {
                             passD = true;

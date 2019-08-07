@@ -248,7 +248,7 @@ public class EnhanceCtrlA : MonoBehaviour
                 xhTk.gameObject.SetActive(false);
             }
 
-            if (a >= 164 && a <= 166 && pass3)
+            if (a >= 163 && a <= 165 && pass3)
             {
                 pass3 = false;
                 XH.timePointEvent = null;
@@ -318,8 +318,14 @@ public class EnhanceCtrlA : MonoBehaviour
         bool pass3 = true;
         bool pass4 = true;
         bool pass5 = true;
+        bool pass6 = true;
         LS.timePointEvent = (a) =>
         {
+            if (a >= 40 && a <= 42 && pass6)
+            {
+                pass6 = false;
+                XH.OnContinue();
+            }
             if (a >= 51 && a <= 53 && pass1)//老师接卡
             {
                 pass1 = false;
@@ -332,7 +338,6 @@ public class EnhanceCtrlA : MonoBehaviour
 
                 XHCtrl xctrl = XH.GetComponent<XHCtrl>();
                 xctrl.r_tuka.gameObject.SetActive(false);
-                XH.OnContinue();
             }
 
             if (a >= 81 && a <= 83 && pass2)//老师桌子放卡片

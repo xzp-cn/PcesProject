@@ -16,6 +16,7 @@ public class ContentFit : UnityEngine.EventSystems.UIBehaviour
     }
     protected override void OnRectTransformDimensionsChange()
     {
+        //base.OnBeforeTransformParentChanged();
         //UnityEngine.Debug.Log("TipUI::OnRectTransformDimensionsChange():" + content.sizeDelta.x);
         float x = leftMargin + content.sizeDelta.x + rightMargin;
         float y = content.sizeDelta.y;

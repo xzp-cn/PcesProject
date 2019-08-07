@@ -22,6 +22,7 @@ public class HomePageView : MonoBehaviour
         //com.name = "commonUI";
         //Canvas canvas = FindObjectOfType<Canvas>();
         //com.transform.SetParent(canvas.transform);       
+        startButton.gameObject.GetUIFlash().StartFlash(); ;
         startButton.onClick.AddListener(StartButtonClick);
     }
     /// <summary>
@@ -30,6 +31,7 @@ public class HomePageView : MonoBehaviour
     void StartButtonClick()
     {
         startButton.interactable = false;
+        startButton.gameObject.GetUIFlash().StopFlash(); ;
         Finish();
     }
     void CallBack(int code, string name)

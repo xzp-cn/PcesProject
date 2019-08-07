@@ -452,7 +452,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
-    m_FontSize: 36
+    m_FontSize: 32
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -545,10 +545,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3371f8845d7ff0149b35c8ca4f5dda7c, type: 3}
-    m_FontSize: 39
+    m_FontSize: 32
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 53
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -556,7 +556,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9636\u6BB5\u6807\u9898"
+  m_Text: 
 --- !u!114 &114478629511811152
 MonoBehaviour:
   m_ObjectHideFlags: 1

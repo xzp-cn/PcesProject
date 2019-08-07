@@ -226,9 +226,12 @@ public class AcceptQuesCtrlC : MonoBehaviour
                 MM.timePointEvent = null;
                 transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
 
-                int stateHash = XH.anim.GetCurrentAnimatorStateInfo(0).tagHash;
-                float length = XH.anim.GetCurrentAnimatorStateInfo(0).length;
-                XH.anim.Play("XH_E_3RD_JG", 0, -length);
+                XH.PlayForward("XH_E_3RD_JG");
+                XH.OnPause();
+                //int stateHash = XH.anim.GetCurrentAnimatorStateInfo(0).tagHash;
+                //float length = XH.anim.GetCurrentAnimatorStateInfo(0).length;
+                //XH.anim.Play("XH_E_3RD_JG", 0, -length);            
+                //XH.PlayForward("idle");
                 //XH.anim.speed = -1;
                 //XH.PlayForward("XH_E_3RD_JG");//小华手收回
             }
@@ -244,7 +247,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         tk9Angle.y = -90.3f;
         tk9.localEulerAngles = tk9Angle;
 
-        Material matSource = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka10").GetComponent<MeshRenderer>().materials[1];
+        Material matSource = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/judai2/tuka9").GetComponent<MeshRenderer>().materials[1];
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matTar = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         matSource.CopyPropertiesFromMaterial(matTar);//更换图卡物体材质
@@ -347,7 +350,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         }
         Transform jd = par.Find("judai2");
         jd.gameObject.SetActive(true);
-        Material tkmat = jd.Find("tuka10 1").GetComponent<MeshRenderer>().materials[1];
+        Material tkmat = jd.Find("tuka9 1").GetComponent<MeshRenderer>().materials[1];
         //par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matSource = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
@@ -366,9 +369,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     void LsGiveObjCallback()
     {
-        XH.anim.speed = 1;
         XH.Complete += XHJiewuCallback;
-        XH.PlayForward("XH_E_3RD_JG");
+        XH.OnContinue();
     }
     void XHJiewuCallback()
     {

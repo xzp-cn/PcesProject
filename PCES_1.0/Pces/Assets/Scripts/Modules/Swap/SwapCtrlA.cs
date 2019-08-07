@@ -217,12 +217,8 @@ public class SwapCtrlA : MonoBehaviour
         Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
         ctrl.r_tuka2.gameObject.SetActive(true);
-        Invoke("HideDeskTK", 0.88f);
+        //Invoke("HideDeskTK", 1f);
         ClickFdlsDikaHandTip();
-    }
-    void HideDeskTK()
-    {
-        xhTk.gameObject.SetActive(false);
     }
     #endregion
     #region 辅导老师抓手递卡
@@ -252,8 +248,14 @@ public class SwapCtrlA : MonoBehaviour
         ClickDispatcher.Inst.EnableClick = false;
         FDLS.Complete += FdlsDikaCallBack;
         FDLS.PlayForward("FDLS_A_1ST_ZD");
+        bool pass = true;
         XH.timePointEvent = (a) =>
         {
+            if (a >= 10 && a <= 12 && pass)
+            {
+                pass = false;
+                xhTk.gameObject.SetActive(false);
+            }
             if (a >= 33 && a <= 35)
             {
                 XH.timePointEvent = null;
@@ -261,6 +263,7 @@ public class SwapCtrlA : MonoBehaviour
             }
         };
         XH.PlayForward("XH_A_1ST_BZDK");
+
     }
     //辅导老师抓手递卡回调
     void FdlsDikaCallBack()
@@ -555,9 +558,11 @@ public class SwapCtrlA : MonoBehaviour
 
         LS.Complete -= LsGiveObjCallback;
         XH.Complete -= XHJiewuCallback;
+        FDLS.Complete -= FdlsDikaCallBack;
 
         XH.timePointEvent = null;
         LS.timePointEvent = null;
+        FDLS.timePointEvent = null;
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
@@ -571,7 +576,7 @@ public class SwapCtrlA : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }
 

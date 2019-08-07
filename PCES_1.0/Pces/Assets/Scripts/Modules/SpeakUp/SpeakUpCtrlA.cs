@@ -107,7 +107,7 @@ public class SpeakUpCtrlA : MonoBehaviour
                 fdlsAnim.OnPause();
                 FBNKT_KA_AnimOper.OnPause();
 
-                //2. 播放结束，提醒操作者点击辅导教师的手，点击后触发辅导教师抓着小华的手把图卡粘在句带上的动画。
+                //2. 播放结束，提醒操作者点击辅助教师的手，点击后触发辅助教师抓着小华的手把图卡粘在句带上的动画。
                 GameObject fdlsObj = PeopleManager.Instance.GetPeople("FDLS_BD");
                 GameObject shou = fdlsObj.transform.Find("FDLS/fdls_shou").gameObject;
                 HighLightCtrl.GetInstance().FlashOn(shou);
@@ -128,7 +128,7 @@ public class SpeakUpCtrlA : MonoBehaviour
     private void RedoClickFDTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要辅导教师协助");
+        tip.SetTipMessage("需要辅助教师协助");
         CancelInvoke("ClickFDTeachersPromptFirst");
         Invoke("ClickFDTeachersPromptFirst", 2);
     }

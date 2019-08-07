@@ -167,7 +167,6 @@ public class SentenceCtrlA : MonoBehaviour
         dlog.SetDialogMessage("小华看见什么");
         CancelInvoke("LsBack");
         Invoke("LsBack", 2);
-
     }
     /// <summary>
     /// 老师收手
@@ -180,7 +179,6 @@ public class SentenceCtrlA : MonoBehaviour
             ClickLsHandTip();
         };
         LS.OnContinue();
-
     }
     void ClickLsCallBack(ClickedObj cobj)
     {
@@ -205,7 +203,7 @@ public class SentenceCtrlA : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指句带");
+        tip.SetTipMessage("需要教师指提示");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }
@@ -348,7 +346,7 @@ public class SentenceCtrlA : MonoBehaviour
             }
         };
 
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师提示移动卡片
         ka.name = "TY_LS_JTKJD_KA";
         ka.transform.SetParent(transform);
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
@@ -521,6 +519,7 @@ public class SentenceCtrlA : MonoBehaviour
 
         XH.timePointEvent = null;
         LS.timePointEvent = null;
+        FDLS.timePointEvent = null;
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);

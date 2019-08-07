@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: affc0c45b5204ef4185298fcb689a9df
+guid: a482d2d249d6a6440b20b05f8bbdc57a
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -212,7 +212,7 @@ ModelImporter:
       name: XH_B_1ST_FBNKDK
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 200
+      lastFrame: 195
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -240,7 +240,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 2
+    meshCompression: 1
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1

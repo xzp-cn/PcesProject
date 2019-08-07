@@ -72,7 +72,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.288f, 0.5466f, 0.408f);
+        _tukaA.transform.localPosition = new Vector3(2.262f, 0.5466f, 0.393f);
         tukaA.transform.SetParent(_tukaA.transform, false);
         tukaA.transform.localPosition = Vector3.zero;
 
@@ -120,7 +120,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 passA = true;
                 xhctrl.r_tuka2.SetActive(true);
                 tukaA.SetActive(false);
-                tukaB.transform.parent.localPosition = new Vector3(2.288f, 0.5466f, 0.408f);
+                tukaB.transform.parent.localPosition = new Vector3(2.255f, 0.5466f, 0.393f);
             }
 
             if (t >= start0 && t <= end0 && !passB)
@@ -148,7 +148,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     private void RedoClickTeachersHandFirst()
     {
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师接图卡");
+        tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickTeachersPromptFirst");
         Invoke("ClickTeachersPromptFirst", 2);
     }
@@ -298,7 +298,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         CancelInvoke("ClickTeachersPromptSecond");
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师提示");
+        tip.SetTipMessage("需要教师阻止");
         Invoke("ClickTeachersPromptSecond", 2);
     }
 
@@ -442,7 +442,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 {
                     passB = true;
                     tukaB.SetActive(true);
-                    tukaB.transform.parent.localPosition = new Vector3(2.4973f, 0.5496f, 0.3915f);
+                    tukaB.transform.parent.localPosition = new Vector3(2.4973f, 0.5496f, 0.505f);
                     tukaB.transform.localPosition = Vector3.zero;
                     //老师接图卡动画结束
                     teacherAnim.timePointEvent = null;
@@ -465,6 +465,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                         //10. 显示2秒，结束后，提醒操作者点击教师的手，点击后触发教师给小华的动画。
                         Invoke("ClickTeachersHandFinal", 2f);
                     };
+                    ChooseDo.Instance.DoWhat(5, RedoClickMicoUIFourth, null);
                 }
             };
 
@@ -476,6 +477,20 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             HighLightCtrl.GetInstance().FlashOff(shou);
         }
     }
+
+    private void RedoClickMicoUIFourth()
+    {
+        CancelInvoke("ClickPromptMicoUIFourth");
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师说话");
+        Invoke("ClickPromptMicoUIFourth", 2);
+    }
+
+    private void ClickPromptMicoUIFourth()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickMicoUIFourth, null);
+    }
+
 
     private void ClickTeachersHandFinal()
     {
@@ -555,7 +570,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
 
                     LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
                     go.transform.SetParent(transform, false);
-                    xiaohuaAnim.timePointEvent = (b) => {
+                    xiaohuaAnim.timePointEvent = (b) =>
+                    {
                         if (b > xhjgs && b < xhjge && !passD)
                         {
                             passD = true;

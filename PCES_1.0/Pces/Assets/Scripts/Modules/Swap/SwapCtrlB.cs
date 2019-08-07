@@ -223,14 +223,14 @@ public class SwapCtrlB : MonoBehaviour
         {
             if (a >= 18 && a <= 20 && pass1)
             {
-                pass1 = true;
+                pass1 = false;
                 XHCtrl ctrl = XH.GetComponent<XHCtrl>();
                 string name = SwapModel.GetInstance().CurReinforcement.pData.name;
                 Material matSource = SwapModel.GetInstance().GetTuKa("tuka_" + name).GetComponent<MeshRenderer>().materials[1];
                 Material matTar = ctrl.r_tuka2.transform.Find("tuka2 1").GetComponent<MeshRenderer>().materials[1];
                 matTar.CopyPropertiesFromMaterial(matSource);
-                Invoke("HideKa", 0.3f);
                 ctrl.r_tuka2.gameObject.SetActive(true);
+                Invoke("HideKa", 0.3f);
             }
             if (a >= 50 && a <= 52 && pass2)
             {
@@ -244,7 +244,7 @@ public class SwapCtrlB : MonoBehaviour
     }
     void HideKa()
     {
-        xhTk.gameObject.SetActive(false);
+        xhTk.SetActive(false);
     }
     /// <summary>
     /// 小华拿卡递卡回调
@@ -510,9 +510,11 @@ public class SwapCtrlB : MonoBehaviour
 
         LS.Complete -= LsGiveObjCallback;
         XH.Complete -= XHJiewuCallback;
+        FDLS.Complete -= FdlsClickXhHandCalllback;
 
         XH.timePointEvent = null;
         LS.timePointEvent = null;
+        FDLS.timePointEvent = null;
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
@@ -526,6 +528,6 @@ public class SwapCtrlB : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

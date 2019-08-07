@@ -184,7 +184,7 @@ public class SentenceCtrlB : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指句带");
+        tip.SetTipMessage("需要教师指提示");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }
@@ -286,7 +286,7 @@ public class SentenceCtrlB : MonoBehaviour
             }
         };
 
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师句带移动卡片
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/TY_LS_JTKJD_KA").GetLegacyAnimationOper();//跟随老师提示移动卡片
         ka.name = "TY_LS_JTKJD_KA";
         ka.transform.SetParent(transform);
         ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
