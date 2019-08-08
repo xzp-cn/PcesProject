@@ -174,16 +174,20 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             bool passA1 = false;
             bool passA2 = false;
             bool passA3 = false;
+            bool passA4 = false;
             teacherAnim.timePointEvent = (t) =>
             {
                 if (t >= start && t <= end && !passA1)
                 {
                     passA1 = true;
-                    xhctrl.r_tuka2.SetActive(false);
-                    lsCtrl.ls_tuka2.SetActive(true);
                     xiaohuaAnim.OnContinue();
                 }
-
+                if (t >= 50 && t <= 51 && !passA4)
+                {
+                    passA4 = true;
+                    xhctrl.r_tuka2.SetActive(false);
+                    lsCtrl.ls_tuka2.SetActive(true);
+                }
                 if (t >= 81 && t <= 83 && !passA2)
                 {
                     passA2 = true;
@@ -412,10 +416,25 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 ClickDispatcher.Inst.EnableClick = true;
                 GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
                 HighLightCtrl.GetInstance().FlashOn(shou);
+
+                ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSec, null);
             }
 
         };
         xiaohuaAnim.PlayForward("TY_XH_NKDK");
+    }
+
+    private void ClickTeachersPromptSec()
+    {
+        ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandSec, null);
+    }
+
+    private void RedoClickTeachersHandSec()
+    {
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要教师接卡");
+        CancelInvoke("ClickTeachersPromptSec");
+        Invoke("ClickTeachersPromptSec", 2);
     }
 
     void OnClickTeacherHandFourth(ClickedObj cobj)
@@ -541,8 +560,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-            int st = 37;
-            int et = 39;
+            int st = 30;
+            int et = 33;
             int stm = 45;
             int etm = 47;
             int xhjgs = 23;

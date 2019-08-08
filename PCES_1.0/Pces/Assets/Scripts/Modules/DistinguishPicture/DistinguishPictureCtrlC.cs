@@ -172,12 +172,17 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         bool passA = false;
         bool passB = false;
         bool passC = false;
+        bool passD = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
+            if (t > 15 && t < 18 && !passD)
+            {
+                passD = false;
+                FanGTB();
+            }
             if (t >= start && t <= end && !passA)
             {
                 passA = true;
-                FanGTB();
                 qhwtks[2].transform.localScale = Vector3.one * 0.6f;
             }
 
@@ -198,6 +203,7 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         };
 
         xiaohuaAnim.PlayForward("XH_C_3RD_FBFY");
+
     }
 
     private void ProcessClickTeacherHandFirst()
@@ -266,14 +272,19 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             bool passA2 = false;
             bool passA3 = false;
             bool passA1 = false;
+            bool passA4 = false;
             teacherAnim.timePointEvent = (tt) =>
             {
+                if (tt >= 35 && tt <= 36 && !passA4)
+                {
+                    passA4 = true;
+                    xiaohuaAnim.OnContinue();
+                }
                 if (tt >= st && tt <= et && !passA)
                 {
                     passA = true;
                     xhctrl.r_tuka.SetActive(false);
                     lsCtrl.ls_tuka2.SetActive(true);
-                    xiaohuaAnim.OnContinue();
                 }
 
                 if (tt >= 81 && tt <= 83 && !passA2)
@@ -344,7 +355,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
     }
 
-
     private void ClickTeachersHandFinal()
     {
         Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
@@ -394,8 +404,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-            int st = 37;
-            int et = 39;
+            int st = 30;
+            int et = 33;
             int stm = 45;
             int etm = 47;
             int xhjgs = 22;

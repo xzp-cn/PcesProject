@@ -262,7 +262,7 @@ public class SentenceCtrlC : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师给相应物品");
+        tip.SetTipMessage("需要教师奖励强化物");
         CancelInvoke("ClickLsGiveObjTip");
         Invoke("ClickLsGiveObjTip", 2);
         //ClickLsGiveObjTip();
@@ -580,7 +580,7 @@ public class SentenceCtrlC : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师给相应物品");
+        tip.SetTipMessage("需要教师奖励强化物");
         CancelInvoke("KJClickLsGiveObjTip");
         Invoke("KJClickLsGiveObjTip", 2);
     }

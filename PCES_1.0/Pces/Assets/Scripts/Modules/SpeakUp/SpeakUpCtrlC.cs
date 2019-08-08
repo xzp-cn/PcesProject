@@ -62,7 +62,7 @@ public class SpeakUpCtrlC : MonoBehaviour
         //生成我要句带
         GameObject judaiParent = new GameObject("judaiParent");
         judaiParent.transform.SetParent(emptyRoot.transform, false);
-        judaiParent.transform.localPosition = new Vector3(2.281f, 0.549f, -0.334f);
+        judaiParent.transform.localPosition = new Vector3(10000f, 0.549f, -0.334f);
         judaiGobj = GameObject.Instantiate(ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].gameObject);
         judaiGobj.GetComponent<PropsObject>().pData = ObjectsManager.instanse.propList[(int)PropsTag.judai_woyao].pData;
         judaiGobj.transform.SetParent(judaiParent.transform, false);
@@ -116,10 +116,13 @@ public class SpeakUpCtrlC : MonoBehaviour
         int end = 288;
         int start1 = 465;
         int end1 = 467;
+        bool pass1 = false;
+        bool pass2 = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
-            if (t >= start && t <= end)
+            if (t >= start && t <= end && !pass1)
             {
+                pass1 = true;
                 XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
                 xhctrl.r_judai2.SetActive(true);
                 xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_1").GetComponent<MeshRenderer>().enabled = false;
@@ -129,8 +132,9 @@ public class SpeakUpCtrlC : MonoBehaviour
                 FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);
             }
 
-            if (t >= start1 && t <= end1)
+            if (t >= start1 && t <= end1 && !pass2)
             {
+                pass2 = true;
                 xiaohuaAnim.timePointEvent = null;
                 xiaohuaAnim.OnPause();
 

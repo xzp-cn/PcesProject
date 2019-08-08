@@ -184,7 +184,7 @@ public class SentenceCtrlB : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指提示");
+        tip.SetTipMessage("需要教师奖励强化物");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }

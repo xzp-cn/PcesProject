@@ -29,7 +29,7 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
         {
             if (pos != null)
             {
-                cam.transform.parent.localPosition = new Vector3(4.933f, 1.071f, 0.43f);
+                cam.transform.parent.localPosition = new Vector3(5.01f, 1.071f, 0.43f);
             }
             else
             {

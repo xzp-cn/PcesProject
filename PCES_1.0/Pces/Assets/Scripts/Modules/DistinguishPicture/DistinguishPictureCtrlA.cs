@@ -551,8 +551,8 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                 comUI.ShowFinalUI();
             };
 
-            int st = 37;
-            int et = 39;
+            int st = 30;
+            int et = 33;
             int stm = 45;
             int etm = 47;
             int xhjgs = 22;

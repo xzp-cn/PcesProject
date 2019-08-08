@@ -180,7 +180,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指提示");
+        tip.SetTipMessage("需要教师提示");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }

@@ -63,13 +63,14 @@ public class SpeakUpCtrlB : MonoBehaviour
         tukaA.transform.SetParent(_tukaA.transform, false);
         tukaA.transform.localPosition = Vector3.zero;
 
-        FBNKT_KA_Anim = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_1ST_FBNKT_KA");
-        FBNKT_KA_Anim.name = "XH_D_1ST_FBNKT_KA";
+        FBNKT_KA_Anim = ResManager.GetPrefab("Prefabs/AnimationKa/XH_D_2ND_FYFT_KA");
+        FBNKT_KA_Anim.name = "XH_D_2ND_FYFT_KA";
         FBNKT_KA_Anim.transform.SetParent(emptyRoot.transform, false);
         //我要图卡
-        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaA/tukaA 1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
         //强化物图卡
         FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
+        FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB").gameObject.SetActive(false);
 
         PeopleManager.Instance.GetPeople("FDLS_BD").SetActive(false);
 
@@ -83,21 +84,34 @@ public class SpeakUpCtrlB : MonoBehaviour
         xiaohuaAnim = xiaohuaGo.GetAnimatorOper();
 
         FBNKT_KA_AnimOper = FBNKT_KA_Anim.GetLegacyAnimationOper();
-        FBNKT_KA_AnimOper.PlayForward("XH_D_1ST_FBNKT_GKA");
+        //FBNKT_KA_AnimOper.PlayForward("XH_D_2ND_FYFT_KA");
 
         int start = 180;
         int end = 182;
         bool passA = false;
+        bool passA1 = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {
             if (t >= start && t <= end && !passA)
             {
                 passA = true;
-                xiaohuaAnim.timePointEvent = null;
-                xiaohuaAnim.OnPause();
-                FBNKT_KA_AnimOper.OnPause();
+                XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+                //xhctrl.r_judai2.SetActive(true);
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_1").GetComponent<MeshRenderer>().enabled = false;
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_2").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(judaiGobj.GetComponent<MeshRenderer>().materials[1]);
+                xhctrl.r_judai2.transform.Find("XH_judai_2 1/jd_tuka_3").GetComponent<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(tukaA.GetComponent<MeshRenderer>().materials[1]);
 
-                //2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+                //FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);
+
+                //2.播放结束，提示操作者点击教师的手，播放教师接卡的动画。
+
+            }
+            if (t >= 315 && t <= 317 && !passA1)
+            {
+
+                passA1 = true;
+                xiaohuaAnim.OnPause();
+
                 GameObject shou = PeopleManager.Instance.GetPeople("LS_BD").transform.Find("LSB_BD/shou").gameObject;
                 Debug.Log("SpeakUpCtrlB.OnXiaoHuaBring(): 2. 播放结束，提示操作者点击教师的手，播放教师接卡的动画。");
                 HighLightCtrl.GetInstance().FlashOn(shou);
@@ -108,7 +122,28 @@ public class SpeakUpCtrlB : MonoBehaviour
             }
         };
 
-        xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+        xiaohuaAnim.PlayForward("XH_D_2ND_FYFT");
+
+        FBNKT_KA_AnimOper = FBNKT_KA_Anim.GetLegacyAnimationOper();
+        bool passB = false;
+        bool passB1 = false;
+        FBNKT_KA_AnimOper.framePointEvent = (t) =>
+        {
+            if (t >= 165 && t <= 168 && !passB)
+            {
+                //显示沟通本第2页图卡
+                passB = true;
+                FBNKT_KA_Anim.transform.Find("XH_judaiA/XH_judaiA 1/tukaB").gameObject.SetActive(true);
+            }
+            if (t >= 326 && t <= 327 && !passB1)
+            {
+                FBNKT_KA_AnimOper.framePointEvent = null;
+                passB1 = true;
+                FBNKT_KA_AnimOper.OnPause();
+            }
+        };
+
+        FBNKT_KA_AnimOper.PlayForward("XH_D_2ND_FYFT_KA");
     }
 
     private void RedoClickTeachersHandFirst()
@@ -147,8 +182,10 @@ public class SpeakUpCtrlB : MonoBehaviour
                     UnityEngine.Debug.Log("SpeakUpCtrlA::OnClickTeacherHandFinal(): 隐藏沟通本句带");
                     LS.timePointEvent = null;
                     xiaohuaAnim.OnContinue();
-                    FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);//沟通本图卡隐藏
-                                                                                          /*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回
+                    /*FBNKT_KA_Anim.transform.Find("XH_judaiA").gameObject.SetActive(false);*///沟通本图卡隐藏
+
+                    /*                    LS.OnPause();  */                                                                    //xiaohuaAnim.PlayForward("XH_D_1ST_BACK");//小华手收回                 
+                    FBNKT_KA_AnimOper.OnContinue();
 
                     //5. 播放结束，提醒操作者点击话筒，点击后话筒旁边显示“你要吃XXX呀”
                     SwapUI swapui = UIManager.Instance.GetUI<SwapUI>("SwapUI");
@@ -180,8 +217,8 @@ public class SpeakUpCtrlB : MonoBehaviour
             ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_1").gameObject.SetActive(false);//隐藏不需要图卡
             Material matWy = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_2").GetComponent<MeshRenderer>().materials[1];//老师我要
             Material matObj = ka.transform.Find("LS_judai_1/ls_judai_1/ls_jd_tuka_3").GetComponent<MeshRenderer>().materials[1];//老师图卡物品
-            Material matSourceWy = emptyRoot.transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
-            Material matSourceObj = emptyRoot.transform.Find("XH_D_1ST_FBNKT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
+            Material matSourceWy = emptyRoot.transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA/XH_judaiA 1/tukaA/tukaA 1").GetComponent<MeshRenderer>().materials[1];//小华我要图卡
+            Material matSourceObj = emptyRoot.transform.Find("XH_D_2ND_FYFT_KA/XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];//小华递卡物品。
             matWy.CopyPropertiesFromMaterial(matSourceWy);
             matObj.CopyPropertiesFromMaterial(matSourceObj);//给物品
 

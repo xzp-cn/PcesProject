@@ -378,7 +378,7 @@ public class SentenceCtrlD : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要妈妈接过物品");
+        tip.SetTipMessage("需要妈妈卡片");
         CancelInvoke("WyClickMMHandTip");
         Invoke("WyClickMMHandTip", 2);
     }

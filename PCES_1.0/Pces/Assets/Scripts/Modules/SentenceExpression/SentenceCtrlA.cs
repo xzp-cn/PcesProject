@@ -203,7 +203,7 @@ public class SentenceCtrlA : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOn(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师指提示");
+        tip.SetTipMessage("需要教师提示");
         CancelInvoke("ClickLsHandTip");
         Invoke("ClickLsHandTip", 2);
     }
@@ -414,7 +414,7 @@ public class SentenceCtrlA : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师给相应物品");
+        tip.SetTipMessage("需要教师奖励强化物");
         CancelInvoke("ClickLsGiveObjTip");
         Invoke("ClickLsGiveObjTip", 2);
     }

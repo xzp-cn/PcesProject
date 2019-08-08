@@ -293,7 +293,7 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     void ShowSpeakJiekaContent()
     {
-        CancelInvoke("ClickmicroPhoneTip");
+        CancelInvoke("ClickmicroPhoneJiekaTip");
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = AcceptQuestionModel.GetInstance().CurReinforcement.pData.name_cn;
