@@ -55,7 +55,7 @@ public class SpeakUpCtrlC : MonoBehaviour
         emptyRoot = new GameObject("Root");
 
         GameObject qhwm = ObjectsManager.instanse.GetQHW();
-        qhwm.transform.SetParent(emptyRoot.transform,false);
+        qhwm.transform.SetParent(emptyRoot.transform, false);
         qhwCtrl = qhwm.GetComponent<QHWCtrl>();
         qhwCtrl.transform.localPosition = new Vector3(1.508f, 0, 0);
 
@@ -150,7 +150,7 @@ public class SpeakUpCtrlC : MonoBehaviour
         bool passA = false;
         FBNKT_KA_AnimOper.framePointEvent = (t) =>
         {
-            if(t >= 165 && t <= 168 && !passA)
+            if (t >= 165 && t <= 168 && !passA)
             {
                 //显示沟通本第2页图卡
                 passA = true;
@@ -315,11 +315,12 @@ public class SpeakUpCtrlC : MonoBehaviour
                     qhwm = ObjectsManager.instanse.GetQHW();
                     qhwm.GetComponent<QHWCtrl>().ShowObj(goodA.name);
                     qhwm.transform.localPosition = new Vector3(1.508f, 0, 0);
+                    //qhwm.transform.localPosition = Vector3.zero;
                     lsctrl.SetJoint(qhwm);
                     RndReinforcementA.transform.parent.gameObject.SetActive(false);
                 }
 
-                if (a > 40 && a < 43 && !passA)//小华接卡动画播放延迟一边挂载强化物
+                if (a > 36 && a < 39 && !passA)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passA = true;
                     LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/XH_B_2ND_JG_KA").GetLegacyAnimationOper();

@@ -262,7 +262,7 @@ public class SpeakUpCtrlB : MonoBehaviour
                     lsctrl.SetJoint(qhwCtrl.gameObject);
                 }
 
-                if (a >= 21 && a < 24 && !passB)//小华接卡动画播放延迟一边挂载强化物
+                if (a >= 45 && a < 47 && !passB)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passB = true;
                     go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();

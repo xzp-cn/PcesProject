@@ -545,8 +545,8 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             int et = 39;
             int stm = 45;
             int etm = 47;
-            int xhjgs = 42;
-            int xhjge = 44;
+            int xhjgs = 23;
+            int xhjge = 25;
             bool passA = false;
             bool passB = false;
             bool passD = false;
@@ -575,9 +575,10 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                         if (b > xhjgs && b < xhjge && !passD)
                         {
                             passD = true;
+                            RndReinforcementB.transform.parent.gameObject.SetActive(false);
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodB.GetComponent<PropsObject>().pData.name);
-                            RndReinforcementB.transform.parent.gameObject.SetActive(false);
+
                         }
                     };
 

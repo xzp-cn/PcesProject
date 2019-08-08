@@ -296,7 +296,7 @@ public class SpeakUpCtrlA : MonoBehaviour
                 lsctrl.SetJoint(qhwCtrl.gameObject);
             }
 
-            if (a >= 21 && a < 24 && !passB)//小华接卡动画播放延迟一边挂载强化物
+            if (a >= 45 && a < 47 && !passB)//小华接卡动画播放延迟一边挂载强化物
             {
                 passB = true;
                 go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
@@ -310,9 +310,9 @@ public class SpeakUpCtrlA : MonoBehaviour
                         pass3 = true;
                         xiaohuaAnim.timePointEvent = null;
                         qhwCtrl.gameObject.SetActive(false);
+                        goodA.transform.parent.gameObject.SetActive(false);
                         XhQHW xhqhw = go.GetComponent<XhQHW>();
                         xhqhw.ShowObj(goodA.name);
-                        goodA.transform.parent.gameObject.SetActive(false);
                     }
                 };
                 xiaohuaAnim.PlayForward("TY_XH_JG");

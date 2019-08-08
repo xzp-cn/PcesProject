@@ -283,7 +283,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
                     xhctrl.r_tuka2.GetComponentInChildren<MeshRenderer>().materials[1].CopyPropertiesFromMaterial(qhwtks[2].GetComponentInChildren<MeshRenderer>().materials[1]);
                 }
 
-                if(tt >= 85 && tt <= 87 && !passA1) {
+                if (tt >= 85 && tt <= 87 && !passA1)
+                {
                     passA1 = true;
                     qhwtks[2].SetActive(true);
                     qhwtks[2].transform.SetParent(emptyRoot.transform);
@@ -397,8 +398,8 @@ public class DistinguishPictureCtrlC : MonoBehaviour
             int et = 39;
             int stm = 45;
             int etm = 47;
-            int xhjgs = 42;
-            int xhjge = 44;
+            int xhjgs = 22;
+            int xhjge = 24;
             bool passA = false;
             bool passB = false;
             bool passD = false;
@@ -422,13 +423,14 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
                     LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/TY_XH_JG_KA").GetLegacyAnimationOper();
                     go.transform.SetParent(transform, false);
-                    xiaohuaAnim.timePointEvent = (b) => {
+                    xiaohuaAnim.timePointEvent = (b) =>
+                    {
                         if (b > xhjgs && b < xhjge && !passD)
                         {
                             passD = true;
+                            RndReinforcementA.transform.parent.gameObject.SetActive(false);
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodA.GetComponent<PropsObject>().pData.name);
-                            RndReinforcementA.transform.parent.gameObject.SetActive(false);
                         }
                     };
 
