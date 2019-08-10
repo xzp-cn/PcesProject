@@ -15,22 +15,22 @@ public class HighlightingEffect : MonoBehaviour
     public int stencilZBufferDepth = 0;
 
     // Stencil (highlighting) buffer size downsample factor
-    public int _downsampleFactor = 4;
+    public int _downsampleFactor = 1;
 
     // Blur iterations
-    public int iterations = 2;
+    public int iterations = 1;
 
     // Blur minimal spread
-     float blurMinSpread = 0.49f;
+    float blurMinSpread = 1f;
 
     // Blur spread per iteration
-     float blurSpread = 0.48f;
+    float blurSpread = 1.5f;
 
     // Blurring intensity for the blur material
-     float _blurIntensity = 0.234f;
+    float _blurIntensity = 0.4f;
 
     // These properties available only in Editor - we don't need them in standalone build
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     // Z-buffer writing state getter/setter
     public bool stencilZBufferEnabled
     {
@@ -98,7 +98,7 @@ public class HighlightingEffect : MonoBehaviour
             }
         }
     }
-    #endif
+#endif
     #endregion
 
     #region Private Fields
@@ -317,11 +317,11 @@ public class HighlightingEffect : MonoBehaviour
     // Render all highlighted objects to the stencil buffer
     void OnPreRender()
     {
-        #if UNITY_4_0
+#if UNITY_4_0
         if (this.enabled == false || go.activeInHierarchy == false)
-        #else
+#else
         if (this.enabled == false || go.active == false)
-        #endif
+#endif
             return;
 
         if (stencilBuffer != null)

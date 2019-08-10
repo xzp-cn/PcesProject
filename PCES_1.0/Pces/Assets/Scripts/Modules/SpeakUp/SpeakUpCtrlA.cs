@@ -94,8 +94,8 @@ public class SpeakUpCtrlA : MonoBehaviour
         FBNKT_KA_AnimOper = FBNKT_KA_Anim.GetLegacyAnimationOper();
         FBNKT_KA_AnimOper.PlayForward("XH_D_1ST_FBNKT_GKA");
 
-        int start = 65;
-        int end = 67;
+        int start = 100;
+        int end = 102;
         bool passA = false;
         xiaohuaAnim.timePointEvent = (t) =>
         {

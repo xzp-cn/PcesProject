@@ -82,6 +82,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         goodB.transform.SetParent(emptyRoot.transform, false);
         goodB.transform.localPosition = new Vector3(9999, 9999, 9999);
         RndReinforcementB = qhwCtrlB.GetObj(results[1].pData.name);
+        goodB.name = results[1].pData.name;
 
         //强化物图卡B
         string tukaNameB = "tuka_" + results[1].pData.name;
@@ -576,11 +577,20 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     passA = true;
 
                     //将当前强化物挂在老师手上
-                    lsCtrl.SetJoint(RndReinforcementB.transform.parent.gameObject);
-                    lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
-                    RndReinforcementB.transform.parent.localPosition = Vector3.zero;
-                    RndReinforcementB.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
-                    RndReinforcementB.transform.localPosition = Vector3.zero;
+                    //lsCtrl.SetJoint(RndReinforcementB.transform.parent.gameObject);
+                    //lsCtrl.l_guadian.transform.localPosition = Vector3.zero;
+                    //RndReinforcementB.transform.parent.localPosition = Vector3.zero;
+                    //RndReinforcementB.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+                    //RndReinforcementB.transform.localPosition = Vector3.zero;
+
+                    RndReinforcementB.transform.parent.gameObject.SetActive(false);
+
+                    GameObject qhwm = ObjectsManager.instanse.GetQHW();
+                    qhwm.transform.SetParent(emptyRoot.transform);
+                    qhwCtrlA = qhwm.GetComponent<QHWCtrl>();
+                    LSCtrl lsctrl = teacherAnim.GetComponent<LSCtrl>();//将当前强化物挂在老师手上                
+                    qhwCtrlA.ShowObj(goodB.name);
+                    lsctrl.SetJoint(qhwCtrlA.gameObject);
                 }
 
                 if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
@@ -595,6 +605,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                         {
                             passD = true;
                             RndReinforcementB.transform.parent.gameObject.SetActive(false);
+                            qhwCtrlA.gameObject.SetActive(false);
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodB.GetComponent<PropsObject>().pData.name);
 

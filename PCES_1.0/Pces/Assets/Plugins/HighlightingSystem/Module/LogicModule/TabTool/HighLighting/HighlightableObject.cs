@@ -15,7 +15,7 @@ public class HighlightableObject : MonoBehaviour
     private static float constantOffSpeed = 4f;
 
     // Default transparent cutoff value used for shaders without _Cutoff property
-    private static float transparentCutoff = 0.5f;
+    private static float transparentCutoff = 10f;
     #endregion
 
     #region Private Fields

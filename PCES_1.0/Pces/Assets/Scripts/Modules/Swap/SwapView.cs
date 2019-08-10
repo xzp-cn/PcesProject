@@ -39,6 +39,8 @@ public class SwapView : MonoBehaviour
             Button startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
             startButton.onClick.AddListener(StartPro);
             startButton.gameObject.GetUIFlash().StartFlash();
+
+            SwapModel.GetInstance().CurReinforcement = null;
         }
         else
         {

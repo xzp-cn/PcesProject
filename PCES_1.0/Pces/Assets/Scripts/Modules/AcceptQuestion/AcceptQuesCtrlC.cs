@@ -73,6 +73,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
+        AcceptQuestionModel.GetInstance().GetIndex(new List<int> { 0, 2, 3 });
         PropsObject pObj = ObjectsManager.instanse.GetProps(Random.Range(101, 1001) % 3);//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
@@ -167,8 +168,8 @@ public class AcceptQuesCtrlC : MonoBehaviour
         tk9.localEulerAngles = Vector3.zero;
 
         //Material matWy = AcceptQuestionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
-        //Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka10").GetComponent<MeshRenderer>().materials[1];//我要图卡       
-        //matSource.CopyPropertiesFromMaterial(matWy);//更换我要图卡物体材质
+        Material matSource = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/tuka8").GetComponent<MeshRenderer>().materials[1];//我要图卡       
+        matSource.CopyPropertiesFromMaterial(matTar);//更换我要图卡物体材质
 
         //bool pass = true;
         ka.Complete = () =>
@@ -333,9 +334,10 @@ public class AcceptQuesCtrlC : MonoBehaviour
                 {
                     mctrl = MM.gameObject.AddComponent<MMCtrl>();
                 }
-                mctrl.SetJoint(qhw);
-                qhw.transform.localPosition = Vector3.zero;
-                mctrl.ls_Lf.transform.localPosition = Vector3.zero;
+                qhw.SetActive(false);
+                //mctrl.SetJoint(qhw);
+                //qhw.transform.localPosition = Vector3.zero;
+                //mctrl.ls_Lf.transform.localPosition = Vector3.zero;
             }
         };
         MM.PlayForward("MM_E_3RE_DY");
@@ -343,26 +345,39 @@ public class AcceptQuesCtrlC : MonoBehaviour
         LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/MM_E_3RE_DY_KA").GetLegacyAnimationOper();//mm手中卡显示
         ka.transform.SetParent(transform);
         ka.name = "MM_E_3RE_DY_KA";
-        Transform par = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R");
-        for (int i = 0; i < par.childCount; i++)
-        {
-            par.GetChild(i).gameObject.SetActive(false);
-        }
+        Transform par = ka.transform.Find("Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/XH_R2");
+        //for (int i = 0; i < par.childCount; i++)
+        //{
+        //    par.GetChild(i).gameObject.SetActive(false);
+        //}
         Transform jd = par.Find("judai2");
         jd.gameObject.SetActive(true);
         Material tkmat = jd.Find("tuka9 1").GetComponent<MeshRenderer>().materials[1];
         //par.Find(AcceptQuestionModel.GetInstance().CurReinforcement.pData.name).gameObject.SetActive(true);
+
         Reinforcement rfc = AcceptQuestionModel.GetInstance().CurReinforcement;
         Material matSource = AcceptQuestionModel.GetInstance().GetTuKa("tuka_" + rfc.pData.name).GetComponent<MeshRenderer>().materials[1];
         tkmat.CopyPropertiesFromMaterial(matSource);
 
-        ka.timePointEvent = (a) =>
+        bool passA = true;
+        bool passB = true;
+        ka.framePointEvent = (a) =>
         {
-            if (a >= 118 && a <= 120)
+            if (a >= 90 && a <= 92 && passB)
             {
-                ka.timePointEvent = null;
-                par.Find(rfc.pData.name).gameObject.SetActive(true);
-                qhw.SetActive(false);
+                //Debug.LogError("xh");
+                passB = false;
+                jd.gameObject.SetActive(false);
+            }
+            if (a >= 118 && a <= 120 && passA)
+            {
+                passA = false;
+                ka.framePointEvent = null;
+                //par.Find(rfc.pData.name).gameObject.SetActive(true);
+                //qhw.SetActive(false);
+                jd.gameObject.SetActive(false);
+                XhQHW xhqhw = ka.GetComponent<XhQHW>();
+                xhqhw.ShowObj(rfc.pData.name);
             }
         };
         ka.PlayForward("MM_E_3RE_DY_KA");
@@ -375,9 +390,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
     void XHJiewuCallback()
     {
         Debug.Log("xh给物品回调用");
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.SetJointL(qhw);
-        qhw.transform.localPosition = Vector3.zero;
+        //XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+        //xhctrl.SetJointL(qhw);
+        //qhw.transform.localPosition = Vector3.zero;
         ShowFinalUI();
     }
     /// <summary>

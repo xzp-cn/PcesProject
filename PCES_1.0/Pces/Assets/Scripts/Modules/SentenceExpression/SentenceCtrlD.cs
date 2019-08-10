@@ -92,6 +92,12 @@ public class SentenceCtrlD : MonoBehaviour
         matTar.CopyPropertiesFromMaterial(matSource);
         Transform tk10 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai4/tuka10");
 
+        Transform Wrist_L = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L");//拿卡
+        Material matk6 = Wrist_L.Find("tuka6").GetComponent<MeshRenderer>().materials[1];
+        matk6.CopyPropertiesFromMaterial(matSource);
+
+        Material mattk4 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/Wrist_R/goutongben/goutongben_01/tuka4").GetComponent<MeshRenderer>().materials[1];
+        mattk4.CopyPropertiesFromMaterial(matSource);
 
 
         tk10.localEulerAngles = new Vector3(0, -90, 0);
@@ -212,8 +218,8 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 pasxh = false;
                 XH.OnContinue();
-                //transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
+                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                //transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
             }
             if (a >= 72 && a <= 75 && pass)
             {
@@ -225,10 +231,6 @@ public class SentenceCtrlD : MonoBehaviour
             }
         };
         MM.PlayForward("MM_F_4TH_DBY");
-
-
-
-
         //Invoke("ClickmicroPhoneTip", 1);
     }
     /// <summary>
@@ -277,8 +279,6 @@ public class SentenceCtrlD : MonoBehaviour
     }
 
 
-
-
     /// <summary>
     /// 小华拿出我要字卡
     /// </summary>
@@ -293,11 +293,12 @@ public class SentenceCtrlD : MonoBehaviour
         MM.PlayForward("idle");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
-        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
+        List<int> indexList = new List<int> { 0, 2, 3, 6 };
+        int index = SentenceExpressionModel.GetInstance().GetIndex(indexList);
+        PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>();//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         SentenceExpressionModel.GetInstance().CurReinforcement = rfc;//设置强化物
         Debug.Log("GetTukaObject  " + rfc.pData.name);
-
 
 
         XH.transitionTime = 0;
@@ -378,7 +379,7 @@ public class SentenceCtrlD : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         HighLightCtrl.GetInstance().FlashOff(mmHand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要妈妈卡片");
+        tip.SetTipMessage("需要妈妈接卡");
         CancelInvoke("WyClickMMHandTip");
         Invoke("WyClickMMHandTip", 2);
     }
@@ -421,8 +422,8 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 passxh = false;
                 XH.OnContinue();
-                //transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
+                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                //transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
 
             }
             if (a >= 72 && a <= 75 && pass)
@@ -430,6 +431,7 @@ public class SentenceCtrlD : MonoBehaviour
                 pass = false;
                 MM.OnPause();
                 lao.OnPause();
+                //Debug.LogError("WYXhBYTip");
                 WYXhBYTip();
             }
             if (a >= 179 && a <= 181 && passmm)
@@ -441,7 +443,6 @@ public class SentenceCtrlD : MonoBehaviour
         };
         MM.PlayForward("MM_F_4TH_DBY");
         lao.PlayForward("MM_F_4TH_DBY_KA");
-
     }
     void WYXhBYTip()
     {
@@ -469,7 +470,8 @@ public class SentenceCtrlD : MonoBehaviour
         Dialog dlog = UIManager.Instance.GetUI<Dialog>("Dialog");
         UIManager.Instance.SetUIDepthTop("Dialog");
         string curObjName = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name_cn;
-        dlog.SetDialogMessage("好的,小华要" + curObjName);
+        //Debug.LogError(curObjName);
+        dlog.SetDialogMessage("好的,小华要" + curObjName + "呀");
     }
     void MMGiveObjCallback()
     {
@@ -496,14 +498,15 @@ public class SentenceCtrlD : MonoBehaviour
                 MM.timePointEvent = null;
                 //MMCtrl ctrl = MM.GetComponent<MMCtrl>();
                 int index = Random.Range(101, 1001) % 4;
-                string name = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>().pData.name;
+                string _name = SentenceExpressionModel.GetInstance().CurReinforcement.pData.name;
+                //Debug.LogError(name);
                 //GameObject go = Instantiate(SentenceExpressionModel.GetInstance().GetTuKa(name));
                 //go.name = "QHW";
                 //go.transform.SetParent(transform);
                 //go.transform.localEulerAngles = Vector3.zero;
                 //ctrl.SetJoint(go);
                 XhQHW xhqhw = KA.GetComponent<XhQHW>();
-                xhqhw.ShowObj(name);
+                xhqhw.ShowObj(_name);
 
                 WYXHJiewu();
             }

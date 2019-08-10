@@ -568,10 +568,19 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                     passA = true;
 
                     //将当前强化物挂在老师手上
-                    lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
-                    RndReinforcementA.transform.parent.localPosition = Vector3.zero;
-                    RndReinforcementA.transform.localPosition = Vector3.zero;
-                    RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+                    //lsCtrl.SetJoint(RndReinforcementA.transform.parent.gameObject);
+                    //RndReinforcementA.transform.parent.localPosition = Vector3.zero;
+                    //RndReinforcementA.transform.localPosition = Vector3.zero;
+                    //RndReinforcementA.transform.parent.localRotation = Quaternion.Euler(Vector3.zero);
+                    RndReinforcementA.transform.parent.gameObject.SetActive(false);
+
+                    GameObject qhwm = ObjectsManager.instanse.GetQHW();
+                    qhwm.transform.SetParent(emptyRoot.transform);
+                    qhwCtrl = qhwm.GetComponent<QHWCtrl>();
+                    LSCtrl lsctrl = teacherAnim.GetComponent<LSCtrl>();//将当前强化物挂在老师手上
+                    qhwCtrl.ShowObj(goodA.name);
+                    lsctrl.SetJoint(qhwCtrl.gameObject);
+
                 }
 
                 if (a > stm && a < etm && !passB)//小华接卡动画播放延迟一边挂载强化物
@@ -588,6 +597,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
                             RndReinforcementA.transform.parent.gameObject.SetActive(false);
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodA.name);
+                            qhwCtrl.gameObject.SetActive(false);
                         }
                     };
 

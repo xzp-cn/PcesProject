@@ -57,6 +57,12 @@ public class AcceptQuestionModel : SingleTemplate<AcceptQuestionModel>
         }
         return ObjectsManager.instanse.GetProps(index);
     }
+
+    public GameObject GetIndex(List<int> _indexList)
+    {
+        int _index = Random.Range(101, 1001) % _indexList.Count;
+        return GetObj(_indexList[_index]);
+    }
     /// <summary>
     /// 当前选择的强化物
     /// </summary>

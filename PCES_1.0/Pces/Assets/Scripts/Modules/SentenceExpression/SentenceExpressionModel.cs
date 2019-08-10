@@ -56,6 +56,17 @@ public class SentenceExpressionModel : SingleTemplate<SentenceExpressionModel>
         }
         return ObjectsManager.instanse.GetProps(index);
     }
+
+    /// <summary>
+    /// /获取随机索引
+    /// </summary>
+    /// <param name="_indexList"></param>
+    /// <returns></returns>
+    public int GetIndex(List<int> _indexList)
+    {
+        int _index = Random.Range(101, 1001) % _indexList.Count;
+        return _indexList[_index];
+    }
     /// <summary>
     /// 当前选择的强化物
     /// </summary>

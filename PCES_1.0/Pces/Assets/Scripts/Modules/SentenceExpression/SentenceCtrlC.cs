@@ -76,14 +76,24 @@ public class SentenceCtrlC : MonoBehaviour
         gtbKJ.transform.SetParent(transform);
         gtbKJ.name = "XH_D_3RD_FBNKTK_KA";//沟通本更新在日志
         gtbKJ.transform.Find("goutongben").gameObject.SetActive(false);
+        //沟通本我要图卡
+        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
+        Material matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+        //沟通本之中性刺激物图卡
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
+        matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+
 
         //沟通本我要图卡
-        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
-        Material matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
+        matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_woyao.ToString()).GetComponent<MeshRenderer>().materials[1];
+        matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
 
         //沟通本之中性刺激物图卡
-        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
         matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
         matTar = gtb.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
         matTar.CopyPropertiesFromMaterial(matSource);
@@ -262,7 +272,7 @@ public class SentenceCtrlC : MonoBehaviour
         //ClickDispatcher.Inst.EnableClick = false;
         swapUI.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
-        tip.SetTipMessage("需要教师奖励强化物");
+        tip.SetTipMessage("需要教师给相应物品");
         CancelInvoke("ClickLsGiveObjTip");
         Invoke("ClickLsGiveObjTip", 2);
         //ClickLsGiveObjTip();
@@ -369,16 +379,7 @@ public class SentenceCtrlC : MonoBehaviour
 
         gtbKJ.transform.Find("goutongben").gameObject.SetActive(true);
 
-        //沟通本我要图卡
-        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(PropsTag.judai_wokanjian.ToString()).GetComponent<MeshRenderer>().materials[1];
-        Material matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB1").GetComponent<MeshRenderer>().materials[1];
-        matTar.CopyPropertiesFromMaterial(matSource);
 
-        //沟通本之中性刺激物图卡
-        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
-        matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
-        matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
-        matTar.CopyPropertiesFromMaterial(matSource);
 
         //设置老师旁边的中性刺激物模型
         pObj = SentenceExpressionModel.GetInstance().GetObj(PropsType.reinforcement);//强化物
