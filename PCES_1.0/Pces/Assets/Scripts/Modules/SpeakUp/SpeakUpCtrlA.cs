@@ -85,11 +85,11 @@ public class SpeakUpCtrlA : MonoBehaviour
 
 
         xiaohuaAnim.PlayForward("XH_D_1ST_FBNKT");
+
         GameObject fdlsObj2 = PeopleManager.Instance.GetPeople("FDLS_BD");
-
         fdlsAnim = fdlsObj2.GetAnimatorOper();
-
-        fdlsAnim.PlayForward("FDLS_D_1ST_TJD");
+        fdlsAnim.PlayForward("FDLS_D_1ST_TJD", 0.343f);
+        fdlsAnim.OnPause();
 
         FBNKT_KA_AnimOper = FBNKT_KA_Anim.GetLegacyAnimationOper();
         FBNKT_KA_AnimOper.PlayForward("XH_D_1ST_FBNKT_GKA");
@@ -104,7 +104,6 @@ public class SpeakUpCtrlA : MonoBehaviour
                 passA = true;
                 xiaohuaAnim.timePointEvent = null;
                 xiaohuaAnim.OnPause();
-                fdlsAnim.OnPause();
                 FBNKT_KA_AnimOper.OnPause();
 
                 //2. 播放结束，提醒操作者点击辅助教师的手，点击后触发辅助教师抓着小华的手把图卡粘在句带上的动画。
@@ -165,11 +164,21 @@ public class SpeakUpCtrlA : MonoBehaviour
                     ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFinal, null);
                 }
             };
-
-            xiaohuaAnim.OnContinue();
-            fdlsAnim.OnContinue();
-            FBNKT_KA_AnimOper.OnContinue();
         }
+
+        fdlsAnim.OnContinue();
+
+        bool passA = false;
+        fdlsAnim.timePointEvent = (a) =>
+          {
+              if (a >= 100 && a <= 102 && !passA)
+              {
+                  passA = true;
+
+                  FBNKT_KA_AnimOper.OnContinue();
+                  xiaohuaAnim.OnContinue();
+              }
+          };
     }
 
     private void RedoClickTeachersHandFinal()

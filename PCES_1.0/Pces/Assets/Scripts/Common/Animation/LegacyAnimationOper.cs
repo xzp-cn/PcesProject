@@ -49,12 +49,12 @@ public class LegacyAnimationOper : MonoBehaviour
     float currLength;
     int lastFrame = -1, curFrame = -1;
 
-    public float transitionTime = 0f;//过渡时间-
+    public float transitionTime = 0f;//过渡时间-   
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
     /// <param name="clipName"></param> 
-    public void PlayForward(string clipName)
+    public void PlayForward(string clipName, float normalizeTime = 0)
     {
         if (anim)
         {
@@ -66,7 +66,7 @@ public class LegacyAnimationOper : MonoBehaviour
 
             if (!anim.IsPlaying(clipName))
             {
-                anim[clipName].normalizedTime = 0;
+                anim[clipName].normalizedTime = normalizeTime;
                 anim.Play(clipName, PlayMode.StopSameLayer);
                 lastFrame = curFrame = -1;
             }

@@ -67,12 +67,14 @@ public class DogFactory
 
 
 
-public class FactoryPattern : MonoBehaviour {
+public class FactoryPattern : MonoBehaviour
+{
 
     DogFactory aFactory;
     //BirdFactory bFactory;
 
-    void Start () {
+    void Start()
+    {
         aFactory = new DogFactory();
         aFactory.CreateRun().Run();
 
@@ -82,7 +84,8 @@ public class FactoryPattern : MonoBehaviour {
     }
 
 
-    void Update () {
+    void Update()
+    {
 
     }
 }

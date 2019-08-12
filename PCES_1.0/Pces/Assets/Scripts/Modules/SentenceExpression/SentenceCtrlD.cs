@@ -434,10 +434,11 @@ public class SentenceCtrlD : MonoBehaviour
                 //Debug.LogError("WYXhBYTip");
                 WYXhBYTip();
             }
-            if (a >= 179 && a <= 181 && passmm)
+            if (a >= 160 && a <= 162 && passmm)
             {
                 passmm = false;
                 MM.timePointEvent = null;
+                //MM.OnPause();                
                 MMGiveObjCallback();
             }
         };
@@ -511,8 +512,10 @@ public class SentenceCtrlD : MonoBehaviour
                 WYXHJiewu();
             }
         };
-        MM.PlayForward("MM_F_4TH_DY");
-        lao.PlayForward("MM_F_4TH_DY_KA");
+        MM.transitionTime = 0;
+        MM.PlayForward("MM_F_4TH_DY", 0.1f);
+        //MM.OnContinue();
+        lao.PlayForward("MM_F_4TH_DY_KA", 0.1f);
 
     }
     void WYXHJiewu()

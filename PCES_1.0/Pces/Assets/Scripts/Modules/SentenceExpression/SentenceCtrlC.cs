@@ -377,6 +377,11 @@ public class SentenceCtrlC : MonoBehaviour
         obj.transform.localPosition = new Vector3(2.453f, 0.578f, 0.798f);
         obj.transform.localScale = Vector3.one * 0.6F;
 
+        string _tuka = "tuka_" + rfc.pData.name;//沟通本里面图卡  
+        Material matSource = SentenceExpressionModel.GetInstance().GetTuKa(_tuka).GetComponent<MeshRenderer>().materials[1];
+        Material matTar = gtbKJ.transform.Find("XH_judaiA/XH_judaiA 1/tukaB/tukaB 1").GetComponent<MeshRenderer>().materials[1];
+        matTar.CopyPropertiesFromMaterial(matSource);
+
         gtbKJ.transform.Find("goutongben").gameObject.SetActive(true);
 
 
@@ -448,6 +453,7 @@ public class SentenceCtrlC : MonoBehaviour
             }
         };
         XH.PlayForward("XH_D_3RD_FBNKTK");
+
 
         gtbKJ.framePointEvent = (b) =>
         {

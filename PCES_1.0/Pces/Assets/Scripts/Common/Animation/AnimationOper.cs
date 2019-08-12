@@ -69,7 +69,7 @@ public class AnimationOper : MonoBehaviour
     float timeLength;
     float currLength;
     public float transitionTime = 0f;//过渡时间   
-    int lastFrame = -1, curFrame = -1; 
+    int lastFrame = -1, curFrame = -1;
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>

@@ -50,7 +50,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         GameObject qhw = ObjectsManager.instanse.GetQHW();
         qhw.transform.SetParent(emptyRoot.transform);
         qhwCtrlA = qhw.GetComponent<QHWCtrl>();
-        qhwCtrlA.transform.localPosition = new Vector3(0, 0, -0.2f);
+        qhwCtrlA.transform.localPosition = new Vector3(-0.127f, 0, 0.371f);
 
         GameObject qhwB = ObjectsManager.instanse.GetQHW();
         qhwB.transform.SetParent(emptyRoot.transform);
@@ -89,8 +89,9 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         tukaB = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameB));
         GameObject _tukaB = new GameObject("tukaB");
         _tukaB.transform.SetParent(emptyRoot.transform, false);
+        _tukaB.transform.SetAsFirstSibling();
 
-        _tukaB.transform.localPosition = new Vector3(2.288f, 0.5466f, 0.521f);
+        _tukaB.transform.localPosition = new Vector3(2.2433f, 0.5438f, 0.4231f);
         tukaB.transform.SetParent(_tukaB.transform, false);
         tukaB.transform.localPosition = Vector3.zero;
     }
@@ -223,40 +224,47 @@ public class DistinguishPictureCtrlB : MonoBehaviour
         swapui.GetMicroBtn.gameObject.GetUIFlash().StartFlash();
         swapui.speakEvent = () =>
         {
+            swapui.speakEvent = null;
             CancelInvoke("ClickPromptMicoUI");
             ChooseDo.Instance.Clicked();
-
             swapui.GetMicroBtn.gameObject.GetUIFlash().StopFlash();
-            swapui.speakEvent = null;
+
             swapui.SetButtonVisiable(SwapUI.BtnName.microButton, false);
             Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
             string gift = "自己拿";
             dialog.SetDialogMessage(gift);
 
+            CancelInvoke("XHTake");
+            Invoke("XHTake", 2);
             //4. 播放结束，触发小华拿起B的动画。
             /*
              小华伸手拿起了老师面前的强化物B。（小华手还没接触到强物化B，物品被老师用左手移到左边，老师的右手指了指强化物B的图卡）。
              */
-            Debug.Log("DistinguishPictureCtrlB::OnClickHuaTong(): 4. 播放结束，触发小华拿起B的动画。");
-            int start = 20;
-            int end = 21;
-            bool passA = false;
-            xiaohuaAnim.timePointEvent = (t) =>
-            {
-                if (t >= start && t <= end && !passA)
-                {
-                    passA = true;
-                    xiaohuaAnim.timePointEvent = null;
-                    dialog.Show(false);
-                    xiaohuaAnim.OnPause();
-
-                    OnXiaoHuaBringB();
-                }
-            };
-
-            xiaohuaAnim.PlayForward("XH_C_2ND_NA");
         };
         ChooseDo.Instance.DoWhat(5, RedoClickMicoUI, null);
+    }
+
+    void XHTake()
+    {
+        Debug.Log("DistinguishPictureCtrlB::OnClickHuaTong(): 4. 播放结束，触发小华拿起B的动画。");
+        int start = 20;
+        int end = 21;
+        bool passA = false;
+        xiaohuaAnim.timePointEvent = (t) =>
+        {
+            if (t >= start && t <= end && !passA)
+            {
+                passA = true;
+                xiaohuaAnim.timePointEvent = null;
+                Dialog dialog = UIManager.Instance.GetUI<Dialog>("Dialog");
+                dialog.Show(false);
+                xiaohuaAnim.OnPause();
+
+                OnXiaoHuaBringB();
+            }
+        };
+
+        xiaohuaAnim.PlayForward("XH_C_2ND_NA");
     }
 
     private void RedoClickMicoUI()
@@ -321,6 +329,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
             CancelInvoke("ClickTeachersPromptSecond");
             GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandSecond);
             ClickDispatcher.Inst.EnableClick = false;
+            HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
             int start = 29;
             int end = 31;
@@ -333,7 +342,7 @@ public class DistinguishPictureCtrlB : MonoBehaviour
                     teacherAnim.timePointEvent = null;
                     teacherAnim.OnPause();
                     xiaohuaAnim.OnContinue();
-                    RndReinforcementB.transform.parent.localPosition = new Vector3(-0.15f, 0f, -0.15f);
+                    RndReinforcementB.transform.parent.localPosition = Vector3.zero /*new Vector3(-0.2f, 0f, -0.164f)*/;
                     //6. 播放结束，提醒操作者点击教师的手，点击后触发教师指指B卡的动画。
                     OnClickTeacherShouThird();
                 }

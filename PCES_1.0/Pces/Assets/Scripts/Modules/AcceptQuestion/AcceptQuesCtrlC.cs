@@ -73,8 +73,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     /// </summary>
     void GetTukaObject()
     {
-        AcceptQuestionModel.GetInstance().GetIndex(new List<int> { 0, 2, 3 });
-        PropsObject pObj = ObjectsManager.instanse.GetProps(Random.Range(101, 1001) % 3);//强化物
+        PropsObject pObj = AcceptQuestionModel.GetInstance().GetIndex(new List<int> { 0, 2 }).GetComponent<PropsObject>();//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
         AcceptQuestionModel.GetInstance().CurReinforcement = rfc;//设置强化物
         Debug.Log("GetTukaObject  " + rfc.pData.name);
