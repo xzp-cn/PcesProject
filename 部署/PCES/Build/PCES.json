@@ -1,0 +1,14 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Pces",
+"dataUrl": "PCES.data.unityweb",
+"asmCodeUrl": "PCES.asm.code.unityweb",
+"asmMemoryUrl": "PCES.asm.memory.unityweb",
+"asmFrameworkUrl": "PCES.asm.framework.unityweb",
+"TOTAL_MEMORY": 536870912,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"}
+}

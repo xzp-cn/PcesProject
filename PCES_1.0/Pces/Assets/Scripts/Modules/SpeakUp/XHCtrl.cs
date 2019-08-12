@@ -134,6 +134,15 @@ public class XHCtrl : MonoBehaviour
             }
         }
 
+        if (XH_R2 != null)
+        {
+            Transform xh_r1 = XH_R2.transform.parent.Find("XH_R1");
+            for (int i = 0; i < xh_r1.childCount; i++)
+            {
+                Destroy(xh_r1.GetChild(i).gameObject);
+            }
+        }
+
         r_tuka.SetActive(false);
         r_tuka2.SetActive(false);
         r_judai.SetActive(false);
