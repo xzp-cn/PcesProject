@@ -30,6 +30,9 @@ public class SentenceCtrlD : MonoBehaviour
         if (hf == null)
         {
             hf = cam.gameObject.AddComponent<HighlightingEffect>();
+            //hf.stencilZBufferDepth = 0;
+            //hf.downsampleFactor = 1;
+            //hf.iterations = 2;
         }
 
         if (swapUI == null)

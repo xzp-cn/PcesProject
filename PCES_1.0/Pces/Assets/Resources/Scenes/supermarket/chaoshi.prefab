@@ -448,6 +448,7 @@ GameObject:
   - component: {fileID: 20711521004518360}
   - component: {fileID: 124028795897639588}
   - component: {fileID: 81868009391629292}
+  - component: {fileID: 114825811197267512}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -5759,6 +5760,20 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114825811197267512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1364246531283956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e3c8e0ec3fac947985810a241da616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stencilZBufferDepth: 0
+  _downsampleFactor: 2
+  iterations: 2
 --- !u!124 &124028795897639588
 Behaviour:
   m_ObjectHideFlags: 1

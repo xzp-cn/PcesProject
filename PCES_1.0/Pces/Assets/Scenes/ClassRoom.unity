@@ -216,6 +216,16 @@ Prefab:
       propertyPath: _downsampleFactor
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 20049084513637376, guid: 6cce8496f654eb743be2d81636486619,
+        type: 2}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20049084513637376, guid: 6cce8496f654eb743be2d81636486619,
+        type: 2}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cce8496f654eb743be2d81636486619, type: 2}
   m_IsPrefabParent: 0
@@ -234,7 +244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1628088525
 MonoBehaviour:
   m_ObjectHideFlags: 0

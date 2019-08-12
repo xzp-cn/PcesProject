@@ -302,8 +302,8 @@ public class SpeakUpCtrlC : MonoBehaviour
             ClickDispatcher.Inst.EnableClick = false;
             HighLightCtrl.GetInstance().FlashOff(cobj.go);
 
-            int st = 32;
-            int et = 35;
+            int st = 25;
+            int et = 28;
             int xhst = 40;
             int xhet = 43;
             bool passA = false;
@@ -324,7 +324,7 @@ public class SpeakUpCtrlC : MonoBehaviour
                     RndReinforcementA.transform.parent.gameObject.SetActive(false);
                 }
 
-                if (a > 36 && a < 39 && !passA)//小华接卡动画播放延迟一边挂载强化物
+                if (a > 45 && a < 48 && !passA)//小华接卡动画播放延迟一边挂载强化物
                 {
                     passA = true;
                     LegacyAnimationOper go = ResManager.GetPrefab("Prefabs/AnimationKa/XH_B_2ND_JG_KA").GetLegacyAnimationOper();

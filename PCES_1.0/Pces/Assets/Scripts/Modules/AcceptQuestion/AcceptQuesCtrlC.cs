@@ -36,6 +36,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
         if (hf == null)
         {
             hf = cam.gameObject.AddComponent<HighlightingEffect>();
+            //hf.stencilZBufferDepth = 0;
+            //hf.downsampleFactor = 1;
+            //hf.iterations = 2;
         }
         Init();
     }
@@ -57,6 +60,12 @@ public class AcceptQuesCtrlC : MonoBehaviour
         XH = PeopleManager.Instance.GetPeople(PeopleTag.XH_BD).GetAnimatorOper();
         XH.PlayForward("XH_E_3RD_FNN");
         XH.OnPause();
+
+        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
+        ka.transform.SetParent(transform);
+        ka.name = "XH_E_3RD_FNN_KA";
+        ka.PlayForward("XH_E_3RD_FNN_KA");
+        ka.OnPause();
         //XH.transform.localPosition = Vector3.zero;
         //XH.transform.localScale = Vector3.zero;
 
@@ -155,9 +164,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
         XH.OnContinue();
         Debug.Log("continue");
 
-        LegacyAnimationOper ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_E_3RD_FNN_KA").GetLegacyAnimationOper();
-        ka.transform.SetParent(transform);
-        ka.name = "XH_E_3RD_FNN_KA";
+        LegacyAnimationOper ka = transform.Find("XH_E_3RD_FNN_KA").gameObject.GetLegacyAnimationOper();
 
         Transform tk9 = ka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1/tuka9");
         Material mat = tk9.GetComponent<MeshRenderer>().materials[1];
@@ -178,7 +185,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
             tk9.localEulerAngles = tkeular;
             Debug.LogError(tk9.localEulerAngles);
         };
-        ka.PlayForward("XH_E_3RD_FNN_KA");
+        ka.OnContinue();
     }
     void XhTzkCallback()
     {
@@ -224,7 +231,13 @@ public class AcceptQuesCtrlC : MonoBehaviour
             if (a >= 41 && a <= 43)//给定一个帧区间范围
             {
                 MM.timePointEvent = null;
-                transform.Find("XH_E_3RD_FNN_KA").gameObject.SetActive(false);//沟通本图卡隐藏
+
+                Transform fnnka = transform.Find("XH_E_3RD_FNN_KA");
+                fnnka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L/judai1").gameObject.SetActive(false);
+                //沟通本图卡隐藏
+                XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+                Transform xh_r1 = xhctrl.XH_R2.transform.parent.Find("XH_R1");
+                fnnka.transform.SetParent(xh_r1);
 
                 XH.PlayForward("XH_E_3RD_JG");
                 XH.OnPause();
