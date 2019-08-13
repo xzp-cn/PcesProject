@@ -177,6 +177,9 @@ public class SentenceCtrlD : MonoBehaviour
         }
         ClickDispatcher.Inst.EnableClick = true;
         HighLightCtrl.GetInstance().FlashOn(mmHand);
+        //HighlightableObject ho = mmHand.gameObject.AddComponent<HighlightableObject>();
+        //ho.OccluderOn();
+        //ho.On(Color.yellow);
         ChooseDo.Instance.DoWhat(5, RedoClickMMHand, MMJieObj);
     }
     void RedoClickMMHand()
@@ -241,7 +244,6 @@ public class SentenceCtrlD : MonoBehaviour
     /// </summary>
     void DBYCallback()
     {
-
         Debug.Log("话筒提示");
         ClickmicroPhoneTip();
     }
@@ -296,7 +298,7 @@ public class SentenceCtrlD : MonoBehaviour
         MM.PlayForward("idle");
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
-        List<int> indexList = new List<int> { 0, 2, 3, 6 };
+        List<int> indexList = new List<int> { 0, 2, 3 };
         int index = SentenceExpressionModel.GetInstance().GetIndex(indexList);
         PropsObject pObj = SentenceExpressionModel.GetInstance().GetObj(index).GetComponent<PropsObject>();//强化物
         Reinforcement rfc = new Reinforcement(pObj.pData);//测试代码 
@@ -425,7 +427,13 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 passxh = false;
                 XH.OnContinue();
-                transform.Find("XH_F_4TH_FNN_KA").GetComponent<LegacyAnimationOper>().OnContinue();
+                Transform fnnka = transform.Find("XH_F_4TH_FNN_KA");
+                fnnka.GetComponent<LegacyAnimationOper>().OnContinue();
+                fnnka.gameObject.SetActive(false);
+                fnnka.gameObject.SetActive(true);
+                Transform xhr1 = XH.GetComponent<XHCtrl>().XH_R2.transform.parent.Find("XH_R1");
+                fnnka.SetParent(xhr1);
+                fnnka.transform.Find("Group1/Main/DeformationSystem/Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/Wrist_L").gameObject.SetActive(false);
                 //transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
 
             }
@@ -543,7 +551,7 @@ public class SentenceCtrlD : MonoBehaviour
         //GameObject ka = ResManager.GetPrefab("Prefabs/AnimationKa/XH_F_4TH_JG_KA");
         //ka.transform.SetParent(transform);
         //ka.GetLegacyAnimationOper().PlayForward("XH_F_4TH_JG_KA");
-        transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
+        //transform.Find("XH_F_4TH_FNN_KA").gameObject.SetActive(false);
     }
     void WYXHJiewuCallback()
     {

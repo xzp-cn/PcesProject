@@ -55,6 +55,7 @@ public class UIManager : SingleTon<UIManager>
         }
         return uiCom;
     }
+
     /// <summary>
     /// 将ui设置为最上面显示
     /// </summary>
@@ -85,6 +86,11 @@ public class UIManager : SingleTon<UIManager>
         {
             item.Value.SetActive(false);
         }
+    }
+
+    public void ClearDic()
+    {
+        uiDic.Clear();
     }
 
     //public void UiFlash

@@ -50,7 +50,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
     {
         GameObject qhw = ObjectsManager.instanse.GetQHW();
         qhw.transform.SetParent(emptyRoot.transform);
-        qhw.transform.localPosition = new Vector3(-0.12f, 0, -0.18f);
+        qhw.transform.localPosition = new Vector3(-0.032f, 0, -0.183f);
         qhwCtrl = qhw.GetComponent<QHWCtrl>();
 
         GameObject qhwB = GameObject.Instantiate(qhw);
@@ -67,7 +67,7 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         tukaA = GameObject.Instantiate(DistinguishPictureModel.GetInstance().GetTuKa(tukaNameA));
         _tukaA = new GameObject("tukaA");
         _tukaA.transform.SetParent(emptyRoot.transform, false);
-        _tukaA.transform.localPosition = new Vector3(2.281f, 0.5466f, 0.538f);
+        _tukaA.transform.localPosition = new Vector3(2.199f, 0.545f, 0.406f);
         tukaA.transform.SetParent(_tukaA.transform, false);
         tukaA.transform.localPosition = Vector3.zero;
 

@@ -46,6 +46,8 @@ public class GameOverCtrl : MonoBehaviour
     {
         gameObject.SetActive(false);
 
+        UIManager.Instance.ClearDic();
+
         FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
         StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
         GameObject go = ResManager.GetPrefab(sb.ToString());

@@ -88,6 +88,13 @@ public class AcceptQuesCtrlC : MonoBehaviour
         Debug.Log("GetTukaObject  " + rfc.pData.name);
 
         Transform panzi = transform.Find("chaoshi/chaoshi_sw/panzi");
+        GameObject panziGo = panzi.gameObject;
+        PanziCtrl pc = panziGo.GetComponent<PanziCtrl>();
+        if (pc == null)
+        {
+            pc = panziGo.AddComponent<PanziCtrl>();
+        }
+
         for (int i = 0; i < panzi.childCount; i++)
         {
             panzi.GetChild(i).gameObject.SetActive(false);
@@ -346,7 +353,9 @@ public class AcceptQuesCtrlC : MonoBehaviour
                 {
                     mctrl = MM.gameObject.AddComponent<MMCtrl>();
                 }
-                qhw.SetActive(false);
+                //qhw.SetActive(false);
+                //Debug.LogError(qhw.name);
+                transform.Find("chaoshi/chaoshi_sw/panzi").GetComponent<PanziCtrl>().ShowObj(qhw.name);
                 //mctrl.SetJoint(qhw);
                 //qhw.transform.localPosition = Vector3.zero;
                 //mctrl.ls_Lf.transform.localPosition = Vector3.zero;
@@ -485,5 +494,36 @@ public class AcceptQuesCtrlC : MonoBehaviour
     private void OnDestroy()
     {
 
+    }
+}
+
+public class PanziCtrl : MonoBehaviour
+{
+    /// <summary>
+    /// 控制盘子中的物体显示
+    /// </summary>
+    public void ShowObj(string goodsName)
+    {
+        Transform par = transform.Find(goodsName);
+        switch (goodsName)
+        {
+            case "biscuit":
+                for (int i = 23; i < 29; i++)
+                {
+                    par.Find("haitaibinggan" + i.ToString()).gameObject.SetActive(false);
+                }
+                break;
+            case "chocolate":
+                par.Find("qiaokeli3").gameObject.SetActive(false);
+                break;
+            case "chips":
+                for (int i = 33; i < 38; i++)
+                {
+                    par.Find("shupian" + i.ToString()).gameObject.SetActive(false);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

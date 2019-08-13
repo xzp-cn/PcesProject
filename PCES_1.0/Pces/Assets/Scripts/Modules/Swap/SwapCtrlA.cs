@@ -299,7 +299,7 @@ public class SwapCtrlA : MonoBehaviour
     void RedoLsJieka()
     {
         //ClickDispatcher.Inst.EnableClick = false;
-        HighLightCtrl.GetInstance().FlashOn(jshand);
+        HighLightCtrl.GetInstance().FlashOff(jshand);
         TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
         tip.SetTipMessage("需要教师接卡");
         CancelInvoke("ClickLsHandTip");
