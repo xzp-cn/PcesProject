@@ -451,6 +451,11 @@ public class DistinguishPictureCtrlB : MonoBehaviour
     {
         if (cobj.objname == "shou")
         {
+            ChooseDo.Instance.Clicked();
+            CancelInvoke("ClickTeachersPromptSec");
+            GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFourth);
+            ClickDispatcher.Inst.EnableClick = false;
+
             int start = 47;
             int end = 48;
             bool passA = false;

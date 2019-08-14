@@ -32,14 +32,14 @@ public class AcceptQuesCtrlC : MonoBehaviour
 
         Camera cam = transform.GetComponentInChildren<Camera>();
         ClickDispatcher.Inst.cam = cam;
-        HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
-        if (hf == null)
-        {
-            hf = cam.gameObject.AddComponent<HighlightingEffect>();
-            //hf.stencilZBufferDepth = 0;
-            //hf.downsampleFactor = 1;
-            //hf.iterations = 2;
-        }
+        //HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
+        //if (hf == null)
+        //{
+        //    hf = cam.gameObject.AddComponent<HighlightingEffect>();
+        //    //hf.stencilZBufferDepth = 0;
+        //    //hf.downsampleFactor = 1;
+        //    //hf.iterations = 2;
+        //}
         Init();
     }
     public void Init()

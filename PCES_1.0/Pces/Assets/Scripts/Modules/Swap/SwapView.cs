@@ -51,7 +51,6 @@ public class SwapView : MonoBehaviour
     {
 
         SwapModel.GetInstance().hpUI.gameObject.SetActive(false);
-
         spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
         spACtrl.transform.SetParent(transform);
         spACtrl.evtFinished += OnSpACtrlFinished;

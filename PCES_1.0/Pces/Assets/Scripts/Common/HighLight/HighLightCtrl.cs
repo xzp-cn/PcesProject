@@ -4,8 +4,9 @@ using UnityEngine;
 public class HighLightCtrl : SingleTemplate<HighLightCtrl>
 {
     List<HighlightableObject> hoList = new List<HighlightableObject>();
-    Camera[] cameras;
-    Color32 c1 = new Color(255, 132, 0, 0), c2 = new Color(206, 215, 21, 255);
+    public Camera[] cameras;
+    //Color32 c1 = new Color(255, 132, 0, 0), c2 = new Color(206, 215, 21, 255);
+    Color c1 = new Color(1, 1, 0, 0), c2 = new Color(1, 1, 1, 1);
     //float freq = 2f;
     /// <summary>
     /// 初始化
@@ -15,21 +16,23 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
         if (cameras == null)
         {
             cameras = UnityEngine.Object.FindObjectsOfType<Camera>();
-            if (cameras != null)
+        }
+        if (cameras != null)
+        {
+            for (int i = 0; i < cameras.Length; i++)
             {
-                for (int i = 0; i < cameras.Length; i++)
+                HighlightingEffect hef = cameras[i].GetComponent<HighlightingEffect>();
+                if (hef == null)
                 {
-                    HighlightingEffect hef = cameras[i].GetComponent<HighlightingEffect>();
-                    if (hef == null)
-                    {
-                        hef = cameras[i].gameObject.AddComponent<HighlightingEffect>();
-                    }
+                    hef = cameras[i].gameObject.AddComponent<HighlightingEffect>();
+                    //hef._downsampleFactor = 1;
+                    //hef.iterations = 2;
                 }
             }
-            else
-            {
-                Debug.LogError("高亮插件需要Camera!");
-            }
+        }
+        else
+        {
+            Debug.LogError("高亮插件需要Camera!");
         }
     }
     /// <summary>
@@ -45,7 +48,10 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
             ho = obj.AddComponent<HighlightableObject>();
         }
         Init();
-        hoList.Add(ho);
+        if (!hoList.Contains(ho))
+        {
+            hoList.Add(ho);
+        }
         return ho;
     }
     /// <summary>
@@ -82,6 +88,7 @@ public class HighLightCtrl : SingleTemplate<HighLightCtrl>
     }
     public void FlashOn(GameObject obj)
     {
+        //Debug.LogError(c1 + "   " + c2);
         InitHighlightObj(obj).FlashingOn(c1, c2);
     }
     /// <summary>

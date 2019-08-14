@@ -15,10 +15,10 @@ public class HighlightingEffect : MonoBehaviour
     public int stencilZBufferDepth = 0;
 
     // Stencil (highlighting) buffer size downsample factor
-    public int _downsampleFactor = 1;
+    public int _downsampleFactor = 2;
 
     // Blur iterations
-    public int iterations = 1;
+    public int iterations = 2;
 
     // Blur minimal spread
     float blurMinSpread = 1f;
@@ -64,18 +64,19 @@ public class HighlightingEffect : MonoBehaviour
         }
         set
         {
-            if (value == 0)
-            {
-                _downsampleFactor = 1;
-            }
-            if (value == 1)
-            {
-                _downsampleFactor = 2;
-            }
-            if (value == 2)
-            {
-                _downsampleFactor = 4;
-            }
+            //if (value == 0)
+            //{
+            //    _downsampleFactor = 1;
+            //}
+            //if (value == 1)
+            //{
+
+            //}
+            //if (value == 2)
+            //{
+            //    _downsampleFactor = 4;
+            //}
+            _downsampleFactor = 2;
         }
     }
 

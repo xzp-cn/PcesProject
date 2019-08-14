@@ -449,8 +449,9 @@ public class SentenceCtrlD : MonoBehaviour
             {
                 passmm = false;
                 MM.timePointEvent = null;
-                //MM.OnPause();                
-                MMGiveObjCallback();
+                MM.OnPause();
+                //MMGiveObjCallback();
+                WyGiveClickMMHandTip();
             }
         };
         MM.PlayForward("MM_F_4TH_DBY");
@@ -487,6 +488,10 @@ public class SentenceCtrlD : MonoBehaviour
     }
     void MMGiveObjCallback()
     {
+        CancelInvoke("WyGiveClickMMHandTip");
+        HighLightCtrl.GetInstance().FlashOff(mmHand);
+        ClickDispatcher.Inst.EnableClick = false;
+
         transform.Find("MM_F_4TH_DBY_KA").gameObject.SetActive(false);
         UIManager.Instance.GetUI<Dialog>("Dialog").Show(false);
 
@@ -524,13 +529,32 @@ public class SentenceCtrlD : MonoBehaviour
             }
         };
         MM.transitionTime = 0;
-        MM.PlayForward("MM_F_4TH_DY", 0.1f);
+        MM.PlayForward("MM_F_4TH_DY", 0.15f);
+        MM.OnContinue();
         //MM.OnContinue();
-        lao.PlayForward("MM_F_4TH_DY_KA", 0.1f);
+        lao.PlayForward("MM_F_4TH_DY_KA", 0.15f);
 
     }
+
+    void WyGiveClickMMHandTip()
+    {
+        ClickDispatcher.Inst.EnableClick = true;
+        HighLightCtrl.GetInstance().FlashOn(mmHand);
+        ChooseDo.Instance.DoWhat(5, RedoWyGiveClickMMhand, MMGiveObjCallback);
+    }
+    void RedoWyGiveClickMMhand()
+    {
+        //ClickDispatcher.Inst.EnableClick = false;
+        HighLightCtrl.GetInstance().FlashOff(mmHand);
+        TipUI tip = UIManager.Instance.GetUI<TipUI>("TipUI");
+        tip.SetTipMessage("需要妈妈给相应物品");
+        CancelInvoke("WyGiveClickMMHandTip");
+        Invoke("WyGiveClickMMHandTip", 2);
+    }
+
     void WYXHJiewu()
     {
+
         XH.Complete += WYXHJiewuCallback;
         bool pass = true;
         XH.timePointEvent = (a) =>

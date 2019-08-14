@@ -37,7 +37,7 @@ public class SentenceExpressionView : MonoBehaviour
         //stCCtrl.evtFinished += OnstCCtrlFinished;
         //stCCtrl.evtRedo += OnstCCtrlRedo;
         //stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
-        //stDCtrl.transform.SetParent(transform);F:\Pces_new\Pces\PCES_1.0\Pces\Assets\Scripts\Modules\SentenceExpression\SentenceExpressionView.cs
+        //stDCtrl.transform.SetParent(transform);
         //stDCtrl.evtFinished += OnstDCtrlFinished;
         //stDCtrl.evtRedo += OnstDCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();

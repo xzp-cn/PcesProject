@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class HighlightableObject : MonoBehaviour
 {
+    private void Start()
+    {
+        FlashingOn();
+    }
     #region Editable Fields
     // Builtin layer reserved for the highlighting
     public static int highlightingLayer = 7;
@@ -250,6 +254,7 @@ public class HighlightableObject : MonoBehaviour
     //
     private void OnDisable()
     {
+
         StopAllCoroutines();
         // Unsubscribe from highlighting event
         HighlightingEffect.highlightingEvent -= UpdateEventHandler;
@@ -794,5 +799,6 @@ public class HighlightableObject : MonoBehaviour
             once = false;
         }
     }
+
     #endregion
 }
