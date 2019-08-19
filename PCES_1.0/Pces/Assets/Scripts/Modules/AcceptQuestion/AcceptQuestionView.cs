@@ -148,17 +148,6 @@ public class AcceptQuestionView : MonoBehaviour
         {
             tpv.Dispose();
         }
-
-        Camera cam = GlobalDataManager.GetInstance().GetCamera();
-        if (cam != null)
-        {
-            //Debug.Log(cam);
-            HighlightingEffect hf = cam.GetComponent<HighlightingEffect>();
-            if (hf != null)
-            {
-                DestroyImmediate(hf);
-            }
-        }
         //销毁、资源释放、监听移除            
         RemoveListens();
         Destroy(gameObject);

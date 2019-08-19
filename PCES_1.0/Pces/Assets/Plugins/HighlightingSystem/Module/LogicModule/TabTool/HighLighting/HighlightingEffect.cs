@@ -157,8 +157,10 @@ public class HighlightingEffect : MonoBehaviour
         {
             if (_blurMaterial == null)
             {
+                Debug.Log("HighlightingEffect:    blurMaterial");
                 _blurMaterial = new Material(blurShader);
                 _blurMaterial.hideFlags = HideFlags.HideAndDontSave;
+                blurMaterial.SetFloat("_Intensity", 0.4f);
             }
             return _blurMaterial;
         }
