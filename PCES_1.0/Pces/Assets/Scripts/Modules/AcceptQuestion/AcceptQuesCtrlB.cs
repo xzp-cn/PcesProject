@@ -406,13 +406,18 @@ public class AcceptQuesCtrlB : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        HighLightCtrl.GetInstance().OffAllObjs();
 
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
-
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
         RemoveAllListeners();
     }
     void NextDo()
@@ -431,14 +436,21 @@ public class AcceptQuesCtrlB : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
-        LS.timePointEvent = null;
-        XH.timePointEvent = null;
-        //FDLS.timePointEvent = null;
+        if (LS != null)
+        {
+            LS.timePointEvent = null;
+            LS.Complete -= LsGiveObjCallback;
+        }
 
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
-
-        swapUI.speakEvent -= SpeakBtnClickCallback;
+        if (XH != null)
+        {
+            XH.timePointEvent = null;
+            XH.Complete -= XHJiewuCallback;
+        }
+        if (swapUI != null)
+        {
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }
@@ -452,7 +464,8 @@ public class AcceptQuesCtrlB : MonoBehaviour
     }
     public void Dispose()
     {
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
 
         evtFinished = null;
         evtRedo = null;

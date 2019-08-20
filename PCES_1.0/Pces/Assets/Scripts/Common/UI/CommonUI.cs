@@ -23,6 +23,10 @@ public class CommonUI : MonoBehaviour
         /// </summary>
         LevelChange,
     }
+    private void Awake()
+    {
+        //DontDestroyOnLoad(gameObject);
+    }
 
     /// <summary>
     /// 重做\下一关事件
@@ -80,7 +84,8 @@ public class CommonUI : MonoBehaviour
     /// </summary>
     public void ShowFinalUI()
     {
-        UIManager.Instance.SetUIDepthTop("CommonUI");
+        //UIManager.Instance.SetUIDepthTop("CommonUI");
+        transform.SetAsLastSibling();
         final.gameObject.SetActive(true);
     }
 
@@ -108,6 +113,8 @@ public class CommonUI : MonoBehaviour
         {
             nextBtn.onClick.RemoveListener(NextBtnClick);
         }
+
+        Debug.Log("ComUI:   Destroy");
 
         GlobalEntity.GetInstance().RemoveListener<string>(pEvent.LevelChange, OnLevelTxtChange);
     }

@@ -84,7 +84,15 @@ public abstract class Entity
     /// <param name="p_type">Enum that describes the event being listened.</param>
     public void RemoveAllListeners(Enum p_type)
     {
-        _table.Remove(p_type);
+        if (_table.ContainsKey(p_type))
+        {
+            Delegate[] dList = _table[p_type].GetInvocationList();
+            for (int i = 0; i < dList.Length; i++)
+            {
+                Delegate.Remove(_table[p_type], dList[i]);
+            }
+            _table.Remove(p_type);
+        }
     }
 
 

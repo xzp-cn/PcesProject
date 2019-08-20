@@ -373,23 +373,29 @@ public class SpeakUpCtrlB : MonoBehaviour
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
 
-        xiaohuaAnim.timePointEvent = null;
-        xiaohuaAnim.OnContinue();
-        LS.timePointEvent = null;
-        LS.OnContinue();
-
-        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-        if (xhctrl != null)
+        if (xiaohuaAnim != null)
         {
-            xhctrl.DestroyGuadian();
+            xiaohuaAnim.timePointEvent = null;
+            xiaohuaAnim.OnContinue();
+
+            XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+            if (xhctrl != null)
+            {
+                xhctrl.DestroyGuadian();
+            }
         }
 
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        if (lsctrl != null)
+        if (LS != null)
         {
-            lsctrl.DestroyGuadian();
-        }
+            LS.timePointEvent = null;
+            LS.OnContinue();
 
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            if (lsctrl != null)
+            {
+                lsctrl.DestroyGuadian();
+            }
+        }
 
         evtFinished = null;
         evtRedo = null;

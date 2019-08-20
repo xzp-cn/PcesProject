@@ -148,6 +148,7 @@ public class SpeakUpView : MonoBehaviour
 
     public void Dispose()
     {
+        //Debug.LogError("SpeakUpView");
         if (spaCtrl != null)
         {
             spaCtrl.Dispose();
@@ -164,6 +165,9 @@ public class SpeakUpView : MonoBehaviour
         {
             tpv.Dispose();
         }
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
+        PeopleManager.Instance.Reset();
+        GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }
 }

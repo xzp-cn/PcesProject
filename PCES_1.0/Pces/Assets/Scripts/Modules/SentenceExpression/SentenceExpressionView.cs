@@ -15,19 +15,18 @@ public class SentenceExpressionView : MonoBehaviour
         ClickDispatcher.Inst.SetCurrentCamera(Camera.main);
         UnityEngine.Debug.Log("SentenceExpressionView::Awake(): 第六阶段 主动发表意见");
         this.name = "SentenceExpressionView";
+        SentenceExpressionModel.GetInstance().Jiaoshi();
     }
     private void Start()
     {
-        SentenceExpressionModel.GetInstance().Jiaoshi();
-
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第六阶段 主动发表意见");
         Canvas canvas = FindObjectOfType<Canvas>();
         com.transform.SetParent(canvas.transform);
-        stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
-        stACtrl.transform.SetParent(transform);
-        stACtrl.evtFinished += OnstACtrlFinished;
-        stACtrl.evtRedo += OnstACtrlRedo;
+        //stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
+        //stACtrl.transform.SetParent(transform);
+        //stACtrl.evtFinished += OnstACtrlFinished;
+        //stACtrl.evtRedo += OnstACtrlRedo;
         //stBCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlB").GetComponent<SentenceCtrlB>();
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;
@@ -36,10 +35,10 @@ public class SentenceExpressionView : MonoBehaviour
         //stCCtrl.transform.SetParent(transform);
         //stCCtrl.evtFinished += OnstCCtrlFinished;
         //stCCtrl.evtRedo += OnstCCtrlRedo;
-        //stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
-        //stDCtrl.transform.SetParent(transform);
-        //stDCtrl.evtFinished += OnstDCtrlFinished;
-        //stDCtrl.evtRedo += OnstDCtrlRedo;
+        stDCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlD").GetComponent<SentenceCtrlD>();
+        stDCtrl.transform.SetParent(transform);
+        stDCtrl.evtFinished += OnstDCtrlFinished;
+        stDCtrl.evtRedo += OnstDCtrlRedo;
         //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         //tpv.transform.SetParent(transform);
         //tpv.evtFinished += OnTestPaperFinished;
@@ -153,6 +152,7 @@ public class SentenceExpressionView : MonoBehaviour
     }
     public void Dispose()
     {
+        //Debug.LogError("SentenceExpressionView");
         //销毁、资源释放、监听移除        
         if (stACtrl != null)
         {
@@ -174,6 +174,9 @@ public class SentenceExpressionView : MonoBehaviour
         {
             tpv.Dispose();
         }
+        PeopleManager.Instance.Reset();
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
+        SentenceExpressionModel.GetInstance().Jiaoshi().SetActive(true);
         RemoveListens();
         Destroy(gameObject);
     }

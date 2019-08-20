@@ -36,7 +36,10 @@ public class PeopleManager : SingleTon<PeopleManager>
             //    temp.Find("Group/Main").localPosition = Vector3.zero;
             //}
             temp.gameObject.SetActive(true);
-            temp.gameObject.GetAnimatorOper().OnContinue();
+            AnimationOper ao = temp.gameObject.GetAnimatorOper();
+            ao.OnContinue();
+            ao.ClearCompleteEvent();
+            ao.timePointEvent = null;
             temp.gameObject.GetAnimatorOper().PlayForward("idle");
 
             XHCtrl xhctrl = temp.GetComponent<XHCtrl>();
@@ -50,6 +53,7 @@ public class PeopleManager : SingleTon<PeopleManager>
                 lsctrl.DestroyGuadian();
             }
         }
+
     }
     public void CtrlShow(string name, bool isShow = true)
     {
@@ -95,6 +99,16 @@ public class PeopleManager : SingleTon<PeopleManager>
         }
         return go;
     }
+
+    public void GetNewXH()
+    {
+        string path = "Prefabs/People/XH_BD";
+        Transform temp = Instantiate<GameObject>(Resources.Load<GameObject>(path)).transform;
+        temp.SetParent(transform);
+        temp.name = "XH_BD";
+        pDic[PeopleTag.XH_BD.ToString()] = temp.gameObject;
+    }
+
     public GameObject GetPeople(string pName)
     {
         GameObject go = null;

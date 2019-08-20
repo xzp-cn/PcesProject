@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 public class StageSelectUI : MonoBehaviour
 {
-    Button okBtn, closeBtn;
+    Button selectBtn, okBtn, closeBtn;
     Toggle[] toggles;
     Transform tip;
     int selectedObjIndex = -1;
     int lastIndex = -1;
     public event System.Action<int> okEvent;
-    public event System.Action closeEvent;
+    public event System.Action selectStageEvent, closeEvent;
     Dictionary<string, Texture> spDic;
     ToggleGroup tgroup;
+    Transform panel;
     private void Awake()
     {
-        gameObject.SetActive(false);
+        panel = transform.Find("bg");
         tgroup = GetComponentInChildren<ToggleGroup>();
         tgroup.allowSwitchOff = true;
         ToggleGroupOff();
+        panel.gameObject.SetActive(false);
         //RectTransform rt = GetComponent<RectTransform>();
     }
     private void OnEnable()
@@ -30,14 +32,15 @@ public class StageSelectUI : MonoBehaviour
     private void Start()
     {
         lastIndex = selectedObjIndex = -1;
-        tip = transform.Find("panel/tip");
+        tip = transform.Find("bg/panel/tip");
         tip.gameObject.SetActive(false);
-        okBtn = transform.Find("panel/okBtn").GetComponent<Button>();
-        closeBtn = transform.Find("panel/closeBtn").GetComponent<Button>();
-        toggles = transform.Find("panel/toggles").GetComponentsInChildren<Toggle>();
+        okBtn = transform.Find("bg/panel/okBtn").GetComponent<Button>();
+        closeBtn = transform.Find("bg/panel/closeBtn").GetComponent<Button>();
+        selectBtn = transform.Find("selectBtn").GetComponent<Button>();
+        toggles = transform.Find("bg/panel/toggles").GetComponentsInChildren<Toggle>();
         for (int i = 0; i < toggles.Length; i++)
         {
-            int index = i;
+            int index = i + 1;
             toggles[i].onValueChanged.AddListener(delegate (bool isOn)
             {
                 OnValueChanged(isOn, index);
@@ -45,13 +48,23 @@ public class StageSelectUI : MonoBehaviour
         }
         okBtn.onClick.AddListener(OnOkBtnClick);
         closeBtn.onClick.AddListener(OnCloseBtnClick);
+        selectBtn.onClick.AddListener(OnSelectBtnClick);
     }
 
+    void OnSelectBtnClick()
+    {
+        Debug.Log("click");
+        panel.gameObject.SetActive(true);
+        if (selectStageEvent != null)
+        {
+            selectStageEvent();
+        }
+    }
     void OnOkBtnClick()
     {
         if (selectedObjIndex >= 0)
         {
-            gameObject.SetActive(false);
+            panel.gameObject.SetActive(false);
             if (okEvent != null)
             {
                 if (lastIndex != selectedObjIndex)
@@ -69,7 +82,7 @@ public class StageSelectUI : MonoBehaviour
     }
     void OnCloseBtnClick()
     {
-        gameObject.SetActive(false);
+        panel.gameObject.SetActive(false);
         if (closeEvent != null)
         {
             closeEvent();
@@ -96,7 +109,7 @@ public class StageSelectUI : MonoBehaviour
     }
     public void Show()
     {
-        gameObject.SetActive(true);
+        panel.gameObject.SetActive(true);
     }
     private void OnDestroy()
     {

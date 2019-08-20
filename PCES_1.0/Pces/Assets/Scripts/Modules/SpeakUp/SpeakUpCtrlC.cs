@@ -408,22 +408,39 @@ public class SpeakUpCtrlC : MonoBehaviour
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
 
-        xiaohuaAnim.timePointEvent = null;
-        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
-        zhuozi2.transform.localPosition = zhuozi2Pos;
-        LS.timePointEvent = null;
-        LS.OnContinue();
-
-        XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
-        if (xhctrl != null)
+        if (xiaohuaAnim != null)
         {
-            xhctrl.DestroyGuadian();
+            xiaohuaAnim.timePointEvent = null;
+
+            XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
+            if (xhctrl != null)
+            {
+                xhctrl.DestroyGuadian();
+            }
+
+            xiaohuaAnim.gameObject.SetActive(false);
+            xiaohuaAnim.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
+            xiaohuaAnim.gameObject.SetActive(true);
+            xiaohuaAnim.OnContinue();
+            xiaohuaAnim.ClearCompleteEvent();
+            DestroyImmediate(xiaohuaAnim.gameObject);
+            PeopleManager.Instance.GetNewXH();
+            //xiaohuaAnim.PlayForward("idle");
         }
 
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        if (lsctrl != null)
+        Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
+        zhuozi2.transform.localPosition = zhuozi2Pos;
+
+        if (LS != null)
         {
-            lsctrl.DestroyGuadian();
+            LS.timePointEvent = null;
+            LS.OnContinue();
+
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            if (lsctrl != null)
+            {
+                lsctrl.DestroyGuadian();
+            }
         }
 
         evtFinished = null;
@@ -433,13 +450,8 @@ public class SpeakUpCtrlC : MonoBehaviour
             Destroy(emptyRoot);
             emptyRoot = null;
         }
-
-        xiaohuaAnim.gameObject.SetActive(false);
-        xiaohuaAnim.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
-        xiaohuaAnim.gameObject.SetActive(true);
-        xiaohuaAnim.OnContinue();
-        xiaohuaAnim.PlayForward("idle");
-
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickteacherHandSecond);
 
         //恢复老师位置和相机位置
         PeopleManager.Instance.GetPeople("LS_BD").transform.localPosition = lsOldPos;

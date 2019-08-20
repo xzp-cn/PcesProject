@@ -495,13 +495,19 @@ public class EnhanceCtrlA : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        HighLightCtrl.GetInstance().OffAllObjs();
+
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
         RemoveAllListeners();
-
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
     void ReDo()
     {
@@ -525,24 +531,36 @@ public class EnhanceCtrlA : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-        swapUI.chooseEvent -= ChooseBtnClickCallback;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
-        selectUI.okEvent -= SelectUIOkBtnCallback;
-
         com = null;
 
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
+        if (swapUI != null)
+        {
+            swapUI.chooseEvent -= ChooseBtnClickCallback;
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
+        if (selectUI != null)
+        {
+            selectUI.okEvent -= SelectUIOkBtnCallback;
+        }
+        if (LS != null)
+        {
+            LS.Complete -= LsGiveObjCallback;
+            LS.timePointEvent = null;
+        }
 
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
+        if (XH != null)
+        {
+            XH.Complete -= XHJiewuCallback;
+            XH.timePointEvent = null;
+        }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
     }
     public void Dispose()
     {
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
 
         evtFinished = null;
         evtRedo = null;

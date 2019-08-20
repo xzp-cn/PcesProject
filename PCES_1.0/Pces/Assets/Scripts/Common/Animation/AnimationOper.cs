@@ -56,7 +56,7 @@ public class AnimationOper : MonoBehaviour
         }
     }
 
-    private void ClearCompleteEvent()
+    public void ClearCompleteEvent()
     {
         for (int i = 0; i < _BindList.Count; i++)
         {
@@ -70,6 +70,7 @@ public class AnimationOper : MonoBehaviour
     float currLength;
     public float transitionTime = 0f;//过渡时间   
     int lastFrame = -1, curFrame = -1;
+    bool isPlaying = false;
     /// <summary>
     /// 从头开始播放动画剪辑
     /// </summary>
@@ -83,8 +84,8 @@ public class AnimationOper : MonoBehaviour
             currLength = 0;
             IsStart = false;
             curFrame = lastFrame = -1;
-            anim.CrossFade(clipName, transitionTime, 0, offset);
-            //anim.Play(clipName, 0, 0);
+            //anim.CrossFade(clipName, transitionTime, 0, offset);
+            anim.Play(clipName, 0, offset);
             System.Array.FindIndex(anim.runtimeAnimatorController.animationClips, (ac) =>
             {
                 if (ac.name == animName)

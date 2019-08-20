@@ -150,6 +150,7 @@ public class SwapView : MonoBehaviour
     }
     public void Dispose()
     {
+        //Debug.LogError("SwapView");
         if (spACtrl != null)
         {
             spACtrl.Dispose();
@@ -166,6 +167,8 @@ public class SwapView : MonoBehaviour
         {
             tpv.Dispose();
         }
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
+        PeopleManager.Instance.Reset();
         //销毁、资源释放、监听移除            
         RemoveListens();
         Destroy(gameObject);

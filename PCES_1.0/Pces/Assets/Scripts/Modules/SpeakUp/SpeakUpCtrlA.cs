@@ -413,8 +413,8 @@ public class SpeakUpCtrlA : MonoBehaviour
 
     public void Dispose()
     {
-        comUI.redoClickEvent -= OnReDo;
-        comUI.nextClickEvent -= OnNextDo;
+        //comUI.redoClickEvent -= OnReDo;
+        //comUI.nextClickEvent -= OnNextDo;
 
         if (comUI == null)
         {
@@ -422,23 +422,35 @@ public class SpeakUpCtrlA : MonoBehaviour
         }
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
-        xiaohuaAnim.timePointEvent = null;
-        xiaohuaAnim.OnContinue();
-        fdlsAnim.OnContinue();
-        fdlsAnim.timePointEvent = null;
-        LS.timePointEvent = null;
-        LS.OnContinue();
+        if (xiaohuaAnim != null)
+        {
+            xiaohuaAnim.timePointEvent = null;
+            xiaohuaAnim.OnContinue();
+            xiaohuaAnim.ClearCompleteEvent();
+        }
+        if (fdlsAnim != null)
+        {
+            fdlsAnim.OnContinue();
+            fdlsAnim.timePointEvent = null;
+            fdlsAnim.ClearCompleteEvent();
+        }
+        if (LS != null)
+        {
+            LS.timePointEvent = null;
+            LS.OnContinue();
+            LS.ClearCompleteEvent();
+
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            if (lsctrl != null)
+            {
+                lsctrl.DestroyGuadian();
+            }
+        }
 
         XHCtrl xhctrl = xiaohuaAnim.GetComponent<XHCtrl>();
         if (xhctrl != null)
         {
             xhctrl.DestroyGuadian();
-        }
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        if (lsctrl != null)
-        {
-            lsctrl.DestroyGuadian();
         }
 
         comUI = null;

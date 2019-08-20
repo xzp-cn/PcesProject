@@ -661,12 +661,26 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
         comUI = null;
-        xiaohuaAnim.OnContinue();
-        xiaohuaAnim.timePointEvent = null;
-        teacherAnim.timePointEvent = null;
-        teacherAnim.OnContinue();
-        xhctrl.DestroyGuadian();
-        lsCtrl.DestroyGuadian();
+        if (xiaohuaAnim != null)
+        {
+            xiaohuaAnim.OnContinue();
+            xiaohuaAnim.timePointEvent = null;
+        }
+        if (teacherAnim != null)
+        {
+            teacherAnim.timePointEvent = null;
+            teacherAnim.OnContinue();
+        }
+        if (xhctrl != null)
+        {
+            xhctrl.DestroyGuadian();
+        }
+        if (lsCtrl != null)
+        {
+            lsCtrl.DestroyGuadian();
+        }
+        ChooseDo.Instance.ResetAll();
+        HighLightCtrl.GetInstance().OffAllObjs();
 
 
         evtFinished = null;

@@ -15,10 +15,10 @@ public class AcceptQuestionView : MonoBehaviour
         UnityEngine.Debug.Log("AcceptQuestionView::Awake(): 第五阶段 接受性问句");
         this.name = "AcceptQuestionView";
         GlobalDataManager.GetInstance().SetPcesCamera();
+        AcceptQuestionModel.GetInstance().Jiaoshi();
     }
     private void Start()
     {
-        AcceptQuestionModel.GetInstance().Jiaoshi();
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第五阶段 接受性问句");
         Canvas canvas = FindObjectOfType<Canvas>();
@@ -132,6 +132,7 @@ public class AcceptQuestionView : MonoBehaviour
     }
     public void Dispose()
     {
+        //Debug.LogError("AcceptQuestionView");
         if (aqACtrl != null)
         {
             aqACtrl.Dispose();
@@ -148,6 +149,10 @@ public class AcceptQuestionView : MonoBehaviour
         {
             tpv.Dispose();
         }
+        PeopleManager.Instance.Reset();
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
+        AcceptQuestionModel.GetInstance().Jiaoshi().SetActive(true);
+        GlobalDataManager.GetInstance().SetPcesCamera();
         //销毁、资源释放、监听移除            
         RemoveListens();
         Destroy(gameObject);

@@ -69,10 +69,10 @@ public class SwapUI : MonoBehaviour
         microButton = 1
     }
 
-    private void OnDestroy()
+    public void ResetUI()
     {
-        chooseBtn.onClick.RemoveListener(OnChooseBtnClick);
-        microButton.onClick.RemoveListener(OnSpeakBtnClick);
+        SetButtonVisiable(BtnName.chooseButton, false);
+        SetButtonVisiable(BtnName.microButton, false);
         if (chooseEvent != null)
         {
             chooseEvent = null;
@@ -82,6 +82,14 @@ public class SwapUI : MonoBehaviour
         {
             speakEvent = null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        chooseBtn.onClick.RemoveListener(OnChooseBtnClick);
+        microButton.onClick.RemoveListener(OnSpeakBtnClick);
+
+        ResetUI();
     }
     private void OnDisable()
     {

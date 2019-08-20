@@ -31,7 +31,7 @@ public class HomePageView : MonoBehaviour
     void StartButtonClick()
     {
         startButton.interactable = false;
-        startButton.gameObject.GetUIFlash().StopFlash(); ;
+        startButton.gameObject.GetUIFlash().StopFlash();
         Finish();
     }
     void CallBack(int code, string name)
@@ -45,8 +45,18 @@ public class HomePageView : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnLevelLoaded;
         UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ClassRoom")
+        //{
 
+        //}
+        //else
+        //{
 
+        //    UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
+        //    //通知当前阶段完成
+        //    GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
+        //    //FlowManager.PreInitComm();
+        //}
     }
 
     private void OnLevelLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)

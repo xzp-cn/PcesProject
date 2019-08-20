@@ -468,15 +468,20 @@ public class SwapCtrlB : MonoBehaviour
     }
     void Finish()
     {
+        HighLightCtrl.GetInstance().OffAllObjs();
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
 
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
-
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
         RemoveAllListeners();
     }
     void ReDo()
@@ -503,19 +508,35 @@ public class SwapCtrlB : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
-        swapUI.chooseEvent -= ChooseBtnClickCallback;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
-        selectUI.okEvent -= SelectUIOkBtnCallback;
-        selectUI.closeEvent -= CloseSelectUICallback;
+        if (swapUI != null)
+        {
+            swapUI.chooseEvent -= ChooseBtnClickCallback;
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
+        if (selectUI != null)
+        {
+            selectUI.okEvent -= SelectUIOkBtnCallback;
+            selectUI.closeEvent -= CloseSelectUICallback;
+        }
 
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
-        FDLS.Complete -= FdlsClickXhHandCalllback;
-
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
-        FDLS.timePointEvent = null;
-
+        if (LS != null)
+        {
+            LS.Complete -= LsGiveObjCallback;
+            LS.ClearCompleteEvent();
+            LS.timePointEvent = null;
+        }
+        if (XH != null)
+        {
+            XH.Complete -= XHJiewuCallback;
+            XH.ClearCompleteEvent();
+            XH.timePointEvent = null;
+        }
+        if (FDLS != null)
+        {
+            FDLS.Complete -= FdlsClickXhHandCalllback;
+            FDLS.ClearCompleteEvent();
+            FDLS.timePointEvent = null;
+        }
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
@@ -523,7 +544,8 @@ public class SwapCtrlB : MonoBehaviour
     {
         evtFinished = null;
         evtRedo = null;
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
         Destroy(gameObject);
     }
     private void OnDestroy()

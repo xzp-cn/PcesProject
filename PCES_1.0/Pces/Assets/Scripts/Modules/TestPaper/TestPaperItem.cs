@@ -38,7 +38,7 @@ public class TestPaperItem : MonoBehaviour
         if (isOn)
         {
             Text txt = transform.Find("question/answer").GetComponent<Text>();
-            txt.text = answer;
+            txt.text = "正确答案  " + answer;
             Image img = transform.Find(togName + "/Background/Checkmark").GetComponent<Image>();
             img.sprite = answer == togName ? right : wrong;
             if (answer == togName)

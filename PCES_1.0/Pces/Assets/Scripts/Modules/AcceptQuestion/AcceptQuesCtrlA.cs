@@ -405,6 +405,7 @@ public class AcceptQuesCtrlA : MonoBehaviour
     {
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+        HighLightCtrl.GetInstance().OffAllObjs();
 
         ResetGuaDian();
 
@@ -412,11 +413,16 @@ public class AcceptQuesCtrlA : MonoBehaviour
     }
     void ResetGuaDian()
     {
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
     }
     void NextDo()
     {
@@ -434,16 +440,23 @@ public class AcceptQuesCtrlA : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
-        LS.timePointEvent = null;
-        XH.timePointEvent = null;
-        //FDLS.timePointEvent = null;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
-
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
-
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
+        if (swapUI != null)
+        {
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
+        if (LS != null)
+        {
+            LS.timePointEvent = null;
+            LS.Complete -= LsGiveObjCallback;
+            LS.timePointEvent = null;
+        }
+        if (XH != null)
+        {
+            XH.timePointEvent = null;
+            //FDLS.timePointEvent = null;          
+            XH.Complete -= XHJiewuCallback;
+            XH.timePointEvent = null;
+        }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickFdlsCallBack);
@@ -458,7 +471,8 @@ public class AcceptQuesCtrlA : MonoBehaviour
     }
     public void Dispose()
     {
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
         evtFinished = null;
         evtRedo = null;
         Destroy(gameObject);

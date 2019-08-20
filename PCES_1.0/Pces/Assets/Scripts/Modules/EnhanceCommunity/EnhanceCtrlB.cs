@@ -453,6 +453,7 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     void Finish()
     {
+        HighLightCtrl.GetInstance().OffAllObjs();
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
 
@@ -491,33 +492,51 @@ public class EnhanceCtrlB : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-        swapUI.chooseEvent -= ChooseBtnClickCallback;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
-        selectUI.okEvent -= SelectUIOkBtnCallback;
+        if (swapUI != null)
+        {
+            swapUI.chooseEvent -= ChooseBtnClickCallback;
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
+        if (selectUI != null)
+        {
+            selectUI.okEvent -= SelectUIOkBtnCallback;
+        }
 
         com = null;
 
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
+        if (LS != null)
+        {
+            LS.Complete -= LsGiveObjCallback;
+            LS.timePointEvent = null;
+        }
 
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
+        if (XH != null)
+        {
+            XH.Complete -= XHJiewuCallback;
+            XH.timePointEvent = null;
+        }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()
     {
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
         evtFinished = null;
         evtRedo = null;
         //PeopleManager.Instance.Reset();
-        XH.gameObject.SetActive(false);
-        XH.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
-        //XH.transform.localPosition = new Vector3(0, 0, 10000);
-        XH.gameObject.SetActive(true);
-        XH.OnContinue();
-        XH.PlayForward("idle");
-
+        if (XH != null)
+        {
+            XH.gameObject.SetActive(false);
+            XH.transform.Find("Group/Main").localPosition = new Vector3(1.952808f, 0, 0.3788859f);
+            //XH.transform.localPosition = new Vector3(0, 0, 10000);
+            XH.gameObject.SetActive(true);
+            XH.OnContinue();
+            //XH.PlayForward("idle");
+            XH.ClearCompleteEvent();
+            DestroyImmediate(XH.gameObject);
+            PeopleManager.Instance.GetNewXH();
+        }
         GlobalDataManager.GetInstance().SetPcesCamera();
         Destroy(gameObject);
     }

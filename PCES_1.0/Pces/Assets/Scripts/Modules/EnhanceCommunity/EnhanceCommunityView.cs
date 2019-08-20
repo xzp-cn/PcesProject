@@ -124,6 +124,7 @@ public class EnhanceCommunityView : MonoBehaviour
     }
     public void Dispose()
     {
+        //Debug.LogError("EnhanceCommunityView");
         //销毁、资源释放、监听移除            
         if (ecACtrl != null)
         {
@@ -142,6 +143,8 @@ public class EnhanceCommunityView : MonoBehaviour
             tpv.Dispose();
         }
         RemoveListens();
+        PeopleManager.Instance.Reset();
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
         Destroy(gameObject);
     }
 }

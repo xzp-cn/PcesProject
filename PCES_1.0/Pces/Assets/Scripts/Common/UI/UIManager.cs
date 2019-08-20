@@ -10,6 +10,15 @@ public class UIManager : SingleTon<UIManager>
     public override void Awake()
     {
         base.Awake();
+        RectTransform topEmpty = new GameObject("topEmpty").AddComponent<RectTransform>();
+        topEmpty.transform.SetParent(transform);
+        topEmpty.transform.localScale = Vector3.one;
+        topEmpty.anchorMax = Vector2.one;
+        topEmpty.anchorMin = Vector2.zero;
+        topEmpty.transform.SetAsLastSibling();
+        topEmpty.anchoredPosition3D = Vector3.zero;
+        topEmpty.offsetMax = Vector2.zero;
+        topEmpty.offsetMin = Vector2.zero;
         //uiDic = new Dictionary<string, GameObject>();
         Debug.Log("调用全局初始化方法 GlobalDataManager");
     }
@@ -70,7 +79,10 @@ public class UIManager : SingleTon<UIManager>
         else
         {
             GameObject ui = uiDic[uiName];
+            //ui.transform.SetSiblingIndex(index);
             ui.transform.SetAsLastSibling();
+            ui.transform.parent.Find("topEmpty").SetAsLastSibling();
+
         }
     }
     /// <summary>
@@ -90,6 +102,15 @@ public class UIManager : SingleTon<UIManager>
 
     public void ClearDic()
     {
+        //Dictionary<string, GameObject>.ValueCollection collec = uiDic.Values;
+        //var iter = collec.GetEnumerator();
+        //Debug.Log(collec.Count + "     UIManager");
+
+        //while (iter.MoveNext())
+        //{
+        //    Debug.Log(iter.Current.name + "     UIManager");
+        //    Destroy(iter.Current);
+        //}
         uiDic.Clear();
     }
 

@@ -507,14 +507,29 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
         comUI = null;
 
-        xiaohuaAnim.timePointEvent = null;
-        xiaohuaAnim.OnContinue();
-        teacherAnim.timePointEvent = null;
-        teacherAnim.OnContinue();
-        xhctrl.DestroyGuadian();
-        lsCtrl.DestroyGuadian();
+        if (xiaohuaAnim != null)
+        {
+            xiaohuaAnim.timePointEvent = null;
+            xiaohuaAnim.OnContinue();
+        }
+        if (teacherAnim != null)
+        {
+            teacherAnim.timePointEvent = null;
+            teacherAnim.OnContinue();
+        }
+        if (xhctrl != null)
+        {
+            xhctrl.DestroyGuadian();
+        }
+        if (lsCtrl != null)
+        {
+            lsCtrl.DestroyGuadian();
+        }
+        ChooseDo.Instance.ResetAll();
+        HighLightCtrl.GetInstance().OffAllObjs();
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFirst);
+        GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, OnClickTeacherHandFinal);
         if (goodA != null)
         {
             Destroy(goodA);

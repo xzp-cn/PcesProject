@@ -388,15 +388,22 @@ public class SwapCtrlC : MonoBehaviour
     }
     void Finish()
     {
+        HighLightCtrl.GetInstance().OffAllObjs();
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
+
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
         RemoveAllListeners();
-
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
-
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
     void ReDo()
     {
@@ -422,16 +429,27 @@ public class SwapCtrlC : MonoBehaviour
         com.redoClickEvent -= ReDo;
         com = null;
 
-        swapUI.chooseEvent -= ChooseBtnClickCallback;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
-        selectUI.okEvent -= SelectUIOkBtnCallback;
-
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
-
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
-
+        if (swapUI != null)
+        {
+            swapUI.chooseEvent -= ChooseBtnClickCallback;
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
+        if (selectUI != null)
+        {
+            selectUI.okEvent -= SelectUIOkBtnCallback;
+        }
+        if (LS != null)
+        {
+            LS.Complete -= LsGiveObjCallback;
+            LS.ClearCompleteEvent();
+            LS.timePointEvent = null;
+        }
+        if (XH != null)
+        {
+            XH.Complete -= XHJiewuCallback;
+            XH.ClearCompleteEvent();
+            XH.timePointEvent = null;
+        }
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     public void Dispose()
@@ -441,11 +459,11 @@ public class SwapCtrlC : MonoBehaviour
 
         PeopleManager.Instance.GetPeople(PeopleTag.FDLS_BD).GetAnimatorOper().gameObject.SetActive(true);
 
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
         Destroy(gameObject);
     }
     private void OnDestroy()
     {
-
     }
 }

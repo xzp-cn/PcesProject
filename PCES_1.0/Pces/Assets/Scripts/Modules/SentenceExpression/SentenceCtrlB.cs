@@ -432,6 +432,7 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void Finish()
     {
+        HighLightCtrl.GetInstance().OffAllObjs();
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
         ResetGuaDian();
@@ -450,15 +451,22 @@ public class SentenceCtrlB : MonoBehaviour
         CommonUI com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.redoClickEvent -= NextDo;
         com.redoClickEvent -= ReDo;
-        swapUI.speakEvent -= SpeakBtnClickCallback;
         com = null;
+        if (swapUI != null)
+        {
+            swapUI.speakEvent -= SpeakBtnClickCallback;
+        }
 
-        LS.Complete -= LsGiveObjCallback;
-        XH.Complete -= XHJiewuCallback;
-
-        XH.timePointEvent = null;
-        LS.timePointEvent = null;
-
+        if (LS != null)
+        {
+            LS.Complete -= LsGiveObjCallback;
+            LS.timePointEvent = null;
+        }
+        if (XH != null)
+        {
+            XH.Complete -= XHJiewuCallback;
+            XH.timePointEvent = null;
+        }
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
     }
     void ReDo()
@@ -472,15 +480,22 @@ public class SentenceCtrlB : MonoBehaviour
     }
     void ResetGuaDian()
     {
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
 
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
     }
     public void Dispose()
     {
-        RemoveAllListeners();
+        //RemoveAllListeners();
+        Finish();
         evtFinished = null;
         evtRedo = null;
         Destroy(gameObject);

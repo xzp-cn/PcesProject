@@ -163,10 +163,10 @@ public class DistinguishPictureView : MonoBehaviour
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.DistinguishPicture);
     }
 
-
     public void Dispose()
     {
-        if (dpcCtrl != null)
+        //Debug.LogError("DistinguishPictureView");
+        if (dpaCtrl != null)
         {
             dpaCtrl.Dispose();
         }
@@ -182,6 +182,8 @@ public class DistinguishPictureView : MonoBehaviour
         {
             tpv.Dispose();
         }
+        PeopleManager.Instance.Reset();
+        UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
         Destroy(gameObject);
     }
 }
