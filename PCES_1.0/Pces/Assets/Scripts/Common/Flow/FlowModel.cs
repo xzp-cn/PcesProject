@@ -54,7 +54,7 @@ public class FlowModel : SingleTemplate<FlowModel>
     /// <summary>
     /// 移除
     /// </summary>
-    /// <param name="task"></param> 
+    /// <param name="task"></param>
     public void RemovePrefabFromMem(string task)
     {
         if (CreatedFlowStepPrefabMaps.ContainsKey(task))
@@ -116,7 +116,8 @@ public class FlowModel : SingleTemplate<FlowModel>
                     ResetAllFlowTask();
                     GameOverCtrl ctrl = UIManager.Instance.GetUI<GameOverCtrl>("GameOverCtrl");
                     ctrl.Init();
-                    throw new Exception("索引有问题");
+                    Debug.LogError("索引有问题");
+                    //throw new Exception("索引有问题");
                 }
             }
 

@@ -48,10 +48,10 @@ public class GameOverCtrl : MonoBehaviour
 
         UIManager.Instance.ClearDic();
 
-        FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
-        StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
-        GameObject go = ResManager.GetPrefab(sb.ToString());
-        FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
+        //FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
+        //StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
+        //GameObject go = ResManager.GetPrefab(sb.ToString());
+        //FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
 
         PeopleManager.Instance.Reset();
     }
