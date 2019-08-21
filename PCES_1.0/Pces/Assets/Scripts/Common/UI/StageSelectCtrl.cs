@@ -34,21 +34,23 @@ public class StageSelectCtrl : MonoBehaviour
     }
     void OnCloseBtnClickCallback()
     {
-
+        ClickDispatcher.Inst.EnableClick = true;
     }
     void OnOKBtnClickCallback(int index)
     {
         ClickDispatcher.Inst.EnableClick = true;
-        //上一个阶段处理
-        Debug.LogFormat((string.Format("  当前阶段:   {0}  ", (ModelTasks)index)));
-        ModelTasks mt = FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
-        FlowModel.GetInstance().RemovePrefabFromMem(mt.ToString());
 
         PeopleManager.Instance.Reset();
         ChooseDo.Instance.ResetAll();
         HighLightCtrl.GetInstance().OffAllObjs();
         UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
         GlobalEntity.GetInstance().RemoveAllListeners(ClickDispatcher.mEvent.DoClick);
+
+        //上一个阶段处理
+        Debug.LogFormat((string.Format("  当前阶段:   {0}  ", (ModelTasks)index)));
+        ModelTasks mt = FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        FlowModel.GetInstance().RemovePrefabFromMem(mt.ToString());
+
         //跳转阶段
         FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
         ft = FlowModel.GetInstance().FindFlowTask((ModelTasks)index);

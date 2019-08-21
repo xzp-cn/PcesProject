@@ -24,7 +24,7 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
         TextAsset XMLFile = Resources.Load<TextAsset>(path);
         xmlDoc.LoadXml(XMLFile.text);
         XmlNodeList courseList = xmlDoc.SelectNodes(findstr);
-        Debug.Log(courseList.Count);
+        //Debug.Log(courseList.Count);
         foreach (XmlNode course in courseList)
         {
             Paper paper = new Paper();

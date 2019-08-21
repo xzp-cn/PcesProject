@@ -505,17 +505,19 @@ public class DistinguishPictureCtrlC : MonoBehaviour
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
 
-        comUI = null;
+        //comUI = null;
 
         if (xiaohuaAnim != null)
         {
             xiaohuaAnim.timePointEvent = null;
             xiaohuaAnim.OnContinue();
+            xiaohuaAnim.ClearCompleteEvent();
         }
         if (teacherAnim != null)
         {
             teacherAnim.timePointEvent = null;
             teacherAnim.OnContinue();
+            teacherAnim.ClearCompleteEvent();
         }
         if (xhctrl != null)
         {
@@ -547,6 +549,6 @@ public class DistinguishPictureCtrlC : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

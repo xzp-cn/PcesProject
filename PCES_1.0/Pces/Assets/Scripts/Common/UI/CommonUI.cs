@@ -114,8 +114,8 @@ public class CommonUI : MonoBehaviour
             nextBtn.onClick.RemoveListener(NextBtnClick);
         }
 
-        Debug.Log("ComUI:   Destroy");
-
+        Debug.Log(" UIManager::     CommonUI");
+        UIManager.Instance.RemoveDic("CommonUI");
         GlobalEntity.GetInstance().RemoveListener<string>(pEvent.LevelChange, OnLevelTxtChange);
     }
 }

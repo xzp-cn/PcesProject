@@ -523,15 +523,18 @@ public class SentenceCtrlA : MonoBehaviour
         {
             LS.Complete -= LsGiveObjCallback;
             LS.timePointEvent = null;
+            LS.ClearCompleteEvent();
         }
         if (XH != null)
         {
             XH.Complete -= XHJiewuCallback;
             XH.timePointEvent = null;
+            XH.ClearCompleteEvent();
         }
         if (FDLS != null)
         {
             FDLS.timePointEvent = null;
+            FDLS.ClearCompleteEvent();
         }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
@@ -570,6 +573,6 @@ public class SentenceCtrlA : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

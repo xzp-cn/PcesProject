@@ -690,12 +690,14 @@ public class SentenceCtrlC : MonoBehaviour
         {
             LS.Complete -= KJLsGiveObjCallback;
             LS.timePointEvent = null;
+            LS.ClearCompleteEvent();
         }
 
         if (XH != null)
         {
             XH.Complete -= KJXHJiewuCallback;
             XH.timePointEvent = null;
+            XH.ClearCompleteEvent();
         }
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
 
@@ -732,7 +734,7 @@ public class SentenceCtrlC : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 
 }

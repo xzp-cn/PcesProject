@@ -546,12 +546,14 @@ public class EnhanceCtrlA : MonoBehaviour
         {
             LS.Complete -= LsGiveObjCallback;
             LS.timePointEvent = null;
+            LS.ClearCompleteEvent();
         }
 
         if (XH != null)
         {
             XH.Complete -= XHJiewuCallback;
             XH.timePointEvent = null;
+            XH.ClearCompleteEvent();
         }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
@@ -569,6 +571,6 @@ public class EnhanceCtrlA : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

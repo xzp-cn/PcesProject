@@ -44,24 +44,26 @@ public class HomePageView : MonoBehaviour
     void Finish()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnLevelLoaded;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
-        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ClassRoom")
-        //{
+        // UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ClassRoom")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+            Debug.LogError("场景加载");
+        }
+        else
+        {
 
-        //}
-        //else
-        //{
-
-        //    UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
-        //    //通知当前阶段完成
-        //    GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
-        //    //FlowManager.PreInitComm();
-        //}
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
+            //通知当前阶段完成
+            GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
+            FlowManager.PreInitComm();
+            //Debug.LogError("场景加载");
+        }
     }
 
     private void OnLevelLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)
     {
-
+        Debug.Log("OnLevelLoaded");
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
         //通知当前阶段完成
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
@@ -76,7 +78,7 @@ public class HomePageView : MonoBehaviour
     {
         //销毁、资源释放、监听移除     
         RemoveListens();
-        HomePageModel.GetInstance().ClearAllGo();
+        //HomePageModel.GetInstance().ClearAllGo();
         Destroy(gameObject);
     }
 }

@@ -665,11 +665,13 @@ public class DistinguishPictureCtrlA : MonoBehaviour
         {
             xiaohuaAnim.OnContinue();
             xiaohuaAnim.timePointEvent = null;
+            xiaohuaAnim.ClearCompleteEvent();
         }
         if (teacherAnim != null)
         {
             teacherAnim.timePointEvent = null;
             teacherAnim.OnContinue();
+            teacherAnim.ClearCompleteEvent();
         }
         if (xhctrl != null)
         {
@@ -695,6 +697,6 @@ public class DistinguishPictureCtrlA : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

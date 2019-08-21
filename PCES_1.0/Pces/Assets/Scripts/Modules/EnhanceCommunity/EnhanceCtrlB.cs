@@ -457,11 +457,18 @@ public class EnhanceCtrlB : MonoBehaviour
         ChooseDo.Instance.ResetAll();
         UIManager.Instance.GetUI<CommonUI>("CommonUI").HideFinalUI();
 
-        XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
-        xhctrl.DestroyGuadian();
+        if (XH != null)
+        {
+            XHCtrl xhctrl = XH.GetComponent<XHCtrl>();
+            xhctrl.DestroyGuadian();
+        }
 
-        LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
-        lsctrl.DestroyGuadian();
+        if (LS != null)
+        {
+            LSCtrl lsctrl = LS.GetComponent<LSCtrl>();
+            lsctrl.DestroyGuadian();
+        }
+
 
         Transform zhuozi2 = EnhanceCommunityModel.GetInstance().Jiaoshi().transform.Find("shinei/zhuozi2");
         zhuozi2.transform.localPosition = zhuozi2Pos;
@@ -508,12 +515,14 @@ public class EnhanceCtrlB : MonoBehaviour
         {
             LS.Complete -= LsGiveObjCallback;
             LS.timePointEvent = null;
+            LS.ClearCompleteEvent();
         }
 
         if (XH != null)
         {
             XH.Complete -= XHJiewuCallback;
             XH.timePointEvent = null;
+            XH.ClearCompleteEvent();
         }
 
         GlobalEntity.GetInstance().RemoveListener<ClickedObj>(ClickDispatcher.mEvent.DoClick, ClickLsCallBack);
@@ -542,6 +551,6 @@ public class EnhanceCtrlB : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

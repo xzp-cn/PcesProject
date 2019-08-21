@@ -505,7 +505,7 @@ public class AcceptQuesCtrlC : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }
 

@@ -668,6 +668,8 @@ public class SentenceCtrlD : MonoBehaviour
     }
     private void OnDestroy()
     {
+        CancelInvoke();
+
 
     }
 }
