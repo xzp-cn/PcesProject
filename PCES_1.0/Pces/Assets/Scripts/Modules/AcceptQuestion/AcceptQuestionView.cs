@@ -21,8 +21,8 @@ public class AcceptQuestionView : MonoBehaviour
     {
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第五阶段 接受性问句");
-        Canvas canvas = FindObjectOfType<Canvas>();
-        com.transform.SetParent(canvas.transform);
+        //Canvas canvas = FindObjectOfType<Canvas>();
+        //com.transform.SetParent(canvas.transform);
         aqACtrl = ResManager.GetPrefab("Prefabs/AcceptQuestion/AcceptQuesCtrlA").GetComponent<AcceptQuesCtrlA>();
         aqACtrl.transform.SetParent(transform);
         aqACtrl.evtFinished += OnaqACtrlFinished;

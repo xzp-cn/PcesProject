@@ -16,7 +16,7 @@ public class StageSelectCtrl : MonoBehaviour
         }
         stageUI.selectStageEvent += OnSelectBtnClickCallback;
         stageUI.okEvent += OnOKBtnClickCallback;
-        //stageUI.closeEvent += OnCloseBtnClickCallback;
+        stageUI.closeEvent += OnCloseBtnClickCallback;
     }
     private void Start()
     {
@@ -27,6 +27,7 @@ public class StageSelectCtrl : MonoBehaviour
     /// </summary>
     void OnSelectBtnClickCallback()
     {
+        //Debug.LogError("OnSelectBtnClickCallback");
         //transform.SetAsLastSibling();
         transform.SetParent(UIManager.Instance.transform.Find("topEmpty"), false);
         ClickDispatcher.Inst.EnableClick = false;
@@ -34,10 +35,12 @@ public class StageSelectCtrl : MonoBehaviour
     }
     void OnCloseBtnClickCallback()
     {
+        //Debug.LogError("OnCloseBtnClickCallback");
         ClickDispatcher.Inst.EnableClick = true;
     }
     void OnOKBtnClickCallback(int index)
     {
+        //Debug.LogError("OnOKBtnClickCallback");
         ClickDispatcher.Inst.EnableClick = true;
 
         PeopleManager.Instance.Reset();
@@ -70,5 +73,7 @@ public class StageSelectCtrl : MonoBehaviour
     {
         stageUI.selectStageEvent -= OnSelectBtnClickCallback;
         stageUI.okEvent -= OnOKBtnClickCallback;
+        stageUI.closeEvent -= OnCloseBtnClickCallback;
+        ClickDispatcher.Inst.EnableClick = true;
     }
 }

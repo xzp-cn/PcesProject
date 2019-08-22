@@ -122,6 +122,6 @@ public class UIManager : SingleTon<UIManager>
     }
     private void OnDestroy()
     {
-        Debug.Log("UIManager  :: ");
+        Debug.Log("UIManager  ::   UIManager");
     }
 }

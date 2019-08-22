@@ -21,12 +21,12 @@ public class SentenceExpressionView : MonoBehaviour
     {
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第六阶段 主动发表意见");
-        Canvas canvas = FindObjectOfType<Canvas>();
-        com.transform.SetParent(canvas.transform);
-        //stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
-        //stACtrl.transform.SetParent(transform);
-        //stACtrl.evtFinished += OnstACtrlFinished;
-        //stACtrl.evtRedo += OnstACtrlRedo;
+        //Canvas canvas = UIManager.Instance.GetComponent<Canvas>();
+        //com.transform.SetParent(canvas.transform);
+        stACtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlA").GetComponent<SentenceCtrlA>();
+        stACtrl.transform.SetParent(transform);
+        stACtrl.evtFinished += OnstACtrlFinished;
+        stACtrl.evtRedo += OnstACtrlRedo;
         //stBCtrl = ResManager.GetPrefab("Prefabs/SentenceExpression/SentenceCtrlB").GetComponent<SentenceCtrlB>();
         //stBCtrl.transform.SetParent(transform);
         //stBCtrl.evtFinished += OnstBCtrlFinished;
@@ -39,10 +39,10 @@ public class SentenceExpressionView : MonoBehaviour
         //stDCtrl.transform.SetParent(transform);
         //stDCtrl.evtFinished += OnstDCtrlFinished;
         //stDCtrl.evtRedo += OnstDCtrlRedo;
-        tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
-        tpv.transform.SetParent(transform);
-        tpv.evtFinished += OnTestPaperFinished;
-        tpv.evtRedo += OnTestPaperRedo;
+        //tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
+        //tpv.transform.SetParent(transform);
+        //tpv.evtFinished += OnTestPaperFinished;
+        //tpv.evtRedo += OnTestPaperRedo;
     }
     void OnstACtrlFinished()
     {
@@ -143,7 +143,9 @@ public class SentenceExpressionView : MonoBehaviour
         }
         PeopleManager.Instance.Reset();
         //通知当前阶段完成
-        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SentenceExpression);
+        GameOverCtrl ctrl = UIManager.Instance.GetUI<GameOverCtrl>("GameOverCtrl");
+        ctrl.Init();
+
     }
     void RemoveListens()
     {

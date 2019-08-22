@@ -22,8 +22,8 @@ public class EnhanceCommunityView : MonoBehaviour
 
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
         com.SetComUITitle("第二阶段 增强自发性沟通");
-        Canvas canvas = FindObjectOfType<Canvas>();
-        com.transform.SetParent(canvas.transform);
+        //Canvas canvas = FindObjectOfType<Canvas>();
+        //com.transform.SetParent(canvas.transform);
         ecACtrl = ResManager.GetPrefab("Prefabs/EnhanceCommunity/EnhanceA").GetComponent<EnhanceCtrlA>();
         ecACtrl.transform.SetParent(transform);
         ecACtrl.evtFinished += OnecACtrlFinished;

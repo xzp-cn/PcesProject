@@ -44,21 +44,21 @@ public class HomePageView : MonoBehaviour
     void Finish()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnLevelLoaded;
-        // UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ClassRoom")
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
-            Debug.LogError("场景加载");
-        }
-        else
-        {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ClassRoom")
+        //{
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene("ClassRoom");
+        //    Debug.LogError("场景加载");
+        //}
+        //else
+        //{
 
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
-            //通知当前阶段完成
-            GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
-            FlowManager.PreInitComm();
-            //Debug.LogError("场景加载");
-        }
+        //    UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLevelLoaded;
+        //    //通知当前阶段完成
+        //    GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.HomePage);
+        //    FlowManager.PreInitComm();
+        //    //Debug.LogError("场景加载");
+        //}
     }
 
     private void OnLevelLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)

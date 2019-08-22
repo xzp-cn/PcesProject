@@ -46,8 +46,9 @@ public class GameOverCtrl : MonoBehaviour
     {
         gameObject.SetActive(false);
 
+        GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.SentenceExpression);
         UIManager.Instance.ClearDic();
-
+        HighLightCtrl.GetInstance().cameras = null;
         //FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
         //StringBuilder sb = new StringBuilder("Prefabs/").Append(ft.FlowEnumID.ToString()).Append("/").Append(ft.FlowEnumID.ToString());
         //GameObject go = ResManager.GetPrefab(sb.ToString());
