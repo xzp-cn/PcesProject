@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Animator 动画播放控制
@@ -178,6 +177,23 @@ public class AnimationOper : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 移除Complete事件所有注册方法
+    /// </summary>
+    public void RemoveAllCompleteEvts()
+    {
+        if (_complete != null)
+        {
+            System.Delegate[] complevts = _complete.GetInvocationList();
+            for (int i = 0; i < complevts.Length; i++)
+            {
+                System.Action delegateComplevt = complevts[i] as System.Action;
+                _complete -= delegateComplevt;
+            }
+        }
+    }
+
+
     void OnDestroy()
     {
         IsStart = false;
@@ -186,4 +202,3 @@ public class AnimationOper : MonoBehaviour
         timePointEvent = null;
     }
 }
-

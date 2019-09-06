@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LegacyAnimationOper : MonoBehaviour
 {
@@ -148,6 +146,23 @@ public class LegacyAnimationOper : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 移除Complete事件所有注册方法
+    /// </summary>
+    public void RemoveAllCompleteEvts()
+    {
+        if (Complete != null)
+        {
+            System.Delegate[] complevts = Complete.GetInvocationList();
+            for (int i = 0; i < complevts.Length; i++)
+            {
+                System.Action delegateComplevt = complevts[i] as System.Action;
+                Complete -= delegateComplevt;
+            }
+        }
+    }
+
     void OnDestroy()
     {
         IsStart = false;
