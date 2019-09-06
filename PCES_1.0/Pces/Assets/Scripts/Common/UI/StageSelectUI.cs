@@ -8,7 +8,7 @@ public class StageSelectUI : MonoBehaviour
     Button selectBtn, okBtn, closeBtn;
     Toggle[] toggles;
     Transform tip;
-    int selectedObjIndex = -1;
+    public int selectedObjIndex = -1;
     int lastIndex = -1;
     public event System.Action<int> okEvent;
     public event System.Action selectStageEvent, closeEvent;
@@ -53,7 +53,7 @@ public class StageSelectUI : MonoBehaviour
 
     void OnSelectBtnClick()
     {
-        Debug.Log("click");
+        //Debug.Log("click");
         panel.gameObject.SetActive(true);
         if (selectStageEvent != null)
         {
@@ -67,11 +67,12 @@ public class StageSelectUI : MonoBehaviour
             panel.gameObject.SetActive(false);
             if (okEvent != null)
             {
-                if (lastIndex != selectedObjIndex)
-                {
-                    lastIndex = selectedObjIndex;
-                    okEvent(selectedObjIndex);
-                }
+                //if (lastIndex != selectedObjIndex)
+                //{
+                //    lastIndex = selectedObjIndex;
+                //    okEvent(selectedObjIndex);
+                //}
+                okEvent(selectedObjIndex);
             }
         }
         else

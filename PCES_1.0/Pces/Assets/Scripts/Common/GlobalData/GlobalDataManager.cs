@@ -9,6 +9,7 @@ public class GlobalDataManager : SingleTemplate<GlobalDataManager>
     {
         UIManager.Instance.GetUI<CommonUI>("CommonUI");
         UIManager.Instance.GetUI<StageSelectCtrl>("StageSelectUI");
+        //Debug.LogError("InitUI");
 
     }
     public Camera GetCamera()

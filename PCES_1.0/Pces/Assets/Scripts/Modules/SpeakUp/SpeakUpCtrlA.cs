@@ -164,21 +164,22 @@ public class SpeakUpCtrlA : MonoBehaviour
                     ChooseDo.Instance.DoWhat(5, RedoClickTeachersHandFinal, null);
                 }
             };
+
+            fdlsAnim.OnContinue();
+            bool passA = false;
+            fdlsAnim.timePointEvent = (a) =>
+            {
+                if (a >= 100 && a <= 102 && !passA)
+                {
+                    passA = true;
+
+                    FBNKT_KA_AnimOper.OnContinue();
+                    xiaohuaAnim.OnContinue();
+                }
+            };
         }
 
-        fdlsAnim.OnContinue();
 
-        bool passA = false;
-        fdlsAnim.timePointEvent = (a) =>
-          {
-              if (a >= 100 && a <= 102 && !passA)
-              {
-                  passA = true;
-
-                  FBNKT_KA_AnimOper.OnContinue();
-                  xiaohuaAnim.OnContinue();
-              }
-          };
     }
 
     private void RedoClickTeachersHandFinal()
@@ -309,15 +310,6 @@ public class SpeakUpCtrlA : MonoBehaviour
 
             bool passA = false;
             bool passB = false;
-            xiaohuaAnim.Complete += () =>
-            {
-                //8. 播放结束，出现下一关和重做的按钮。
-                Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
-                comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-                comUI.redoClickEvent += OnReDo;
-                comUI.nextClickEvent += OnNextDo;
-                comUI.ShowFinalUI();
-            };
 
             LegacyAnimationOper go = null;
             LS.timePointEvent = (a) =>//老师递给物品
@@ -347,6 +339,17 @@ public class SpeakUpCtrlA : MonoBehaviour
                             XhQHW xhqhw = go.GetComponent<XhQHW>();
                             xhqhw.ShowObj(goodA.name);
                         }
+                    };
+
+                    xiaohuaAnim.ClearCompleteEvent();
+                    xiaohuaAnim.Complete += () =>
+                    {
+                        //8. 播放结束，出现下一关和重做的按钮。
+                        Debug.Log("SpeakUpCtrlA.OnClickTeacherHandFinal(): 8. 播放结束，出现下一关和重做的按钮。");
+                        comUI = UIManager.Instance.GetUI<CommonUI>("CommonUI");
+                        comUI.redoClickEvent += OnReDo;
+                        comUI.nextClickEvent += OnNextDo;
+                        comUI.ShowFinalUI();
                     };
                     xiaohuaAnim.PlayForward("TY_XH_JG");
                     go.PlayForward("TY_XH_JG_KA");
@@ -466,6 +469,6 @@ public class SpeakUpCtrlA : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

@@ -60,7 +60,9 @@ public class TestPaperView : MonoBehaviour
             {
                 TipUI tipUI = UIManager.Instance.GetUI<TipUI>("TipUI");
                 tipUI.SetTipMessage("还有题目为未做 !");
-                UIManager.Instance.SetUIDepthTop("TipUI");
+                //UIManager.Instance.SetUIDepthTop("TipUI");
+                transform.SetAsLastSibling();
+                tipUI.transform.SetAsLastSibling();
                 return;
             }
         }

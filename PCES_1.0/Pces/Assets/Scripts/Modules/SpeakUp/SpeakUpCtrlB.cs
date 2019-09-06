@@ -409,6 +409,6 @@ public class SpeakUpCtrlB : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        CancelInvoke();
     }
 }

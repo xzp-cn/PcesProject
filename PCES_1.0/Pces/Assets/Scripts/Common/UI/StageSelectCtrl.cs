@@ -16,7 +16,7 @@ public class StageSelectCtrl : MonoBehaviour
         }
         stageUI.selectStageEvent += OnSelectBtnClickCallback;
         stageUI.okEvent += OnOKBtnClickCallback;
-        //stageUI.closeEvent += OnCloseBtnClickCallback;
+        stageUI.closeEvent += OnCloseBtnClickCallback;
     }
     private void Start()
     {
@@ -27,6 +27,7 @@ public class StageSelectCtrl : MonoBehaviour
     /// </summary>
     void OnSelectBtnClickCallback()
     {
+        //Debug.LogError("OnSelectBtnClickCallback");
         //transform.SetAsLastSibling();
         transform.SetParent(UIManager.Instance.transform.Find("topEmpty"), false);
         ClickDispatcher.Inst.EnableClick = false;
@@ -34,21 +35,25 @@ public class StageSelectCtrl : MonoBehaviour
     }
     void OnCloseBtnClickCallback()
     {
-
+        //Debug.LogError("OnCloseBtnClickCallback");
+        ClickDispatcher.Inst.EnableClick = true;
     }
     void OnOKBtnClickCallback(int index)
     {
+        //Debug.LogError("OnOKBtnClickCallback");
         ClickDispatcher.Inst.EnableClick = true;
-        //上一个阶段处理
-        Debug.LogFormat((string.Format("  当前阶段:   {0}  ", (ModelTasks)index)));
-        ModelTasks mt = FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
-        FlowModel.GetInstance().RemovePrefabFromMem(mt.ToString());
 
         PeopleManager.Instance.Reset();
         ChooseDo.Instance.ResetAll();
         HighLightCtrl.GetInstance().OffAllObjs();
         UIManager.Instance.GetUI<SwapUI>("SwapUI").ResetUI();
         GlobalEntity.GetInstance().RemoveAllListeners(ClickDispatcher.mEvent.DoClick);
+
+        //上一个阶段处理
+        Debug.LogFormat((string.Format("  当前阶段:   {0}  ", (ModelTasks)index)));
+        ModelTasks mt = FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        FlowModel.GetInstance().RemovePrefabFromMem(mt.ToString());
+
         //跳转阶段
         FlowTask ft = FlowModel.GetInstance().CurrFlowTask;
         ft = FlowModel.GetInstance().FindFlowTask((ModelTasks)index);
@@ -68,5 +73,7 @@ public class StageSelectCtrl : MonoBehaviour
     {
         stageUI.selectStageEvent -= OnSelectBtnClickCallback;
         stageUI.okEvent -= OnOKBtnClickCallback;
+        stageUI.closeEvent -= OnCloseBtnClickCallback;
+        ClickDispatcher.Inst.EnableClick = true;
     }
 }

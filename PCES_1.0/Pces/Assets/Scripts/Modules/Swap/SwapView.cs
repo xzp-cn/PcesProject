@@ -27,15 +27,16 @@ public class SwapView : MonoBehaviour
     void Introduct()
     {
         com = UIManager.Instance.GetUI<CommonUI>("CommonUI");
-        com.SetComUITitle("第一阶段 以物换物");
-        Canvas canvas = FindObjectOfType<Canvas>();
-        com.transform.SetParent(canvas.transform);
+        //com.SetComUITitle("第一阶段 以物换物");
+        com.SetComUITitle("首页");
+        //Canvas canvas = UIManager.Instance.GetComponent<Canvas>();
+        //com.transform.SetParent(canvas.transform);
 
         if (SwapModel.GetInstance().hpUI == null)
         {
             HomePageUI homePageUI = UIManager.Instance.GetUI<HomePageUI>("HomePageUI");
             SwapModel.GetInstance().hpUI = homePageUI;
-            homePageUI.transform.SetParent(canvas.transform, false);
+            homePageUI.transform.SetParent(UIManager.Instance.transform, false);
             Button startButton = homePageUI.transform.Find("Button").GetComponent<Button>();//开始按钮
             startButton.onClick.AddListener(StartPro);
             startButton.gameObject.GetUIFlash().StartFlash();
@@ -49,7 +50,7 @@ public class SwapView : MonoBehaviour
     }
     private void StartPro()
     {
-
+        com.SetComUITitle("第一阶段 以物换物");
         SwapModel.GetInstance().hpUI.gameObject.SetActive(false);
         spACtrl = ResManager.GetPrefab("Prefabs/Swap/SwapA").GetComponent<SwapCtrlA>();
         spACtrl.transform.SetParent(transform);

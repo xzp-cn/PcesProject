@@ -465,5 +465,6 @@ public class SwapCtrlC : MonoBehaviour
     }
     private void OnDestroy()
     {
+        CancelInvoke();
     }
 }

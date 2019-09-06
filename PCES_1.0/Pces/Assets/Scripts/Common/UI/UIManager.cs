@@ -46,6 +46,7 @@ public class UIManager : SingleTon<UIManager>
         GameObject ui = null;
         if (uiDic.ContainsKey(uiName))
         {
+            //Debug.LogError("InitUI  ::  dic" + uiName);
             ui = uiDic[uiName];
         }
         else
@@ -54,6 +55,7 @@ public class UIManager : SingleTon<UIManager>
             ui = ResManager.GetPrefab(path);
             uiDic.Add(uiName, ui);
             InitUI(uiName, ui.transform);
+            //Debug.LogError("Load  ::  " + path);
         }
         ui.name = uiName;
         T uiCom = ui.GetComponent<T>();
@@ -102,17 +104,24 @@ public class UIManager : SingleTon<UIManager>
 
     public void ClearDic()
     {
-        //Dictionary<string, GameObject>.ValueCollection collec = uiDic.Values;
-        //var iter = collec.GetEnumerator();
+        Dictionary<string, GameObject>.ValueCollection collec = uiDic.Values;
+        var iter = collec.GetEnumerator();
         //Debug.Log(collec.Count + "     UIManager");
 
-        //while (iter.MoveNext())
-        //{
-        //    Debug.Log(iter.Current.name + "     UIManager");
-        //    Destroy(iter.Current);
-        //}
+        while (iter.MoveNext())
+        {
+            //Debug.Log(iter.Current.name + "     UIManager");
+            Destroy(iter.Current);
+        }
         uiDic.Clear();
     }
 
-    //public void UiFlash
+    public void RemoveDic(string key)
+    {
+        uiDic.Remove(key);
+    }
+    private void OnDestroy()
+    {
+        Debug.Log("UIManager  ::   UIManager");
+    }
 }

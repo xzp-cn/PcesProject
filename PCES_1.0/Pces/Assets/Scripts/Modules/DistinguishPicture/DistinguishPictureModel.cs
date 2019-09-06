@@ -50,7 +50,7 @@ public class DistinguishPictureModel : SingleTemplate<DistinguishPictureModel>
             Debug.Log("强化物索引:" + index);
             results.Add(ObjectsManager.instanse.propList[index]);
         });
-        Debug.Log("====================================================");
+        //Debug.Log("====================================================");
     }
 
     /// <summary>
