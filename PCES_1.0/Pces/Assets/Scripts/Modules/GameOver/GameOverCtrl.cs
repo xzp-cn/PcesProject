@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameOverCtrl : MonoBehaviour
@@ -23,8 +21,30 @@ public class GameOverCtrl : MonoBehaviour
         int wrong = int.Parse(str[1]);
         double a = ((double)right) / (right + wrong);
         double ratio = Math.Round(a, 4) * 100;
-        transform.Find("Text").GetComponent<Text>().text = @"答对题目: " + right + "\n" + "答错题目: " + wrong + "\n" + "正确率: " + ratio.ToString() + "%";
+        string text = @"答对题目: " + right + "\n" + "答错题目: " + wrong + "\n" + "正确率: " + ratio.ToString() + "%";
+        transform.Find("Text").GetComponent<Text>().text = text;
+
+        //发送统计分数时间戳       
+        string guid = BitConverter.ToUInt64(Guid.NewGuid().ToByteArray(), 0).ToString();
+
+        //格式：guid+开始时间+结束时间+分数
+        string msg = "id=" + guid + "&" + HomePageModel.GetInstance().SendTimeStampStr() + "&score=" + ratio.ToString();
+        StartCoroutine(SendMsg(msg));
         Settle();
+    }
+
+    IEnumerator SendMsg(string str)
+    {
+        string path = Application.streamingAssetsPath + "/ip.txt";
+        Debug.Log("GameOverCtrl::SendMsg()::streamingAssets::path " + path);
+        WWW wwwIP = new WWW(path);
+        yield return wwwIP;
+        string txt = string.Empty;
+        txt = wwwIP.text;
+        Debug.Log("GameOverCtrl::SendMsg():: txt = " + txt);
+        WWW www = new WWW(txt + str);
+        yield return www;
+        Debug.Log(www.text);
     }
     /// <summary>
     /// 结算
@@ -37,7 +57,6 @@ public class GameOverCtrl : MonoBehaviour
         //分数统计显示
         gameObject.SetActive(true);
         //分数清零
-
     }
     /// <summary>
     /// 再玩一次

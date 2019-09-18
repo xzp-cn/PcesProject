@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Text;
+﻿using System.Text;
+using UnityEngine;
 /// <summary>
 /// 流程控制模块View
 /// </summary>
@@ -18,6 +17,7 @@ public class FlowManager : MonoBehaviour
         GameObject go = ResManager.GetPrefab(sb.ToString());
         FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
         //PreInitComm();
+        HomePageModel.GetInstance();
     }
 
     /// <summary>
