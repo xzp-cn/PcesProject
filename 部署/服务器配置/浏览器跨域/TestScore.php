@@ -1,5 +1,5 @@
 <?php 
-     require_once("1.php");
+     require_once("crossDomain.php");
     //echo 'userName:'.$_GET['userName'];
     //echo '<br/>';
     //echo 'userEmail:'.$_GET['userEmail'];
