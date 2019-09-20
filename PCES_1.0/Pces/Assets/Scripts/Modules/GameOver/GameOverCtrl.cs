@@ -37,12 +37,12 @@ public class GameOverCtrl : MonoBehaviour
     {
         string path = Application.streamingAssetsPath + "/ip.txt";
         Debug.Log("GameOverCtrl::SendMsg()::streamingAssets::path " + path);
-        WWW wwwIP = new WWW(path);
+        WWW wwwIP = new WWW(path);//加载本地文件
         yield return wwwIP;
-        string txt = string.Empty;
-        txt = wwwIP.text;
-        Debug.Log("GameOverCtrl::SendMsg():: txt = " + txt);
-        WWW www = new WWW(txt + str);
+        string txtIP = string.Empty;
+        txtIP = wwwIP.text;
+        Debug.Log("GameOverCtrl::SendMsg():: txt = " + txtIP);
+        WWW www = new WWW(txtIP + str);//请求消息
         yield return www;
         Debug.Log(www.text);
     }
