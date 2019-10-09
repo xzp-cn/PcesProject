@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
 /// 交换东西
@@ -11,6 +9,7 @@ public class SwapView : MonoBehaviour
     public SwapCtrlB spBCtrl;
     public SwapCtrlC spCCtrl;
     public TestPaperView tpv;
+    Summary sum;
     CommonUI com;
     private void Awake()
     {
@@ -116,6 +115,7 @@ public class SwapView : MonoBehaviour
         tpv = ResManager.GetPrefab("Prefabs/UI/TestPaperView").GetComponent<TestPaperView>();
         tpv.evtFinished += OnTestPaperFinished;
         tpv.evtRedo += OnTestPaperRedo;
+
     }
     private void OnSpCCtrlRedo()
     {
@@ -143,6 +143,7 @@ public class SwapView : MonoBehaviour
         tpv.Dispose();
         //通知当前阶段完成
         GlobalEntity.GetInstance().Dispatch<ModelTasks>(FlowModel.mEvent.FlowStepFinished, ModelTasks.Swap);
+        //Summary();
     }
     void RemoveListens()
     {

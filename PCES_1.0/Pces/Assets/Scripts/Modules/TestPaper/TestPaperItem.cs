@@ -7,6 +7,7 @@ public class TestPaperItem : MonoBehaviour
     public Sprite wrong;
     ToggleGroup tg;
     Toggle[] togs;
+    public System.Action callback;
     public int item_right = 0;//统计正确
     public int item_wrong = 0;//统计错误
     private void Awake()
@@ -52,6 +53,10 @@ public class TestPaperItem : MonoBehaviour
             {
                 togs[i].interactable = false;
             }
+            if (callback != null)
+            {
+                callback();
+            }
         }
     }
     public void ResetAll()//重置数据
@@ -64,5 +69,9 @@ public class TestPaperItem : MonoBehaviour
         }
         item_right = 0;
         item_wrong = 0;
+    }
+    private void OnDestroy()
+    {
+        callback = null;
     }
 }

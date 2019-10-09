@@ -18,8 +18,8 @@ public class FlowManager : MonoBehaviour
         FlowModel.GetInstance().PushPrefabToMem(ft.FlowEnumID.ToString(), go);
         //PreInitComm();
         HomePageModel.GetInstance();
+        new GameObject("xmlParse").AddComponent<XmlParse>();
     }
-
     /// <summary>
     /// 预初始化
     /// </summary>
@@ -33,7 +33,7 @@ public class FlowManager : MonoBehaviour
     }
     private void OnFlowStepFinished(ModelTasks mt)
     {
-        //Debug.LogError(mt.ToString());s
+        //Debug.LogError(mt.ToString());s        
         FlowModel.GetInstance().RemovePrefabFromMem(mt.ToString());
         FlowModel.GetInstance().NextFlowTask();
         FlowTask ft = FlowModel.GetInstance().CurrFlowTask;

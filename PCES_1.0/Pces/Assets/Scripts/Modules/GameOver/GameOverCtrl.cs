@@ -11,6 +11,15 @@ public class GameOverCtrl : MonoBehaviour
         again = transform.Find("Button").GetComponent<Button>();
         again.onClick.AddListener(PlayAgain);
     }
+    private void Start()
+    {
+        Text title = transform.Find("summary/bg/title/text").GetComponent<Text>();
+        Text content = transform.Find("summary/bg/content").GetComponent<Text>();
+        int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+        SumText st = SumaryModel.GetInstance().GetContent(curIndex + 1);
+        title.text = st.title;
+        content.text = "\u3000\u3000" + st.content;
+    }
     public void Init()
     {
         //分数统计界面UI显示

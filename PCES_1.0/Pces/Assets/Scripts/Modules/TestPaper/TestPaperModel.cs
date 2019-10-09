@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using UnityEngine;
 
 public class TestPaperModel : SingleTemplate<TestPaperModel>
 {
@@ -8,21 +7,19 @@ public class TestPaperModel : SingleTemplate<TestPaperModel>
 
     public TestPaperModel()
     {
-        ParseXml("TestPaper/TestPaper", "Subject/Items");
+        //ReadXml("/TestPaper/TestPaper.xml", "Subject/Items",ParseXml);
     }
-
     /// <summary>
     /// 调用举例：TestPaperModel.GetInstance().ParseXml("TestPaper/TestPaper", "Subject");   
     /// </summary>
     /// <param name="path"></param>
     /// <param name="findstr"></param>
     /// <returns></returns>
-    public void ParseXml(string path, string findstr = "")
+    public void ParseXml(string xmlStr, string findStr)
     {
         XmlDocument xmlDoc = new XmlDocument();
-        TextAsset XMLFile = Resources.Load<TextAsset>(path);
-        xmlDoc.LoadXml(XMLFile.text);
-        XmlNodeList courseList = xmlDoc.SelectNodes(findstr);
+        xmlDoc.LoadXml(xmlStr);
+        XmlNodeList courseList = xmlDoc.SelectNodes(findStr);
         //Debug.Log(courseList.Count);
         foreach (XmlNode course in courseList)
         {

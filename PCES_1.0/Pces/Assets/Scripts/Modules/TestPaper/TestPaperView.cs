@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 public class TestPaperView : MonoBehaviour
 {
     public event System.Action evtFinished, evtRedo;
     private CommonUI comUI;
     Button resetBtn, nextBtn;
+    int subject = 0;//题目数量
     private void Awake()
     {
         Init();
@@ -20,6 +19,28 @@ public class TestPaperView : MonoBehaviour
         nextBtn.onClick.AddListener(OnNextDo);
         Transform canvas = comUI.transform.parent;
         transform.SetParent(canvas.transform, false);
+
+        TestPaperItem[] Items = transform.GetComponentsInChildren<TestPaperItem>();
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].callback = Callback;
+        }
+    }
+    /// <summary>
+    /// 做题回调
+    /// </summary>
+    void Callback()
+    {
+        subject++;
+        Debug.Log(subject);
+        if (subject == 5)
+        {
+            //弹出总结框
+            Summary sum = ResManager.GetPrefab("Prefabs/UI/summary").GetComponent<Summary>();
+            sum.transform.SetParent(transform, false);
+            int curIndex = (int)FlowModel.GetInstance().CurrFlowTask.FlowEnumID;
+            sum.ChangeContent(curIndex);
+        }
     }
     public void Init()
     {
@@ -95,8 +116,6 @@ public class TestPaperView : MonoBehaviour
     {
         comUI.redoClickEvent -= OnReDo;
         comUI.nextClickEvent -= OnNextDo;
-
-
     }
 
     void Redo()
